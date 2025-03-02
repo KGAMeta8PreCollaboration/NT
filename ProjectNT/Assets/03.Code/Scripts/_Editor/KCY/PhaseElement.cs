@@ -15,17 +15,10 @@ public class PhaseElement : MonoBehaviour
     [SerializeField] private float m_Time;
     public Button m_Up;
     public Button m_Down;
-    public int num;
-
     private void Awake()
     {
         phaseDriver = GetComponentInParent<PhaseDriver>();
         m_Up.onClick.AddListener(() => phaseDriver.SwapPhaseUp(this));
         m_Down.onClick.AddListener(() => phaseDriver.SwapPhaseDown(this));
-    }
-
-    private void Start()
-    {
-        Debug.Log(num);
     }
 }

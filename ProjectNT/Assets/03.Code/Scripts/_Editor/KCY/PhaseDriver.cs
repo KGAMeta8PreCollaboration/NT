@@ -35,10 +35,8 @@ public class PhaseDriver : MonoBehaviour
         Instantiate(newPhasePrefab, phaseRect, false);
         SetAddBTN();
         PhaseElement temp = newPhase.GetComponent<PhaseElement>();
-        temp.num = num;
         linkedPhase.AddLast(temp);
         StartCoroutine(ScrollBarCtrl());
-        num++;
     }
     public void SwapPhaseUp(PhaseElement other)
     {
