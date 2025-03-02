@@ -14,8 +14,8 @@ public class Enums
     public enum Gamemode
     {
         SOLO,
-        DUO-1,
-        DUO-2
+        DUO1,
+        DUO2
     }
 
     public enum Phase
