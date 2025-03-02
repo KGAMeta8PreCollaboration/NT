@@ -11,8 +11,7 @@ using UnityEngine;
 
 public class MusicDriver : MonoBehaviour
 {
-
-    public string loadFolderPath;
+    [SerializeField] private string loadFolderPath;
 
     public void OpenFolderBrowser() =>
         StandaloneFileBrowser.OpenFolderPanelAsync("", "", false, paths =>
