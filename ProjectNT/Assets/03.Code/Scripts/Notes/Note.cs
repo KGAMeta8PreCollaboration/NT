@@ -8,6 +8,7 @@ public class Note : MonoBehaviour
 	public bool isHit { get; private set; }
 
 	public Action<Note> OnDestroyed;
+	public Action<Note> OnHit;
 	
 	
 	public void Init(Transform target, float speed)
@@ -19,6 +20,9 @@ public class Note : MonoBehaviour
 	public void Hit()
 	{
 		isHit = true;
+		print("노트 히트");
+		OnHit?.Invoke(this);
+		Destroy(gameObject);
 	}
 
 	private void Move()
@@ -29,13 +33,16 @@ public class Note : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		// print("트리거 진입");
 		// 판정 구역 접근
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
+		// print("트리거 나감");
 		// 판정 구역 벗어남 == 노트 미스
-		Miss();
+		if (other.CompareTag("JudgingArea"))
+			Miss();
 	}
 
 	private void Miss()
