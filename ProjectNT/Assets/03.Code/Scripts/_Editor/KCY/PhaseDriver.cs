@@ -12,9 +12,10 @@ public class PhaseDriver : MonoBehaviour
     [SerializeField] private Button addPhase;
     [SerializeField] private RectTransform phaseRect;
     [SerializeField] private Scrollbar phaseScrollBar;
-    [SerializeField] private RectTransform addPhaseRect;
+    [SerializeField] private RectTransform addBTNRect;
     private LinkedList<PhaseElement> linkedPhase = new LinkedList<PhaseElement>();
-    public event Action<float> OnRectChanged;
+    public Enums.Difficulty m_Difficulty;
+
     private void Awake()
     {
         if (newPhasePrefab == null)
@@ -92,5 +93,8 @@ public class PhaseDriver : MonoBehaviour
         addPhase.transform.SetParent(null);
         addPhase.transform.SetParent(phaseRect);
     }
-
+    public void OnOff()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
 }
