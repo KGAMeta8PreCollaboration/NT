@@ -28,7 +28,6 @@ public class DifficutyDriver : MonoBehaviour
         {
             diff_Toggles[i].onValueChanged.AddListener(phaseDrivers[i].gameObject.SetActive);
             phaseDrivers[i].modeDiff = currentModeDiff + i;
-            // diff_Toggles[i].onValueChanged.AddListener()
         }
         diff_Toggles[0].isOn = true;
         diff_Toggles[0].interactable = false;

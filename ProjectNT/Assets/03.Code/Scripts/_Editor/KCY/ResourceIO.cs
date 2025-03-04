@@ -11,11 +11,11 @@ using SFB;
 using UnityEditor;
 using UnityEngine.Events;
 
-public class MusicDriver : MonoBehaviour
+public class ResourceIO : MonoBehaviour
 {
 
-    private static MusicDriver instance;
-    public static MusicDriver Instance { get { return instance; } }
+    private static ResourceIO instance;
+    public static ResourceIO Instance { get { return instance; } }
     [SerializeField] private string loadFolderPath;
     private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     private string loadDataPath = "\\Editor\\Song\\";

@@ -36,7 +36,7 @@ public class PhaseDriver : MonoBehaviour
     }
     private void Start()
     {
-        MusicDriver.Instance.saveDelegate += AddDataList;
+        ResourceIO.Instance.saveDelegate += AddDataList;
 
     }
     private void AddNewPhase()
@@ -155,7 +155,7 @@ public class PhaseDriver : MonoBehaviour
         {
             dataList.Add(phaseElement.m_SongData);
         }
-        MusicDriver.Instance.keyValuePairs[m_ModeDiff] = dataList;
+        ResourceIO.Instance.keyValuePairs[m_ModeDiff] = dataList;
 
     }
 }
