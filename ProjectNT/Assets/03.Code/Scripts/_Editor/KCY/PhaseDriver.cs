@@ -31,6 +31,14 @@ public class PhaseDriver : MonoBehaviour
     {
         Initialize();
     }
+    private void OnEnable()
+    {
+    }
+    private void Start()
+    {
+        MusicDriver.Instance.saveDelegate += AddDataList;
+
+    }
     private void AddNewPhase()
     {
         //페이즈 10개 생성 시 추가생성 불가
@@ -58,7 +66,7 @@ public class PhaseDriver : MonoBehaviour
         }
         temp.phaseNum = byDifficulty[m_ModeDiff];
         //저장 델리게이트 등록
-        MusicDriver.Instance.saveDelegate += temp.SaveAction;
+
         //새로운 페이즈 추가시 스크롤바 Value변경
         StartCoroutine(ScrollBarCtrl());
     }
@@ -140,5 +148,14 @@ public class PhaseDriver : MonoBehaviour
 
         addPhase.onClick.AddListener(AddNewPhase);
     }
+    public void AddDataList()
+    {
+        List<SongData> dataList = new List<SongData>();
+        foreach (PhaseElement phaseElement in linkedPhase)
+        {
+            dataList.Add(phaseElement.m_SongData);
+        }
+        MusicDriver.Instance.keyValuePairs[m_ModeDiff] = dataList;
 
+    }
 }

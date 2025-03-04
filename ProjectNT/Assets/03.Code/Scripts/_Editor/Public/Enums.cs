@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enums
 {
+    public const int MODEDIFF_COUNT = 12;
     public enum ModeDiff
     {
         SOLO_EASY,

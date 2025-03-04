@@ -35,11 +35,6 @@ public class PhaseElement : MonoBehaviour
         Initialize();
     }
 
-    public void SaveAction()
-    {
-        MusicDriver.Instance.Save(m_SongData, m_ModeDiff, m_PhaseNum.ToString());
-    }
-
     private void Initialize()
     {
         phaseDriver = GetComponentInParent<PhaseDriver>();
