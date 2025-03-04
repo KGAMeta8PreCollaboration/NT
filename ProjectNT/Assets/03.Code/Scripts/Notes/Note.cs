@@ -1,11 +1,20 @@
 using System;
 using UnityEngine;
 
+public enum NoteType
+{
+	Bad,
+	Good,
+	Cool,
+	Perfect,
+}
+
 public class Note : MonoBehaviour
 {
 	public Transform target { get; private set; }
 	public float speed { get; private set; }
 	public bool isHit { get; private set; }
+	public NoteType noteType { get; private set; }
 
 	public Action<Note> OnDestroyed;
 	public Action<Note> OnHit;
@@ -20,7 +29,7 @@ public class Note : MonoBehaviour
 	public void Hit()
 	{
 		isHit = true;
-		print("노트 히트");
+		noteType = NoteType.Perfect;
 		OnHit?.Invoke(this);
 		Destroy(gameObject);
 	}
@@ -48,8 +57,10 @@ public class Note : MonoBehaviour
 	private void Miss()
 	{
 		// 노트 미스 처리
+		noteType = NoteType.Bad;
 		// 미스 효과음, 이펙트 재생
 		OnDestroyed?.Invoke(this);
+		OnHit?.Invoke(this);
 		Destroy(gameObject);
 	}
 

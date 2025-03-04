@@ -21,8 +21,6 @@ public class TmpCreateNotes : MonoBehaviour
 		}
 	}
 	
-	
-	
 	public void Hit(InputAction.CallbackContext context)
 	{
 		if (context.performed)

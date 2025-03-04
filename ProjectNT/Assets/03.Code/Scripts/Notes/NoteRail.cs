@@ -12,11 +12,11 @@ public class NoteRail : MonoBehaviour
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
 	}
 
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab)
+	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit)
 	{
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
-		noteSpawner.StartSpawning(onAddNote, onNoteDestroyed, notePrefab);
+		noteSpawner.StartSpawning(onAddNote, onNoteDestroyed, notePrefab, onNoteHit);
 	}
 
 	public void AddNote(Note note)
