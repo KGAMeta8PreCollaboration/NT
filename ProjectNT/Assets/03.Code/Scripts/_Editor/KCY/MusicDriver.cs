@@ -13,21 +13,27 @@ using UnityEngine.Events;
 
 public class MusicDriver : MonoBehaviour
 {
+    private static MusicDriver instance;
+    public static MusicDriver Instance { get { return instance; } }
     [SerializeField] private string loadFolderPath;
-    [SerializeField] private string saveDataPath = null;
+    private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     // [SerializeField] private PopUp popUp;
-
+    public Dictionary<Enums.ModeDiff, List<PhaseElement>> keyValuePairs = new Dictionary<Enums.ModeDiff, List<PhaseElement>>();
+    private string currentPath;
     public AudioClip audioClip;
     public string Dest;
+    public delegate void SaveDelegate();
+    public SaveDelegate save_Delegate;
 
-    // public void OpenFolderBrowser() =>
-    //     StandaloneFileBrowser.OpenFolderPanelAsync("", "", false, paths =>
-    //     {
-    //         if (paths.Length <= 0) return;
-
-    //         var installation = paths[0];
-    //         loadFolderPath = installation;
-    //     });
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else DestroyImmediate(gameObject);
+    }
     private void Start()
     {
         if (saveDataPath == null)
@@ -37,7 +43,6 @@ public class MusicDriver : MonoBehaviour
     }
     public void BrowserForFile()
     {
-
         var extensions = new[]
         {
             new ExtensionFilter("Sound Files", "mp3", "wav")
@@ -52,5 +57,54 @@ public class MusicDriver : MonoBehaviour
         string DestFile = Path.Combine(Application.persistentDataPath + fileName);
 
         File.Copy(paths[0], DestFile, true);
+    }
+
+    public void BrowserForSave()
+    {
+        var paths = StandaloneFileBrowser.OpenFolderPanel("저장 경로 선택", "", false);
+        currentPath = paths[0] + saveDataPath;
+        if (!Directory.Exists(currentPath))
+        {
+            Directory.CreateDirectory(currentPath);
+        }
+        save_Delegate?.Invoke();
+    }
+    // public void FindSaveFiles()
+    // {
+    //     var paths = StandaloneFileBrowser.OpenFolderPanel("폴더 불러오기", "", false);
+
+    //     string fullPath = Path.Combine(Environment.CurrentDirectory, saveDataPath);
+
+    //     try
+    //     {
+    //         string content = File.ReadAllText(fullPath);
+    //         Debug.Log(content);
+    //     }
+    //     catch (FileNotFoundException)
+    //     {
+    //         Debug.LogError($"File not found: {fullPath}");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Debug.LogError($"An error occurred: {ex.Message}");
+    //     }
+    // }
+    public void Save(SongData saveInfo, Enums.ModeDiff modeDiff, string fileName)
+    {
+        string savePath = currentPath + modeDiff.ToString() + "\\";
+        string saveData = JsonUtility.ToJson(saveInfo);
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+
+        Debug.Log($"in Save Path : {savePath}");
+
+        File.WriteAllText(savePath + fileName, saveData);
+    }
+
+    public void Save_BTN()
+    {
+
     }
 }

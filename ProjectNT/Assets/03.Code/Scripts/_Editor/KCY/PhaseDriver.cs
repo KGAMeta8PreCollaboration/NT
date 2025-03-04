@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class PhaseDriver : MonoBehaviour
@@ -13,18 +14,22 @@ public class PhaseDriver : MonoBehaviour
     [SerializeField] private RectTransform phaseRect;
     [SerializeField] private Scrollbar phaseScrollBar;
     [SerializeField] private RectTransform addBTNRect;
-    private LinkedList<PhaseElement> linkedPhase = new LinkedList<PhaseElement>();
-    public Enums.Difficulty m_Difficulty;
+    public LinkedList<PhaseElement> linkedPhase = new LinkedList<PhaseElement>();
+
+    private Dictionary<Enums.ModeDiff, int> byDifficulty = new Dictionary<Enums.ModeDiff, int>();
+
+    private Enums.ModeDiff currentModeDiff;
+
+    public Enums.ModeDiff modeDiff
+    {
+        get { return currentModeDiff; }
+        set { currentModeDiff = value; }
+    }
 
     private void Awake()
     {
-        if (newPhasePrefab == null)
-        {
-            newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
-        }
-        addPhase.onClick.AddListener(AddNewPhase);
+        Initialize();
     }
-    int num = 0;
     private void AddNewPhase()
     {
         if (linkedPhase.Count == 10)
@@ -34,9 +39,16 @@ public class PhaseDriver : MonoBehaviour
         }
         GameObject newPhase =
         Instantiate(newPhasePrefab, phaseRect, false);
-        SetAddBTN();
+        ReplaceAddBTN();
         PhaseElement temp = newPhase.GetComponent<PhaseElement>();
+        temp.modeDiff = currentModeDiff;
         linkedPhase.AddLast(temp);
+
+        if (!byDifficulty.ContainsKey(currentModeDiff))
+            byDifficulty.Add(currentModeDiff, linkedPhase.Count);
+        else byDifficulty[currentModeDiff] = linkedPhase.Count;
+        temp.phaseNum = byDifficulty[currentModeDiff];
+        temp.action += temp.SaveAction;
         StartCoroutine(ScrollBarCtrl());
     }
     public void SwapPhaseUp(PhaseElement other)
@@ -49,16 +61,15 @@ public class PhaseDriver : MonoBehaviour
         LinkedListNode<PhaseElement> prevNode = linkedPhase.Find(other).Previous;
         linkedPhase.Remove(other);
         linkedPhase.AddBefore(prevNode, other);
-
+        int tempNum = prevNode.Value.phaseNum;
+        prevNode.Value.phaseNum = other.phaseNum;
+        other.phaseNum = tempNum;
         foreach (PhaseElement phase in linkedPhase)
         {
             phase.gameObject.transform.SetParent(null);
-        }
-        foreach (PhaseElement phase in linkedPhase)
-        {
             phase.gameObject.transform.SetParent(phaseRect);
         }
-        SetAddBTN();
+        ReplaceAddBTN();
     }
     public void SwapPhaseDown(PhaseElement other)
     {
@@ -70,16 +81,15 @@ public class PhaseDriver : MonoBehaviour
         LinkedListNode<PhaseElement> nextNode = linkedPhase.Find(other).Next;
         linkedPhase.Remove(other);
         linkedPhase.AddAfter(nextNode, other);
-
+        int tempNum = nextNode.Value.phaseNum;
+        nextNode.Value.phaseNum = other.phaseNum;
+        other.phaseNum = tempNum;
         foreach (PhaseElement phase in linkedPhase)
         {
             phase.gameObject.transform.SetParent(null);
-        }
-        foreach (PhaseElement phase in linkedPhase)
-        {
             phase.gameObject.transform.SetParent(phaseRect);
         }
-        SetAddBTN();
+        ReplaceAddBTN();
     }
     private IEnumerator ScrollBarCtrl()
     {
@@ -88,13 +98,18 @@ public class PhaseDriver : MonoBehaviour
         phaseScrollBar.value = 0;
     }
 
-    private void SetAddBTN()
+    private void ReplaceAddBTN()
     {
         addPhase.transform.SetParent(null);
         addPhase.transform.SetParent(phaseRect);
     }
-    public void OnOff()
+
+    private void Initialize()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        if (newPhasePrefab == null)
+            newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
+
+        addPhase.onClick.AddListener(AddNewPhase);
+        currentModeDiff = Enums.ModeDiff.SOLO_EASY;
     }
 }
