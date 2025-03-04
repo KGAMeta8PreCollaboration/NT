@@ -14,7 +14,7 @@ public class PhaseDriver : MonoBehaviour
     [SerializeField] private RectTransform phaseRect;
     [SerializeField] private Scrollbar phaseScrollBar;
     [SerializeField] private RectTransform addBTNRect;
-    public LinkedList<PhaseElement> linkedPhase = new LinkedList<PhaseElement>();
+    public LinkedList<Phase> linkedPhase = new LinkedList<Phase>();
 
     private Dictionary<Enums.ModeDiff, int> byDifficulty = new Dictionary<Enums.ModeDiff, int>();
 
@@ -51,7 +51,7 @@ public class PhaseDriver : MonoBehaviour
         GameObject newPhase =
         Instantiate(newPhasePrefab, phaseRect, false);
         ReplaceAddBTN();
-        PhaseElement temp = newPhase.GetComponent<PhaseElement>();
+        Phase temp = newPhase.GetComponent<Phase>();
         //현재 난이도에 따라 페이즈 난이도 설정
         temp.modeDiff = m_ModeDiff;
         linkedPhase.AddLast(temp);
@@ -70,7 +70,7 @@ public class PhaseDriver : MonoBehaviour
         //새로운 페이즈 추가시 스크롤바 Value변경
         StartCoroutine(ScrollBarCtrl());
     }
-    public void SwapPhaseUp(PhaseElement other)
+    public void SwapPhaseUp(Phase other)
     {
         //이전페이즈 없을시 리턴
         if (linkedPhase.Find(other).Previous == null)
@@ -80,7 +80,7 @@ public class PhaseDriver : MonoBehaviour
         }
 
         //변경할 페이즈 찾음
-        LinkedListNode<PhaseElement> prevNode = linkedPhase.Find(other).Previous;
+        LinkedListNode<Phase> prevNode = linkedPhase.Find(other).Previous;
         linkedPhase.Remove(other);
         linkedPhase.AddBefore(prevNode, other);
 
@@ -90,7 +90,7 @@ public class PhaseDriver : MonoBehaviour
         other.phaseNum = tempNum;
 
         //페이즈 RectTransform 정렬
-        foreach (PhaseElement phase in linkedPhase)
+        foreach (Phase phase in linkedPhase)
         {
             phase.gameObject.transform.SetParent(null);
             phase.gameObject.transform.SetParent(phaseRect);
@@ -99,7 +99,7 @@ public class PhaseDriver : MonoBehaviour
         //페이즈 추가버튼 정렬
         ReplaceAddBTN();
     }
-    public void SwapPhaseDown(PhaseElement other)
+    public void SwapPhaseDown(Phase other)
     {
         //다음페이즈 없을시 리턴
         if (linkedPhase.Find(other).Next == null)
@@ -109,7 +109,7 @@ public class PhaseDriver : MonoBehaviour
         }
 
         //변경할 페이즈 찾음
-        LinkedListNode<PhaseElement> nextNode = linkedPhase.Find(other).Next;
+        LinkedListNode<Phase> nextNode = linkedPhase.Find(other).Next;
         linkedPhase.Remove(other);
         linkedPhase.AddAfter(nextNode, other);
 
@@ -119,7 +119,7 @@ public class PhaseDriver : MonoBehaviour
         other.phaseNum = tempNum;
 
         //페이즈 RectTransform 정렬
-        foreach (PhaseElement phase in linkedPhase)
+        foreach (Phase phase in linkedPhase)
         {
             phase.gameObject.transform.SetParent(null);
             phase.gameObject.transform.SetParent(phaseRect);
@@ -151,7 +151,7 @@ public class PhaseDriver : MonoBehaviour
     public void AddDataList()
     {
         List<SongData> dataList = new List<SongData>();
-        foreach (PhaseElement phaseElement in linkedPhase)
+        foreach (Phase phaseElement in linkedPhase)
         {
             dataList.Add(phaseElement.m_SongData);
         }

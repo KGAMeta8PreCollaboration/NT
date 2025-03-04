@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhaseElement : MonoBehaviour
+public class Phase : MonoBehaviour
 {
     [SerializeField] private PhaseDriver phaseDriver;
     [SerializeField] private Button m_Load;
