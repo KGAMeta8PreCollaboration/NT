@@ -21,9 +21,9 @@ public class MusicDriver : MonoBehaviour
     public Dictionary<Enums.ModeDiff, List<PhaseElement>> keyValuePairs = new Dictionary<Enums.ModeDiff, List<PhaseElement>>();
     private string currentPath;
     public AudioClip audioClip;
-    public string Dest;
     public delegate void SaveDelegate();
-    public SaveDelegate save_Delegate;
+
+    public SaveDelegate saveDelegate;
 
     private void Awake()
     {
@@ -67,7 +67,8 @@ public class MusicDriver : MonoBehaviour
         {
             Directory.CreateDirectory(currentPath);
         }
-        save_Delegate?.Invoke();
+        saveDelegate?.Invoke();
+
     }
     // public void FindSaveFiles()
     // {
@@ -101,10 +102,5 @@ public class MusicDriver : MonoBehaviour
         Debug.Log($"in Save Path : {savePath}");
 
         File.WriteAllText(savePath + fileName, saveData);
-    }
-
-    public void Save_BTN()
-    {
-
     }
 }

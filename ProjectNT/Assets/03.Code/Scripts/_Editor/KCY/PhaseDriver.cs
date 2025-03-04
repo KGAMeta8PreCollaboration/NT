@@ -18,13 +18,13 @@ public class PhaseDriver : MonoBehaviour
 
     private Dictionary<Enums.ModeDiff, int> byDifficulty = new Dictionary<Enums.ModeDiff, int>();
 
-    private Enums.ModeDiff currentModeDiff;
+    private Enums.ModeDiff m_ModeDiff;
 
     public Enums.ModeDiff modeDiff
     {
-        get { return currentModeDiff; }
+        get { return m_ModeDiff; }
 
-        set { currentModeDiff = value; }
+        set { m_ModeDiff = value; }
     }
 
     private void Awake()
@@ -45,34 +45,33 @@ public class PhaseDriver : MonoBehaviour
         ReplaceAddBTN();
         PhaseElement temp = newPhase.GetComponent<PhaseElement>();
         //현재 난이도에 따라 페이즈 난이도 설정
-        temp.modeDiff = currentModeDiff;
+        temp.modeDiff = m_ModeDiff;
         linkedPhase.AddLast(temp);
         //페이즈 별 번호 추가
-        if (!byDifficulty.ContainsKey(currentModeDiff))
+        if (!byDifficulty.ContainsKey(m_ModeDiff))
         {
-            byDifficulty.Add(currentModeDiff, linkedPhase.Count);
+            byDifficulty.Add(m_ModeDiff, linkedPhase.Count);
         }
         else
         {
-            byDifficulty[currentModeDiff] = linkedPhase.Count;
+            byDifficulty[m_ModeDiff] = linkedPhase.Count;
         }
-        temp.phaseNum = byDifficulty[currentModeDiff];
-        //저장 액션 등록
-        temp.action += temp.SaveAction;
-
+        temp.phaseNum = byDifficulty[m_ModeDiff];
+        //저장 델리게이트 등록
+        MusicDriver.Instance.saveDelegate += temp.SaveAction;
         //새로운 페이즈 추가시 스크롤바 Value변경
         StartCoroutine(ScrollBarCtrl());
     }
     public void SwapPhaseUp(PhaseElement other)
     {
-        //이전노드 없을시 리턴
+        //이전페이즈 없을시 리턴
         if (linkedPhase.Find(other).Previous == null)
         {
-            Debug.Log("이전노드 없음");
+            Debug.Log("이전페이즈 없음");
             return;
         }
 
-        //변경할 노드 찾음
+        //변경할 페이즈 찾음
         LinkedListNode<PhaseElement> prevNode = linkedPhase.Find(other).Previous;
         linkedPhase.Remove(other);
         linkedPhase.AddBefore(prevNode, other);
@@ -94,14 +93,14 @@ public class PhaseDriver : MonoBehaviour
     }
     public void SwapPhaseDown(PhaseElement other)
     {
-        //다음노드 없을시 리턴
+        //다음페이즈 없을시 리턴
         if (linkedPhase.Find(other).Next == null)
         {
-            Debug.Log("다음노드 없음");
+            Debug.Log("다음페이즈 없음");
             return;
         }
 
-        //변경할 노드 찾음
+        //변경할 페이즈 찾음
         LinkedListNode<PhaseElement> nextNode = linkedPhase.Find(other).Next;
         linkedPhase.Remove(other);
         linkedPhase.AddAfter(nextNode, other);
@@ -140,6 +139,6 @@ public class PhaseDriver : MonoBehaviour
             newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
 
         addPhase.onClick.AddListener(AddNewPhase);
-        currentModeDiff = Enums.ModeDiff.SOLO_EASY;
     }
+
 }

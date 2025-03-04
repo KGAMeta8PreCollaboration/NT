@@ -19,7 +19,6 @@ public class PhaseElement : MonoBehaviour
     private Enums.ModeDiff m_ModeDiff;
     private int m_PhaseNum;
     public SongData m_SongData = new SongData();
-    public Action action;
     public Enums.ModeDiff modeDiff
     {
         get { return m_ModeDiff; }
