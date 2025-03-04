@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -20,12 +21,7 @@ public class PhaseDriver : MonoBehaviour
 
     private Enums.ModeDiff m_ModeDiff;
 
-    public Enums.ModeDiff modeDiff
-    {
-        get { return m_ModeDiff; }
-
-        set { m_ModeDiff = value; }
-    }
+    public Enums.ModeDiff modeDiff { get; set; }
 
     private void Awake()
     {
@@ -33,11 +29,18 @@ public class PhaseDriver : MonoBehaviour
     }
     private void OnEnable()
     {
+        //세이브로드 이벤트 구독
+        ResourceIO.Instance.saveDelegate += AddDataList;
+        ResourceIO.Instance.loadDelegate += LoadData;
+    }
+    private void OnDisable()
+    {
+        //세이브로드 이벤트 구독 해제
+        ResourceIO.Instance.saveDelegate -= AddDataList;
+        ResourceIO.Instance.loadDelegate -= LoadData;
     }
     private void Start()
     {
-        ResourceIO.Instance.saveDelegate += AddDataList;
-
     }
     private void AddNewPhase()
     {
@@ -151,11 +154,25 @@ public class PhaseDriver : MonoBehaviour
     public void AddDataList()
     {
         List<SongData> dataList = new List<SongData>();
-        foreach (Phase phaseElement in linkedPhase)
+        foreach (Phase phase in linkedPhase)
         {
-            dataList.Add(phaseElement.m_SongData);
+            dataList.Add(phase.m_SongData);
         }
-        ResourceIO.Instance.keyValuePairs[m_ModeDiff] = dataList;
-
+        ResourceIO.Instance.Phase_Dic[m_ModeDiff] = dataList;
+    }
+    public void LoadData()
+    {
+        List<SongData> dataList = new List<SongData>();
+        dataList = ResourceIO.Instance.Phase_Dic[m_ModeDiff];
+        for (int i = 0; i < dataList.Count; i++)
+        {
+            AddNewPhase();
+        }
+        int temp = 0;
+        foreach (Phase phase in linkedPhase)
+        {
+            phase.m_SongData = dataList[temp];
+            temp++;
+        }
     }
 }

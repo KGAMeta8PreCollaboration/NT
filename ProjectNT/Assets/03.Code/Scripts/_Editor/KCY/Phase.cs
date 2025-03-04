@@ -17,18 +17,13 @@ public class Phase : MonoBehaviour
     [SerializeField] private Button m_Up;
     [SerializeField] private Button m_Down;
     private Enums.ModeDiff m_ModeDiff;
+    private SongData songData = new SongData();
+
     private int m_PhaseNum;
-    public SongData m_SongData = new SongData();
-    public Enums.ModeDiff modeDiff
-    {
-        get { return m_ModeDiff; }
-        set { m_ModeDiff = value; }
-    }
-    public int phaseNum
-    {
-        get { return m_PhaseNum; }
-        set { m_PhaseNum = value; }
-    }
+
+    public SongData m_SongData { get; set; }
+    public Enums.ModeDiff modeDiff { get; set; }
+    public int phaseNum { get; set; }
 
     private void Awake()
     {
