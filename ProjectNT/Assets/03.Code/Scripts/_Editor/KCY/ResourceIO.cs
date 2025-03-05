@@ -7,9 +7,9 @@ using System.Threading;
 using Microsoft.Win32;
 using TMPro;
 using UnityEngine;
-using SFB;
 using UnityEditor;
 using UnityEngine.Events;
+using SFB;
 
 public class ResourceIO : MonoBehaviour
 {
@@ -43,6 +43,7 @@ public class ResourceIO : MonoBehaviour
     {
         if (dataPath == null)
         {
+
             var paths = StandaloneFileBrowser.OpenFolderPanel("저장 경로 선택", "", false);
             string[] temp = Directory.GetDirectories(paths[0]);
             Debug.Log(temp[0]);
@@ -54,7 +55,6 @@ public class ResourceIO : MonoBehaviour
         }
         saveDelegate?.Invoke();
         Save(fileName);
-
     }
 
     public void BrowserForLoad()

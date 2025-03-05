@@ -16,7 +16,22 @@ public class DifficutyCtrl : MonoBehaviour
     }
     private void Start()
     {
-        phaseDrivers[0].gameObject.SetActive(true);
+        for (int i = 0; i < 4; i++)
+        {
+            //세이브로드 이벤트 구독
+            ResourceIO.Instance.saveDelegate += phaseDrivers[i].AddDataList;
+            ResourceIO.Instance.loadDelegate += phaseDrivers[i].LoadData;
+        }
+    }
+    private void OnDisable()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+
+            //세이브로드 이벤트 구독 해제
+            ResourceIO.Instance.saveDelegate -= phaseDrivers[i].AddDataList;
+            ResourceIO.Instance.loadDelegate -= phaseDrivers[i].LoadData;
+        }
     }
     private void Initialize()
     {
@@ -24,8 +39,12 @@ public class DifficutyCtrl : MonoBehaviour
         {
             diff_Toggles[i].onValueChanged.AddListener(phaseDrivers[i].gameObject.SetActive);
             phaseDrivers[i].modeDiff = currentModeDiff + i;
+
+            phaseDrivers[i].Initialize();
+
         }
         diff_Toggles[0].isOn = true;
         diff_Toggles[0].interactable = false;
+        phaseDrivers[0].gameObject.SetActive(true);
     }
 }

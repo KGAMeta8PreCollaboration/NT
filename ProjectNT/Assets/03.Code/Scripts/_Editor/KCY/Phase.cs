@@ -35,5 +35,6 @@ public class Phase : MonoBehaviour
         phaseDriver = GetComponentInParent<PhaseDriver>();
         m_Up.onClick.AddListener(() => phaseDriver.SwapPhaseUp(this));
         m_Down.onClick.AddListener(() => phaseDriver.SwapPhaseDown(this));
+
     }
 }

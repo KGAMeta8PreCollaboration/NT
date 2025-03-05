@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
+
 public class PhaseDriver : MonoBehaviour
 {
     [SerializeField] private GameObject newPhasePrefab;
@@ -21,26 +22,29 @@ public class PhaseDriver : MonoBehaviour
 
     private Enums.ModeDiff m_ModeDiff;
 
-    public Enums.ModeDiff modeDiff { get; set; }
+    public Enums.ModeDiff modeDiff
+    {
+        get { return m_ModeDiff; }
+        set { m_ModeDiff = value; }
+    }
 
     private void Awake()
     {
-        Initialize();
+
     }
-    private void OnEnable()
-    {
-        //세이브로드 이벤트 구독
-        ResourceIO.Instance.saveDelegate += AddDataList;
-        ResourceIO.Instance.loadDelegate += LoadData;
-    }
-    private void OnDisable()
-    {
-        //세이브로드 이벤트 구독 해제
-        ResourceIO.Instance.saveDelegate -= AddDataList;
-        ResourceIO.Instance.loadDelegate -= LoadData;
-    }
+
     private void Start()
     {
+        //세이브로드 이벤트 구독
+        // ResourceIO.Instance.saveDelegate += AddDataList;
+        // ResourceIO.Instance.loadDelegate += LoadData;
+    }
+
+    private void OnDestroy()
+    {
+        //세이브로드 이벤트 구독 해제
+        //     ResourceIO.Instance.saveDelegate -= AddDataList;
+        //     ResourceIO.Instance.loadDelegate -= LoadData;
     }
     private void AddNewPhase()
     {
@@ -71,7 +75,7 @@ public class PhaseDriver : MonoBehaviour
         //저장 델리게이트 등록
 
         //새로운 페이즈 추가시 스크롤바 Value변경
-        StartCoroutine(ScrollBarCtrl());
+        if (gameObject.activeSelf) StartCoroutine(ScrollBarCtrl());
     }
     public void SwapPhaseUp(Phase other)
     {
@@ -144,7 +148,7 @@ public class PhaseDriver : MonoBehaviour
         addPhase.transform.SetParent(phaseRect);
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         if (newPhasePrefab == null)
             newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
@@ -162,6 +166,7 @@ public class PhaseDriver : MonoBehaviour
     }
     public void LoadData()
     {
+        if (!ResourceIO.Instance.Phase_Dic.ContainsKey(m_ModeDiff)) return;
         List<SongData> dataList = new List<SongData>();
         dataList = ResourceIO.Instance.Phase_Dic[m_ModeDiff];
         for (int i = 0; i < dataList.Count; i++)
