@@ -18,12 +18,14 @@ public class Note : MonoBehaviour
 
 	public Action<Note> OnDestroyed;
 	public Action<Note> OnHit;
+
+	public AudioClip hitSound;
 	
-	
-	public void Init(Transform target, float speed)
+	public void Init(Transform target, float speed, AudioClip hitSound = null)
 	{
 		this.target = target;
 		this.speed = speed;
+		this.hitSound = hitSound;
 	}
 	
 	public void Hit()
@@ -31,6 +33,12 @@ public class Note : MonoBehaviour
 		isHit = true;
 		noteType = NoteType.Perfect;
 		OnHit?.Invoke(this);
+		Destroy();
+	}
+	
+	private void Destroy()
+	{
+		OnDestroyed?.Invoke(this);
 		Destroy(gameObject);
 	}
 
@@ -50,7 +58,7 @@ public class Note : MonoBehaviour
 	{
 		// print("트리거 나감");
 		// 판정 구역 벗어남 == 노트 미스
-		if (other.CompareTag("JudgingArea"))
+		if (other.CompareTag("Woofer"))
 			Miss();
 	}
 
@@ -61,13 +69,13 @@ public class Note : MonoBehaviour
 		// 미스 효과음, 이펙트 재생
 		OnDestroyed?.Invoke(this);
 		OnHit?.Invoke(this);
-		Destroy(gameObject);
+		Destroy();
 	}
 
 	private void FixedUpdate()
 	{
 		Move();
 		if (Vector3.Distance(transform.position, target.position) < 0.1f)
-			Destroy(gameObject);
+			Destroy();
 	}
 }
