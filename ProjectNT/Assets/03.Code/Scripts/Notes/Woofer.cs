@@ -5,8 +5,7 @@ public class Woofer : MonoBehaviour
 {
 	private List<Note> notes = new List<Note>();
 	private AudioSource _audioSource;
-	private AudioClip hitSound;
-	private bool isClipChanged = false;
+	public AudioClip hitSound { get; private set; }
 
 	private void Awake()
 	{
@@ -18,30 +17,25 @@ public class Woofer : MonoBehaviour
 	public void SetAudioClip(AudioClip clip)
 	{
 		hitSound = clip;
-		isClipChanged = true;
 	}
 
+	
 	public void Hit()
 	{
-		if (!_audioSource.isPlaying)
+		if (_audioSource.isPlaying)
 		{
-			_audioSource.Play();
+			_audioSource.Stop();
 		}
+		if (_audioSource.clip != hitSound)
+			_audioSource.clip = hitSound;
+		
+		_audioSource.Play();
 
 		if (notes.Count == 0)
 			return;
 
 		notes[0].Hit();
 		notes.RemoveAt(0);
-	}
-
-	private void Update()
-	{
-		if (!_audioSource.isPlaying && isClipChanged)
-		{
-			_audioSource.clip = hitSound;
-			isClipChanged = false;
-		}
 	}
 
 	private void OnTriggerEnter(Collider other)

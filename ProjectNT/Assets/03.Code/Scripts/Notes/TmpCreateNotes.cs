@@ -10,7 +10,7 @@ public class TmpCreateNotes : MonoBehaviour
 	private void Start()
 	{
 		noteManager = FindObjectOfType<NoteManager>();
-		StartCoroutine(CreateCoroutine());
+		// StartCoroutine(CreateCoroutine());
 	}
 	
 	public void Create(InputAction.CallbackContext context)

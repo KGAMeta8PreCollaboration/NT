@@ -18,7 +18,8 @@ public class NoteRail : MonoBehaviour
 	{
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
-		AudioClip audioClip = AudioManager.Instance.GetRandomAudioClip();
+		// AudioClip audioClip = AudioManager.Instance.GetRandomAudioClip();
+		AudioClip audioClip = AudioManager.Instance.GetNextAudioClip();
 		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip);
 	}
 

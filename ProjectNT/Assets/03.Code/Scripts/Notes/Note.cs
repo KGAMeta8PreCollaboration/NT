@@ -30,10 +30,10 @@ public class Note : MonoBehaviour
 	
 	public void Hit()
 	{
+		Destroy();
 		isHit = true;
 		noteType = NoteType.Perfect;
 		OnHit?.Invoke(this);
-		Destroy();
 	}
 	
 	private void Destroy()
@@ -64,12 +64,10 @@ public class Note : MonoBehaviour
 
 	private void Miss()
 	{
-		// 노트 미스 처리
-		noteType = NoteType.Bad;
-		// 미스 효과음, 이펙트 재생
-		OnDestroyed?.Invoke(this);
-		OnHit?.Invoke(this);
 		Destroy();
+		isHit = true;
+		noteType = NoteType.Bad;
+		OnHit?.Invoke(this);
 	}
 
 	private void FixedUpdate()
