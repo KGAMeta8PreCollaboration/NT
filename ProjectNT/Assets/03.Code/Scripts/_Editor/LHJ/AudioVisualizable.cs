@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class AudioVisualizable : MonoBehaviour
 {
     //텍스쳐의 최대 크기
@@ -10,27 +9,34 @@ public class AudioVisualizable : MonoBehaviour
 
     [Header("waveform을 표시할 오브젝트")]
     [SerializeField] private GameObject targetObject;
-    [Header("waveform의 높이")]
+    [Header("waveform의 높이(클수록 가로로 길어짐)")]
     [SerializeField] private float heightScale = 1f;
-    [Header("1초당 표시될 waveform의 너비")]
+    [Header("1초당 표시될 waveform의 너비(클수록 새로로 길어짐)")]
     [SerializeField] private float widthPerSecond = 1f;
     [Header("1초당 샘플링할 횟수")]
     [SerializeField] private int samplesPerSecond = 100;
+    [Header("AudioSourceManager를 참조해주세요")]
+    [SerializeField] private AudioSourceManager audioSourceManager;
+
     [SerializeField] private Color backgroundColor = Color.black;
     [SerializeField] private Color waveColor = Color.green;
 
-    private AudioSource _audioSource;
     private Texture2D _waveformTexture;
+    //픽셀을 그릴 배열
     private Color[] _pixels;
     private Material _targetMaterial;
 
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        InitWaveform();
+    }
+
+    private void InitWaveform()
+    {
         if (targetObject != null)
         {
             Renderer renderer = targetObject.GetComponent<Renderer>();
-            if(renderer != null)
+            if (renderer != null)
             {
                 _targetMaterial = new Material(renderer.material);
 
@@ -40,7 +46,7 @@ public class AudioVisualizable : MonoBehaviour
                 _targetMaterial.mainTexture = _waveformTexture;
                 renderer.material = _targetMaterial;
 
-                float duration = _audioSource.clip.length;
+                float duration = audioSourceManager.AudioDuration;
                 float width = duration * widthPerSecond;
                 targetObject.transform.localScale = new Vector3(width / 10f, 1, heightScale / 10f);
             }
@@ -50,7 +56,7 @@ public class AudioVisualizable : MonoBehaviour
     //waveform 텍스쳐 생성 후 _pixels에 담아줌
     private void CreateWaveformTexture()
     {
-        float duration = _audioSource.clip.length;
+        float duration = audioSourceManager.AudioDuration;
         print($"오디오 클립의 길이 : {duration}");
         //텍스쳐의 넓이 = 오디오의 길이 * 초당 샘플링 수
         int textureWidth = (int)(duration * samplesPerSecond);
@@ -73,9 +79,9 @@ public class AudioVisualizable : MonoBehaviour
     private void GenerateWaveform()
     {
         //sample은 0 ~ 1 사이의 값
-        float[] samples = new float[_audioSource.clip.samples];
+        float[] samples = new float[audioSourceManager.AudioSource.clip.samples];
         //0 -> 샘플을 0초부터 가져옴(44100이 1초)
-        _audioSource.clip.GetData(samples, 0);
+        audioSourceManager.AudioSource.clip.GetData(samples, 0);
 
         ClearTexture();
 
@@ -100,6 +106,7 @@ public class AudioVisualizable : MonoBehaviour
                     float sample = Mathf.Abs(samples[sampleIndex]);
                     if (sample > maxSample)
                     {
+                        //1픽셀 안에 대표값만 필요하다
                         maxSample = sample;
                     }
                 }
@@ -113,6 +120,7 @@ public class AudioVisualizable : MonoBehaviour
             //위 아래로 왔다갔다 하면서 그림
             for (int y = centerY - sampleHeight / 2; y < centerY + sampleHeight / 2; y++)
             {
+                //범위 제한
                 if (y >= 0 && y < _waveformTexture.height)
                 {
                     //2차원 배열을 1차원 배열로 나타냄
