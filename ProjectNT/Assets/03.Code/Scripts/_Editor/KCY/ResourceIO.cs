@@ -43,27 +43,46 @@ public class ResourceIO : MonoBehaviour
     {
         if (dataPath == null)
         {
+            try
+            {
+                var paths = StandaloneFileBrowser.OpenFolderPanel("저장 경로 선택", "", false);
+                string[] temp = Directory.GetDirectories(paths[0]);
+                Debug.Log(temp[0]);
+                dataPath = paths[0] + saveDataPath;
 
-            var paths = StandaloneFileBrowser.OpenFolderPanel("저장 경로 선택", "", false);
-            string[] temp = Directory.GetDirectories(paths[0]);
-            Debug.Log(temp[0]);
-            dataPath = paths[0] + saveDataPath;
+                if (!Directory.Exists(dataPath))
+                {
+                    Directory.CreateDirectory(dataPath);
+                }
+
+            }
+            catch
+            {
+                Debug.LogError("경로를 불러오지 못했습니다");
+            }
         }
-        if (!Directory.Exists(dataPath))
+        else
         {
-            Directory.CreateDirectory(dataPath);
+            saveDelegate?.Invoke();
+            Save(fileName);
         }
-        saveDelegate?.Invoke();
-        Save(fileName);
+
     }
 
     public void BrowserForLoad()
     {
         var paths = StandaloneFileBrowser.OpenFolderPanel("불러올 경로 선택", "", false);
-        string[] loadPath = Directory.GetFiles(paths[0] + loadDataPath);
-        string jsonFile = File.ReadAllText(loadPath[0]);
-        Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<SongData>>(jsonFile);
-        loadDelegate?.Invoke();
+        try
+        {
+            string[] loadPath = Directory.GetFiles(paths[0] + loadDataPath);
+            string jsonFile = File.ReadAllText(loadPath[0]);
+            Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<SongData>>(jsonFile);
+            loadDelegate?.Invoke();
+        }
+        catch
+        {
+            Debug.LogError("경로를 불러오지 못했습니다.");
+        }
     }
 
     public void Save(string fileName)

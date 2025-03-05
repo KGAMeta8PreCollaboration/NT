@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-
 public class PhaseDriver : MonoBehaviour
 {
     [SerializeField] private GameObject newPhasePrefab;
@@ -16,6 +15,13 @@ public class PhaseDriver : MonoBehaviour
     [SerializeField] private RectTransform phaseRect;
     [SerializeField] private Scrollbar phaseScrollBar;
     [SerializeField] private RectTransform addBTNRect;
+    [SerializeField] private GameObject target_Obj;
+    public GameObject phaseObj
+    {
+        get { return target_Obj; }
+        private set { target_Obj = value; }
+    }
+    private int maxPhaseCount = 10;
     public LinkedList<Phase> linkedPhase = new LinkedList<Phase>();
 
     private Dictionary<Enums.ModeDiff, int> byDifficulty = new Dictionary<Enums.ModeDiff, int>();
