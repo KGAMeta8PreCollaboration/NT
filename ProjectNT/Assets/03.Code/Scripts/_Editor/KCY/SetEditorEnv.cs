@@ -24,10 +24,13 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private Button openFolderBTN;
     [SerializeField] private Button nextBTN;
-
+    [SerializeField] private ProjectIO projectIO;
     private string savePath = "Assets/Resources/";
-    PATH PATH = new PATH();
-
+    private PATH PATH = new PATH();
+    public PATH Path
+    {
+        get { return PATH; }
+    }
     private void Awake()
     {
         LoadPath();
@@ -38,8 +41,6 @@ public class SetEditorEnv : MonoBehaviour
 
     private void CheckPath()
     {
-        PATH.Path = inputField.text;
-
         if (!Directory.Exists(PATH.Path + PATH.EditorDIR_Name))
         {
             Directory.CreateDirectory(PATH.Path + PATH.EditorDIR_Name);
@@ -49,6 +50,7 @@ public class SetEditorEnv : MonoBehaviour
             Debug.Log("에디터 폴더 생성 및 경로 저장");
 
         }
+        else PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
         if (!Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
         {
             Directory.CreateDirectory(PATH.EditorPath + PATH.ProjectDIR_Name);
@@ -57,9 +59,16 @@ public class SetEditorEnv : MonoBehaviour
             SavePath();
             Debug.Log("프로젝트 폴더 생성 및 경로 저장");
         }
-
-        defaultPath.gameObject.SetActive(false);
-        project.gameObject.SetActive(true);
+        else PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
+        if (Directory.Exists(PATH.ProjectPath))
+        {
+            defaultPath.gameObject.SetActive(false);
+            projectIO.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"프로젝트 폴더 경로 오류\n{PATH.ProjectPath}");
+        }
 
     }
 
@@ -68,7 +77,14 @@ public class SetEditorEnv : MonoBehaviour
         var path = StandaloneFileBrowser.OpenFolderPanel("에디터 경로 선택", "", false);
         try
         {
-            PATH.Path = path[0];
+            if (path[0] == PATH.EditorPath)
+            {
+
+            }
+            if (path[0] != PATH.EditorPath)
+            {
+
+            }
             PATH.CurrentPath = PATH.Path;
             inputField.text = PATH.CurrentPath;
             SavePath();

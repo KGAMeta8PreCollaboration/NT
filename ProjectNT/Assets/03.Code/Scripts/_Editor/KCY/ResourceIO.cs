@@ -114,23 +114,23 @@ public class ResourceIO : MonoBehaviour
         File.WriteAllText(savePath + fileName, saveData);
     }
 
-    // public void BrowserForFile()
-    // {
-    //     var extensions = new[]
-    //     {
-    //         new ExtensionFilter("Sound Files", "mp3", "wav")
-    //     };
+    public void BrowserForFile()
+    {
+        var extensions = new[]
+        {
+            new ExtensionFilter("Sound Files", "mp3", "wav")
+        };
 
-    //     var paths = StandaloneFileBrowser.OpenFilePanel("Open Song File", "", extensions, false);
-    //     Debug.Log(paths[0]);
+        var paths = StandaloneFileBrowser.OpenFilePanel("Open Song File", "", extensions, false);
+        Debug.Log(paths[0]);
 
-    //     string fileName = Path.GetFileName(paths[0]);
-    //     Debug.Log(fileName);
-    //     //Company 하위 경로
-    //     string DestFile = Path.Combine(Application.persistentDataPath + fileName);
+        string fileName = Path.GetFileName(paths[0]);
+        Debug.Log(fileName);
+        //Company 하위 경로
+        string DestFile = Path.Combine(Application.persistentDataPath + fileName);
 
-    //     File.Copy(paths[0], DestFile, true);
-    // }
+        File.Copy(paths[0], DestFile, true);
+    }
 
     // public void FindSaveFiles()
     // {

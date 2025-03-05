@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class ProjectIO : MonoBehaviour
 {
-    [SerializeField] private GameObject newProjectPrefab;
-    [SerializeField] private RectTransform project_Rect;
-    [SerializeField] private TextMeshProUGUI pathVisual_TMP;
+    [SerializeField] private SetEditorEnv editorEnv;
     [SerializeField] private Button return_BTN;
-    [SerializeField] private Button addProejct_BTN;
-    [SerializeField] private Button refreah_BTN;
-    [SerializeField] private Button delete_BTN;
+    public TextMeshProUGUI pathVisual_TMP;
 
-    private GameObject currenctProject;
-
+    private void Awake()
+    {
+        Debug.Log(editorEnv.Path.ProjectPath);
+        pathVisual_TMP.text = editorEnv.Path.ProjectPath;
+    }
+    //TODO 프로젝트의 저장정보를 ProjectLoader에게 보내기
 }
