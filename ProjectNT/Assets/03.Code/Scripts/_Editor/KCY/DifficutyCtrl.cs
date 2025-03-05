@@ -37,7 +37,7 @@ public class DifficutyCtrl : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            diff_Toggles[i].onValueChanged.AddListener(phaseDrivers[i].phaseObj.SetActive);
+            diff_Toggles[i].onValueChanged.AddListener(phaseDrivers[i].PhaseObj.SetActive);
             phaseDrivers[i].modeDiff = currentModeDiff + i;
 
             phaseDrivers[i].Initialize();
@@ -45,7 +45,7 @@ public class DifficutyCtrl : MonoBehaviour
         }
         diff_Toggles[0].isOn = true;
         diff_Toggles[0].interactable = false;
-        phaseDrivers[0].phaseObj.SetActive(true);
+        phaseDrivers[0].PhaseObj.SetActive(true);
     }
 
 }

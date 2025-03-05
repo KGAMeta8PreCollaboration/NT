@@ -19,7 +19,7 @@ public class ResourceIO : MonoBehaviour
     [SerializeField] private string loadFolderPath;
     private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     private string loadDataPath = "\\Editor\\Song\\Phase\\";
-    private string fileName = "Phase";
+    private string fileName = "SaveData";
     public Dictionary<Enums.ModeDiff, List<SongData>> Phase_Dic =
     new Dictionary<Enums.ModeDiff, List<SongData>>();
 
@@ -27,8 +27,10 @@ public class ResourceIO : MonoBehaviour
     public AudioClip audioClip;
     public delegate void SaveDelegate();
     public delegate void LoadDelegate();
+
     public SaveDelegate saveDelegate;
     public LoadDelegate loadDelegate;
+
     private void Awake()
     {
         if (instance == null)
@@ -47,7 +49,6 @@ public class ResourceIO : MonoBehaviour
             {
                 var paths = StandaloneFileBrowser.OpenFolderPanel("저장 경로 선택", "", false);
                 string[] temp = Directory.GetDirectories(paths[0]);
-                Debug.Log(temp[0]);
                 dataPath = paths[0] + saveDataPath;
 
                 if (!Directory.Exists(dataPath))
@@ -60,6 +61,8 @@ public class ResourceIO : MonoBehaviour
             {
                 Debug.LogError("경로를 불러오지 못했습니다");
             }
+            saveDelegate?.Invoke();
+            Save(fileName);
         }
         else
         {
@@ -72,17 +75,31 @@ public class ResourceIO : MonoBehaviour
     public void BrowserForLoad()
     {
         var paths = StandaloneFileBrowser.OpenFolderPanel("불러올 경로 선택", "", false);
-        try
+        Debug.Log("하위 모든 파일을 읽어옵니다.");
+        string[] allfiles = Directory.GetFiles(paths[0], "*.*", SearchOption.AllDirectories);
+        foreach (string s in allfiles)
         {
-            string[] loadPath = Directory.GetFiles(paths[0] + loadDataPath);
-            string jsonFile = File.ReadAllText(loadPath[0]);
-            Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<SongData>>(jsonFile);
-            loadDelegate?.Invoke();
+            try
+            {
+                string jsonFile = File.ReadAllText(s);
+                Debug.Log(s);
+                Debug.Log("위 파일을 읽어오는중");
+                Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<SongData>>(jsonFile);
+                loadDelegate?.Invoke();
+                Debug.Log("데이터 적용 성공");
+            }
+            catch
+            {
+                Debug.LogWarning(s);
+                Debug.LogWarning("불러오기 실패 다른 파일을 읽습니다.");
+                continue;
+            }
+            finally
+            {
+                Debug.Log("로드할 파일이 존재하지 않거나 이미 불러왔습니다.");
+            }
         }
-        catch
-        {
-            Debug.LogError("경로를 불러오지 못했습니다.");
-        }
+
     }
 
     public void Save(string fileName)

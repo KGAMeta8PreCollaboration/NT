@@ -40,6 +40,6 @@ public class Phase : MonoBehaviour
 
     private void Delete_BTN()
     {
-
+        Destroy(gameObject);
     }
 }
