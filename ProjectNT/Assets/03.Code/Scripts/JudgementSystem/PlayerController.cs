@@ -1,14 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-	private void Update()
+	[SerializeField] private JudgementSystem _judgementSystem;
+
+	private NoteManager noteManager;
+	[SerializeField] private Woofer[] _woofers;
+
+	private void Start()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		noteManager = FindObjectOfType<NoteManager>();
+	}
+
+	public void Create(InputAction.CallbackContext context)
+	{
+		if (context.performed)
 		{
-			//판정
+			noteManager.CreateNote(int.Parse(context.control.name) - 1);
+		}
+	}
+	public void Hit(InputAction.CallbackContext context)
+	{
+		if (context.performed && context.control.name.Equals("space"))
+		{
+			_judgementSystem.CheckTiming();
 		}
 	}
 }

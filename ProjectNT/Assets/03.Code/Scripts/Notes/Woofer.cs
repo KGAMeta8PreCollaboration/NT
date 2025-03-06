@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Woofer : MonoBehaviour
 {
-	private List<Note> notes = new List<Note>();
+	public List<Note> notes = new List<Note>();
 	private AudioSource _audioSource;
 	public AudioClip hitSound { get; private set; }
 
@@ -19,7 +19,7 @@ public class Woofer : MonoBehaviour
 		hitSound = clip;
 	}
 
-	
+
 	public void Hit()
 	{
 		if (_audioSource.isPlaying)
@@ -28,7 +28,7 @@ public class Woofer : MonoBehaviour
 		}
 		if (_audioSource.clip != hitSound)
 			_audioSource.clip = hitSound;
-		
+
 		_audioSource.Play();
 
 		if (notes.Count == 0)
@@ -43,6 +43,7 @@ public class Woofer : MonoBehaviour
 		if (other.TryGetComponent(out Note note))
 		{
 			notes.Add(note);
+			print("노트가 우퍼 범위 안에 들어왔음");
 		}
 	}
 
