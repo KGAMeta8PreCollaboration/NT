@@ -9,10 +9,10 @@ public class AudioVisualizable : MonoBehaviour
 
     [Header("waveform을 표시할 오브젝트")]
     [SerializeField] private GameObject targetObject;
-    [Header("waveform의 높이(클수록 가로로 길어짐)")]
-    [SerializeField] private float heightScale = 1f;
-    [Header("1초당 표시될 waveform의 너비(클수록 새로로 길어짐)")]
-    [SerializeField] private float widthPerSecond = 1f;
+    [Header("waveform의 너비(클수록 가로로 길어짐)")]
+    [SerializeField] private float widthScale = 1f;
+    [Header("1초당 표시될 waveform의 높이(클수록 새로로 길어짐)")]
+    [SerializeField] private float higthScale = 1f;
     [Header("1초당 샘플링할 횟수")]
     [SerializeField] private int samplesPerSecond = 100;
     [Header("AudioSourceManager를 참조해주세요")]
@@ -47,8 +47,8 @@ public class AudioVisualizable : MonoBehaviour
                 renderer.material = _targetMaterial;
 
                 float duration = audioSourceManager.AudioDuration;
-                float width = duration * widthPerSecond;
-                targetObject.transform.localScale = new Vector3(width / 10f, 1, heightScale / 10f);
+                float height = duration * higthScale;
+                targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
             }
         }
     }
@@ -58,21 +58,23 @@ public class AudioVisualizable : MonoBehaviour
     {
         float duration = audioSourceManager.AudioDuration;
         print($"오디오 클립의 길이 : {duration}");
-        //텍스쳐의 넓이 = 오디오의 길이 * 초당 샘플링 수
-        int textureWidth = (int)(duration * samplesPerSecond);
+        //텍스쳐의 높이 = 오디오의 길이 * 초당 샘플링 수(샘플링 수가 높아질 수록 자세한 파형을 그릴 수 있다)
+        int textureHeight = (int)(duration * samplesPerSecond);
 
-        if (textureWidth > MAX_TEXTUREWIDTH)
+        if (textureHeight > MAX_TEXTUREWIDTH)
         {
             int maxSample = MAX_TEXTUREWIDTH / (int)duration;
-            textureWidth = (int)(duration * maxSample);
-            print($"WidthPerSecond의 최대값 : {maxSample}");
+            textureHeight = (int)(duration * maxSample);
+            print($"heightPerSecond의 최대값 : {maxSample}");
         }
 
-        print($"텍스쳐의 넓이 : {textureWidth}");
+        print($"텍스쳐의 높이 : {textureHeight}");
 
         //거의 256이면 깨끗한 해상도가 나옴
-        int textureHeight = 256;
+        int textureWidth = 256;
+        //픽셀 초기화
         _waveformTexture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false);
+        //픽셀 배열 크기 초기화
         _pixels = new Color[textureWidth * textureHeight];
     }
 
@@ -86,10 +88,10 @@ public class AudioVisualizable : MonoBehaviour
         ClearTexture();
 
         //1픽셀 당 샘플 수
-        int samplesPerPixel = samples.Length / _waveformTexture.width;
+        int samplesPerPixel = samples.Length / _waveformTexture.height;
 
         //가로 픽셀에 대해 반복
-        for (int x = 0; x < _waveformTexture.width; x++)
+        for (int y = 0; y < _waveformTexture.height; y++)
         {
             //최대 진폭값 -> 픽셀안에 대표값
             float maxSample = 0f;
@@ -98,30 +100,27 @@ public class AudioVisualizable : MonoBehaviour
             for (int i = 0; i < samplesPerPixel; i++)
             {
                 //샘플들을 배열처럼 확인
-                int sampleIndex = x * samplesPerPixel + i;
+                int sampleIndex = y * samplesPerPixel + i;
                 //끝에 값 예외
                 if (sampleIndex < samples.Length)
                 {
                     //각 배열들의 값 확인
                     float sample = Mathf.Abs(samples[sampleIndex]);
-                    if (sample > maxSample)
-                    {
-                        //1픽셀 안에 대표값만 필요하다
-                        maxSample = sample;
-                    }
+                    //1픽셀 안에 대표값만 필요
+                    maxSample = Mathf.Max(maxSample, sample);
                 }
             }
 
             //텍스쳐의 중앙
-            int centerY = _waveformTexture.height / 2;
-            //샘플의 높이 = 최대 진폭값 * 텍스쳐 높이
-            int sampleHeight = (int)(maxSample * _waveformTexture.height);
+            int centerX = _waveformTexture.width / 2;
+            //샘플의 넓이 = 최대 진폭값 * 텍스쳐 높이
+            int sampleWidth = (int)(maxSample * _waveformTexture.width);
 
             //위 아래로 왔다갔다 하면서 그림
-            for (int y = centerY - sampleHeight / 2; y < centerY + sampleHeight / 2; y++)
+            for (int x = centerX - sampleWidth / 2; x < centerX + sampleWidth / 2; x++)
             {
                 //범위 제한
-                if (y >= 0 && y < _waveformTexture.height)
+                if (x >= 0 && x < _waveformTexture.width)
                 {
                     //2차원 배열을 1차원 배열로 나타냄
                     _pixels[y * _waveformTexture.width + x] = waveColor;

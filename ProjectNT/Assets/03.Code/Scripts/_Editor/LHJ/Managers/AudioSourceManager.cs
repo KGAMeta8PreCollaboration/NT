@@ -27,6 +27,7 @@ public class AudioSourceManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                print($"스페이스바 눌림"); 
                 _isPlaying = !_isPlaying;
                 HandlePushSpace(_isPlaying);
             }
