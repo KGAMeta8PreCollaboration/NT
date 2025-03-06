@@ -8,20 +8,26 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject targetObject;
     [Header("가로 길이(클수록 가로로 길어짐)")]
     [SerializeField] private float widthScale = 1f;
-    [Header("새로 길이(클수록 새로로 길어짐)")]
+    [Header("세로 길이(클수록 세로로 길어짐)")]
     [SerializeField] private float heightScale = 1f;
     [Header("Texture해상도")]
-    [SerializeField] private float texturePerSecond;
-    [SerializeField] private int row;    //열(가로줄)
-    [SerializeField] private int column = 4; //행(새로줄)
+    [SerializeField] private float texturePerSecond = 2048f; // 텍스처 해상도 증가
+    [Header("Grid 설정")]
+    [SerializeField] private float bpm = 120;
+    [SerializeField] private int beatsPerBar = 4; // 마디당 박자의 수
+    [SerializeField] private int subdivision = 4; // 박자
+    [SerializeField] private int nodesPerBeat = 1; //비트당 노드 수
+    [SerializeField] private int row;    // 열(가로줄)
+    [SerializeField] private int column = 4; // 행(세로줄)
     [SerializeField] private Color gridColor = Color.black;
+    [SerializeField] private Color subGridColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // 서브그리드 색상
     [SerializeField] private Color backgroundColor = Color.white;
     [SerializeField] private float lineThickness = 2f;
 
     private AudioSourceManager _audioSourceManager;
     private Texture2D _gridTexture;
     private Material _targetMaterial;
-
+    private const float BASE_BPM = 120f; // 기준이 되는 BPM
 
     private void Awake()
     {
@@ -55,25 +61,26 @@ public class GridManager : MonoBehaviour
             renderer.material = _targetMaterial;
 
             float duration = _audioSourceManager.AudioDuration;
-            float hight = duration * heightScale;
-
-            targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, hight / 10f);
+            float height = duration * heightScale;
+            targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
         }
     }
 
-    //텍스쳐 크기 결정
     private void CreateGridTexture()
     {
         float duration = _audioSourceManager.AudioDuration;
-        int height = (int)(duration * texturePerSecond);
+
+        int height = Mathf.CeilToInt(duration * texturePerSecond);
+
         if (height > AudioVisualizable.MAX_TEXTUREWIDTH)
         {
-            int maxSample = AudioVisualizable.MAX_TEXTUREWIDTH / (int)duration;
-            height = (int)(duration * maxSample);
-            print($"heightPerSecond의 최대값 : {maxSample}");
+            height = AudioVisualizable.MAX_TEXTUREWIDTH;
+            Debug.LogWarning("텍스처 크기가 최대 크기를 초과");
         }
-        int width = 256;
+
+        int width = 2048; // 가로 해상도도 증가
         _gridTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        _gridTexture.filterMode = FilterMode.Bilinear; // 선명한 텍스처를 위해 필터모드 설정
     }
 
     private void UpdateGrid()
@@ -86,7 +93,7 @@ public class GridManager : MonoBehaviour
 
     private void GenerateGrid()
     {
-        //배경 설정
+        // 배경 설정
         for (int y = 0; y < _gridTexture.height; y++)
         {
             for (int x = 0; x < _gridTexture.width; x++)
@@ -95,29 +102,163 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        int cellWidth = _gridTexture.height / row;
-        int cellHeight = _gridTexture.width / column;
+        float songDuration = _audioSourceManager.AudioDuration;
+        //초당 픽셀
+        float pixelsPerSecond = _gridTexture.height / songDuration;
+        //초당 bpm
+        float secondsPerBeat = 60 / bpm;
+        //1비트 당 픽셀
+        float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
 
-        for (int y = 0; y < _gridTexture.height; y++)
+        float columnWidth = _gridTexture.width / (float)column;
+        for (int x = 0; x < column; x++)
         {
-            for (int x = 0; x < _gridTexture.width; x++)
-            {
-                if (x == cellWidth || y == cellHeight)
-                {
-                    _gridTexture.SetPixel(x, y, gridColor);
-                }
-                //int cellWidth = _gridTexture.height / row;
-                //int cellHeight = _gridTexture.width / column;
+            int xPos = Mathf.RoundToInt(x * columnWidth);
+            DrawVerticalLine(xPos, gridColor);
+        }
 
-                //bool isGridLine = (x % cellWidth < lineThickness || y % cellHeight < lineThickness);
-
-                //if (isGridLine)
-                //{
-                //    _gridTexture.SetPixel(x, y, gridColor);
-                //}
-            }
+        for (float y = 0; y < _gridTexture.height; y += pixelsPerBeat)
+        {
+            DrawHorizontalLine(Mathf.FloorToInt(y), gridColor);
         }
 
         _gridTexture.Apply();
+        //int subdivisionHeight = Mathf.RoundToInt((_gridTexture.height / (_gridTexture.height / subdivision)) * bpmScale);
+        //int beatHeight = subdivisionHeight * subdivision;
+        //int barHeight = beatHeight * beatsPerBar;
+
+        //노드 서브선
+        //float nodeSubdivisionHeight = beatHeight / (float)nodesPerBeat;
+        //// 세로선 그리기 (열)
+        //float columnWidth = _gridTexture.width / (float)column;
+
+        //for (int x = 0; x < column; x++)
+        //{
+        //    int xPos = Mathf.RoundToInt(x * columnWidth);
+        //    DrawVerticalLine(xPos, gridColor);
+        //}
+
+        //// 가로선 그리기 (박자선, 노드 서브디비전)
+        //for (int y = 0; y < _gridTexture.height; y++)
+        //{
+        //    Color lineColor;
+        //    if (y % barHeight == 0) // 마디선
+        //    {
+        //        lineColor = gridColor;
+        //        DrawHorizontalLine(y, lineColor);
+        //    }
+        //    else if (y % beatHeight == 0) // 박자선
+        //    {
+        //        lineColor = gridColor;
+        //        DrawHorizontalLine(y, lineColor);
+        //    }
+        //    else if (y % nodeSubdivisionHeight < 1) // 노드 서브디비전 선
+        //    {
+        //        lineColor = subGridColor;
+        //        DrawHorizontalLine(y, lineColor);
+        //    }
+        //    else if (y % subdivisionHeight == 0) // 분할선
+        //    {
+        //        lineColor = gridColor;
+        //        DrawHorizontalLine(y, lineColor);
+        //    }
+        //}
+
+        //_gridTexture.Apply();
+
+
+
+        //for (int x = 0; x < column; x++)
+        //{
+        //    int xPos = Mathf.RoundToInt(x * columnWidth);
+
+        //    for (int y = 0; y < _gridTexture.height; y++)
+        //    {
+        //        for (int t = 0; t < lineThickness; t++)
+        //        {
+        //            if (xPos + t < _gridTexture.width)
+        //            {
+        //                _gridTexture.SetPixel(xPos + t, y, gridColor);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //// 가로선 그리기 (박자선)
+        //for (int y = 0; y < _gridTexture.height; y++)
+        //{
+        //    Color lineColor;
+        //    if (y % barHeight == 0) // 마디선
+        //    {
+        //        lineColor = gridColor;
+        //    }
+        //    else if (y % beatHeight == 0) // 박자선
+        //    {
+        //        lineColor = gridColor;
+        //    }
+        //    else if (y % subdivisionHeight == 0) // 분할선
+        //    {
+        //        lineColor = gridColor;
+        //    }
+        //    else
+        //    {
+        //        continue;
+        //    }
+
+        //    for (int x = 0; x < _gridTexture.width; x++)
+        //    {
+        //        for (int t = 0; t < lineThickness; t++)
+        //        {
+        //            if (y + t < _gridTexture.height)
+        //            {
+        //                _gridTexture.SetPixel(x, y + t, lineColor);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //_gridTexture.Apply();
+    }
+
+    private void DrawVerticalLine(int x, Color color)
+    {
+        for (int y = 0; y < _gridTexture.height; y++)
+        {
+            for (int t = 0; t < lineThickness; t++)
+            {
+                if (x + t < _gridTexture.width)
+                {
+                    _gridTexture.SetPixel(x + t, y, color);
+                }
+            }
+        }
+    }
+
+    private void DrawHorizontalLine(int y, Color color)
+    {
+        for (int x = 0; x < _gridTexture.width; x++)
+        {
+            for (int t = 0; t < lineThickness; t++)
+            {
+                if (y + t < _gridTexture.height)
+                {
+                    _gridTexture.SetPixel(x, y + t, color);
+                }
+            }
+        }
+    }
+
+    public void UpdateGridSettings(float newBpm, int newBeatsPerBar, int newSubdivision)
+    {
+        bpm = newBpm;
+        beatsPerBar = newBeatsPerBar;
+        subdivision = newSubdivision;
+        UpdateGrid();
+    }
+
+    public void SetNodesPerBeat(int count)
+    {
+        nodesPerBeat = Mathf.Max(1, count);
+        UpdateGrid();
     }
 }
