@@ -113,6 +113,7 @@ public class GridManager : MonoBehaviour
         float columnWidth = _gridTexture.width / (float)column;
         for (int x = 0; x < column; x++)
         {
+            //새로 선 그릴 포지션
             int xPos = Mathf.RoundToInt(x * columnWidth);
             DrawVerticalLine(xPos, gridColor);
         }
@@ -220,6 +221,7 @@ public class GridManager : MonoBehaviour
         //_gridTexture.Apply();
     }
 
+    //새로선 그리는 함수
     private void DrawVerticalLine(int x, Color color)
     {
         for (int y = 0; y < _gridTexture.height; y++)
@@ -234,6 +236,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    //가로선 그리는 함수
     private void DrawHorizontalLine(int y, Color color)
     {
         for (int x = 0; x < _gridTexture.width; x++)
