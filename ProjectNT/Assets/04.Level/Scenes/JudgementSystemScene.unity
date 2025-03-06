@@ -446,7 +446,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicStartTime: 0
-  musicStartDelay: 1
   bgSound: {fileID: 994153897}
 --- !u!4 &994153896
 Transform:
@@ -963,8 +962,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255930719}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.69, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.02}
+  m_LocalPosition: {x: 0, y: 0, z: 7}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1214,7 +1213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681143309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50}
+  m_LocalPosition: {x: 0, y: 0, z: 27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1235,9 +1234,9 @@ MonoBehaviour:
   noteTime: 5
   noteBeat: 0
   noteSpeed: 0
-  lengthInBeats: 4
+  noteFallTime: 5
+  secPerBeat: 0
   railLength: 20
-  offset: 0.43
 --- !u!1 &1813546809
 GameObject:
   m_ObjectHideFlags: 0

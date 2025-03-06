@@ -26,7 +26,7 @@ public class JudgementSystem : MonoBehaviour
     {
         _secondPerBeat = 60f / bpm; // BPM을 초 단위로 변환
     }
-    float curr = 5.0f;
+    float curr = 2f;
 
     private void Update()
     {
@@ -34,20 +34,20 @@ public class JudgementSystem : MonoBehaviour
         {
             JudgeNote(_note);
         }
-        double musicTime = AudioSettings.dspTime - _rhythmGameManager.musicStartTime - offset; // 현재 재생 시간
-        print(musicTime.ToString("f2") + "초");
-        if (musicTime >= curr - 0.02f && musicTime <= curr + 0.02f)
-        {
-            JudgeNote(_note);
-            curr += 5.0f;
-        }
+        //double musicTime = AudioSettings.dspTime - _rhythmGameManager.musicStartTime - offset; // 현재 재생 시간
+        ////print(musicTime.ToString("f2") + "초");
+        //if (musicTime >= curr - 0.02f && musicTime <= curr + 0.02f)
+        //{
+        //    JudgeNote(_note);
+        //    curr += 5f;
+        //}
 
     }
 
     public void JudgeNote(Note note)
     {
         double musicTime = AudioSettings.dspTime - _rhythmGameManager.musicStartTime - offset; // 현재 재생 시간
-        double currentBeat = musicTime * _secondPerBeat; // 현재 비트 계산
+        double currentBeat = musicTime / _secondPerBeat; // 현재 비트 계산
         double timeDiff = Math.Abs(currentBeat - note.noteBeat); // 노트의 비트와 현재 비트 비교
         string hitRes;
         Vector3 notePos = note.transform.position;
