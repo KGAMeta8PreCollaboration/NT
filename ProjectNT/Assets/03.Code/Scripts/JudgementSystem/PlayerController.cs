@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    //=======PC 용=========
     [SerializeField] private Woofer[] _woofers;
 
     private NoteManager _noteManager;
-
-    [Range(1, 5)] public float hitSpeedThreshold = 1f;
+    //=======PC 용=========
+    public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
     private ActionBasedController _controller;
-    private Rigidbody _rigidbody;
+
+    public GameObject tmpPointPrefab;
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _noteManager = FindObjectOfType<NoteManager>();
         _controller = GetComponentInParent<ActionBasedController>();
 
@@ -57,21 +57,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.TryGetComponent<Woofer>(out Woofer woofer))
         {
-            float speed = _rigidbody.velocity.magnitude;
-            Vector3 direction = _rigidbody.velocity.normalized;
-            float dotProduct = Vector3.Dot(direction, Vector3.down);
+            Vector3 stickPosition = transform.position;
 
-            if (speed >= hitSpeedThreshold && dotProduct > 0.7f) // 속도+방향 검사
+            Vector3 closestPoint = other.ClosestPointOnBounds(stickPosition);
+
+            Vector3 wooferCenter = other.bounds.center;
+
+            float wooferTopY = wooferCenter.y + (other.bounds.extents.y - hitThreshold);
+
+            Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
+
+            if (closestPoint.y >= wooferTopY)
             {
-                Debug.Log("노트 히트 성공! (정확한 내리치기 판정)");
-                Destroy(other.gameObject);
+                Debug.Log("노트 히트 성공! (윗면에서 충돌)");
+                woofer.Hit();
             }
             else
             {
-                Debug.Log("속도 부족 또는 잘못된 방향 (히트 실패)");
+                Debug.Log("미스! (옆면 또는 아래쪽 충돌)");
             }
         }
     }

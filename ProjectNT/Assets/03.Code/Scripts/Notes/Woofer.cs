@@ -46,7 +46,6 @@ public class Woofer : MonoBehaviour
         if (other.TryGetComponent(out Note note))
         {
             notes.Add(note);
-            print("노트가 우퍼 범위 안에 들어왔음");
         }
     }
 
