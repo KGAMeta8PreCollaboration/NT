@@ -13,9 +13,6 @@ using SFB;
 
 public class ResourceIO : MonoBehaviour
 {
-
-    private static ResourceIO instance;
-    public static ResourceIO Instance { get { return instance; } }
     [SerializeField] private string loadFolderPath;
     private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     private string loadDataPath = "\\Editor\\Song\\Phase\\";
@@ -33,12 +30,7 @@ public class ResourceIO : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else DestroyImmediate(gameObject);
+
     }
 
     public void BrowserForSave()

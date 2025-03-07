@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PhaseDriver : MonoBehaviour
 {
+    [SerializeField] private ResourceIO resourceIO;
     [SerializeField] private GameObject newPhasePrefab;
     [SerializeField] private Button addPhase;
     [SerializeField] private RectTransform phaseRect;
@@ -176,13 +177,13 @@ public class PhaseDriver : MonoBehaviour
         {
             dataList.Add(phase.m_SongData);
         }
-        ResourceIO.Instance.Phase_Dic[m_ModeDiff] = dataList;
+        resourceIO.Phase_Dic[m_ModeDiff] = dataList;
     }
     public void LoadData()
     {
-        if (!ResourceIO.Instance.Phase_Dic.ContainsKey(m_ModeDiff)) return;
+        if (!resourceIO.Phase_Dic.ContainsKey(m_ModeDiff)) return;
         List<SongData> dataList = new List<SongData>();
-        dataList = ResourceIO.Instance.Phase_Dic[m_ModeDiff];
+        dataList = resourceIO.Phase_Dic[m_ModeDiff];
         int temp = 0;
         if (linkedPhase.Count > 0)
         {
