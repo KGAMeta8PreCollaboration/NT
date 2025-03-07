@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Woofer[] _woofers;
 
     private NoteManager _noteManager;
+
+    [Range(1, 5)] public float hitSpeedThreshold = 1f;
     private ActionBasedController _controller;
+    private Rigidbody _rigidbody;
 
     private void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _noteManager = FindObjectOfType<NoteManager>();
         _controller = GetComponentInParent<ActionBasedController>();
 
@@ -47,6 +52,27 @@ public class PlayerController : MonoBehaviour
             if (index == -1) return;
 
             _woofers[index].Hit();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.TryGetComponent<Woofer>(out Woofer woofer))
+        {
+            float speed = _rigidbody.velocity.magnitude;
+            Vector3 direction = _rigidbody.velocity.normalized;
+            float dotProduct = Vector3.Dot(direction, Vector3.down);
+
+            if (speed >= hitSpeedThreshold && dotProduct > 0.7f) // 속도+방향 검사
+            {
+                Debug.Log("노트 히트 성공! (정확한 내리치기 판정)");
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                Debug.Log("속도 부족 또는 잘못된 방향 (히트 실패)");
+            }
         }
     }
 
