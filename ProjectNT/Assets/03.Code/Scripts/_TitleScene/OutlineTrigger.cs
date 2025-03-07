@@ -1,63 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
+
+public enum TitleUIName
+{
+    SinglePlay,
+    MultiPlay,
+    RankingBoard,
+    GameSetting
+}
 
 public class OutlineTrigger : MonoBehaviour
 {
+    public TitleUIName uiName;
     public GameObject text;
-    public GameObject uiObject;
+    public XRBaseInteractable interactable;
 
-    private Outline outline;  // Outline 컴포넌트
-    private Renderer objectRenderer;
-    private bool isOutlineActive = false; // 아웃라인 활성화 여부
+    private Outline outline; 
+    private bool isOutlineActive = false; 
 
     private void Start()
     {
-        outline = GetComponent<Outline>();  // Outline 컴포넌트 가져오기
-        objectRenderer = GetComponent<Renderer>();  // Renderer 컴포넌트 가져오기
+        outline = GetComponent<Outline>();  
         text.SetActive(false);
-        uiObject.SetActive(false);
-        // 처음에는 아웃라인 비활성화
         if (outline != null)
         {
-            outline.enabled = false; // 아웃라인 비활성화
+            outline.enabled = false;
+        }
+        if (interactable != null)
+        {
+            interactable.hoverEntered.AddListener(OnOutLine);
+            interactable.hoverExited.AddListener(OffOutLine);
+            interactable.selectEntered.AddListener(OnSelect);
         }
     }
 
-    private void OnMouseOver()
+    private void OnOutLine(HoverEnterEventArgs args)
     {
-        // TitleManager의 isComplete가 true일 때만 아웃라인 활성화
-        if (TitleManager.instance.isComplete && !isOutlineActive)
+        if (TitleManager.instance.isComplete && !TitleManager.instance.isUIActive)
         {
             if (outline != null)
             {
-                outline.enabled = true; // 마우스가 오브젝트에 올라가면 아웃라인 활성화
-                isOutlineActive = true; // 아웃라인이 활성화되었음을 기록
                 text.SetActive(true);
+                outline.enabled = true; //아웃라인 활성화
+                isOutlineActive = true; //아웃라인 활성화 됨을 확인
             }
         }
     }
 
-    private void OnMouseExit()
+    private void OffOutLine(HoverExitEventArgs args)
     {
         if (isOutlineActive)
         {
             if (outline != null)
             {
-                outline.enabled = false; // 마우스가 오브젝트 밖으로 나가면 아웃라인 비활성화
-                isOutlineActive = false; // 아웃라인이 비활성화되었음을 기록
                 text.SetActive(false);
+                outline.enabled = false; //아웃라인 비활성화
+                isOutlineActive = false; //아웃라인 비활성화 됨을 확인
             }
         }
     }
 
-    private void OnMouseDown()
+    public void OnSelect(SelectEnterEventArgs args)
     {
-        // 오브젝트를 클릭했을 때 활성화할 오브젝트가 설정되어 있다면
-        if (uiObject != null)
+        Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화");
+        TitleManager.instance.OpenUI(uiName);
+        if (outline != null)
         {
-            TitleManager.instance.isUIActive
-            uiObject.SetActive(true); // 해당 오브젝트를 활성화
+            text.SetActive(false);
+            outline.enabled = false; 
+            isOutlineActive = false;
         }
     }
 }
