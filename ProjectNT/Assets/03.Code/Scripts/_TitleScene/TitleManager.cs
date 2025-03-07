@@ -15,6 +15,8 @@ public class TitleManager : MonoBehaviour
     public bool isComplete = false;//페이드아웃 효과 끝났는지 확인
     public bool isUIActive = false;//UI가 활성화 상태인지 확인
 
+    public AudioSource audioSource;
+
     private GameObject curUI;
 
     private void Awake()
@@ -79,5 +81,15 @@ public class TitleManager : MonoBehaviour
         Debug.Log("Close버튼 클릭 현재 UI 닫기");
         curUI.SetActive(false);
         isUIActive = false;
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

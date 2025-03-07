@@ -37,8 +37,9 @@ public class OutlineTrigger : MonoBehaviour
         }
     }
 
-    private void OnOutLine(HoverEnterEventArgs args)
+    public void OnOutLine(HoverEnterEventArgs args)
     {
+        Debug.Log("ㅁ");
         if (TitleManager.instance.isComplete && !TitleManager.instance.isUIActive)
         {
             if (outline != null)

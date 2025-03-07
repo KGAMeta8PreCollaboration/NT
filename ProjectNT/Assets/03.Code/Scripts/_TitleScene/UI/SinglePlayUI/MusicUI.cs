@@ -19,7 +19,7 @@ public class MusicUI : MonoBehaviour
 
     public void MusicDataSetting()
     {
-        musicImage = data.musicImage;
+        musicImage = data.musicAlbumArtImage;
         musicName.text = data.musicName;
     }
 }
