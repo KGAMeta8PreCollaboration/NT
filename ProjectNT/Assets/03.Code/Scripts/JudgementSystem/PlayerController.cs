@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private JudgementSystem[] _judgementSystems;
+    [SerializeField] private Woofer[] _woofers;
 
     private NoteManager noteManager;
 
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
             if (index == -1) return;
 
-            _judgementSystems[index].CheckTiming();
+            _woofers[index].Hit();
         }
     }
 }
