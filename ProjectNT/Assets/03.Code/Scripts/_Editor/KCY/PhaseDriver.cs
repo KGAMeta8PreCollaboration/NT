@@ -59,7 +59,7 @@ public class PhaseDriver : MonoBehaviour
         //     ResourceIO.Instance.saveDelegate -= AddDataList;
         //     ResourceIO.Instance.loadDelegate -= LoadData;
     }
-    private void AddNewPhase(SongData songData = null)
+    private void AddNewPhase(BeatMapData songData = null)
     {
         //페이즈 10개 생성 시 추가생성 불가
         if (linkedPhase.Count == 10)
@@ -172,7 +172,7 @@ public class PhaseDriver : MonoBehaviour
     }
     public void AddDataList()
     {
-        List<SongData> dataList = new List<SongData>();
+        List<BeatMapData> dataList = new List<BeatMapData>();
         foreach (Phase phase in linkedPhase)
         {
             dataList.Add(phase.m_SongData);
@@ -182,7 +182,7 @@ public class PhaseDriver : MonoBehaviour
     public void LoadData()
     {
         if (!resourceIO.Phase_Dic.ContainsKey(m_ModeDiff)) return;
-        List<SongData> dataList = new List<SongData>();
+        List<BeatMapData> dataList = new List<BeatMapData>();
         dataList = resourceIO.Phase_Dic[m_ModeDiff];
         int temp = 0;
         if (linkedPhase.Count > 0)

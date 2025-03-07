@@ -17,11 +17,11 @@ public class Phase : MonoBehaviour
     [SerializeField] private Button m_Up;
     [SerializeField] private Button m_Down;
     private Enums.ModeDiff m_ModeDiff;
-    private SongData songData = new SongData();
+    private BeatMapData songData = new BeatMapData();
 
     private int m_PhaseNum;
 
-    public SongData m_SongData { get; set; }
+    public BeatMapData m_SongData { get; set; }
     public Enums.ModeDiff modeDiff { get; set; }
     public int phaseNum { get; set; }
 
