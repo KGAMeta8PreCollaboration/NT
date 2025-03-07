@@ -37,7 +37,6 @@ public class JudgementSystem : MonoBehaviour
     public NoteType CheckTiming()
     {
         float notePosX = _woofer.notes[0].transform.position.x;
-        print("노트 x 값: " + notePosX);
         for (int i = 0; i < _timingBoxs.Length; i++)
         {
             if (_timingBoxs[i].x <= notePosX && notePosX <= _timingBoxs[i].y)
