@@ -25,7 +25,7 @@ public class AudioSourceManager : MonoBehaviour
     {
         if (cameraController._isRotating == false)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 print($"스페이스바 눌림"); 
                 _isPlaying = !_isPlaying;

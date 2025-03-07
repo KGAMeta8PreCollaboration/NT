@@ -68,8 +68,6 @@ public class AudioVisualizable : MonoBehaviour
             print($"heightPerSecond의 최대값 : {maxSample}");
         }
 
-        print($"텍스쳐의 높이 : {textureHeight}");
-
         //거의 256이면 깨끗한 해상도가 나옴
         int textureWidth = 256;
         //픽셀 초기화
