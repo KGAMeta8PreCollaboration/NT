@@ -27,6 +27,8 @@ public class GridManager : MonoBehaviour
 
     public float BPM => bpm;
     public int Row => row;
+    public int Column => column;
+
     public Texture2D GridTexture => _gridTexture;
     public Action gridInfoCallback;
 
@@ -40,8 +42,9 @@ public class GridManager : MonoBehaviour
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => _audioSourceManager.AudioSource != null);
         InitGrid();
     }
 

@@ -88,11 +88,10 @@ public class NodeContainer : MonoBehaviour
         if (Physics.Raycast(ray, out hit) && hit.transform == transform)
         {
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
-            print($"로컬좌표 : {localHit}");
 
             //Plane의 로컬좌표계인 (-5, 5)를 (0, 10)으로 변환하기 위해 5를 더함
-            float normalizedX = (localHit.x + 5f) / 10f * _gridManager.Row;
-            int column = Mathf.Clamp(Mathf.FloorToInt(normalizedX), 0, _gridManager.Row - 1);
+            float normalizedX = (localHit.x + 5f) / 10f * _gridManager.Column;
+            int column = Mathf.Clamp(Mathf.FloorToInt(normalizedX), 0, _gridManager.Column - 1);
 
             float normalizedZ = (localHit.z + 5f) / 10f * _totalBeats;
             int beatIndex = Mathf.Clamp(Mathf.FloorToInt(normalizedZ), 0, _totalBeats - 1);
@@ -105,7 +104,7 @@ public class NodeContainer : MonoBehaviour
     //임시 노드
     private void CreatePreviewNode(int column, int beatIndex) 
     {
-        if (column < 0 || beatIndex < 0 || column >= _gridManager.Row || beatIndex >= _totalBeats)
+        if (column < 0 || beatIndex < 0 || column >= _gridManager.Column || beatIndex >= _totalBeats)
         {
             if (_previewNode != null)
             {
@@ -135,7 +134,7 @@ public class NodeContainer : MonoBehaviour
             _previewNode.transform.localScale = _previewNode.transform.localScale;
         }
 
-        float cellSizeX = 10f / _gridManager.Row;
+        float cellSizeX = 10f / _gridManager.Column;
         float cellSizeZ = 10f / _totalBeats;
 
         float xPos = -5f + (column * cellSizeX) + (cellSizeX / 2f);
@@ -157,7 +156,7 @@ public class NodeContainer : MonoBehaviour
 
         if (node != null)
         {
-            float cellSizeX = 10f / _gridManager.Row;
+            float cellSizeX = 10f / _gridManager.Column;
             float cellSizeZ = 10f / _totalBeats;
 
             //gridIndex를 실제 위치로 변환(0 ~ 10을 -5 ~ 5로)
