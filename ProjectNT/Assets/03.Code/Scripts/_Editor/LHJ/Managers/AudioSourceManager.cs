@@ -8,9 +8,9 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField] private CameraController cameraController; // -> 이부분 마음에 안든다. 나중에 camera이동중일때를 넘겨줄 방법을 찾아보자
 
     private AudioSource _audioSource;
-    private float _audioDuration;
+    private int _audioDuration;
     public AudioSource AudioSource => _audioSource;
-    public float AudioDuration => _audioDuration;
+    public int AudioDuration => _audioDuration;
 
     private bool _isPlaying;
 
@@ -18,7 +18,9 @@ public class AudioSourceManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
 
-        _audioDuration = _audioSource.clip.length;
+        //반올림
+        _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
+        print($"노래 길이 {_audioDuration}");
     }
 
     private void Update()
@@ -27,7 +29,6 @@ public class AudioSourceManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                print($"스페이스바 눌림"); 
                 _isPlaying = !_isPlaying;
                 HandlePushSpace(_isPlaying);
             }

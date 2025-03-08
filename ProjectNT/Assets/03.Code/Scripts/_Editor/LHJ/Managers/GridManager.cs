@@ -28,6 +28,9 @@ public class GridManager : MonoBehaviour
     public float BPM => bpm;
     public int Row => row;
     public int Column => column;
+    public Vector2 CellSize => _cellSize;
+    public Vector2[,] GridPoint => _gridPoint;
+    public int TotalBeats => _totalBeats;
 
     public Texture2D GridTexture => _gridTexture;
     public Action gridInfoCallback;
@@ -35,6 +38,9 @@ public class GridManager : MonoBehaviour
     private AudioSourceManager _audioSourceManager;
     private Texture2D _gridTexture;
     private Material _targetMaterial;
+    private Vector2 _cellSize;
+    private Vector2[,] _gridPoint;
+    private int _totalBeats;
     private const float BASE_BPM = 120f; // 기준이 되는 BPM
 
     private void Awake()
@@ -78,9 +84,9 @@ public class GridManager : MonoBehaviour
 
     private void CreateGridTexture()
     {
-        float duration = _audioSourceManager.AudioDuration;
+        int duration = _audioSourceManager.AudioDuration;
 
-        int height = Mathf.CeilToInt(duration * texturePerSecond);
+        int height = duration * (int)texturePerSecond;
 
         if (height > AudioVisualizable.MAX_TEXTUREWIDTH)
         {
@@ -90,6 +96,7 @@ public class GridManager : MonoBehaviour
 
         int width = 2048; // 가로 해상도도 증가
         _gridTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        print($"TextureSize : {width} X {height}");
         _gridTexture.filterMode = FilterMode.Bilinear; // 선명한 텍스처를 위해 필터모드 설정
     }
 
@@ -112,32 +119,47 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        float songDuration = _audioSourceManager.AudioDuration;
+        int songDuration = _audioSourceManager.AudioDuration;
         //초당 픽셀
-        float pixelsPerSecond = _gridTexture.height / songDuration;
+        int pixelsPerSecond = _gridTexture.height / songDuration;
         //초당 bpm
         float secondsPerBeat = 60 / bpm;
-        //1비트 당 픽셀
+        //1비트 당 픽셀 -> cell의 높이
         float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+        //cell의 넓이
+        float columnWidth = _gridTexture.width / column;
+        //전체 비트 수 
+        _totalBeats = Mathf.CeilToInt(_gridTexture.height / pixelsPerBeat);
+        _gridPoint = new Vector2[column, _totalBeats];
 
-        float columnWidth = _gridTexture.width / (float)column;
+        for (int c = 0; c < column; c++)
+        {
+            for (int b = 0; b < _totalBeats; b++)
+            {
+                // Cell의 중앙점 계산을 위해 0.5f 오프셋 추가
+                float xPos = -5f + ((c * columnWidth) / _gridTexture.width * 10f) + (5f / column);
+                float zPos = -5f + ((b * pixelsPerBeat) / _gridTexture.height * 10f) + (5f / _totalBeats);
+                _gridPoint[c, b] = new Vector2(xPos, zPos);
+            }
+        }
+
         for (int x = 0; x < column; x++)
         {
             //새로 선 그릴 포지션
-            int xPos = Mathf.RoundToInt(x * columnWidth);
+            float xPos = x * columnWidth;
             DrawVerticalLine(xPos, gridColor);
         }
 
         for (float y = 0; y < _gridTexture.height; y += pixelsPerBeat)
         {
-            DrawHorizontalLine(Mathf.FloorToInt(y), gridColor);
+            DrawHorizontalLine(y, gridColor);
         }
 
         _gridTexture.Apply();
     }
 
     //새로선 그리는 함수
-    private void DrawVerticalLine(int x, Color color)
+    private void DrawVerticalLine(float x, Color color)
     {
         for (int y = 0; y < _gridTexture.height; y++)
         {
@@ -145,14 +167,14 @@ public class GridManager : MonoBehaviour
             {
                 if (x + t < _gridTexture.width)
                 {
-                    _gridTexture.SetPixel(x + t, y, color);
+                    _gridTexture.SetPixel((int)(x + t), y, color);
                 }
             }
         }
     }
 
     //가로선 그리는 함수
-    private void DrawHorizontalLine(int y, Color color)
+    private void DrawHorizontalLine(float y, Color color)
     {
         for (int x = 0; x < _gridTexture.width; x++)
         {
@@ -160,7 +182,7 @@ public class GridManager : MonoBehaviour
             {
                 if (y + t < _gridTexture.height)
                 {
-                    _gridTexture.SetPixel(x, y + t, color);
+                    _gridTexture.SetPixel(x, (int)(y + t), color);
                 }
             }
         }

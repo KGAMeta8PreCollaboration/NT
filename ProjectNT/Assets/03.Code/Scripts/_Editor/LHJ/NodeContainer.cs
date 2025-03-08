@@ -52,21 +52,24 @@ public class NodeContainer : MonoBehaviour
     //노드 이차원 배열 생성
     private void InitializeNodeGrid()
     {
-        _texture = _gridManager.GridTexture;
-        float songDuration = _audioSourceManager.AudioDuration;
+        _totalBeats = _gridManager.TotalBeats;
+        _nodeGrid = new Node[_gridManager.Column, _totalBeats];
+        print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
+        //_texture = _gridManager.GridTexture;
+        //int songDuration = _audioSourceManager.AudioDuration;
 
-        //비트당 초
-        float secondsPerBeat = 60f / _gridManager.BPM;
-        //초당 픽셀
-        float pixelsPerSecond = _texture.height / songDuration;
-        //비트당 픽셀
-        float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+        ////비트당 초
+        //float secondsPerBeat = 60f / _gridManager.BPM;
+        ////초당 픽셀
+        //float pixelsPerSecond = _texture.height / songDuration;
+        ////비트당 픽셀
+        //float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
 
-        //셀이 날라가면 안되니 올림
-        _totalBeats = Mathf.CeilToInt(_texture.height / pixelsPerBeat);
-         
-        _nodeGrid = new Node[_gridManager.Row, _totalBeats];
-        print($"그리드 생성 완료 : {_gridManager.Row} x {_totalBeats}");
+        ////비트의 총 수 -> 셀이 날라가면 안되니 올림
+        //_totalBeats = Mathf.CeilToInt(_texture.height / pixelsPerBeat);
+
+        //_nodeGrid = new Node[_gridManager.Row, _totalBeats];
+        //print($"그리드 생성 완료 : {_gridManager.Row} x {_totalBeats}");
     }
 
     private void PlaceNodeMousePosition()
@@ -89,11 +92,11 @@ public class NodeContainer : MonoBehaviour
         {
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
 
-            //Plane의 로컬좌표계인 (-5, 5)를 (0, 10)으로 변환하기 위해 5를 더함
+            // Plane의 -5~5 범위를 그리드 인덱스로 변환
             float normalizedX = (localHit.x + 5f) / 10f * _gridManager.Column;
-            int column = Mathf.Clamp(Mathf.FloorToInt(normalizedX), 0, _gridManager.Column - 1);
-
             float normalizedZ = (localHit.z + 5f) / 10f * _totalBeats;
+
+            int column = Mathf.Clamp(Mathf.FloorToInt(normalizedX), 0, _gridManager.Column - 1);
             int beatIndex = Mathf.Clamp(Mathf.FloorToInt(normalizedZ), 0, _totalBeats - 1);
 
             return (column, beatIndex);
@@ -134,13 +137,8 @@ public class NodeContainer : MonoBehaviour
             _previewNode.transform.localScale = _previewNode.transform.localScale;
         }
 
-        float cellSizeX = 10f / _gridManager.Column;
-        float cellSizeZ = 10f / _totalBeats;
-
-        float xPos = -5f + (column * cellSizeX) + (cellSizeX / 2f);
-        float zPos = -5f + (beatIndex * cellSizeZ) + (cellSizeZ / 2f);
-
-        _previewNode.transform.position = nodeParent.TransformPoint(new Vector3(xPos, 0.1f, zPos));
+        Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
+        _previewNode.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
     }
 
     private void CreateNode(int column, int beatIndex)
@@ -156,17 +154,11 @@ public class NodeContainer : MonoBehaviour
 
         if (node != null)
         {
-            float cellSizeX = 10f / _gridManager.Column;
-            float cellSizeZ = 10f / _totalBeats;
-
-            //gridIndex를 실제 위치로 변환(0 ~ 10을 -5 ~ 5로)
-            float xPos = -5f + (column * cellSizeX) + (cellSizeX / 2f);
-            float zPos = -5f + (beatIndex * cellSizeZ) + (cellSizeZ / 2f);
-
-            nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(xPos, 0.1f, zPos));
+            Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
+            nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
-
             node.transform.localScale = nodeObj.transform.localScale;
+
             _nodeGrid[column, beatIndex] = node;
             node.Initialize(column, beatIndex * (60f / _gridManager.BPM));
         }
