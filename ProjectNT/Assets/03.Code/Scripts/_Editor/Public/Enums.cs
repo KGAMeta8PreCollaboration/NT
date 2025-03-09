@@ -20,4 +20,18 @@ public class Enums
         DUO2_HARD,
         DUO2_EXTREAM
     }
+
+    public enum Details
+    {
+        SAVEPATHCHOICE,
+        FILESAVEFAIL,
+        NONEPROJECTNAME,
+        NONEARTIST,
+        NONEBPM,
+        NONEBGM,
+        NONETHUMBNAIL,
+        SAVEWARNING,
+        FILELOADFAIL,
+        PATHSETERROR
+    }
 }

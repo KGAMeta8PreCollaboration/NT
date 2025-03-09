@@ -9,7 +9,7 @@ public class EditorUIManager : MonoBehaviour
     public static EditorUIManager Instance { get { return instance; } }
     public GameObject editorCanvas;
     public GameObject pathCanvas;
-    public GameObject popupCanvas;
+    public PopUp popUp;
 
     private void Awake()
     {

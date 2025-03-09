@@ -28,11 +28,6 @@ public class ResourceIO : MonoBehaviour
     public SaveDelegate saveDelegate;
     public LoadDelegate loadDelegate;
 
-    private void Awake()
-    {
-
-    }
-
     public void BrowserForSave()
     {
         if (dataPath == null)
@@ -47,7 +42,6 @@ public class ResourceIO : MonoBehaviour
                 {
                     Directory.CreateDirectory(dataPath);
                 }
-
             }
             catch
             {
@@ -123,25 +117,4 @@ public class ResourceIO : MonoBehaviour
 
         File.Copy(paths[0], DestFile, true);
     }
-
-    // public void FindSaveFiles()
-    // {
-    //     var paths = StandaloneFileBrowser.OpenFolderPanel("폴더 불러오기", "", false);
-
-    //     string fullPath = Path.Combine(Environment.CurrentDirectory, saveDataPath);
-
-    //     try
-    //     {
-    //         string content = File.ReadAllText(fullPath);
-    //         Debug.Log(content);
-    //     }
-    //     catch (FileNotFoundException)
-    //     {
-    //         Debug.LogError($"File not found: {fullPath}");
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Debug.LogError($"An error occurred: {ex.Message}");
-    //     }
-    // }
 }
