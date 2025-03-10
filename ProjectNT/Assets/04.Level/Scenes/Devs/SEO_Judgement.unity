@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1199,6 +1199,7 @@ MonoBehaviour:
   maxNoteRails: 4
   notePrefab: {fileID: 4567978807683224838, guid: e6c7c3c6064699045b55acb962080841,
     type: 3}
+  noteSpeed: 5
   _scoreManager: {fileID: 576981027}
 --- !u!4 &576981026
 Transform:
@@ -2788,10 +2789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: 703ffb04eb4452442bcf3efbb78e4ae7, type: 3}
-  - {fileID: 8300000, guid: 152374a94e468a3468f3a7c8732fbb5c, type: 3}
-  - {fileID: 8300000, guid: cf93e6061ab747940b7b76560334c898, type: 3}
-  - {fileID: 8300000, guid: b224a907c1d4c4345807e697357a5b77, type: 3}
+  - {fileID: 8300000, guid: 6743a4ab148b4d446babbd6b8c21d0d5, type: 3}
+  - {fileID: 8300000, guid: 43fd227c13216304c89d4f5d4092e55a, type: 3}
 --- !u!4 &1221805483
 Transform:
   m_ObjectHideFlags: 0

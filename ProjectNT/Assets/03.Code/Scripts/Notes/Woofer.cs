@@ -21,18 +21,17 @@ public class Woofer : MonoBehaviour
         hitSound = clip;
     }
 
-
-    public void Hit()
-    {
-        // 타격음은 무조건 재생해야되니까
-        if (_audioSource.isPlaying)
-        {
-            _audioSource.Stop();
-        }
-        if (_audioSource.clip != hitSound)
-            _audioSource.clip = hitSound;
-
-        _audioSource.Play();
+	
+	public void Hit()
+	{
+		if (_audioSource.isPlaying)
+		{
+			_audioSource.Stop();
+		}
+		if (_audioSource.clip != hitSound)
+			_audioSource.clip = hitSound;
+		
+		_audioSource.PlayOneShot(hitSound);
 
         if (notes.Count == 0)
             return;
