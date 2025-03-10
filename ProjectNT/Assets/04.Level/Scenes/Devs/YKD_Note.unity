@@ -1113,7 +1113,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 212617327}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1004570935}
+        m_TargetAssemblyTypeName: Woofer, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &212617327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2787,7 +2799,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 967526496}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1345148860}
+        m_TargetAssemblyTypeName: Woofer, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &967526496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2908,7 +2932,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 992020628}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1147696688}
+        m_TargetAssemblyTypeName: Woofer, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &992020628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3302,7 +3338,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1145756854}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1389818239}
+        m_TargetAssemblyTypeName: Woofer, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1145756854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3743,7 +3791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: 43fd227c13216304c89d4f5d4092e55a, type: 3}
+  - {fileID: 8300000, guid: 6743a4ab148b4d446babbd6b8c21d0d5, type: 3}
 --- !u!4 &1221805483
 Transform:
   m_ObjectHideFlags: 0
@@ -5782,7 +5830,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a20a13d892d4c1e41b6f717a1beb7cdb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 344462b7af3d8d943a047d147b640116, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1

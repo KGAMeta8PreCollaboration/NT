@@ -10,11 +10,11 @@ public class AudioManager : Singleton<AudioManager>
 	private void Start()
 	{
 		// AudioSetting();
-		print(AudioSettings.GetConfiguration().speakerMode);
-		print(AudioSettings.GetConfiguration().sampleRate);
-		print(AudioSettings.GetConfiguration().numRealVoices);
-		print(AudioSettings.GetConfiguration().numVirtualVoices);
-		print(AudioSettings.GetConfiguration().dspBufferSize);
+		// print(AudioSettings.GetConfiguration().speakerMode);
+		// print(AudioSettings.GetConfiguration().sampleRate);
+		// print(AudioSettings.GetConfiguration().numRealVoices);
+		// print(AudioSettings.GetConfiguration().numVirtualVoices);
+		// print(AudioSettings.GetConfiguration().dspBufferSize);
 
 		// printBuffer();
 	}
