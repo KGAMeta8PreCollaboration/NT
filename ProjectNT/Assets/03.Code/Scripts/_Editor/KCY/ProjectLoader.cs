@@ -5,6 +5,7 @@ using System.IO;
 using SFB;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,21 +15,24 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private ProjectIO projectIO;
     [SerializeField] private GameObject newProjectPrefab;
     [SerializeField] private RectTransform project_rect;
-    [SerializeField] private Button addProejct_btn;
-    [SerializeField] private Button refreah_btn;
-    [SerializeField] private Button delete_btn;
     [SerializeField] private Image thumbnail_img;
     [SerializeField] private TMP_InputField projectName_inputfield;
     [SerializeField] private TMP_InputField songArtist_inputfield;
-    [SerializeField] private TMP_InputField project_bpm;
+    [SerializeField] private TMP_InputField projectBpm_inputfield;
     [SerializeField] private TextMeshProUGUI bgmName_tmp;
     [SerializeField] private TextMeshProUGUI thumbnailName_tmp;
+    [SerializeField] private Button addProejct_btn;
+    [SerializeField] private Button refreah_btn;
+    [SerializeField] private Button delete_btn;
     [SerializeField] private Button loadSong_btn;
     [SerializeField] private Button loadThumbnail_btn;
     [SerializeField] private Button edit_btn;
     [SerializeField] private Button save_btn;
+    [SerializeField] private Button back_btn;
+    private Action delAction;
     private string bgmTempPath;
     private string thumbnailTempPath;
+
     public Project currentProject;
     public ToggleGroup projects_Group;
     public List<Project> addedProjects = new List<Project>();
@@ -45,26 +49,39 @@ public class ProjectLoader : MonoBehaviour
 
     public Sprite SetThumbnail { set { thumbnail_img.sprite = value; } }
 
-    public string SetBpm { set { project_bpm.text = value; } }
-
+    public string SetBpm { set { projectBpm_inputfield.text = value; } }
+    public bool EditBtn { set { edit_btn.interactable = value; } }
     private void Awake()
     {
         Initialize();
         LoadProjects();
     }
-
+    private void OnEnable()
+    {
+        delAction += Delete;
+    }
+    private void OnDisable()
+    {
+        delAction -= Delete;
+    }
     private void Initialize()
     {
         if (projectIO == null) projectIO = GetComponentInParent<ProjectIO>();
         newProjectPrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/NewProject");
         addProejct_btn.onClick.AddListener(AddNewProject);
         refreah_btn.onClick.AddListener(Refresh);
-        delete_btn.onClick.AddListener(Delete);
+        delete_btn.onClick.AddListener(DeleteUIOpen);
         edit_btn.onClick.AddListener(EditProject);
         save_btn.onClick.AddListener(SaveProject);
         loadSong_btn.onClick.AddListener(LoadSong);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
+        back_btn.onClick.AddListener(Back);
         SetDefault();
+    }
+
+    private void Back()
+    {
+        //TODO 경로 설정 패널로 이동~
     }
 
     private void EditProject()
@@ -154,7 +171,7 @@ public class ProjectLoader : MonoBehaviour
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEARTIST);
             return;
         }
-        if (project_bpm.text == "")
+        if (projectBpm_inputfield.text == "")
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
             return;
@@ -172,8 +189,9 @@ public class ProjectLoader : MonoBehaviour
 
         //프로젝트 데이터 업데이트
         currentProject.projectData.projectName = projectName_inputfield.text;
+        currentProject.ProjectName.text = projectName_inputfield.text;
         currentProject.projectData.artistName = songArtist_inputfield.text;
-        currentProject.projectData.bpm = int.Parse(project_bpm.text);
+        currentProject.projectData.bpm = int.Parse(projectBpm_inputfield.text);
 
         string thumbTemp = null;
         string bgmTemp = null;
@@ -208,11 +226,12 @@ public class ProjectLoader : MonoBehaviour
                     Directory.Move(currentProject.projectData.m_Path, path);
                     Debug.Log("디렉토리 경로 변경");
                     currentProject.projectData.m_Path = path;
-
+                    DataSave(path);
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e.Message);
+                    EditorUIManager.Instance.popUp.PopUpOpen(Detail.SAVEFOLDEREXIST);
                 }
             }   //기존 경로와 같다면
             else if (path == currentProject.projectData.m_Path)
@@ -220,15 +239,39 @@ public class ProjectLoader : MonoBehaviour
                 //바뀌기 전 기존 썸네일 및 음악 삭제
                 FindDifferent(path, thumbTemp, bgmTemp);
                 DataSave(path);
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.CHANGEPROJECTINFOCOMPLETE);
             }
         }
         else
         {
+            bool check = FindSameProjects();
+            if (!check)
+            {
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.SAVEFOLDEREXIST);
+                return;
+            }
             //없으면 하나 만들어
             Directory.CreateDirectory(path);
             currentProject.projectData.m_Path = path;
             DataSave(path);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.MAKEPROJECTCOMPLETE);
         }
+    }
+
+    private bool FindSameProjects()
+    {
+
+        foreach (Project p in addedProjects)
+        {
+            if (p == currentProject) continue;
+            if (p.projectData.projectName == currentProject.projectData.projectName)
+            {
+                return false;
+            }
+            Debug.Log(p.projectData.projectName);
+            Debug.Log(currentProject.projectData.projectName);
+        }
+        return true;
     }
 
     private void FindDifferent(string path, string thumb, string bgm)
@@ -251,13 +294,21 @@ public class ProjectLoader : MonoBehaviour
             }
         }
     }
+
+    private void DeleteUIOpen()
+    {
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.DELETEPROJECTCHECK, delAction);
+    }
+
     private void Delete()
     {
         if (currentProject == null) return;
         if (string.IsNullOrEmpty(currentProject.projectData.m_Path))
         {
+            addedProjects.Remove(currentProject);
             Destroy(currentProject.gameObject);
-            SetDefault();
+            if (addedProjects.Count == 0) SetDefault();
+            addProejct_btn.interactable = true;
             return;
         }
         string[] files = Directory.GetFiles(currentProject.projectData.m_Path);
@@ -266,13 +317,15 @@ public class ProjectLoader : MonoBehaviour
             File.Delete(file);
         }
         Directory.Delete(currentProject.projectData.m_Path);
+        addedProjects.Remove(currentProject);
         Destroy(currentProject.gameObject);
         thumbnail_img.sprite = null;
         projectName_inputfield.text = null;
         songArtist_inputfield.text = null;
         bgmName_tmp.text = null;
         thumbnailName_tmp.text = null;
-        SetDefault();
+        projectBpm_inputfield.text = null;
+        if (addedProjects.Count == 0) SetDefault();
     }
 
     private void Refresh()
@@ -283,23 +336,35 @@ public class ProjectLoader : MonoBehaviour
     private void AddNewProject()
     {
         GameObject project = Instantiate(newProjectPrefab, project_rect, false);
+        if (currentProject != null) currentProject = null;
         currentProject = project.GetComponent<Project>();
         addedProjects.Add(currentProject);
 
-        projectName_inputfield.onEndEdit.RemoveAllListeners();
-        songArtist_inputfield.onEndEdit.RemoveAllListeners();
-
-        projectName_inputfield.onEndEdit.AddListener(currentProject.SetName);
-        songArtist_inputfield.onEndEdit.AddListener(currentProject.SetArtist);
+        InputFieldReset();
 
         projectName_inputfield.interactable = true;
         songArtist_inputfield.interactable = true;
         loadSong_btn.interactable = true;
         loadThumbnail_btn.interactable = true;
+        projectBpm_inputfield.interactable = true;
 
+        currentProject.Toggle.interactable = false;
         addProejct_btn.interactable = false;
     }
+    public void InputFieldReset()
+    {
+        projectName_inputfield.onEndEdit.RemoveAllListeners();
+        songArtist_inputfield.onEndEdit.RemoveAllListeners();
+        projectBpm_inputfield.onEndEdit.RemoveAllListeners();
 
+        projectName_inputfield.text = "";
+        songArtist_inputfield.text = "";
+        projectBpm_inputfield.text = "";
+
+        projectName_inputfield.onEndEdit.AddListener(currentProject.SetName);
+        songArtist_inputfield.onEndEdit.AddListener(currentProject.SetArtist);
+        projectBpm_inputfield.onEndEdit.AddListener(currentProject.SetBPM);
+    }
     private void DataSave(string path)
     {
         string combinePath;
@@ -331,18 +396,25 @@ public class ProjectLoader : MonoBehaviour
         //경로가 없다면 돌아가기
         if (string.IsNullOrEmpty(filePath) == true) return null;
 
-        //이미지 읽어오기
-        byte[] bytes = File.ReadAllBytes(filePath);
+        try
+        {
+            //이미지 읽어오기
+            byte[] bytes = File.ReadAllBytes(filePath);
+            //텍스쳐 만들기
+            Texture2D texture = new Texture2D(100, 100);
+            texture.LoadImage(bytes);
+            //스프라이트 만들기
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot);
+            sprite.name = texture.name;
+            return sprite;
 
-        //텍스쳐 만들기
-        Texture2D texture = new Texture2D(100, 100);
-        texture.LoadImage(bytes);
-
-        //스프라이트 만들기
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot);
-        sprite.name = texture.name;
-
-        return sprite;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.LOADIMGFAIL);
+        }
+        return null;
     }
 
     public void SetDefault()
@@ -352,7 +424,7 @@ public class ProjectLoader : MonoBehaviour
         songArtist_inputfield.interactable = false;
         loadSong_btn.interactable = false;
         loadThumbnail_btn.interactable = false;
-
+        projectBpm_inputfield.interactable = false;
         addProejct_btn.interactable = true;
     }
 }

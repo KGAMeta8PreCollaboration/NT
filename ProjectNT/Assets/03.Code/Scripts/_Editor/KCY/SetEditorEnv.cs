@@ -37,14 +37,18 @@ public class SetEditorEnv : MonoBehaviour
     }
     private void Awake()
     {
-        LoadPath();
-        if (PATH.Path != null) CheckPath();
-        inputField.text = PATH.Path;
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
     }
+    private IEnumerator Start()
+    {
+        yield return null;
+        LoadPath();
+        if (PATH.Path != null) CheckPath();
+        inputField.text = PATH.Path;
 
+    }
     private void Exit_BTN()
     {
         //TODO  세이브

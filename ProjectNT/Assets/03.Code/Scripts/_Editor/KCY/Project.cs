@@ -65,12 +65,30 @@ public class Project : MonoBehaviour
 
     private void ChangeFocus(bool isTrue)
     {
-        if (isTrue)
+        if (!isTrue)
         {
+            loader.currentProject = null;
+            loader.SetProjectName = "";
+            loader.SetArtistName = "";
+            loader.SetBgmName = "";
+            loader.SetThumbnailName = "";
+            loader.SetBpm = "";
+            loader.SetThumbnail = null;
+            toggle.interactable = true;
+        }
+        else
+        {
+            loader.currentProject = this;
             if (string.IsNullOrEmpty(projectData.projectName))
+            {
                 projectName.text = "New Project";
+                toggle.interactable = false;
+                loader.EditBtn = false;
+                return;
+            }
             else
             {
+                loader.InputFieldReset();
                 projectName.text = projectData.projectName;
                 loader.SetProjectName = projectData.projectName;
                 loader.SetArtistName = projectData.artistName;
@@ -83,31 +101,32 @@ public class Project : MonoBehaviour
                     sprite = loader.MakeSprite(path, Vector2.zero);
                 }
                 loader.SetThumbnail = sprite;
+                loader.EditBtn = true;
             }
             toggle.interactable = false;
-            loader.currentProject = this;
-        }
-        else
-        {
-            loader.SetProjectName = "";
-            loader.SetArtistName = "";
-            loader.SetBgmName = "";
-            loader.SetThumbnailName = "";
-            loader.SetBpm = "";
-            loader.SetThumbnail = null;
-            toggle.interactable = true;
-            loader.currentProject = null;
         }
     }
 
     public void SetName(string text)
     {
-        projectName.text = text;
+        Debug.Log("RE");
+        Debug.Log(this.GetInstanceID());
+        Debug.Log(loader.currentProject.GetInstanceID());
+        if (this != loader.currentProject) return;
+        Debug.Log("SET");
         projectData.projectName = text;
+        loader.currentProject.projectName.text = text;
     }
 
-    internal void SetArtist(string text)
+    public void SetArtist(string text)
     {
+        if (this != loader.currentProject) return;
         projectData.artistName = text;
+    }
+    public void SetBPM(string text)
+    {
+        if (this != loader.currentProject) return;
+        if (string.IsNullOrEmpty(text)) return;
+        projectData.bpm = int.Parse(text);
     }
 }

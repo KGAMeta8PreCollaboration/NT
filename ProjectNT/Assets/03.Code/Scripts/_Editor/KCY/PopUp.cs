@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,16 +13,18 @@ public class PopUp : MonoBehaviour
     [SerializeField] private GameObject popupObj;
     [SerializeField] private Button check;
     [SerializeField] private Button cancle;
-
+    private bool isTrue = false;
     public Dictionary<Enums.Details, string> popUpInfo = new Dictionary<Enums.Details, string>();
-
+    private Action temp;
     private void Awake()
     {
         check.onClick.AddListener(CheckBtnOff);
         check.onClick.AddListener(PopupOff);
+        check.onClick.AddListener(CheckClick);
 
         cancle.onClick.AddListener(CancleBtnOff);
         cancle.onClick.AddListener(PopupOff);
+        cancle.onClick.AddListener(CancleClick);
 
         for (int i = 0; i < detailInfos.Count; i++)
         {
@@ -29,8 +32,9 @@ public class PopUp : MonoBehaviour
         }
     }
 
-    public void PopUpOpen(Enums.Details details)
+    public void PopUpOpen(Enums.Details details, Action action = null)
     {
+        popupObj.SetActive(true);
         switch (details)
         {
             case Enums.Details.SAVEPATHCHOICE:
@@ -42,14 +46,24 @@ public class PopUp : MonoBehaviour
             case Enums.Details.NONETHUMBNAIL:
             case Enums.Details.FILELOADFAIL:
             case Enums.Details.PATHSETERROR:
+            case Enums.Details.SAVEFOLDEREXIST:
+            case Enums.Details.LOADIMGFAIL:
+            case Enums.Details.MAKEPROJECTCOMPLETE:
+            case Enums.Details.CHANGEPROJECTINFOCOMPLETE:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 break;
             case Enums.Details.SAVEWARNING:
+            case Enums.Details.DELETEPROJECTCHECK:
                 detail_tmp.text = popUpInfo[details];
+                CheckBtnOn();
+                CancleBtnOn();
+                temp = action;
+                break;
+            default:
+                Debug.LogError("지정되지 않은 케이스입니다.");
                 break;
         }
-        popupObj.SetActive(true);
     }
 
     private void CheckBtnOn()
@@ -72,4 +86,16 @@ public class PopUp : MonoBehaviour
     {
         popupObj.SetActive(false);
     }
+    private void CheckClick()
+    {
+        isTrue = true;
+        temp?.Invoke();
+        temp = null;
+    }
+    private void CancleClick()
+    {
+        isTrue = false;
+        temp = null;
+    }
+
 }
