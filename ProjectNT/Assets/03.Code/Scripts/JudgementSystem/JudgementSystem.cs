@@ -29,8 +29,8 @@ public class JudgementSystem : MonoBehaviour
             _timingBoxs[i].Set(minX, maxX);
 
             float diff = Mathf.Abs(minX - maxX);
-            print(diff);
-            print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
+            // print(diff);
+            // print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
         }
     }
 

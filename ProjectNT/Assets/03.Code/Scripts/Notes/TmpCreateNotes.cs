@@ -13,13 +13,13 @@ public class TmpCreateNotes : MonoBehaviour
 		StartCoroutine(CreateCoroutine());
 	}
 	
-	public void Create(InputAction.CallbackContext context)
-	{
-		if (context.performed)
-		{
-			noteManager.CreateNote(int.Parse(context.control.name) - 1);
-		}
-	}
+	// public void Create(InputAction.CallbackContext context)
+	// {
+	// 	if (context.performed)
+	// 	{
+	// 		noteManager.CreateNote(int.Parse(context.control.name) - 1);
+	// 	}
+	// }
 	
 	public void Hit(InputAction.CallbackContext context)
 	{
@@ -44,6 +44,6 @@ public class TmpCreateNotes : MonoBehaviour
 
 	private void RandomCreate()
 	{
-		noteManager.CreateNote(Random.Range(0, noteManager.maxNoteRails));
+		// noteManager.CreateNote(Random.Range(0, noteManager.maxNoteRails));
 	}
 }
