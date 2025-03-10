@@ -5,7 +5,8 @@ public class NoteSpawner : MonoBehaviour
 {
 	public Transform spawnPoint;
 	public Transform target;
-	public float noteSpeed = 5.0f;
+	
+	[HideInInspector] public float noteSpeed = 5.0f;
 
 	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, AudioClip hitSound)
 	{

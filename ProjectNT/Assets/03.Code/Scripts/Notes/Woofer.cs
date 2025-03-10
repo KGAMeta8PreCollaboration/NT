@@ -29,7 +29,7 @@ public class Woofer : MonoBehaviour
 		if (_audioSource.clip != hitSound)
 			_audioSource.clip = hitSound;
 		
-		_audioSource.Play();
+		_audioSource.PlayOneShot(hitSound);
 
 		if (notes.Count == 0)
 			return;
