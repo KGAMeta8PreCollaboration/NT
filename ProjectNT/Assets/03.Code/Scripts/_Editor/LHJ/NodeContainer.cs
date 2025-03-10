@@ -92,19 +92,33 @@ public class NodeContainer : MonoBehaviour
         {
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
 
-            // Plane의 -5~5 범위를 그리드 인덱스로 변환
-            float normalizedX = (localHit.x + 5f) / 10f * _gridManager.Column;
-            float normalizedZ = (localHit.z + 5f) / 10f * _totalBeats;
+            // 가장 가까운 GridPoint 찾기
+            float minDistance = float.MaxValue;
+            int nearestColumn = 0;
+            int nearestBeatIndex = 0;
 
-            int column = Mathf.Clamp(Mathf.FloorToInt(normalizedX), 0, _gridManager.Column - 1);
-            int beatIndex = Mathf.Clamp(Mathf.FloorToInt(normalizedZ), 0, _totalBeats - 1);
+            for (int c = 0; c < _gridManager.Column; c++)
+            {
+                for (int b = 0; b < _totalBeats; b++)
+                {
+                    Vector2 gridPoint = _gridManager.GridPoint[c, b];
+                    float distance = Vector2.Distance(new Vector2(localHit.x, localHit.z), gridPoint);
 
-            return (column, beatIndex);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestColumn = c;
+                        nearestBeatIndex = b;
+                    }
+                }
+            }
+
+            return (nearestColumn, nearestBeatIndex);
         }
         return (-1, -1);
     }
 
-    //임시 노드
+    //임시 노드 생성
     private void CreatePreviewNode(int column, int beatIndex) 
     {
         if (column < 0 || beatIndex < 0 || column >= _gridManager.Column || beatIndex >= _totalBeats)

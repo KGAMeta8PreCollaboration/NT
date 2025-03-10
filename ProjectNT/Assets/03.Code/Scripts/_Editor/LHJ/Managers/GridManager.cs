@@ -15,10 +15,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float texturePerSecond = 2048f; // 텍스처 해상도 증가
     [Header("Grid 설정")]
     [SerializeField] private float bpm = 120;
-    //[SerializeField] private int beatsPerBar = 4; // 마디당 박자의 수
+    [SerializeField] private int beatNum = 4; //박자의 수
     //[SerializeField] private int subdivision = 4; // 박자
     [SerializeField] private int nodesPerBeat = 1; //비트당 노드 수
-    [SerializeField] private int row;    // 열(가로줄)
+    private int row;    // 열(가로줄)
     [SerializeField] private int column = 4; // 행(세로줄)
     [SerializeField] private Color gridColor = Color.black;
     [SerializeField] private Color subGridColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // 서브그리드 색상
@@ -26,11 +26,12 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float lineThickness = 2f;
 
     public float BPM => bpm;
-    public int Row => row;
+    //public int Row => row;
     public int Column => column;
     public Vector2 CellSize => _cellSize;
     public Vector2[,] GridPoint => _gridPoint;
     public int TotalBeats => _totalBeats;
+    public int BeatNum => beatNum;
 
     public Texture2D GridTexture => _gridTexture;
     public Action gridInfoCallback;
@@ -41,7 +42,8 @@ public class GridManager : MonoBehaviour
     private Vector2 _cellSize;
     private Vector2[,] _gridPoint;
     private int _totalBeats;
-    private const float BASE_BPM = 120f; // 기준이 되는 BPM
+    private const float BASE_BPM = 120f; //기준이 되는 BPM
+    private const int BASE_BEAT = 1; //기준이 되는 박자 수
 
     private void Awake()
     {
@@ -90,8 +92,9 @@ public class GridManager : MonoBehaviour
 
         if (height > AudioVisualizable.MAX_TEXTUREWIDTH)
         {
-            height = AudioVisualizable.MAX_TEXTUREWIDTH;
-            Debug.LogWarning("텍스처 크기가 최대 크기를 초과");
+            float ratio = AudioVisualizable.MAX_TEXTUREWIDTH / duration;
+            height = (int)(duration * ratio);
+            Debug.LogWarning($"텍스처 크기가 최대 크기를 초과해서 높이 재설정 : {height} ");
         }
 
         int width = 2048; // 가로 해상도도 증가
@@ -121,24 +124,29 @@ public class GridManager : MonoBehaviour
 
         int songDuration = _audioSourceManager.AudioDuration;
         //초당 픽셀
-        int pixelsPerSecond = _gridTexture.height / songDuration;
+        float pixelsPerSecond = _gridTexture.height / songDuration;
         //초당 bpm
         float secondsPerBeat = 60 / bpm;
+        //bpm을 나눌 비트의 수
+        int beat = (beatNum <= 1) ? BASE_BEAT : beatNum;
         //1비트 당 픽셀 -> cell의 높이
-        float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+        float pixelsPerBeat = (pixelsPerSecond * secondsPerBeat);
         //cell의 넓이
         float columnWidth = _gridTexture.width / column;
         //전체 비트 수 
-        _totalBeats = Mathf.CeilToInt(_gridTexture.height / pixelsPerBeat);
+        _totalBeats = Mathf.CeilToInt(_gridTexture.height / pixelsPerBeat) * beat;
         _gridPoint = new Vector2[column, _totalBeats];
+        print($"GridManager에 행과 열 개수 : {column} X {_totalBeats}");
 
         for (int c = 0; c < column; c++)
         {
             for (int b = 0; b < _totalBeats; b++)
             {
-                // Cell의 중앙점 계산을 위해 0.5f 오프셋 추가
+                //Cell의 중앙점 계산을 위해 0.5f 오프셋 추가
                 float xPos = -5f + ((c * columnWidth) / _gridTexture.width * 10f) + (5f / column);
-                float zPos = -5f + ((b * pixelsPerBeat) / _gridTexture.height * 10f) + (5f / _totalBeats);
+                //Grid 중앙에 위치하기 위해 뒤에 주석처리
+                float zPos = -5f + ((b * pixelsPerBeat / beat) / _gridTexture.height * 10f)/* + (5f / _totalBeats)*/;
+
                 _gridPoint[c, b] = new Vector2(xPos, zPos);
             }
         }
@@ -152,7 +160,20 @@ public class GridManager : MonoBehaviour
 
         for (float y = 0; y < _gridTexture.height; y += pixelsPerBeat)
         {
-            DrawHorizontalLine(y, gridColor);
+            DrawHorizontalLine(y, gridColor, false);
+
+            if (beat > 1)
+            {
+                float subDivisionSpace = pixelsPerBeat / beat;
+                for (int i = 1; i < beat; i++)
+                {
+                    float subY = y + (i * subDivisionSpace);
+                    if (subY < _gridTexture.height)
+                    {
+                        DrawHorizontalLine(subY, subGridColor, true);
+                    }
+                }
+            }
         }
 
         _gridTexture.Apply();
@@ -174,11 +195,13 @@ public class GridManager : MonoBehaviour
     }
 
     //가로선 그리는 함수
-    private void DrawHorizontalLine(float y, Color color)
+    private void DrawHorizontalLine(float y, Color color, bool isSubGrid)
     {
+        float line = isSubGrid? lineThickness / 2 : lineThickness;
+        //lineThickness = (isSubGrid == true) ? lineThickness / 2 : lineThickness;
         for (int x = 0; x < _gridTexture.width; x++)
         {
-            for (int t = 0; t < lineThickness; t++)
+            for (int t = 0; t < line; t++)
             {
                 if (y + t < _gridTexture.height)
                 {
@@ -186,19 +209,5 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    //public void UpdateGridSettings(float newBpm, int newBeatsPerBar, int newSubdivision)
-    //{
-    //    bpm = newBpm;
-    //    beatsPerBar = newBeatsPerBar;
-    //    subdivision = newSubdivision;
-    //    UpdateGrid();
-    //}
-
-    public void SetNodesPerBeat(int count)
-    {
-        nodesPerBeat = Mathf.Max(1, count);
-        UpdateGrid();
     }
 }

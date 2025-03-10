@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioSourceManager : MonoBehaviour
 {
-    [SerializeField] private CameraController cameraController; // -> 이부분 마음에 안든다. 나중에 camera이동중일때를 넘겨줄 방법을 찾아보자
-
-    private AudioSource _audioSource;
+    private CameraController _cameraController;
+    private AudioSource _audioSource;  
     private int _audioDuration;
     public AudioSource AudioSource => _audioSource;
     public int AudioDuration => _audioDuration;
@@ -17,6 +16,7 @@ public class AudioSourceManager : MonoBehaviour
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        _cameraController = FindObjectOfType<CameraController>();
 
         //반올림
         _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
@@ -25,7 +25,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private void Update()
     {
-        if (cameraController._isRotating == false)
+        if (_cameraController._isRotating == false)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

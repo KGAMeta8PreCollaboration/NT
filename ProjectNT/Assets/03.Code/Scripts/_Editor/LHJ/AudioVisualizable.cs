@@ -13,18 +13,21 @@ public class AudioVisualizable : MonoBehaviour
     [SerializeField] private float widthScale = 1f;
     [Header("1초당 표시될 waveform의 높이(클수록 새로로 길어짐)")]
     [SerializeField] private float higthScale = 1f;
-    [Header("1초당 샘플링할 횟수")]
-    [SerializeField] private int samplesPerSecond = 100;
-    [Header("AudioSourceManager를 참조해주세요")]
-    [SerializeField] private AudioSourceManager audioSourceManager;
-
+    [Header("1초당 샘플링할 횟수(높을수록 해상도 높아짐)")]
+    [SerializeField] private float samplesPerSecond = 100;
     [SerializeField] private Color backgroundColor = Color.black;
     [SerializeField] private Color waveColor = Color.green;
 
+    private AudioSourceManager _audioSourceManager;
     private Texture2D _waveformTexture;
     //픽셀을 그릴 배열
     private Color[] _pixels;
     private Material _targetMaterial;
+
+    private void Awake()
+    {
+        _audioSourceManager = FindObjectOfType<AudioSourceManager>();
+    }
 
     private void Start()
     {
@@ -46,7 +49,7 @@ public class AudioVisualizable : MonoBehaviour
                 _targetMaterial.mainTexture = _waveformTexture;
                 renderer.material = _targetMaterial;
 
-                float duration = audioSourceManager.AudioDuration;
+                float duration = _audioSourceManager.AudioDuration;
                 float height = duration * higthScale;
                 targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
             }
@@ -56,32 +59,32 @@ public class AudioVisualizable : MonoBehaviour
     //waveform 텍스쳐 생성 후 _pixels에 담아줌
     private void CreateWaveformTexture()
     {
-        float duration = audioSourceManager.AudioDuration;
+        int duration = _audioSourceManager.AudioDuration;
         print($"오디오 클립의 길이 : {duration}");
         //텍스쳐의 높이 = 오디오의 길이 * 초당 샘플링 수(샘플링 수가 높아질 수록 자세한 파형을 그릴 수 있다)
-        int textureHeight = (int)(duration * samplesPerSecond);
+        int height = duration * (int)samplesPerSecond;
 
-        if (textureHeight > MAX_TEXTUREWIDTH)
+        if (height > MAX_TEXTUREWIDTH)
         {
-            int maxSample = MAX_TEXTUREWIDTH / (int)duration;
-            textureHeight = (int)(duration * maxSample);
-            print($"heightPerSecond의 최대값 : {maxSample}");
+            float ratio = MAX_TEXTUREWIDTH / duration;
+            height = (int)(duration * ratio);
+            print($"heightPerSecond의 최대값 : {ratio}");
         }
 
         //거의 256이면 깨끗한 해상도가 나옴
         int textureWidth = 256;
         //픽셀 초기화
-        _waveformTexture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false);
+        _waveformTexture = new Texture2D(textureWidth, height, TextureFormat.RGBA32, false);
         //픽셀 배열 크기 초기화
-        _pixels = new Color[textureWidth * textureHeight];
+        _pixels = new Color[textureWidth * height];
     }
 
     private void GenerateWaveform()
     {
         //sample은 0 ~ 1 사이의 값
-        float[] samples = new float[audioSourceManager.AudioSource.clip.samples];
+        float[] samples = new float[_audioSourceManager.AudioSource.clip.samples];
         //0 -> 샘플을 0초부터 가져옴(44100이 1초)
-        audioSourceManager.AudioSource.clip.GetData(samples, 0);
+        _audioSourceManager.AudioSource.clip.GetData(samples, 0);
 
         ClearTexture();
 
