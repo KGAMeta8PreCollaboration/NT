@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -16,30 +17,41 @@ public class OutlineTrigger : MonoBehaviour
 {
     public TitleUIName uiName;
     public GameObject text;
-    public XRBaseInteractable interactable;
+    public InputActionReference left;
+    public InputActionReference right;
 
     private Outline outline; 
-    private bool isOutlineActive = false; 
+    private bool isOutlineActive = false;
+    private XRSimpleInteractable simpleInteractable;
 
     private void Start()
     {
-        outline = GetComponent<Outline>();  
+        outline = GetComponent<Outline>();
+        simpleInteractable = GetComponent<XRSimpleInteractable>();
         text.SetActive(false);
         if (outline != null)
         {
             outline.enabled = false;
         }
-        if (interactable != null)
+        if (simpleInteractable != null)
         {
-            interactable.hoverEntered.AddListener(OnOutLine);
-            interactable.hoverExited.AddListener(OffOutLine);
-            interactable.selectEntered.AddListener(OnSelect);
+            simpleInteractable.hoverEntered.AddListener(OnOutLine);
+            simpleInteractable.hoverExited.AddListener(OffOutLine);
         }
     }
-
+    private void OnEnable()
+    {
+        left.action.started += Test;
+        right.action.started += Test;
+    }
+    private void OnDisable()
+    {
+        left.action.started -= Test;
+        right.action.started -= Test;
+    }
     public void OnOutLine(HoverEnterEventArgs args)
     {
-        Debug.Log("ㅁ");
+        Debug.Log("OnOutLine");
         if (TitleManager.instance.isComplete && !TitleManager.instance.isUIActive)
         {
             if (outline != null)
@@ -51,8 +63,9 @@ public class OutlineTrigger : MonoBehaviour
         }
     }
 
-    private void OffOutLine(HoverExitEventArgs args)
+    public void OffOutLine(HoverExitEventArgs args)
     {
+        Debug.Log("OffOutLine");
         if (isOutlineActive)
         {
             if (outline != null)
@@ -64,7 +77,7 @@ public class OutlineTrigger : MonoBehaviour
         }
     }
 
-    public void OnSelect(SelectEnterEventArgs args)
+    public void OnSelect()
     {
         Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화");
         TitleManager.instance.OpenUI(uiName);
@@ -73,6 +86,14 @@ public class OutlineTrigger : MonoBehaviour
             text.SetActive(false);
             outline.enabled = false; 
             isOutlineActive = false;
+        }
+    }
+
+    public void Test(InputAction.CallbackContext context)
+    {
+        if (isOutlineActive)
+        {
+            OnSelect();
         }
     }
 }

@@ -3,22 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class BlurEffectManager : MonoBehaviour
 {
     public TextMeshProUGUI titleText;
-    public PostProcessVolume postProcessVolume;
     public GameObject uiCamere;
     public float fadeOutTime = 3f;
+    public Volume volume;
 
+    private VolumeProfile profile;
     private DepthOfField depth;
 
     void Start()
     {
-        postProcessVolume.profile.TryGetSettings(out depth);
-        depth.focalLength.value = Mathf.Max(depth.focalLength.value, 200f);
+        if (volume != null)
+        {
+            volume.enabled = true;
+        }
+        profile = volume.profile;
     }
+
     void Update()
     {
         // 카메라의 정면 (화면 정면)을 기준으로 위치를 고정시키기 위해
@@ -58,7 +64,11 @@ public class BlurEffectManager : MonoBehaviour
         titleText.color = endColor; // 최종 색상 설정
         titleText.gameObject.SetActive(false); // 타이틀 텍스트를 비활성화하여 화면에서 제거
 
-        postProcessVolume.weight = 0f;
+        if (depth != null)
+        {
+            volume.weight = 0f;
+            volume.enabled = false;
+        }
         uiCamere.SetActive(false);
 
         onComplete?.Invoke();
@@ -66,12 +76,34 @@ public class BlurEffectManager : MonoBehaviour
 
     private void ResetTitleText()
     {
+        if (volume != null)
+        {
+            volume.enabled = true;
+        }
+        profile = volume.profile;
+
         titleText.gameObject.SetActive(true);
         uiCamere.SetActive(true);
         Color color = titleText.color;
         color.a = 1f;  // 알파값을 1로 설정
         titleText.color = color;
-        postProcessVolume.weight = 1f;
-        postProcessVolume.isGlobal = true;
+
+        if (profile.TryGet(out depth))
+        {
+            //여기서 시작할때 전체화면 블러처리
+            depth.mode.value = DepthOfFieldMode.Gaussian;
+
+            depth.gaussianStart.value = 0.1f;
+            depth.gaussianEnd.value = 1000f;
+            depth.gaussianMaxRadius.value = 10f;
+            depth.highQualitySampling.value = true;
+            Debug.Log("블러 효과 성공");
+        }
+        else
+        {
+            Debug.LogWarning("volume.profile 가져오기 실패");
+        }
+        volume.weight = 1f;
+        volume.isGlobal = true;
     }
 }
