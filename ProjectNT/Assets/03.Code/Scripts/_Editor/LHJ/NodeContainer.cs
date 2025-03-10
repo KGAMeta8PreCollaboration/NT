@@ -92,28 +92,39 @@ public class NodeContainer : MonoBehaviour
         {
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
 
-            // 가장 가까운 GridPoint 찾기
-            float minDistance = float.MaxValue;
-            int nearestColumn = 0;
-            int nearestBeatIndex = 0;
+            // 각 셀의 크기 계산
+            float cellWidth = 10f / _gridManager.Column;
+            float cellHeight = 10f / _totalBeats;
 
-            for (int c = 0; c < _gridManager.Column; c++)
+            // 마우스 위치를 -5 ~ 5 범위에서 0 ~ 10 범위로 변환
+            float posX = localHit.x + 5f;
+            float posZ = localHit.z + 5f;
+
+            // 각 셀의 범위를 체크하여 인덱스 결정
+            int column = -1;
+            int beatIndex = -1;
+
+            // column 인덱스 찾기
+            for (int i = 0; i < _gridManager.Column; i++)
             {
-                for (int b = 0; b < _totalBeats; b++)
+                if (posX >= i * cellWidth && posX < (i + 1) * cellWidth)
                 {
-                    Vector2 gridPoint = _gridManager.GridPoint[c, b];
-                    float distance = Vector2.Distance(new Vector2(localHit.x, localHit.z), gridPoint);
-
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        nearestColumn = c;
-                        nearestBeatIndex = b;
-                    }
+                    column = i;
+                    break;
                 }
             }
 
-            return (nearestColumn, nearestBeatIndex);
+            // beatIndex 찾기
+            for (int i = 0; i < _totalBeats; i++)
+            {
+                if (posZ >= i * cellHeight && posZ < (i + 1) * cellHeight)
+                {
+                    beatIndex = i;
+                    break;
+                }
+            }
+
+            return (column, beatIndex);
         }
         return (-1, -1);
     }
@@ -143,7 +154,6 @@ public class NodeContainer : MonoBehaviour
 
         if (_previewNode == null)
         {
-
             _previewNode = Instantiate(nodePrefab);
             Material previewNodeMaterial = _previewNode.GetComponent<MeshRenderer>().material;
             previewNodeMaterial.color = _previewNodeColor;

@@ -125,18 +125,23 @@ public class GridManager : MonoBehaviour
         int songDuration = _audioSourceManager.AudioDuration;
         //초당 픽셀
         float pixelsPerSecond = _gridTexture.height / songDuration;
-        //초당 bpm
+        print($"초당 픽셀 : {pixelsPerSecond}");
+        //비트 당 초
         float secondsPerBeat = 60 / bpm;
+        print($"초당bpm : {secondsPerBeat}");
         //bpm을 나눌 비트의 수
         int beat = (beatNum <= 1) ? BASE_BEAT : beatNum;
         //1비트 당 픽셀 -> cell의 높이
         float pixelsPerBeat = (pixelsPerSecond * secondsPerBeat);
+        print($"float일때 pixelsPerBeat : {pixelsPerBeat}");
         //cell의 넓이
         float columnWidth = _gridTexture.width / column;
+        print($"셀 하나의 사이즈 : {columnWidth} X {pixelsPerBeat}");
+
         //전체 비트 수 
-        _totalBeats = Mathf.CeilToInt(_gridTexture.height / pixelsPerBeat) * beat;
+        _totalBeats = Mathf.CeilToInt(_gridTexture.height / (float)pixelsPerBeat) * beat;
+
         _gridPoint = new Vector2[column, _totalBeats];
-        print($"GridManager에 행과 열 개수 : {column} X {_totalBeats}");
 
         for (int c = 0; c < column; c++)
         {
