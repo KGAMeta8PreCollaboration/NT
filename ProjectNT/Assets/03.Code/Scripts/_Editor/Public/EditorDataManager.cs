@@ -12,6 +12,7 @@ public struct ProjectData
     public string bgmName;
     public int bpm;
     public string m_Path;
+    public string m_KeysoundPath;
 }
 
 public class EditorDataManager : Singleton<EditorDataManager>
