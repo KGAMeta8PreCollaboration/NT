@@ -10,23 +10,23 @@ public class ScoreUI : MonoBehaviour
 	private TextMeshProUGUI _scoreCountText;
 
 	public TextMeshProUGUI _timeText;
-	private double _time;
+	private double _startDspTime;
 
 	private void Start()
 	{
-		_comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>();
+		_comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>(); 
 		_scoreManager.OnComboChanged += combo => _comboCountText.text = combo.ToString();
 
 		_scoreCountText = transform.Find("ScoreCount").GetComponent<TextMeshProUGUI>();
 		_scoreManager.OnScoreChanged += score => _scoreCountText.text = score.ToString();
 		
 		_timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
-		_time = AudioSettings.dspTime;
+		_startDspTime = AudioSettings.dspTime;
 	}
 
 	private void Update()
 	{
-		_timeText.text = $"TIME\n{(AudioSettings.dspTime - _time):F2}";
+		_timeText.text = $"TIME\n{(AudioSettings.dspTime - _startDspTime):F2}";
 	}
 
 }

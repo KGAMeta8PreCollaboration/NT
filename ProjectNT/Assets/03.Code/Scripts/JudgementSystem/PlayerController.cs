@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
 
         prevPos = transform.position;
 
-        StartCoroutine(CreateCoroutine());
+        // TODO :                                                                                                                                                                                                                                                       
+        // StartCoroutine(CreateCoroutine());
     }
 
     private void Update()
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            _noteManager.CreateNote(int.Parse(context.control.name) - 1);
+            // _noteManager.CreateNote(int.Parse(context.control.name) - 1);
         }
     }
 
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
     private void RandomCreate()
     {
-        _noteManager.CreateNote(Random.Range(0, _noteManager.maxNoteRails));
+        // _noteManager.CreateNote(Random.Range(0, _noteManager.maxNoteRails));
     }
     //======================Test======================
 
