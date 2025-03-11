@@ -78,6 +78,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         _player.transform.position = _lobbyPoint.position;
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        print("플레이어 입장 시 실행되는 함수");
+        UpdateMultiLobbyUI2(newPlayer, true);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdateMultiLobbyUI2(otherPlayer, true);
+    }
+
     public void AssignPlayerRole()
     {
         if (PhotonNetwork.IsMasterClient) // 가장 먼저 들어온 플레이어 = Player1
@@ -91,7 +102,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             _player.transform.position = _spawnPointPlayers[1].position;
         }
 
-        photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
+        //photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
+        UpdateMultiLobbyUI2(PhotonNetwork.LocalPlayer, false);
     }
 
     [PunRPC]
@@ -107,6 +119,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             {
                 _multiLobbyUI.connectImagePlayer2.color = Color.green; // 초록색으로 변경
             }
+        }
+    }
+
+    public void UpdateMultiLobbyUI2(Player player, bool isQuit)
+    {
+        if (player.NickName == "Player1")
+        {
+            _multiLobbyUI.connectImagePlayer1.color = isQuit == false ? Color.green : Color.red; // 초록색으로 변경
+        }
+        else if (player.NickName == "Player2")
+        {
+            _multiLobbyUI.connectImagePlayer2.color = isQuit == false ? Color.green : Color.red;  // 초록색으로 변경
         }
     }
 
