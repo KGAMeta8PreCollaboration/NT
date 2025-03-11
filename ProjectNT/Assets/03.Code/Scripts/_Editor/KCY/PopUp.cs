@@ -44,12 +44,14 @@ public class PopUp : MonoBehaviour
             case Enums.Details.NONEBPM:
             case Enums.Details.NONEBGM:
             case Enums.Details.NONETHUMBNAIL:
+            case Enums.Details.NONEKEYSOUNDFOLDER:
             case Enums.Details.FILELOADFAIL:
             case Enums.Details.PATHSETERROR:
             case Enums.Details.SAVEFOLDEREXIST:
             case Enums.Details.LOADIMGFAIL:
             case Enums.Details.MAKEPROJECTCOMPLETE:
             case Enums.Details.CHANGEPROJECTINFOCOMPLETE:
+            case Enums.Details.FILEDETECTIONFAIL:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 break;

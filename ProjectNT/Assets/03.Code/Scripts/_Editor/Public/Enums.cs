@@ -30,6 +30,7 @@ public class Enums
         NONEBPM,
         NONEBGM,
         NONETHUMBNAIL,
+        NONEKEYSOUNDFOLDER,
         SAVEWARNING,
         FILELOADFAIL,
         PATHSETERROR,
@@ -37,6 +38,7 @@ public class Enums
         LOADIMGFAIL,
         MAKEPROJECTCOMPLETE,
         CHANGEPROJECTINFOCOMPLETE,
-        DELETEPROJECTCHECK
+        DELETEPROJECTCHECK,
+        FILEDETECTIONFAIL
     }
 }

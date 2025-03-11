@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EditorUIManager : MonoBehaviour
+public class EditorUIManager : Singleton<EditorUIManager>
 {
-    private static EditorUIManager instance;
-    public static EditorUIManager Instance { get { return instance; } }
+
     public GameObject editorCanvas;
     public GameObject pathCanvas;
     public PopUp popUp;
-    public Sprite thumbnail;
-    public string songName;
-    public string songArtist;
-    private void Awake()
-    {
 
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else DestroyImmediate(gameObject);
+    protected override void Awake()
+    {
+        base.Awake();
 
         SceneManager.sceneLoaded += (x, y) =>
         {

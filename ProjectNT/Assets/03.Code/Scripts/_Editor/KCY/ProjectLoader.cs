@@ -23,11 +23,13 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private TMP_InputField projectBpm_inputfield;
     [SerializeField] private TextMeshProUGUI bgmName_tmp;
     [SerializeField] private TextMeshProUGUI thumbnailName_tmp;
+    [SerializeField] private TextMeshProUGUI keySound_tmp;
     [SerializeField] private Button addProejct_btn;
     [SerializeField] private Button refreah_btn;
     [SerializeField] private Button delete_btn;
     [SerializeField] private Button loadSong_btn;
     [SerializeField] private Button loadThumbnail_btn;
+    [SerializeField] private Button loadKeySound_btn;
     [SerializeField] private Button edit_btn;
     [SerializeField] private Button save_btn;
     [SerializeField] private Button back_btn;
@@ -75,10 +77,12 @@ public class ProjectLoader : MonoBehaviour
         addProejct_btn.onClick.AddListener(AddNewProject);
         refreah_btn.onClick.AddListener(Refresh);
         delete_btn.onClick.AddListener(DeleteUIOpen);
-        edit_btn.onClick.AddListener(EditProject);
-        save_btn.onClick.AddListener(SaveProject);
         loadSong_btn.onClick.AddListener(LoadSong);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
+        loadKeySound_btn.onClick.AddListener(LoadKeySound);
+        edit_btn.onClick.AddListener(EditProject);
+        save_btn.onClick.AddListener(SaveProject);
+
         back_btn.onClick.AddListener(Back);
         SetDefault();
     }
@@ -91,6 +95,9 @@ public class ProjectLoader : MonoBehaviour
     private void EditProject()
     {
         //TODO 다음으로 넘어가기
+
+        EditorDataManager.Instance.currentProjectData = currentProject.projectData;
+        EditorUIManager.Instance.pathCanvas.SetActive(false);
         EditorUIManager.Instance.editorCanvas.SetActive(true);
     }
 
@@ -162,6 +169,36 @@ public class ProjectLoader : MonoBehaviour
         }
     }
 
+    private void LoadKeySound()
+    {
+        try
+        {
+            string[] path = StandaloneFileBrowser.OpenFolderPanel("키음의 디렉토리를 선택해주세요.", "", false);
+            string[] files = Directory.GetFiles(path[0]);
+            string extention;
+            int count = 0;
+            foreach (string l in files)
+            {
+                extention = Path.GetExtension(l);
+                if (extention != ".wav" || extention != ".mp3" || extention != "ogg")
+                {
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILEDETECTIONFAIL);
+                return;
+            }
+            keySound_tmp.text = Path.GetFullPath(path[0]);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning(e.Message);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+        }
+    }
+
     private void SaveProject()
     {
         if (projectName_inputfield.text == "")
@@ -180,14 +217,19 @@ public class ProjectLoader : MonoBehaviour
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
             return;
         }
-        if (bgmName_tmp.text == "BGM 선택")
+        if (bgmName_tmp.text == "")
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBGM);
             return;
         }
-        if (thumbnailName_tmp.text == "썸네일 선택")
+        if (thumbnailName_tmp.text == "")
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONETHUMBNAIL);
+            return;
+        }
+        if (keySound_tmp.text == "")
+        {
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEKEYSOUNDFOLDER);
             return;
         }
 

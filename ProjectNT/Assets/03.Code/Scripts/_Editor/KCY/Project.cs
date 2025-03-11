@@ -7,16 +7,7 @@ using Unity.InteractiveTutorials;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-[Serializable]
-public struct ProjectData
-{
-    public string projectName;
-    public string artistName;
-    public string thumbnailName;
-    public string bgmName;
-    public int bpm;
-    public string m_Path;
-}
+
 public class Project : MonoBehaviour
 {
     [SerializeField] private ProjectLoader loader;

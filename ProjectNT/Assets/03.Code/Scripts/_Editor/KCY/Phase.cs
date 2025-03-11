@@ -30,7 +30,6 @@ public class Phase : MonoBehaviour
 
     private void Initialize()
     {
-        // phaseDriver = GetComponentInParent<PhaseDriver>();
         m_Up.onClick.AddListener(() => phaseDriver.SwapPhaseUp(this));
         m_Down.onClick.AddListener(() => phaseDriver.SwapPhaseDown(this));
         m_Delete.onClick.AddListener(Delete_BTN);
