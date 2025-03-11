@@ -9,7 +9,7 @@ public class LoadedNoteData
 {
 	public double time;
 	public int railIndex;
-	public int audioIndex;
+	public string noteAudioClipName;
 }
 
 public class NoteGenerator : MonoBehaviour

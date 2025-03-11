@@ -20,7 +20,7 @@ public class NoteManager : MonoBehaviour
 			else
 				_scoreManager.IncreaseCombo();
 			_scoreManager.AddScore(note.noteType);
-		}, spawnDspTime, noteData.time);
+		}, spawnDspTime, noteData.time, AudioManager.Instance.GetAudioClipAtString(noteData.noteAudioClipName));
 	}
 
 	private void AddNote(Note note)
