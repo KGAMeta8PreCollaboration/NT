@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
+using Detail = Enums.Details;
 [Serializable]
 public class PATH
 {
@@ -36,14 +37,18 @@ public class SetEditorEnv : MonoBehaviour
     }
     private void Awake()
     {
-        LoadPath();
-        if (PATH.Path != null) CheckPath();
-        inputField.text = PATH.Path;
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
     }
+    private IEnumerator Start()
+    {
+        yield return null;
+        LoadPath();
+        if (PATH.Path != null) CheckPath();
+        inputField.text = PATH.Path;
 
+    }
     private void Exit_BTN()
     {
         //TODO  세이브
@@ -123,6 +128,7 @@ public class SetEditorEnv : MonoBehaviour
         catch
         {
             Debug.LogWarning("경로 설정 중 문제");
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
         }
     }
 
@@ -138,7 +144,7 @@ public class SetEditorEnv : MonoBehaviour
         PATH = JsonUtility.FromJson<PATH>(data);
         if (!Directory.Exists(PATH.ProjectPath))
         {
-            Debug.LogError("파일 경로를 다시 설정해주세요.");
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
             PATH.Path = null;
             PATH.CurrentPath = null;
             PATH.EditorPath = null;

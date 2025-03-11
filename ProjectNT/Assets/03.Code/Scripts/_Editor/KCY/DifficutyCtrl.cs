@@ -11,6 +11,7 @@ public class DifficutyCtrl : MonoBehaviour
     [SerializeField] private List<PhaseDriver> phaseDrivers = new List<PhaseDriver>();
     private Enums.ModeDiff currentModeDiff;
     public Enums.ModeDiff modeDiff { get; set; }
+    public PhaseDriver currentPhase;
     private void Awake()
     {
         Initialize();
@@ -41,7 +42,7 @@ public class DifficutyCtrl : MonoBehaviour
             diff_Toggles[i].onValueChanged.AddListener(phaseDrivers[i].PhaseObj.SetActive);
             phaseDrivers[i].modeDiff = currentModeDiff + i;
 
-            phaseDrivers[i].Initialize();
+            // phaseDrivers[i].Initialize();
 
         }
         diff_Toggles[0].isOn = true;

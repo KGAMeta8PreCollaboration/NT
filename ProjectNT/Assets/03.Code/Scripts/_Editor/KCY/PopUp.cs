@@ -1,29 +1,103 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
-public struct PopupDetail
-{
-
-}
+using UnityEngine.UI;
 
 public class PopUp : MonoBehaviour
 {
-   public string[] strings = new string[]
+
+    [SerializeField] private List<string> detailInfos;
+    [SerializeField] private TextMeshProUGUI detail_tmp;
+    [SerializeField] private GameObject popupObj;
+    [SerializeField] private Button check;
+    [SerializeField] private Button cancle;
+    private bool isTrue = false;
+    public Dictionary<Enums.Details, string> popUpInfo = new Dictionary<Enums.Details, string>();
+    private Action temp;
+    private void Awake()
     {
-        "저장할 경로를 선택해주세요.",
-        "파일을 저장하는데 실패했습니다",
-        "작업물의 이름이 지정되지않았습니다.",
-        "작업물의 아티스트가 지정되지않았습니다.",
-        "작업물의 표지가 지정되지않았습니다.",
-        "작업을 수행하면 저장하지 않은 작업물이 제거될 수 있습니다.\n먼저 저장하시겠습니까?",
-        "파일을 불러오지 못 했습니다.",
-        "더 이상 페이즈를 늘릴 수 없습니다."
-    };
+        check.onClick.AddListener(CheckBtnOff);
+        check.onClick.AddListener(PopupOff);
+        check.onClick.AddListener(CheckClick);
 
-   private void Awake()
-   {
+        cancle.onClick.AddListener(CancleBtnOff);
+        cancle.onClick.AddListener(PopupOff);
+        cancle.onClick.AddListener(CancleClick);
 
-   }
+        for (int i = 0; i < detailInfos.Count; i++)
+        {
+            popUpInfo[Enums.Details.SAVEPATHCHOICE + i] = detailInfos[i];
+        }
+    }
+
+    public void PopUpOpen(Enums.Details details, Action action = null)
+    {
+        popupObj.SetActive(true);
+        switch (details)
+        {
+            case Enums.Details.SAVEPATHCHOICE:
+            case Enums.Details.FILESAVEFAIL:
+            case Enums.Details.NONEPROJECTNAME:
+            case Enums.Details.NONEARTIST:
+            case Enums.Details.NONEBPM:
+            case Enums.Details.NONEBGM:
+            case Enums.Details.NONETHUMBNAIL:
+            case Enums.Details.NONEKEYSOUNDFOLDER:
+            case Enums.Details.FILELOADFAIL:
+            case Enums.Details.PATHSETERROR:
+            case Enums.Details.SAVEFOLDEREXIST:
+            case Enums.Details.LOADIMGFAIL:
+            case Enums.Details.MAKEPROJECTCOMPLETE:
+            case Enums.Details.CHANGEPROJECTINFOCOMPLETE:
+            case Enums.Details.FILEDETECTIONFAIL:
+                detail_tmp.text = popUpInfo[details];
+                CheckBtnOn();
+                break;
+            case Enums.Details.SAVEWARNING:
+            case Enums.Details.DELETEPROJECTCHECK:
+                detail_tmp.text = popUpInfo[details];
+                CheckBtnOn();
+                CancleBtnOn();
+                temp = action;
+                break;
+            default:
+                Debug.LogError("지정되지 않은 케이스입니다.");
+                break;
+        }
+    }
+
+    private void CheckBtnOn()
+    {
+        check.gameObject.SetActive(true);
+    }
+    private void CancleBtnOn()
+    {
+        cancle.gameObject.SetActive(true);
+    }
+    private void CheckBtnOff()
+    {
+        check.gameObject.SetActive(false);
+    }
+    private void CancleBtnOff()
+    {
+        cancle.gameObject.SetActive(false);
+    }
+    private void PopupOff()
+    {
+        popupObj.SetActive(false);
+    }
+    private void CheckClick()
+    {
+        isTrue = true;
+        temp?.Invoke();
+        temp = null;
+    }
+    private void CancleClick()
+    {
+        isTrue = false;
+        temp = null;
+    }
 
 }
