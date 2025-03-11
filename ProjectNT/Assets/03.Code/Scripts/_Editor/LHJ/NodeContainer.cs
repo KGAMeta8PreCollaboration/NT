@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.HID;
 
 public class NodeContainer : MonoBehaviour
 {
@@ -35,13 +37,26 @@ public class NodeContainer : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = _editorCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (EventSystem.current.IsPointerOverGameObject() == false)
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
+                }
+            }
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+            PlaceNodeMousePosition();
+        }
+
         (int column, int beatIndex) = GetGridPositionFromMouse();
         CreatePreviewNode(column, beatIndex);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            PlaceNodeMousePosition();
-        }
     }
 
     private void GridValueChanged()

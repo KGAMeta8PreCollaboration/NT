@@ -8,6 +8,7 @@ public class SongTimelineController : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private float mouseWheelSpeed = 10f;
 
     private AudioSourceManager _audioSourceManager;
     private BeatMapPlane _beatMapPlane;
@@ -60,5 +61,11 @@ public class SongTimelineController : MonoBehaviour
         UpdateTimeText(newTime);
 
         _beatMapPlane.HandleBeatMapPosZ(slider.value);
+    }
+
+    public void SliderController()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel") * mouseWheelSpeed;
+        slider.value = scroll;
     }
 }
