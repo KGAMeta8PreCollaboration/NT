@@ -18,6 +18,8 @@ public class Note : MonoBehaviour
     public Action<Note> OnHit;
     public AudioClip hitSound;
 
+    [SerializeField] private ParticleSystem hitEffect;
+    
     private Vector3 _initialPosition;
     private double _spawnDspTime;
     private double _targetDspTime;
@@ -36,6 +38,8 @@ public class Note : MonoBehaviour
         Destroy();
         isHit = true;
         this.noteType = noteType;
+        ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+        effect.Play();
         OnHit?.Invoke(this);
     }
 
