@@ -150,7 +150,7 @@ public class GridManager : MonoBehaviour
                 //Cell의 중앙점 계산을 위해 0.5f 오프셋 추가
                 float xPos = -5f + ((c * columnWidth) / _gridTexture.width * 10f) + (5f / column);
                 //Grid 중앙에 위치하기 위해 뒤에 주석처리
-                float zPos = -5f + ((b * pixelsPerBeat / beat) / _gridTexture.height * 10f)/* + (5f / _totalBeats)*/;
+                float zPos = -5f + ((b * pixelsPerBeat / beat) / _gridTexture.height * 10f)/*+ (5f / _totalBeats)*/;
 
                 _gridPoint[c, b] = new Vector2(xPos, zPos);
             }
@@ -163,7 +163,7 @@ public class GridManager : MonoBehaviour
             DrawVerticalLine(xPos, gridColor);
         }
 
-        for (float y = 0; y < _gridTexture.height; y += pixelsPerBeat)
+        for (float y = 0; y <= _gridTexture.height; y += pixelsPerBeat)
         {
             DrawHorizontalLine(y, gridColor, false);
 
@@ -203,14 +203,18 @@ public class GridManager : MonoBehaviour
     private void DrawHorizontalLine(float y, Color color, bool isSubGrid)
     {
         float line = isSubGrid? lineThickness / 2 : lineThickness;
-        //lineThickness = (isSubGrid == true) ? lineThickness / 2 : lineThickness;
-        for (int x = 0; x < _gridTexture.width; x++)
+        float halfThickness = line / 2;
+        float startY = y - halfThickness;
+        float endY = y + halfThickness;
+
+        for (float i = startY; i <= endY; i += 0.5f)
         {
-            for (int t = 0; t < line; t++)
+            int pixelY = Mathf.RoundToInt(i);
+            if (pixelY >= 0 && pixelY < _gridTexture.height)
             {
-                if (y + t < _gridTexture.height)
+                for (int x = 0; x < _gridTexture.width; x++)
                 {
-                    _gridTexture.SetPixel(x, (int)(y + t), color);
+                    _gridTexture.SetPixel(x, pixelY, color);
                 }
             }
         }

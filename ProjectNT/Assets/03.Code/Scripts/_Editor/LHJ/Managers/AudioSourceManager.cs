@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,14 @@ public class AudioSourceManager : MonoBehaviour
     public int AudioDuration => _audioDuration;
 
     private bool _isPlaying;
+    //public Action<bool> callback;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _cameraController = FindObjectOfType<CameraController>();
 
-        //반올림
+        //올림
         _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
         print($"노래 길이 {_audioDuration}");
     }
@@ -37,6 +39,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private void HandlePushSpace(bool clickedSpace)
     {
+        //callback?.Invoke(clickedSpace);
         if (clickedSpace == true)
             _audioSource.Pause();
         else

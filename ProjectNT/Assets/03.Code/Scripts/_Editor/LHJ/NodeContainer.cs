@@ -39,18 +39,19 @@ public class NodeContainer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = _editorCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (EventSystem.current.IsPointerOverGameObject() == false)
-                {
-                    Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
-                }
-            }
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
+            //Slider로 Plane 위치 변경이 안됨
+            //Ray ray = _editorCamera.ScreenPointToRay(Input.mousePosition);
+            //if (Physics.Raycast(ray, out RaycastHit hit))
+            //{
+            //    if (EventSystem.current.IsPointerOverGameObject() == false)
+            //    {
+            //        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
+            //    }
+            //}
+            //if (EventSystem.current.IsPointerOverGameObject())
+            //{
+            //    return;
+            //}
             PlaceNodeMousePosition();
         }
 
@@ -70,29 +71,14 @@ public class NodeContainer : MonoBehaviour
         _totalBeats = _gridManager.TotalBeats;
         _nodeGrid = new Node[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
-        //_texture = _gridManager.GridTexture;
-        //int songDuration = _audioSourceManager.AudioDuration;
-
-        ////비트당 초
-        //float secondsPerBeat = 60f / _gridManager.BPM;
-        ////초당 픽셀
-        //float pixelsPerSecond = _texture.height / songDuration;
-        ////비트당 픽셀
-        //float pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
-
-        ////비트의 총 수 -> 셀이 날라가면 안되니 올림
-        //_totalBeats = Mathf.CeilToInt(_texture.height / pixelsPerBeat);
-
-        //_nodeGrid = new Node[_gridManager.Row, _totalBeats];
-        //print($"그리드 생성 완료 : {_gridManager.Row} x {_totalBeats}");
     }
 
     private void PlaceNodeMousePosition()
     {
         (int column, int beatIndex) = GetGridPositionFromMouse();
-        print($"행 : {column}, 열 : {beatIndex}");
         if (column >= 0 && column < 4 && beatIndex >= 0 && beatIndex < _totalBeats)
         {
+            print($"행 : {column}, 열 : {beatIndex}");
             CreateNode(column, beatIndex);
         }
     }
@@ -107,37 +93,23 @@ public class NodeContainer : MonoBehaviour
         {
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
 
-            // 각 셀의 크기 계산
-            float cellWidth = 10f / _gridManager.Column;
-            float cellHeight = 10f / _totalBeats;
+            // cell의 실제 크기 계산
+            float cellWidth = 10f / _gridManager.Column; 
+            float cellHeight = 10f / _gridManager.TotalBeats;        
 
-            // 마우스 위치를 -5 ~ 5 범위에서 0 ~ 10 범위로 변환
+            //-5~5 범위의 hit 좌표를 0~10 범위로 변환
             float posX = localHit.x + 5f;
             float posZ = localHit.z + 5f;
 
-            // 각 셀의 범위를 체크하여 인덱스 결정
-            int column = -1;
-            int beatIndex = -1;
+            //실제 위치를 cell 크기로 나누어 grid 인덱스 계산
+            int column = (int)(posX / cellWidth);
+            int beatIndex = (int)(posZ / cellHeight);
 
-            // column 인덱스 찾기
-            for (int i = 0; i < _gridManager.Column; i++)
-            {
-                if (posX >= i * cellWidth && posX < (i + 1) * cellWidth)
-                {
-                    column = i;
-                    break;
-                }
-            }
-
-            // beatIndex 찾기
-            for (int i = 0; i < _totalBeats; i++)
-            {
-                if (posZ >= i * cellHeight && posZ < (i + 1) * cellHeight)
-                {
-                    beatIndex = i;
-                    break;
-                }
-            }
+            // 범위 체크
+            if (column < 0) column = 0;
+            if (column >= _gridManager.Column) column = _gridManager.Column - 1;
+            if (beatIndex < 0) beatIndex = 0;
+            if (beatIndex >= _totalBeats) beatIndex = _totalBeats - 1;
 
             return (column, beatIndex);
         }
@@ -190,7 +162,7 @@ public class NodeContainer : MonoBehaviour
 
         GameObject nodeObj = Instantiate(nodePrefab);
         Node node = nodeObj.GetComponent<Node>();
-
+         
         if (node != null)
         {
             Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];

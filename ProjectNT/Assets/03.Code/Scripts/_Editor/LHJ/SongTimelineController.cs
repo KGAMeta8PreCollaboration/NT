@@ -23,6 +23,7 @@ public class SongTimelineController : MonoBehaviour
         {
             Debug.LogError("AudioSourceManager가 씬에 존재하지 않습니다.");
         }
+        //_audioSourceManager.callback += SliderController;
     }
 
     private IEnumerator Start()                                                                                                     
@@ -63,9 +64,13 @@ public class SongTimelineController : MonoBehaviour
         _beatMapPlane.HandleBeatMapPosZ(slider.value);
     }
 
-    public void SliderController()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel") * mouseWheelSpeed;
-        slider.value = scroll;
-    }
+    //public void SliderController(bool playing)
+    //{
+    //    if (playing == false)
+    //    {
+    //        return;
+    //    }
+    //    float scroll = Input.GetAxis("Mouse ScrollWheel");
+    //    slider.value = scroll;
+    //}
 }
