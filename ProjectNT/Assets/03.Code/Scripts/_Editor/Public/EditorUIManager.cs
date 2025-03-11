@@ -10,9 +10,12 @@ public class EditorUIManager : MonoBehaviour
     public GameObject editorCanvas;
     public GameObject pathCanvas;
     public PopUp popUp;
-
+    public Sprite thumbnail;
+    public string songName;
+    public string songArtist;
     private void Awake()
     {
+
         if (instance == null)
         {
             instance = this;

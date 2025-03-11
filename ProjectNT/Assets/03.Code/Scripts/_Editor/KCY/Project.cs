@@ -23,6 +23,12 @@ public class Project : MonoBehaviour
     [SerializeField] private Toggle toggle;
     [SerializeField] private TextMeshProUGUI projectName;
     private Sprite sprite;
+    private string tempName;
+    private string tempArtist;
+    private string tempThumbnail;
+    private string tempBgm;
+    private string tempBpm;
+
     public Toggle Toggle
     {
         get { return toggle; }
@@ -109,24 +115,41 @@ public class Project : MonoBehaviour
 
     public void SetName(string text)
     {
-        Debug.Log("RE");
-        Debug.Log(this.GetInstanceID());
-        Debug.Log(loader.currentProject.GetInstanceID());
         if (this != loader.currentProject) return;
-        Debug.Log("SET");
-        projectData.projectName = text;
-        loader.currentProject.projectName.text = text;
+        // projectData.projectName = text;
+        // loader.currentProject.projectName.text = text;
+        tempName = text;
     }
 
     public void SetArtist(string text)
     {
         if (this != loader.currentProject) return;
-        projectData.artistName = text;
+        // projectData.artistName = text;
+        tempArtist = text;
     }
     public void SetBPM(string text)
     {
         if (this != loader.currentProject) return;
         if (string.IsNullOrEmpty(text)) return;
-        projectData.bpm = int.Parse(text);
+        // projectData.bpm = int.Parse(text);
+        tempBpm = text;
+    }
+    public void SetThumbnail(string text)
+    {
+        if (this != loader.currentProject) return;
+        tempThumbnail = text;
+    }
+    public void SetBgm(string text)
+    {
+        if (this != loader.currentProject) return;
+        tempBgm = text;
+    }
+    public void SetProjectData()
+    {
+        projectData.projectName = tempName;
+        projectData.artistName = tempArtist;
+        projectData.bpm = int.Parse(tempBpm);
+        projectData.thumbnailName = tempThumbnail;
+        projectData.bgmName = tempBgm;
     }
 }

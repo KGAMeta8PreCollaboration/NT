@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using SFB;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ using UnityEngine.UI;
 using Detail = Enums.Details;
 public class ProjectLoader : MonoBehaviour
 {
+    #region 인스펙터참조멤버
     [SerializeField] private ProjectIO projectIO;
     [SerializeField] private GameObject newProjectPrefab;
     [SerializeField] private RectTransform project_rect;
@@ -29,33 +31,34 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private Button edit_btn;
     [SerializeField] private Button save_btn;
     [SerializeField] private Button back_btn;
+    #endregion
+
     private Action delAction;
     private string bgmTempPath;
     private string thumbnailTempPath;
-
     public Project currentProject;
     public ToggleGroup projects_Group;
     public List<Project> addedProjects = new List<Project>();
 
+    #region 프로퍼티
     public string ProjectPath { get { return projectIO.ProjectPath; } }
-
     public string SetProjectName { set { projectName_inputfield.text = value; } }
-
     public string SetArtistName { set { songArtist_inputfield.text = value; } }
-
     public string SetBgmName { set { bgmName_tmp.text = value; } }
-
     public string SetThumbnailName { set { thumbnailName_tmp.text = value; } }
-
     public Sprite SetThumbnail { set { thumbnail_img.sprite = value; } }
-
     public string SetBpm { set { projectBpm_inputfield.text = value; } }
     public bool EditBtn { set { edit_btn.interactable = value; } }
+    #endregion
     private void Awake()
     {
         Initialize();
         LoadProjects();
+        projectName_inputfield.onValueChanged.AddListener((word) => projectName_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
+        songArtist_inputfield.onValueChanged.AddListener((word) => songArtist_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
+        projectBpm_inputfield.onValueChanged.AddListener((word) => projectBpm_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
     }
+
     private void OnEnable()
     {
         delAction += Delete;
@@ -64,6 +67,7 @@ public class ProjectLoader : MonoBehaviour
     {
         delAction -= Delete;
     }
+
     private void Initialize()
     {
         if (projectIO == null) projectIO = GetComponentInParent<ProjectIO>();
@@ -134,7 +138,6 @@ public class ProjectLoader : MonoBehaviour
         {
             Debug.LogWarning(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
-
         }
     }
 
@@ -189,10 +192,11 @@ public class ProjectLoader : MonoBehaviour
         }
 
         //프로젝트 데이터 업데이트
-        currentProject.projectData.projectName = projectName_inputfield.text;
-        currentProject.ProjectName.text = projectName_inputfield.text;
-        currentProject.projectData.artistName = songArtist_inputfield.text;
-        currentProject.projectData.bpm = int.Parse(projectBpm_inputfield.text);
+        // currentProject.projectData.projectName = projectName_inputfield.text;
+        // currentProject.ProjectName.text = projectName_inputfield.text;
+        // currentProject.projectData.artistName = songArtist_inputfield.text;
+        // currentProject.projectData.bpm = int.Parse(projectBpm_inputfield.text);
+        currentProject.SetProjectData();
 
         string thumbTemp = null;
         string bgmTemp = null;
