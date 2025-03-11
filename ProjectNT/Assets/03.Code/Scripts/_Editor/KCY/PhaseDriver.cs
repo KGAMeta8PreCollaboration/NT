@@ -11,12 +11,13 @@ using UnityEngine.UI;
 public class PhaseDriver : MonoBehaviour
 {
     [SerializeField] private ResourceIO resourceIO;
+    [SerializeField] private DifficutyCtrl diffCtrl;
     [SerializeField] private GameObject newPhasePrefab;
     [SerializeField] private Button addPhase;
     [SerializeField] private RectTransform phaseRect;
     [SerializeField] private Scrollbar phaseScrollBar;
-    [SerializeField] private RectTransform addBTNRect;
     [SerializeField] private GameObject target_Obj;
+    [SerializeField] private Toggle toggle;
     private bool isSaved = true;
     public bool IsSaved
     {
@@ -28,7 +29,6 @@ public class PhaseDriver : MonoBehaviour
         get { return target_Obj; }
         private set { target_Obj = value; }
     }
-    private int maxPhaseCount = 10;
     public LinkedList<Phase> linkedPhase = new LinkedList<Phase>();
 
     private Dictionary<Enums.ModeDiff, int> byDifficulty = new Dictionary<Enums.ModeDiff, int>();
@@ -43,6 +43,9 @@ public class PhaseDriver : MonoBehaviour
 
     private void Awake()
     {
+        if (diffCtrl == null) diffCtrl = GetComponentInParent<DifficutyCtrl>();
+        if (toggle == null) toggle = GetComponent<Toggle>();
+        toggle.onValueChanged.AddListener(Initialize);
 
     }
 
@@ -59,6 +62,18 @@ public class PhaseDriver : MonoBehaviour
         //     ResourceIO.Instance.saveDelegate -= AddDataList;
         //     ResourceIO.Instance.loadDelegate -= LoadData;
     }
+    public void Initialize(bool isTrue)
+    {
+        if (newPhasePrefab == null)
+            newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
+
+        if (isTrue)
+        {
+            diffCtrl.currentPhase = this;
+            addPhase.onClick.RemoveAllListeners();
+            addPhase.onClick.AddListener(() => AddNewPhase());
+        }
+    }
     private void AddNewPhase(SongData songData = null)
     {
         //페이즈 10개 생성 시 추가생성 불가
@@ -70,11 +85,11 @@ public class PhaseDriver : MonoBehaviour
         Debug.Log("생성");
         GameObject newPhase =
         Instantiate(newPhasePrefab, phaseRect, false);
-        ReplaceAddBTN();
         Phase temp = newPhase.GetComponent<Phase>();
         //현재 난이도에 따라 페이즈 난이도 설정
         temp.modeDiff = m_ModeDiff;
-        if (songData != null) temp.m_SongData = songData;
+        temp.phaseDriver = this;
+        // if (songData != null) temp.m_SongData = songData;
         linkedPhase.AddLast(temp);
         //페이즈 별 번호 추가
         if (!byDifficulty.ContainsKey(m_ModeDiff))
@@ -117,8 +132,6 @@ public class PhaseDriver : MonoBehaviour
             phase.gameObject.transform.SetParent(phaseRect);
         }
 
-        //페이즈 추가버튼 정렬
-        ReplaceAddBTN();
     }
     public void SwapPhaseDown(Phase other)
     {
@@ -146,8 +159,6 @@ public class PhaseDriver : MonoBehaviour
             phase.gameObject.transform.SetParent(phaseRect);
         }
 
-        //페이즈 추가버튼 정렬
-        ReplaceAddBTN();
     }
     private IEnumerator ScrollBarCtrl()
     {
@@ -156,26 +167,12 @@ public class PhaseDriver : MonoBehaviour
         phaseScrollBar.value = 0;
     }
 
-    private void ReplaceAddBTN()
-    {
-        addPhase.transform.SetParent(null);
-        addPhase.transform.SetParent(phaseRect);
-        IsSaved = false;
-    }
-
-    public void Initialize()
-    {
-        if (newPhasePrefab == null)
-            newPhasePrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/AudioSource_Info");
-
-        addPhase.onClick.AddListener(() => AddNewPhase());
-    }
     public void AddDataList()
     {
         List<SongData> dataList = new List<SongData>();
         foreach (Phase phase in linkedPhase)
         {
-            dataList.Add(phase.m_SongData);
+            // dataList.Add(phase.m_SongData);
         }
         resourceIO.Phase_Dic[m_ModeDiff] = dataList;
     }
@@ -189,7 +186,7 @@ public class PhaseDriver : MonoBehaviour
         {
             foreach (Phase phase in linkedPhase)
             {
-                phase.m_SongData = dataList[temp];
+                // phase.m_SongData = dataList[temp];
                 temp++;
             }
         }

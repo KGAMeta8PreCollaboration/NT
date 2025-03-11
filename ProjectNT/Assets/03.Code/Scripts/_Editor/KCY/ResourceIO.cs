@@ -117,4 +117,11 @@ public class ResourceIO : MonoBehaviour
 
         File.Copy(paths[0], DestFile, true);
     }
+
+    public void Test()
+    {
+        string path = Path.Combine(Application.dataPath, "Test");
+        Directory.CreateDirectory(path);
+
+    }
 }
