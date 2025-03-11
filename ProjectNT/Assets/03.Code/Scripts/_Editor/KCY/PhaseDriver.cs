@@ -72,6 +72,11 @@ public class PhaseDriver : MonoBehaviour
             diffCtrl.currentPhase = this;
             addPhase.onClick.RemoveAllListeners();
             addPhase.onClick.AddListener(() => AddNewPhase());
+            Debug.Log("등록");
+        }
+        else
+        {
+
         }
     }
     private void AddNewPhase(SongData songData = null)

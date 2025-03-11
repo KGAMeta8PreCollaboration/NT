@@ -38,6 +38,7 @@ public class Phase : MonoBehaviour
 
     private void Delete_BTN()
     {
+        phaseDriver.linkedPhase.Remove(this);
         Destroy(gameObject);
     }
 }
