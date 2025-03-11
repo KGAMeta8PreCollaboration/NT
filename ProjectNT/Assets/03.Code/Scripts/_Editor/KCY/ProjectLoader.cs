@@ -87,6 +87,7 @@ public class ProjectLoader : MonoBehaviour
     private void EditProject()
     {
         //TODO 다음으로 넘어가기
+        EditorUIManager.Instance.editorCanvas.SetActive(true);
     }
 
     private void LoadProjects()
