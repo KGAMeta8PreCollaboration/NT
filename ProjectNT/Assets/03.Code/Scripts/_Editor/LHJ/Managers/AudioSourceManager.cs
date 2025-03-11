@@ -23,7 +23,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private void Update()
     {
-        if (cameraController._isRotating == false)
+        if (cameraController?._isRotating == false)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
