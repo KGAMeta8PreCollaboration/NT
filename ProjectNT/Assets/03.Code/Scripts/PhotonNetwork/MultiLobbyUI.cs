@@ -21,6 +21,12 @@ public class MultiLobbyUI : MonoBehaviour
         _photonManager.LeaveRoom();
     }
 
+    public void ResetConnectImage()
+    {
+        connectImagePlayer1.color = Color.red;
+        connectImagePlayer2.color = Color.red;
+    }
+
     private void OnDestroy()
     {
         _quitButton.onClick.RemoveListener(QuitButtonClick);

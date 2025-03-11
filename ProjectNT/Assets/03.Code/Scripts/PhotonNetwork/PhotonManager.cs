@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
+
         _logText.text = "방 참가 성공!";
         print(_logText.text);
 
@@ -38,6 +40,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         _multiLobbyUI.gameObject.SetActive(true);
 
         AssignPlayerRole();
+        photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
     }
 
     public void LeaveRoom()
@@ -72,39 +75,55 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         print("포톤 연결 해제");
+        _multiLobbyUI.ResetConnectImage();
         _multiLobbyUI?.gameObject.SetActive(false);
         _tmp_LobbyUI?.SetActive(true);
 
         _player.transform.position = _lobbyPoint.position;
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        print("플레이어 입장 시 실행되는 함수");
-        UpdateMultiLobbyUI2(newPlayer, true);
-    }
-
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        UpdateMultiLobbyUI2(otherPlayer, true);
+        print("나간 플레이어: "+otherPlayer.NickName);
+        if (otherPlayer.NickName.Equals("Player1"))
+        {
+            _multiLobbyUI.connectImagePlayer1.color = Color.red;
+        }
+        else
+        {
+            _multiLobbyUI.connectImagePlayer2.color = Color.red;
+        }
+            otherPlayer.NickName = "";
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        print($"{newMasterClient.NickName}이 새로운 마스터가 됌.");
     }
 
     public void AssignPlayerRole()
     {
-        if (PhotonNetwork.IsMasterClient) // 가장 먼저 들어온 플레이어 = Player1
+        // 현재 방에 있는 플레이어들 가져오기
+        List<Player> players = new List<Player>(PhotonNetwork.PlayerList);
+            print(players.Count);
+        // 기존 역할이 남아있는지 확인
+        bool isPlayer1Assigned = players.Exists(p => p.NickName == "Player1");
+        bool isPlayer2Assigned = players.Exists(p => p.NickName == "Player2");
+
+        if (!isPlayer1Assigned) // Player1 역할이 비어있으면 현재 플레이어를 Player1로 지정
         {
             PhotonNetwork.LocalPlayer.NickName = "Player1";
             _player.transform.position = _spawnPointPlayers[0].position;
+            Debug.Log("새로운 Player1 설정됨: " + PhotonNetwork.LocalPlayer.NickName);
         }
-        else
+        else if (!isPlayer2Assigned) // Player2 역할이 비어있으면 현재 플레이어를 Player2로 지정
         {
             PhotonNetwork.LocalPlayer.NickName = "Player2";
             _player.transform.position = _spawnPointPlayers[1].position;
+            Debug.Log("새로운 Player2 설정됨: " + PhotonNetwork.LocalPlayer.NickName);
         }
-
-        //photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
-        UpdateMultiLobbyUI2(PhotonNetwork.LocalPlayer, false);
     }
+
 
     [PunRPC]
     public void UpdateMultiLobbyUI()
@@ -119,18 +138,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             {
                 _multiLobbyUI.connectImagePlayer2.color = Color.green; // 초록색으로 변경
             }
-        }
-    }
-
-    public void UpdateMultiLobbyUI2(Player player, bool isQuit)
-    {
-        if (player.NickName == "Player1")
-        {
-            _multiLobbyUI.connectImagePlayer1.color = isQuit == false ? Color.green : Color.red; // 초록색으로 변경
-        }
-        else if (player.NickName == "Player2")
-        {
-            _multiLobbyUI.connectImagePlayer2.color = isQuit == false ? Color.green : Color.red;  // 초록색으로 변경
         }
     }
 
