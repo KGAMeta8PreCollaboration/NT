@@ -26,8 +26,8 @@ public class Woofer : MonoBehaviour
 	{
 		if (_audioSource.isPlaying)
 		{
-			_audioSource.Stop();
-		}
+			// _audioSource.Stop();
+        }
 		if (_audioSource.clip != hitSound)
 			_audioSource.clip = hitSound;
 		
