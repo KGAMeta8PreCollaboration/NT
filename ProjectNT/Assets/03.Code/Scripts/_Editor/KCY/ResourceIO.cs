@@ -17,8 +17,8 @@ public class ResourceIO : MonoBehaviour
     private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     private string loadDataPath = "\\Editor\\Song\\Phase\\";
     private string fileName = "SaveData";
-    public Dictionary<Enums.ModeDiff, List<SongData>> Phase_Dic =
-    new Dictionary<Enums.ModeDiff, List<SongData>>();
+    public Dictionary<Enums.ModeDiff, List<BeatMapData>> Phase_Dic =
+    new Dictionary<Enums.ModeDiff, List<BeatMapData>>();
 
     private string dataPath;
     public AudioClip audioClip;
@@ -76,7 +76,7 @@ public class ResourceIO : MonoBehaviour
                 string jsonFile = File.ReadAllText(s);
                 Debug.Log(s);
                 Debug.Log("위 파일을 읽어오는중");
-                Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<SongData>>(jsonFile);
+                Phase_Dic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, List<BeatMapData>>(jsonFile);
                 loadDelegate?.Invoke();
                 Debug.Log("데이터 적용 성공");
             }
