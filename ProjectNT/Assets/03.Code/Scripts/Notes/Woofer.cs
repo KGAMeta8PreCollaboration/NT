@@ -36,14 +36,15 @@ public class Woofer : MonoBehaviour
         if (notes.Count == 0)
             return;
 
-        notes[0].Hit(_judgementSystem.CheckTiming());
-        notes.RemoveAt(0);
+        Note note = notes[0];
+        note.Hit(_judgementSystem.CheckTiming());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Note note))
         {
+            note.OnDestroyed += note => notes.Remove(note);
             notes.Add(note);
         }
     }
@@ -52,7 +53,7 @@ public class Woofer : MonoBehaviour
     {
         if (other.TryGetComponent(out Note note))
         {
-            notes.Remove(note);
+            notes?.Remove(note);
         }
     }
 }

@@ -764,7 +764,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1239717125}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1436,6 +1436,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &525590551685175629
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 525590550546029328, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_Name
+      value: LongNote
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029328, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7821974
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.912654
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.623199
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 525590550546029330, guid: 01795987734823248931e31f9e49d1fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 01795987734823248931e31f9e49d1fb, type: 3}
 --- !u!4 &1209467253426550874
 Transform:
   m_ObjectHideFlags: 0
@@ -6367,6 +6441,8 @@ GameObject:
   - component: {fileID: 7046967573408643750}
   - component: {fileID: 7046967573408643748}
   - component: {fileID: 956140008}
+  - component: {fileID: 7046967573408643752}
+  - component: {fileID: 7046967573408643753}
   m_Layer: 0
   m_Name: NoteManager
   m_TagString: Untagged
@@ -6374,6 +6450,74 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7046967573408643752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046967573408643751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343dcb7cc0ab8ae4f84c8276b2d0effb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _woofers:
+  - {fileID: 7046967572054737912}
+  - {fileID: 7046967572104652091}
+  - {fileID: 7046967571764708535}
+  - {fileID: 7046967573550955440}
+--- !u!114 &7046967573408643753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046967573408643751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 345daa196b27ff24097b3be9c30e01c0,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af391851-29fe-49af-bc56-24b7bdbfccbb
+    m_ActionName: Create/Create[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7046967573408643752}
+        m_TargetAssemblyTypeName: TmpCreateNotes, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d91726f-90ed-4a33-899e-edb70440188d
+    m_ActionName: Create/Hit[/Keyboard/a,/Keyboard/s,/Keyboard/d,/Keyboard/f]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Create
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &7046967573479288192
 GameObject:
   m_ObjectHideFlags: 0
