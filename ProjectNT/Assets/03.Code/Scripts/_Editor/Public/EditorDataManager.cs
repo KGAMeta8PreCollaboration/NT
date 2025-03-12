@@ -27,9 +27,19 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
     new Dictionary<Enums.ModeDiff, BeatMapData>();
 
+    private Enums.ModeDiff currentModeDiff;
+    public Enums.ModeDiff CurrentModeDiff { set { currentModeDiff = value; } }
+    private NodeContainer nodeContainer;
     protected override void Awake()
     {
         base.Awake();
+        //TODO 병합 후 주석해제예정
+        // if (nodeContainer == null) nodeContainer = FindObjectOfType<NodeContainer>();
+        for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
+        {
+            BeatMapData beatMapData = new BeatMapData();
+            beatMapDic.Add(Enums.ModeDiff.SOLO_EASY + i, beatMapData);
+        }
     }
 
     public void LoadBeatMapData()
@@ -50,6 +60,9 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public void SaveBeatMapData()
     {
         string path = Path.Combine(currentProjectData.m_Path, savefileName);
-
+        //TODO 병합 후 주석해제 예정
+        string jsonData;
+        jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
+        File.WriteAllText(path, jsonData);
     }
 }

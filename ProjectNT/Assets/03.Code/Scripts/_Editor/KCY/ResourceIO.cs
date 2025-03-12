@@ -25,11 +25,10 @@ public class ResourceIO : MonoBehaviour
     public SaveDelegate saveDelegate;
     public LoadDelegate loadDelegate;
 
-    private void Awake()
+    private void Start()
     {
         EditorDataManager.Instance.LoadBeatMapData();
     }
-
     private void LoadKeySounds()
     {
 

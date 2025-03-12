@@ -8,11 +8,8 @@ public class GameModeCtrl : MonoBehaviour
 {
     [SerializeField] private List<Toggle> diffToggles;
     [SerializeField] private List<Toggle> modeToggles;
-    private Enums.ModeDiff currentGameMode;
     private int diffCount;
     private int modeCount;
-
-    public Enums.ModeDiff CurrentGameMode => currentGameMode;
 
     private void Awake()
     {
@@ -28,7 +25,7 @@ public class GameModeCtrl : MonoBehaviour
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
-        currentGameMode = 0;
+        EditorDataManager.Instance.CurrentModeDiff = 0;
     }
 
     private void SetMode(bool isTrue)
@@ -42,7 +39,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     modeCount = i;
                     int total = modeCount + diffCount;
-                    currentGameMode = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i += 4;
@@ -60,7 +57,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     diffCount = i;
                     int total = modeCount + diffCount;
-                    currentGameMode = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i++;
