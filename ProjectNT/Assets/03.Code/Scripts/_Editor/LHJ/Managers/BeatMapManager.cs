@@ -17,7 +17,7 @@ public class BeatMapManager : MonoBehaviour
 
     //에디터 상태
     private bool _isPaused = true;
-    private NodeType _currentNodeType = NodeType.None;
+    //private NodeType _currentNodeType = NodeType.None;
 
     private void InitializeEdior()
     {

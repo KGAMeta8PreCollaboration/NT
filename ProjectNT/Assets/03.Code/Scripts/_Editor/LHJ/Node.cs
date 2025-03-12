@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    private int _column;
-    private float _beatTime;
-
-    public int Column => _column;
-    public float BeatTime => _beatTime;
-
-    public void Initialize(int column, float beatTime)
+    private Vector2Int _index;
+    private NodeType _nodeType;
+    private NodeInstrument _nodeInstrument;
+    private string _keySound;
+    private Vector3 _nodeColor;
+    
+    public void InitializeFromData(NodeData data)
     {
-        _column = column;
-        _beatTime = beatTime;
+
     }
 }

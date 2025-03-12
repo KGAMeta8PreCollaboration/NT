@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
@@ -20,6 +21,8 @@ public class NodeContainer : MonoBehaviour
     private Material myMaterial;
     private Material myMaterialPrefab;
 
+    private BeatMapData _currentBeatMapData;
+              
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
@@ -58,16 +61,29 @@ public class NodeContainer : MonoBehaviour
         (int column, int beatIndex) = GetGridPositionFromMouse();
         CreatePreviewNode(column, beatIndex);
 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SaveBeatMap();
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (_currentBeatMapData == null)
+            {
+                print("정보 없음");
+                return;
+            }
+            PrintAllNode();
+        }
     }
 
     private void GridValueChanged()
     {
-        InitializeNodeGrid();
+        InitializeNodeGrid();  
     }
 
     //노드 이차원 배열 생성
     private void InitializeNodeGrid()
-    {
+    { 
         _totalBeats = _gridManager.TotalBeats;
         _nodeGrid = new Node[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
@@ -171,7 +187,43 @@ public class NodeContainer : MonoBehaviour
             node.transform.localScale = nodeObj.transform.localScale;
 
             _nodeGrid[column, beatIndex] = node;
-            node.Initialize(column, beatIndex * (60f / _gridManager.BPM));
+            //node.Initialize(column, beatIndex * (60f / _gridManager.BPM));
         }
+    }
+
+    //비트맵 저장하는 함수
+    public void SaveBeatMap()
+    {
+        _currentBeatMapData = new BeatMapData();
+
+        _currentBeatMapData.songData = new SongData
+        {
+            songName = _audioSourceManager.AudioSource.clip.name,
+            songLength = _audioSourceManager.AudioDuration
+        };
+
+        _currentBeatMapData.gridSetting = new GridSetting
+        {
+            BPM = _gridManager.BPM,
+            Column = _gridManager.Column,
+            BeatNum = _gridManager.BeatNum,
+        };
+
+        _currentBeatMapData.nodes = new List<NodeData>();
+        for (int i = 0; i < _gridManager.Column; i++)
+        {
+            for (int j = 0; j < _gridManager.TotalBeats; j++)
+            {
+                if (_nodeGrid != null)
+                {
+                    //_currentBeatMapData.nodes.Add(_nodeGrid[i, j])
+                }
+            }
+        }
+    }
+
+    private void PrintAllNode()
+    {
+        print($"노드의 양 : {_currentBeatMapData.nodes.Count()}");
     }
 }
