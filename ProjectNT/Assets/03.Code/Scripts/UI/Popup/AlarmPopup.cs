@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using TMPro;
 using UnityEngine;
+using Game;
 
 public class AlarmPopup : Popup
 {

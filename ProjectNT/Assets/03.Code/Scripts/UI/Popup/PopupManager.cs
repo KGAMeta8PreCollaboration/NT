@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Game;
 public class PopupManager : Singleton<PopupManager>
 {
     public List<Popup> popupList = new List<Popup>();
