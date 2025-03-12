@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EditorDataManager : MonoBehaviour
+[Serializable]
+public struct ProjectData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string projectName;
+    public string artistName;
+    public string thumbnailName;
+    public string bgmName;
+    public int bpm;
+    public string m_Path;
+}
 
-    // Update is called once per frame
-    void Update()
+public class EditorDataManager : Singleton<EditorDataManager>
+{
+
+    public ProjectData currentProjectData;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
     }
 }

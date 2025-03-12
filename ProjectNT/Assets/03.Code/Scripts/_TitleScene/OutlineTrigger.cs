@@ -24,6 +24,7 @@ public class OutlineTrigger : MonoBehaviour
 
     private Outline outline; 
     private bool isOutlineActive = false;
+    private bool isEventRegistered = false;
     private XRSimpleInteractable simpleInteractable;
 
     private void Start()
@@ -44,14 +45,14 @@ public class OutlineTrigger : MonoBehaviour
 
     private void OnEnable()
     {
-        left.action.started += OnSelect;
-        right.action.started += OnSelect;
+        //left.action.started += OnSelect;
+        //right.action.started += OnSelect;
     }
 
     private void OnDisable()
     {
-        left.action.started -= OnSelect;
-        right.action.started -= OnSelect;
+        //left.action.started -= OnSelect;
+        //right.action.started -= OnSelect;
     }
 
     private void OnOutLine(HoverEnterEventArgs args)
@@ -64,6 +65,12 @@ public class OutlineTrigger : MonoBehaviour
                 uiNameText.SetActive(true);
                 outline.enabled = true; //아웃라인 활성화
                 isOutlineActive = true; //아웃라인 활성화 됨을 확인
+                if (!isEventRegistered)
+                {
+                    left.action.started += OnSelect;
+                    right.action.started += OnSelect;
+                    isEventRegistered = true;
+                }
             }
         }
     }
@@ -78,6 +85,12 @@ public class OutlineTrigger : MonoBehaviour
                 uiNameText.SetActive(false);
                 outline.enabled = false; //아웃라인 비활성화
                 isOutlineActive = false; //아웃라인 비활성화 됨을 확인
+                if (isEventRegistered)
+                {
+                    left.action.started -= OnSelect;
+                    right.action.started -= OnSelect;
+                    isEventRegistered = false;
+                }
             }
         }
     }
