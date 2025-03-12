@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 public enum UIGameType
 {
@@ -50,12 +49,12 @@ public class GamePlayUI : BaseTitleUI
 
     private void OnEnable()
     {
-        ResetMusicSet();
+        //ResetMusicSet();
     }
 
     private void OnDisable()
     {
-        StopMusic();
+        //StopMusic();
     }
 
     private void SetMusicData(TitleMusicData data)
@@ -76,6 +75,7 @@ public class GamePlayUI : BaseTitleUI
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 노래시작
+            PhotonNetwork.LoadLevel("LSH_MultiGame");
         }
         else
         {

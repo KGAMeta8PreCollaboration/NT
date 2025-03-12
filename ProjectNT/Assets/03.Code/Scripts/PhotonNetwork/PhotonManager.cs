@@ -31,6 +31,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		//_tmp_LobbyUI.SetActive(false);
 		//_multiLobbyUI.gameObject.SetActive(true);
 
+		PhotonNetwork.AutomaticallySyncScene = true;
+
 		_player.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
 
 		AssignPlayerRole();
