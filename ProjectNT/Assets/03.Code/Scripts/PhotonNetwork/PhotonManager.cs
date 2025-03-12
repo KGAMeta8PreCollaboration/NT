@@ -1,5 +1,4 @@
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,9 +13,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 	[SerializeField] private VRPlayer _player;
 
-
 	[SerializeField] private GameObject _tmp_LobbyUI;
-	[SerializeField] private Transform _lobbyPoint;
 
 	public override void OnConnectedToMaster()
 	{
