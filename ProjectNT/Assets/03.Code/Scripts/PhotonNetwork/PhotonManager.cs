@@ -9,16 +9,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	[SerializeField] private Transform[] _spawnPointPlayers;
 	[SerializeField] private MultiLobbyUI _multiLobbyUI;
 
-	[SerializeField] private TextMeshProUGUI _logText;
-
 	[SerializeField] private VRPlayer _player;
 
-	[SerializeField] private GameObject _tmp_LobbyUI;
+	//[SerializeField] private GameObject _tmp_LobbyUI;
 
 	public override void OnConnectedToMaster()
 	{
-		_logText.text = "Photon 연결 성공!";
-		print(_logText.text);
+		print("Photon 연결 성공!");
 		PhotonNetwork.JoinLobby();
 	}
 	public override void OnJoinedLobby()
@@ -29,11 +26,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom()
 	{
 
-		_logText.text = "방 참가 성공!";
-		print(_logText.text);
+		print("방 참가 성공!");
 
-		_tmp_LobbyUI.SetActive(false);
-		_multiLobbyUI.gameObject.SetActive(true);
+		//_tmp_LobbyUI.SetActive(false);
+		//_multiLobbyUI.gameObject.SetActive(true);
 
 		_player.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
 
@@ -79,8 +75,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		PhotonNetwork.LocalPlayer.NickName = "";
 		print(PhotonNetwork.LocalPlayer.NickName);
 
-		_multiLobbyUI?.gameObject.SetActive(false);
-		_tmp_LobbyUI?.SetActive(true);
+		//_multiLobbyUI?.gameObject.SetActive(false);
+		//_tmp_LobbyUI?.SetActive(true);
 
 		_player.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(true);
 	}
@@ -150,8 +146,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 	private void SpawnPlayer()
 	{
-		_logText.text = "플레이어 컨트롤러 생성";
-		print(_logText.text);
+		print("플레이어 컨트롤러 생성");
 		if (PhotonNetwork.NickName == "Player1")
 		{
 			PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation);

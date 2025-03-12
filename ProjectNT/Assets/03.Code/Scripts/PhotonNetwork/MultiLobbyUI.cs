@@ -19,6 +19,7 @@ public class MultiLobbyUI : MonoBehaviour
 	private void QuitButtonClick()
 	{
 		_photonManager.LeaveRoom();
+		TitleManager.instance.CloseUI();
 	}
 
 	public void ResetConnectImage()
