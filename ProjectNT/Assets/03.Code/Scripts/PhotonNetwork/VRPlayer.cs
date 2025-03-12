@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class VRPlayer : MonoBehaviour
 {
-	[SerializeField] private PhotonView _Playerview;
+	[SerializeField] private PhotonView _playerView;
+	[SerializeField] private Transform _leftHand;
+	[SerializeField] private Transform _rightHand;
+
 	private Camera _playerCamera;
 	private AudioListener playerAudioListener;
 
@@ -14,10 +17,18 @@ public class VRPlayer : MonoBehaviour
 		_playerCamera = GetComponentInChildren<Camera>();
 		playerAudioListener = GetComponentInChildren<AudioListener>();
 
-		PlayerCameraAndAudioListenerActive(_Playerview.IsMine);
+		PlayerCameraAndAudioListenerActive(_playerView.IsMine);
 	}
 
-	public void PlayerCameraAndAudioListenerActive(bool on)
+    private void Update()
+    {
+		if (_playerView.IsMine)
+		{
+
+		}
+    }
+
+    public void PlayerCameraAndAudioListenerActive(bool on)
 	{
 		if (on)
 		{

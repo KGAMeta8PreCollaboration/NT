@@ -9,7 +9,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	[SerializeField] private Transform[] _spawnPointPlayers;
 	[SerializeField] private MultiLobbyUI _multiLobbyUI;
 
-	[SerializeField] private VRPlayer _player;
+	[SerializeField] private VRPlayer _lobbyPlayer;
+
+	public VRPlayer multiLobbyPlayer;
 
 	//[SerializeField] private GameObject _tmp_LobbyUI;
 
@@ -33,7 +35,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 		PhotonNetwork.AutomaticallySyncScene = true;
 
-		_player.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
+		_lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
 
 		AssignPlayerRole();
 		SpawnPlayer();
@@ -80,7 +82,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		//_multiLobbyUI?.gameObject.SetActive(false);
 		//_tmp_LobbyUI?.SetActive(true);
 
-		_player.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(true);
+		_lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(true);
 	}
 
 	public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -149,14 +151,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	private void SpawnPlayer()
 	{
 		print("플레이어 컨트롤러 생성");
-		if (PhotonNetwork.NickName == "Player1")
+		if (PhotonNetwork.LocalPlayer.NickName == "Player1")
 		{
-			PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation);
+            multiLobbyPlayer = PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
 		}
-		else if (PhotonNetwork.NickName == "Player2")
+		else if (PhotonNetwork.LocalPlayer.NickName == "Player2")
 		{
 
-			PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation);
+			multiLobbyPlayer=PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
 		}
 	}
 }
