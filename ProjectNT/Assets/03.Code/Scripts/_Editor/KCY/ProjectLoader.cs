@@ -97,7 +97,7 @@ public class ProjectLoader : MonoBehaviour
     {
         //TODO 다음으로 넘어가기
 
-        EditorDataManager.Instance.currentProjectData = currentProject.projectData;
+        EditorDataManager.Instance.ProjectData = currentProject.projectData;
         EditorUIManager.Instance.pathCanvas.SetActive(false);
         EditorUIManager.Instance.editorCanvas.SetActive(true);
     }
@@ -127,7 +127,8 @@ public class ProjectLoader : MonoBehaviour
             currentProject.projectData = projectData;
         }
         addProejct_btn.interactable = true;
-        edit_btn.interactable = true;
+        if (addedProjects.Count > 0)
+            edit_btn.interactable = true;
     }
 
     private void LoadSong()

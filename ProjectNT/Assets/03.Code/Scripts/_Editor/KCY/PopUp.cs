@@ -12,8 +12,9 @@ public class PopUp : MonoBehaviour
     [SerializeField] private TextMeshProUGUI detail_tmp;
     [SerializeField] private GameObject popupObj;
     [SerializeField] private Button check;
+    [SerializeField] private TextMeshProUGUI check_tmp;
     [SerializeField] private Button cancle;
-    private bool isTrue = false;
+    [SerializeField] private Button notSave;
     public Dictionary<Enums.Details, string> popUpInfo = new Dictionary<Enums.Details, string>();
     private Action temp;
     private void Awake()
@@ -25,6 +26,9 @@ public class PopUp : MonoBehaviour
         cancle.onClick.AddListener(CancleBtnOff);
         cancle.onClick.AddListener(PopupOff);
         cancle.onClick.AddListener(CancleClick);
+
+        notSave.onClick.AddListener(NotSaveBtnOff);
+        notSave.onClick.AddListener(PopupOff);
 
         for (int i = 0; i < detailInfos.Count; i++)
         {
@@ -55,12 +59,14 @@ public class PopUp : MonoBehaviour
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 break;
-            case Enums.Details.SAVEWARNING:
             case Enums.Details.DELETEPROJECTCHECK:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 CancleBtnOn();
                 temp = action;
+                break;
+            case Enums.Details.SAVEWARNING:
+
                 break;
             default:
                 Debug.LogError("지정되지 않은 케이스입니다.");
@@ -72,32 +78,44 @@ public class PopUp : MonoBehaviour
     {
         check.gameObject.SetActive(true);
     }
-    private void CancleBtnOn()
-    {
-        cancle.gameObject.SetActive(true);
-    }
     private void CheckBtnOff()
     {
         check.gameObject.SetActive(false);
     }
+    private void CheckClick()
+    {
+        temp?.Invoke();
+        temp = null;
+    }
+    private void CancleBtnOn()
+    {
+        cancle.gameObject.SetActive(true);
+    }
+
     private void CancleBtnOff()
     {
         cancle.gameObject.SetActive(false);
     }
+
+    private void CancleClick()
+    {
+        temp = null;
+    }
+    private void NotSaveBtnOn()
+    {
+        notSave.gameObject.SetActive(true);
+    }
+    private void NotSaveBtnOff()
+    {
+        notSave.gameObject.SetActive(false);
+    }
+    private void NotSaveClick()
+    {
+
+    }
     private void PopupOff()
     {
         popupObj.SetActive(false);
-    }
-    private void CheckClick()
-    {
-        isTrue = true;
-        temp?.Invoke();
-        temp = null;
-    }
-    private void CancleClick()
-    {
-        isTrue = false;
-        temp = null;
     }
 
 }

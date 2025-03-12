@@ -17,10 +17,7 @@ public class ResourceIO : MonoBehaviour
     // private string saveDataPath = "\\Night Traveler\\Editor\\Song\\";
     // private string loadDataPath = "\\Editor\\Song\\Phase\\";
     // private string fileName = "SaveData";
-    public Dictionary<Enums.ModeDiff, List<SongData>> Phase_Dic =
-    new Dictionary<Enums.ModeDiff, List<SongData>>();
 
-    private string dataPath;
     public AudioClip audioClip;
     public delegate void SaveDelegate();
     public delegate void LoadDelegate();
@@ -28,16 +25,31 @@ public class ResourceIO : MonoBehaviour
     public SaveDelegate saveDelegate;
     public LoadDelegate loadDelegate;
 
+    private void Awake()
+    {
+        EditorDataManager.Instance.LoadBeatMapData();
+    }
+
+    private void LoadKeySounds()
+    {
+
+    }
+    private void SetSavePath()
+    {
+
+    }
+
     public void Save(string fileName)
     {
-        string savePath = dataPath + fileName + "\\";
-        string saveData = DictionaryJsonUtility.ToJson(Phase_Dic, true);
-        if (!Directory.Exists(savePath))
-        {
-            Directory.CreateDirectory(savePath);
-        }
-        Debug.Log($"in Save Path : {savePath}");
-        File.WriteAllText(savePath + fileName, saveData);
+
+        // string savePath = dataPath + fileName + "\\";
+        // string saveData = DictionaryJsonUtility.ToJson(Phase_Dic, true);
+        // if (!Directory.Exists(savePath))
+        // {
+        //     Directory.CreateDirectory(savePath);
+        // }
+        // Debug.Log($"in Save Path : {savePath}");
+        // File.WriteAllText(savePath + fileName, saveData);
     }
 
     // public void BrowserForSave()
