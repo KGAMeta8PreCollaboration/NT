@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class BaseTitleUI : MonoBehaviour
 {
-    public Button closeButton;
+    [SerializeField]
+    private Button closeButton;
 
     public virtual void Awake()
     {
-        closeButton.onClick.AddListener(CloseUI);
+        closeButton.onClick.AddListener(CloseUIButtonClick);
         gameObject.SetActive(false);
     }
 
-    public void CloseUI()
+    public virtual void CloseUIButtonClick()
     {
         TitleManager.instance.CloseUI();
     }

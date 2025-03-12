@@ -6,18 +6,21 @@ public class TitleManager : MonoBehaviour
 {
     public static TitleManager instance;
 
+    [Header("UI")]
     public GameObject singlePlayUI;
     public GameObject multiPlayUI;
     public GameObject rankingBoardUI;
     public GameObject gameSettingUI;
 
-    public BlurEffectManager blurEffectManager;
-    public bool isComplete = false;//페이드아웃 효과 끝났는지 확인
-    public bool isUIActive = false;//UI가 활성화 상태인지 확인
-
-    public AudioSource audioSource;
+    [SerializeField]
+    private BlurEffectManager blurEffectManager;
+    private bool isComplete = false;//페이드아웃 효과 끝났는지 확인
+    private bool isUIActive = false;//UI가 활성화 상태인지 확인
 
     private GameObject curUI;
+
+    public bool IsComplete { get { return isComplete; } }
+    public bool IsUIActive { get { return isUIActive; } }
 
     private void Awake()
     {
@@ -31,7 +34,7 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         blurEffectManager.ResetTitle();
         //서버생기면 여기서 실행후 끝날때 아래함수 실행
@@ -83,13 +86,5 @@ public class TitleManager : MonoBehaviour
         isUIActive = false;
     }
 
-    public void PlayMusic(AudioClip clip)
-    {
-        if (audioSource.isPlaying)
-        {
-            audioSource.Stop();
-        }
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
+
 }

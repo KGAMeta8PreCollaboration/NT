@@ -29,5 +29,8 @@ public class TitleController : MonoBehaviour
         controller = abcController.GetComponent<XRController>();
     }
 
-    
+    public void TestController()
+    {
+        
+    }
 }

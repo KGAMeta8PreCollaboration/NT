@@ -16,9 +16,11 @@ public enum TitleUIName
 public class OutlineTrigger : MonoBehaviour
 {
     public TitleUIName uiName;
-    public GameObject text;
-    public InputActionReference left;
-    public InputActionReference right;
+    public GameObject uiNameText;
+    [SerializeField]
+    private InputActionReference left;
+    [SerializeField]
+    private InputActionReference right;
 
     private Outline outline; 
     private bool isOutlineActive = false;
@@ -28,7 +30,7 @@ public class OutlineTrigger : MonoBehaviour
     {
         outline = GetComponent<Outline>();
         simpleInteractable = GetComponent<XRSimpleInteractable>();
-        text.SetActive(false);
+        uiNameText.SetActive(false);
         if (outline != null)
         {
             outline.enabled = false;
@@ -39,61 +41,64 @@ public class OutlineTrigger : MonoBehaviour
             simpleInteractable.hoverExited.AddListener(OffOutLine);
         }
     }
+
     private void OnEnable()
     {
-        left.action.started += Test;
-        right.action.started += Test;
+        left.action.started += OnSelect;
+        right.action.started += OnSelect;
     }
+
     private void OnDisable()
     {
-        left.action.started -= Test;
-        right.action.started -= Test;
+        left.action.started -= OnSelect;
+        right.action.started -= OnSelect;
     }
-    public void OnOutLine(HoverEnterEventArgs args)
+
+    private void OnOutLine(HoverEnterEventArgs args)
     {
         Debug.Log("OnOutLine");
-        if (TitleManager.instance.isComplete && !TitleManager.instance.isUIActive)
+        if (TitleManager.instance.IsComplete && !TitleManager.instance.IsUIActive)
         {
             if (outline != null)
             {
-                text.SetActive(true);
+                uiNameText.SetActive(true);
                 outline.enabled = true; //아웃라인 활성화
                 isOutlineActive = true; //아웃라인 활성화 됨을 확인
             }
         }
     }
 
-    public void OffOutLine(HoverExitEventArgs args)
+    private void OffOutLine(HoverExitEventArgs args)
     {
         Debug.Log("OffOutLine");
         if (isOutlineActive)
         {
             if (outline != null)
             {
-                text.SetActive(false);
+                uiNameText.SetActive(false);
                 outline.enabled = false; //아웃라인 비활성화
                 isOutlineActive = false; //아웃라인 비활성화 됨을 확인
             }
         }
     }
 
-    public void OnSelect()
+    private void OnSelect(InputAction.CallbackContext context)
     {
-        Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화");
-        TitleManager.instance.OpenUI(uiName);
-        if (outline != null)
-        {
-            text.SetActive(false);
-            outline.enabled = false; 
-            isOutlineActive = false;
-        }
-    }
-
-    public void Test(InputAction.CallbackContext context)
-    {
+        Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화 시도");
         if (isOutlineActive)
         {
-            OnSelect();
+            TitleManager.instance.OpenUI(uiName);
+            if (outline != null)
+            {
+                Debug.Log($"{uiName} UI활성화 성공");
+                uiNameText.SetActive(false);
+                outline.enabled = false;
+                isOutlineActive = false;
+            }
+        }
+        else
+        {
+            Debug.Log($"isOutlineActive 이므로 UI실행 실패");
         }
     }
 }

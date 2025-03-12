@@ -28,7 +28,7 @@ public class BlurEffectManager : MonoBehaviour
     void Update()
     {
         // 카메라의 정면 (화면 정면)을 기준으로 위치를 고정시키기 위해
-        Vector3 screenCenter = new Vector3(0.5f, 0.5f, 2f);  // 화면의 중앙에 고정
+        Vector3 screenCenter = new Vector3(0.5f, 2f, 2f);  // 화면의 중앙에 고정
         Vector3 worldPosition = Camera.main.ViewportToWorldPoint(screenCenter);  // 화면 좌표를 월드 좌표로 변환
 
         // 타이틀 텍스트의 위치를 화면 정면으로 고정
@@ -91,12 +91,12 @@ public class BlurEffectManager : MonoBehaviour
         if (profile.TryGet(out depth))
         {
             //여기서 시작할때 전체화면 블러처리
-            depth.mode.value = DepthOfFieldMode.Gaussian;
+            depth.mode.value = DepthOfFieldMode.Bokeh;
 
-            depth.gaussianStart.value = 0.1f;
-            depth.gaussianEnd.value = 1000f;
-            depth.gaussianMaxRadius.value = 10f;
-            depth.highQualitySampling.value = true;
+            depth.focusDistance.value = 0f;
+            depth.focalLength.value = 300f;
+            depth.aperture.value = 32f;
+            depth.bladeCount.value = 6;
             Debug.Log("블러 효과 성공");
         }
         else
