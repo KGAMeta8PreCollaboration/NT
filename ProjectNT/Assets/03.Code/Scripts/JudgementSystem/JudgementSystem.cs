@@ -29,13 +29,20 @@ public class JudgementSystem : MonoBehaviour
             _timingBoxs[i].Set(minX, maxX);
 
             float diff = Mathf.Abs(minX - maxX);
-            print(diff);
-            print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
+            // print(diff);
+            // print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
         }
     }
 
     public NoteType CheckTiming()
     {
+        if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
+        {
+            // _judgementText.text = "Miss!";
+            print("미스!");
+            return NoteType.Bad;
+        }
+
         float notePosX = _woofer.notes[0].transform.position.x;
         for (int i = 0; i < _timingBoxs.Length; i++)
         {
@@ -44,12 +51,13 @@ public class JudgementSystem : MonoBehaviour
                 NoteType noteType = i == 0 ? NoteType.Perfect :
                     i == 1 ? NoteType.Good :
                     i == 2 ? NoteType.Cool : NoteType.Bad;
-                _judgementText.text = noteType.ToString() + "!";
+                // if (_judgementText)
+                //     _judgementText.text = noteType.ToString() + "!";
                 print(noteType.ToString() + "!");
                 return noteType;
             }
         }
-        _judgementText.text = "Miss!";
+        // _judgementText.text = "Miss!";
         print("미스!");
         return NoteType.Bad;
     }

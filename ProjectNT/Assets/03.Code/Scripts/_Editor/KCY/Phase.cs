@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class Phase : MonoBehaviour
 {
-    [SerializeField] private PhaseDriver phaseDriver;
     [SerializeField] private Button m_Load;
     [SerializeField] private Button m_Delete;
     [SerializeField] private TextMeshProUGUI m_NameTMP;
@@ -17,11 +16,10 @@ public class Phase : MonoBehaviour
     [SerializeField] private Button m_Up;
     [SerializeField] private Button m_Down;
     private Enums.ModeDiff m_ModeDiff;
-    private SongData songData = new SongData();
 
     private int m_PhaseNum;
 
-    public SongData m_SongData { get; set; }
+    public PhaseDriver phaseDriver;
     public Enums.ModeDiff modeDiff { get; set; }
     public int phaseNum { get; set; }
 
@@ -32,7 +30,6 @@ public class Phase : MonoBehaviour
 
     private void Initialize()
     {
-        phaseDriver = GetComponentInParent<PhaseDriver>();
         m_Up.onClick.AddListener(() => phaseDriver.SwapPhaseUp(this));
         m_Down.onClick.AddListener(() => phaseDriver.SwapPhaseDown(this));
         m_Delete.onClick.AddListener(Delete_BTN);
@@ -40,6 +37,7 @@ public class Phase : MonoBehaviour
 
     private void Delete_BTN()
     {
+        phaseDriver.linkedPhase.Remove(this);
         Destroy(gameObject);
     }
 }

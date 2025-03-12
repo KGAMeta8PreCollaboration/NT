@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,29 +6,31 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioSourceManager : MonoBehaviour
 {
-    [SerializeField] private CameraController cameraController; // -> 이부분 마음에 안든다. 나중에 camera이동중일때를 넘겨줄 방법을 찾아보자
-
-    private AudioSource _audioSource;
-    private float _audioDuration;
+    private CameraController _cameraController;
+    private AudioSource _audioSource;  
+    private int _audioDuration;
     public AudioSource AudioSource => _audioSource;
-    public float AudioDuration => _audioDuration;
+    public int AudioDuration => _audioDuration;
 
     private bool _isPlaying;
+    //public Action<bool> callback;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        _cameraController = FindObjectOfType<CameraController>();
 
-        _audioDuration = _audioSource.clip.length;
+        //올림
+        _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
+        print($"노래 길이 {_audioDuration}");
     }
 
     private void Update()
     {
-        if (cameraController._isRotating == false)
+        if (_cameraController._isRotating == false)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                print($"스페이스바 눌림"); 
                 _isPlaying = !_isPlaying;
                 HandlePushSpace(_isPlaying);
             }
@@ -36,6 +39,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private void HandlePushSpace(bool clickedSpace)
     {
+        //callback?.Invoke(clickedSpace);
         if (clickedSpace == true)
             _audioSource.Pause();
         else

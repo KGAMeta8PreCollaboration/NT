@@ -21,30 +21,30 @@ public class Woofer : MonoBehaviour
         hitSound = clip;
     }
 
-
-    public void Hit()
-    {
-        // 타격음은 무조건 재생해야되니까
-        if (_audioSource.isPlaying)
-        {
-            _audioSource.Stop();
+	
+	public void Hit()
+	{
+		if (_audioSource.isPlaying)
+		{
+			// _audioSource.Stop();
         }
-        if (_audioSource.clip != hitSound)
-            _audioSource.clip = hitSound;
-
-        _audioSource.Play();
+		if (_audioSource.clip != hitSound)
+			_audioSource.clip = hitSound;
+		
+		_audioSource.PlayOneShot(hitSound);
 
         if (notes.Count == 0)
             return;
 
-        notes[0].Hit(_judgementSystem.CheckTiming());
-        notes.RemoveAt(0);
+        Note note = notes[0];
+        note.Hit(_judgementSystem.CheckTiming());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Note note))
         {
+            note.OnDestroyed += note => notes.Remove(note);
             notes.Add(note);
         }
     }
@@ -53,7 +53,7 @@ public class Woofer : MonoBehaviour
     {
         if (other.TryGetComponent(out Note note))
         {
-            notes.Remove(note);
+            notes?.Remove(note);
         }
     }
 }

@@ -7,53 +7,50 @@ using Unity.InteractiveTutorials;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-[Serializable]
-public struct ProjectData
-{
-    public string projectName;
-    public string artistName;
-    public string thumbnailName;
-    public string bgmName;
-    public int bpm;
-    public string m_Path;
-}
+
 public class Project : MonoBehaviour
 {
     [SerializeField] private ProjectLoader loader;
-    [SerializeField] private Toggle m_Toggle;
-    [SerializeField] private TextMeshProUGUI m_ProjectName;
-    private Sprite m_Sprite;
+    [SerializeField] private Toggle toggle;
+    [SerializeField] private TextMeshProUGUI projectName;
+    private Sprite sprite;
+    private string tempName;
+    private string tempArtist;
+    private string tempThumbnail;
+    private string tempBgm;
+    private string tempBpm;
+
     public Toggle Toggle
     {
-        get { return m_Toggle; }
+        get { return toggle; }
         set { Toggle = value; }
     }
     public TextMeshProUGUI ProjectName
     {
-        get { return m_ProjectName; }
-        set { m_ProjectName = value; }
+        get { return projectName; }
+        set { projectName = value; }
     }
     public ProjectData projectData = new ProjectData();
     private void Awake()
     {
         loader = GetComponentInParent<ProjectLoader>();
-        m_Toggle.group = loader.projects_Group;
+        toggle.group = loader.projects_Group;
 
-        m_Toggle.onValueChanged.AddListener(ChangeFocus);
+        toggle.onValueChanged.AddListener(ChangeFocus);
 
     }
 
     private void Start()
     {
         LoadData();
-        m_Toggle.isOn = true;
+        toggle.isOn = true;
     }
 
     private void LoadData()
     {
         if (string.IsNullOrEmpty(projectData.projectName)) return;
         Debug.Log("프로젝트 이름 있음");
-        m_ProjectName.text = projectData.projectName;
+        projectName.text = projectData.projectName;
         if (string.IsNullOrEmpty(projectData.artistName)) return;
         Debug.Log("아티스트 이름 있음");
         if (string.IsNullOrEmpty(projectData.bgmName)) return;
@@ -65,47 +62,85 @@ public class Project : MonoBehaviour
 
     private void ChangeFocus(bool isTrue)
     {
-        if (isTrue)
+        if (!isTrue)
         {
-            if (string.IsNullOrEmpty(projectData.projectName))
-                m_ProjectName.text = "New Project";
-            else
-            {
-                m_ProjectName.text = projectData.projectName;
-                loader.SetProjectName = projectData.projectName;
-                loader.SetArtistName = projectData.artistName;
-                loader.SetBgmName = projectData.bgmName;
-                loader.SetThumbnailName = projectData.thumbnailName;
-                if (m_Sprite == null)
-                {
-                    string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
-                    m_Sprite = loader.MakeSprite(path, Vector2.zero);
-                }
-                loader.SetThumbnail = m_Sprite;
-            }
-            m_Toggle.interactable = false;
-            loader.currentProject = this;
-        }
-        else
-        {
+            loader.currentProject = null;
             loader.SetProjectName = "";
             loader.SetArtistName = "";
             loader.SetBgmName = "";
             loader.SetThumbnailName = "";
+            loader.SetBpm = "";
             loader.SetThumbnail = null;
-            m_Toggle.interactable = true;
-            loader.currentProject = null;
+            toggle.interactable = true;
+        }
+        else
+        {
+            loader.currentProject = this;
+            if (string.IsNullOrEmpty(projectData.projectName))
+            {
+                projectName.text = "New Project";
+                toggle.interactable = false;
+                loader.EditBtn = false;
+                return;
+            }
+            else
+            {
+                loader.InputFieldReset();
+                projectName.text = projectData.projectName;
+                loader.SetProjectName = projectData.projectName;
+                loader.SetArtistName = projectData.artistName;
+                loader.SetBgmName = projectData.bgmName;
+                loader.SetThumbnailName = projectData.thumbnailName;
+                loader.SetBpm = projectData.bpm.ToString();
+                if (sprite == null)
+                {
+                    string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
+                    sprite = loader.MakeSprite(path, Vector2.zero);
+                }
+                loader.SetThumbnail = sprite;
+                loader.EditBtn = true;
+            }
+            toggle.interactable = false;
         }
     }
 
     public void SetName(string text)
     {
-        m_ProjectName.text = text;
-        projectData.projectName = text;
+        if (this != loader.currentProject) return;
+        // projectData.projectName = text;
+        // loader.currentProject.projectName.text = text;
+        tempName = text;
     }
 
-    internal void SetArtist(string text)
+    public void SetArtist(string text)
     {
-        projectData.artistName = text;
+        if (this != loader.currentProject) return;
+        // projectData.artistName = text;
+        tempArtist = text;
+    }
+    public void SetBPM(string text)
+    {
+        if (this != loader.currentProject) return;
+        if (string.IsNullOrEmpty(text)) return;
+        // projectData.bpm = int.Parse(text);
+        tempBpm = text;
+    }
+    public void SetThumbnail(string text)
+    {
+        if (this != loader.currentProject) return;
+        tempThumbnail = text;
+    }
+    public void SetBgm(string text)
+    {
+        if (this != loader.currentProject) return;
+        tempBgm = text;
+    }
+    public void SetProjectData()
+    {
+        projectData.projectName = tempName;
+        projectData.artistName = tempArtist;
+        projectData.bpm = int.Parse(tempBpm);
+        projectData.thumbnailName = tempThumbnail;
+        projectData.bgmName = tempBgm;
     }
 }
