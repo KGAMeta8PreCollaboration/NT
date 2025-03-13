@@ -75,7 +75,6 @@ public class GamePlayUI : BaseTitleUI
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 노래시작
-            PhotonNetwork.LoadLevel("LSH_MultiGame");
         }
         else
         {

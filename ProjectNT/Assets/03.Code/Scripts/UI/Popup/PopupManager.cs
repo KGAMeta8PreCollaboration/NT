@@ -20,7 +20,7 @@ public class PopupManager : Singleton<PopupManager>
     {
         T foundPopup = popupList.Find(popup => popup is T) as T;
 
-        if(foundPopup != null)
+        if (foundPopup != null)
         {
             foundPopup.transform.SetAsLastSibling();
             foundPopup.gameObject.SetActive(true);
@@ -37,12 +37,21 @@ public class PopupManager : Singleton<PopupManager>
         }
     }
 
+    public void ClosePopup<T>() where T : Popup
+    {
+        T foundPopup = popupList.Find(popup => popup is T) as T;
+        if (foundPopup != null)
+        {
+            foundPopup.gameObject.SetActive(false);
+        }
+    }
+
     //씬에 있는 모든 팝업 찾기
     private void FindPopups()
     {
-        Popup[] popups=FindObjectsOfType<Popup>();
+        Popup[] popups = FindObjectsOfType<Popup>();
 
-        foreach(Popup popup in popups)
+        foreach (Popup popup in popups)
         {
             popupList.Add(popup);
             popup.Init();
