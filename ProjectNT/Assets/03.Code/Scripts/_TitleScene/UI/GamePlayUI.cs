@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public enum UIGameType
 {
@@ -44,16 +45,16 @@ public class GamePlayUI : BaseTitleUI
         backgroundAudioSource.loop = true;
         backgroundAudioSource.Play();
         base.Awake();
-    }
+     }
 
     private void OnEnable()
     {
-        ResetMusicSet();
+        //ResetMusicSet();
     }
 
     private void OnDisable()
     {
-        StopMusic();
+        //StopMusic();
     }
 
     private void SetMusicData(TitleMusicData data)
