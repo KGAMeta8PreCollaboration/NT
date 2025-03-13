@@ -17,32 +17,18 @@ public class GamePlayUI : BaseTitleUI
     [Header("음악 미리보기 파일")]
     [SerializeField]
     private GameMusicSampleData gameMusicData;//프리팹에 GameMusicSample 프리팹 참조
-
-    public Image musicImage;
-    public TextMeshProUGUI musicNameText;
-    public TextMeshProUGUI musicDescriptionText;
+    public MusicChangeAndSelect musicChangeSelect;
 
     public Button gameStartButton;
-    public Button songChangeLeftButton;
-    public Button songChangeRightButton;
-    public Button songResetButton;
-
-    [SerializeField, Header("게임 음악 샘플 소스")]
-    private AudioSource gameMusicAudioSource;
-    [SerializeField, Header("배경 음악 소스")]
-    private AudioSource backgroundAudioSource;
-
-    private int musicNum;
-    private TitleMusicData curMusicData;
 
     public override void Awake()
     {
-        songChangeRightButton.onClick.AddListener(NextMusicButton);
-        songChangeLeftButton.onClick.AddListener(PreviousMusicButton);
         gameStartButton.onClick.AddListener(StartGame);
-        songResetButton.onClick.AddListener(MusicSoundReset);
-        backgroundAudioSource.loop = true;
-        backgroundAudioSource.Play();
+        musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
+        musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
+        musicChangeSelect.restartButton.onClick.AddListener(MusicSoundReset);
+        musicChangeSelect.backgroundAudioSource.loop = true;
+        musicChangeSelect.backgroundAudioSource.Play();
         base.Awake();
     }
 
@@ -53,24 +39,13 @@ public class GamePlayUI : BaseTitleUI
 
     private void OnDisable()
     {
-        StopMusic();
-    }
-
-    private void SetMusicData(TitleMusicData data)
-    {
-        //musicImage.sprite = data.musicAlbumArtImage.sprite;
-        musicNameText.text = data.musicName;
-        musicDescriptionText.text = data.musicDescription;
-        curMusicData = data;
-        Debug.Log($"{data.musicName}");
-        MusicLoop(true);
-        //TitleManager.instance.PlayMusic(curMusicData.musicClip);
+        musicChangeSelect.StopMusic();
     }
 
     public void StartGame()
     {
         //curMusicData 로 노래가지고 게임시작 로직
-        MusicLoop(false);
+        musicChangeSelect.MusicLoop(false);
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 노래시작
@@ -84,7 +59,7 @@ public class GamePlayUI : BaseTitleUI
     //음악 재시작
     public void MusicSoundReset()
     {
-        PlayMusic(curMusicData.musicClip);
+        musicChangeSelect.PlayMusic(musicChangeSelect.CurMusicData.musicClip);
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 음악 재시작 동기화
@@ -94,8 +69,7 @@ public class GamePlayUI : BaseTitleUI
     //인덱스 0번음악으로 변경(시작)
     public void ResetMusicSet()
     {
-        musicNum = 0;
-        SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
+        musicChangeSelect.BackToFirstSongMusic();
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 노래 넘어가는거 동기화
@@ -105,30 +79,13 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
-        if (musicNum < gameMusicData.titleMusicDatas.Count - 1)
-        {
-            musicNum++;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
-        }
-        else
-        {
-            ResetMusicSet();
-        }
+        musicChangeSelect.NextMusic();
     }
 
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
-        if (musicNum != 0)
-        {
-            musicNum--;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
-        }
-        else
-        {
-            musicNum = gameMusicData.titleMusicDatas.Count - 1;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
-        }
+        musicChangeSelect.PreviousMusic();
     }
 
     public override void CloseUIButtonClick()
@@ -141,28 +98,5 @@ public class GamePlayUI : BaseTitleUI
         {
             //멀티플레이시 닫기 버튼을 누르면 원래 위치로 다시 이동
         }
-    }
-
-    public void PlayMusic(AudioClip clip)
-    {
-        if (gameMusicAudioSource.isPlaying)
-        {
-            gameMusicAudioSource.Stop();
-        }
-        gameMusicAudioSource.clip = clip;
-        gameMusicAudioSource.Play();
-    }
-
-    public void StopMusic()
-    {
-        if (gameMusicAudioSource.isPlaying)
-        {
-            gameMusicAudioSource.Stop();
-        }
-    }
-
-    public void MusicLoop(bool musicLoop)
-    {
-        gameMusicAudioSource.loop = musicLoop;
     }
 }
