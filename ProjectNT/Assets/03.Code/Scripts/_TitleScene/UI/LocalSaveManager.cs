@@ -22,29 +22,6 @@ public class PlayerLocalSaveData
 
         this.playerImageName = imageName;
     }
-
-    public Texture2D GetPlayerUmage()
-    {
-        string path = "_Title/" + playerImageName;
-        Texture2D texture = Resources.Load<Texture2D>(path);
-        //테스트용
-        if (texture == null)
-        {
-            Texture2D newtexture = new Texture2D(256, 256);
-
-            // 모든 픽셀을 빨간색으로 설정
-            for (int x = 0; x < newtexture.width; x++)
-            {
-                for (int y = 0; y < newtexture.height; y++)
-                {
-                    newtexture.SetPixel(x, y, Color.red);  // 빨간색
-                }
-            }
-            newtexture.Apply();
-            texture = newtexture;
-        }
-        return texture;
-    }
 }
 
 [Serializable]
@@ -153,6 +130,7 @@ public class LocalSaveManager : MonoBehaviour
         yield return null;
     }
 
+    //이 아래는 테스트용
     public Button testButton;
     public GameMusicSampleData gameMusicData;
     private string tsetName = "player";
@@ -176,11 +154,6 @@ public class LocalSaveManager : MonoBehaviour
     public IEnumerator TestSave(Action action)
     {
         Debug.Log("테스트세이브 시작");
-        //int testScore = UnityEngine.Random.Range(100, 100000);
-        //int testLevel = UnityEngine.Random.Range(20, 50);
-        //int testnum = UnityEngine.Random.Range(1, 10);
-        //string name = tsetName + testnum.ToString();
-        //yield return StartCoroutine(LocalDataSave(gameMusicData.titleMusicDatas[0].musicName, name, testLevel, testScore));
         foreach (TitleMusicData data in gameMusicData.titleMusicDatas)
         {
             int testRandomNum = UnityEngine.Random.Range(1, 5);

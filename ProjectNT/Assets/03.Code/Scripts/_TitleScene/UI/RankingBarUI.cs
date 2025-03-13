@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RankingBarUI : MonoBehaviour
+public class RankingBarUI : MonoBehaviour//프리팹용
 {
     public Image playerImage;
     public TextMeshProUGUI lavelUI;

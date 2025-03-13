@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MusicChangeAndSelect : MonoBehaviour
+public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어가는데 사용
 {
     [Header("음악 미리보기 파일")]
     public GameMusicSampleData gameMusicData;//프리팹에 GameMusicSample 프리팹 참조
@@ -34,22 +34,22 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetMusicData(TitleMusicData data)
     {
+        Debug.Log($"{data.musicName}");
         //musicImage.sprite = data.musicAlbumArtImage.sprite;
         curMusicData = data;
         musicNameText.text = data.musicName;
         musicDesc.text = data.musicDescription;
-        Debug.Log($"{data.musicName}");
         if (gameMusicAudioSource.loop == false)
         {
             MusicLoop(true);
         }
-        //TitleManager.instance.PlayMusic(curMusicData.musicClip);
+        //PlayMusic(curMusicData.musicClip);
     }
 
     //음악 처음부터 다시시작
     public void RestartMusic()
     {
-
+        //PlayMusic(curMusicData.musicClip);
     }
 
     //가장 처음의 노래로 변경
@@ -93,12 +93,12 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     public void PlayMusic(AudioClip clip)
     {
-        if (gameMusicAudioSource.isPlaying)
+        if (gameMusicAudioSource.isPlaying)//현재 재생중이면
         {
-            gameMusicAudioSource.Stop();
+            gameMusicAudioSource.Stop();//중지시키고
         }
         gameMusicAudioSource.clip = clip;
-        gameMusicAudioSource.Play();
+        gameMusicAudioSource.Play();//받은 노래 다시시작
     }
 
     public void StopMusic()

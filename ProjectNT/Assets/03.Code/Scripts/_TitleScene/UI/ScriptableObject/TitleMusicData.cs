@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "TitleMusicData", menuName = "ScriptableObjects/TitleMusicData", order = int.MaxValue)]
-public class TitleMusicData : ScriptableObject
+public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
 {
     [Header("음악 이름")]
     public string musicName;

@@ -20,9 +20,7 @@ public class RankingBoardUI : BaseTitleUI
 
     public override void Awake()
     {
-        //버튼할당
-        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.PreviousMusic(RankingBoardUIUpdate));
-        musicCange.changeRightButton.onClick.AddListener(() => musicCange.NextMusic(RankingBoardUIUpdate));
+        Initialize();
         base.Awake();
     }
 
@@ -34,7 +32,13 @@ public class RankingBoardUI : BaseTitleUI
 
     private void OnDisable()
     {
-        RankingBaardUIDestroy();
+        RankingBarUIDestroy();
+    }
+
+    private void Initialize()
+    {
+        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.PreviousMusic(RankingBoardUIUpdate));
+        musicCange.changeRightButton.onClick.AddListener(() => musicCange.NextMusic(RankingBoardUIUpdate));
     }
 
     public void LastUpdateTime()
@@ -50,9 +54,8 @@ public class RankingBoardUI : BaseTitleUI
 
     private IEnumerator LoadData()
     {
-        //버튼으로 노래넘어갈때마다 그노래받아와야할듯
-        loadingPanel.SetActive(true);
-        RankingBaardUIDestroy();
+        RankingBarUIDestroy();//이전 데이터들 지우기
+        loadingPanel.SetActive(true);//데이터 넣는동안 로딩패널 활성화
 
         //데이터 불러오기 - 노래이름으로 그 노래의 세이브 데이터 가져오기
         string curMusicName = musicCange.CurMusicData.musicName;
@@ -62,25 +65,24 @@ public class RankingBoardUI : BaseTitleUI
         int rank = 1;
         if (localSaveManager.datas != null && localSaveManager.datas.Count > 0)
         {
-            // 해당 노래의 데이터 리스트를 가져오기
+            //해당 노래의 데이터 리스트를 가져오기
             List<PlayerLocalSaveData> rankingDataList = localSaveManager.datas;
 
-            // 데이터를 바탕으로 랭킹 UI 생성
+            //데이터를 바탕으로 랭킹 UI 생성
             foreach (PlayerLocalSaveData data in rankingDataList)
             {
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
                 rankingBarUIs.Add(rankingBarUI);
-                rankingBarUI.GetComponent<RankingBarUI>().UISetting(data, rank); // 데이터와 순위를 전달
+                rankingBarUI.GetComponent<RankingBarUI>().UISetting(data, rank);
                 rank++;
             }
         }
-
-        LastUpdateTime(); // UI 업데이트 후 시간 표시
+        LastUpdateTime(); //UI 업데이트 후 시간 표시
         loadingPanel.SetActive(false);
     }
 
     //UI프리팹들 지우기
-    public void RankingBaardUIDestroy()
+    public void RankingBarUIDestroy()
     {
         foreach (GameObject rankingBar in rankingBarUIs)
         {
