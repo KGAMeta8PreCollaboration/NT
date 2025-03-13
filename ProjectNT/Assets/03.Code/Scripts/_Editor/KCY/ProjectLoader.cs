@@ -184,8 +184,10 @@ public class ProjectLoader : MonoBehaviour
             foreach (string l in files)
             {
                 extention = Path.GetExtension(l);
-                if (extention != ".wav" || extention != ".mp3" || extention != "ogg")
+
+                if (extention != ".wav" && extention != ".mp3" && extention != ".ogg")
                 {
+                    Debug.Log(extention);
                     count++;
                 }
             }
