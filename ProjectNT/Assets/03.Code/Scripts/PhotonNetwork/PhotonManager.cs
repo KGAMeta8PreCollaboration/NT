@@ -91,14 +91,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
 		print("나간 플레이어: " + otherPlayer.NickName);
-		if (otherPlayer.NickName.Equals("Player1"))
-		{
-			_multiLobbyUI.connectImagePlayer1.color = Color.red;
-		}
-		else
-		{
-			_multiLobbyUI.connectImagePlayer2.color = Color.red;
-		}
+		_multiLobbyUI.UpdateConnectImage(otherPlayer, true);
 		otherPlayer.NickName = "";
 	}
 
@@ -134,14 +127,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	{
 		foreach (var player in PhotonNetwork.PlayerList)
 		{
-			if (player.NickName == "Player1")
-			{
-				_multiLobbyUI.connectImagePlayer1.color = Color.green; // 초록색으로 변경
-			}
-			else if (player.NickName == "Player2")
-			{
-				_multiLobbyUI.connectImagePlayer2.color = Color.green; // 초록색으로 변경
-			}
+			_multiLobbyUI.UpdateConnectImage(player,false);
 		}
 	}
 
