@@ -11,6 +11,7 @@ public class NoteManager : MonoBehaviour
 
 	public List<Note> notes { get; private set; } = new List<Note>();
 
+	
 	public void CreateNoteFromData(LoadedNoteData noteData)
 	{
 		double spawnDspTime = AudioSettings.dspTime;

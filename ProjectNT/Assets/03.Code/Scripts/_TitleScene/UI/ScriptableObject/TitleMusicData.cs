@@ -1,0 +1,15 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+[CreateAssetMenu(fileName = "TitleMusicData", menuName = "ScriptableObjects/TitleMusicData", order = int.MaxValue)]
+public class TitleMusicData : ScriptableObject
+{
+    [Header("음악 이름")]
+    public string musicName;
+    [Header("음악 설명")]
+    public string musicDescription;
+    [Header("앨범 아트 이미지")]
+    public Image musicAlbumArtImage;
+    [Header("음악 파일")]
+    public AudioClip musicClip;
+}
