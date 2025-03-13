@@ -22,6 +22,10 @@ public class NoteGenerator : MonoBehaviour
 	private void Awake()
 	{
 		_noteManager = GetComponent<NoteManager>();
+		// foreach (var item in loadedNotes)
+		// {
+		// 	item.noteAudioClipName = "1-1";
+		// }
 	}
 
 	private async void Start()
