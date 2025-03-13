@@ -4,11 +4,16 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.UI;
 
 public class NodeContainer : MonoBehaviour
 {
     [SerializeField] private GameObject nodePrefab;
     [SerializeField] private Transform nodeParent;
+    [SerializeField] private Button firstButton;
+    [SerializeField] private Button secondButton;
+    [SerializeField] private Button thirdButton;
+    [SerializeField] private Button fourthButton;
 
     private Camera _editorCamera;
     private GridManager _gridManager;
@@ -181,6 +186,7 @@ public class NodeContainer : MonoBehaviour
          
         if (node != null)
         {
+            node.TestPrint();
             Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
             nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
