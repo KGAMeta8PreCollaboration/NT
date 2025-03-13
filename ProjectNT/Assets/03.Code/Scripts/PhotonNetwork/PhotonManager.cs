@@ -11,8 +11,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 	[SerializeField] private VRPlayer _lobbyPlayer;
 
-	public VRPlayer multiLobbyPlayer;
-
 	//[SerializeField] private GameObject _tmp_LobbyUI;
 
 	public override void OnConnectedToMaster()
@@ -153,12 +151,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		print("플레이어 컨트롤러 생성");
 		if (PhotonNetwork.LocalPlayer.NickName == "Player1")
 		{
-            multiLobbyPlayer = PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
+            PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
 		}
 		else if (PhotonNetwork.LocalPlayer.NickName == "Player2")
 		{
 
-			multiLobbyPlayer=PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
+			PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
 		}
 	}
 }

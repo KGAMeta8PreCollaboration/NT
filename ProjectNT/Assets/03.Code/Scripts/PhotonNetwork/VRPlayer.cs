@@ -2,12 +2,13 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRPlayer : MonoBehaviour
 {
 	[SerializeField] private PhotonView _playerView;
-	[SerializeField] private Transform _leftHand;
-	[SerializeField] private Transform _rightHand;
+	[SerializeField] private ActionBasedController _leftHandCtrl;
+	[SerializeField] private ActionBasedController _rightHandCtrl;
 
 	private Camera _playerCamera;
 	private AudioListener playerAudioListener;
@@ -20,25 +21,21 @@ public class VRPlayer : MonoBehaviour
 		PlayerCameraAndAudioListenerActive(_playerView.IsMine);
 	}
 
-    private void Update()
-    {
-		if (_playerView.IsMine)
-		{
-
-		}
-    }
-
     public void PlayerCameraAndAudioListenerActive(bool on)
 	{
 		if (on)
 		{
 			_playerCamera.enabled = true;
 			playerAudioListener.enabled = true;
+			_leftHandCtrl.enableInputTracking = true;
+			_rightHandCtrl.enableInputTracking = true;
 		}
 		else
 		{
 			_playerCamera.enabled = false;
 			playerAudioListener.enabled = false;
-		}
+            _leftHandCtrl.enableInputTracking = false;
+            _rightHandCtrl.enableInputTracking = false;
+        }
 	}
 }
