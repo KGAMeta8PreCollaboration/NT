@@ -21,6 +21,13 @@ public class NoteRail : MonoBehaviour
 		AudioClip audioClip = AudioManager.Instance.GetNextAudioClip();
 		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
 	}
+	
+	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime, AudioClip audioClip)
+	{
+		onAddNote += note => AddNote(note);
+		onNoteDestroyed += note => RemoveNote(note);
+		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
+	}
 
 	public void AddNote(Note note)
 	{
