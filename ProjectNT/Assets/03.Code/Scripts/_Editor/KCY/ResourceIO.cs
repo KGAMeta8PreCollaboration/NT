@@ -22,9 +22,6 @@ public class ResourceIO : MonoBehaviour
     public delegate void SaveDelegate();
     public delegate void LoadDelegate();
 
-    public SaveDelegate saveDelegate;
-    public LoadDelegate loadDelegate;
-
     private void Start()
     {
         EditorDataManager.Instance.LoadBeatMapData();
