@@ -32,10 +32,18 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         backgroundAudioSource.loop = true;
     }
 
-    private void SetMusicData(TitleMusicData data)
+    private void Update()
+    {
+        if (gameMusicAudioSource.isPlaying == true)
+        {
+            Debug.Log("노래나오는중");
+        }
+    }
+
+    private void SetMusicData(TitleMusicData data)//음악 데이터들 화면에표시
     {
         Debug.Log($"{data.musicName}");
-        //musicImage.sprite = data.musicAlbumArtImage.sprite;
+        musicImage.sprite = data.musicAlbumArtSprit;
         curMusicData = data;
         musicNameText.text = data.musicName;
         musicDesc.text = data.musicDescription;
@@ -43,13 +51,13 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         {
             MusicLoop(true);
         }
-        //PlayMusic(curMusicData.musicClip);
+        PlayMusic(curMusicData.musicClip);
     }
 
     //음악 처음부터 다시시작
     public void RestartMusic()
     {
-        //PlayMusic(curMusicData.musicClip);
+        PlayMusic(curMusicData.musicClip);
     }
 
     //가장 처음의 노래로 변경
@@ -106,6 +114,7 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         if (gameMusicAudioSource.isPlaying)
         {
             gameMusicAudioSource.Stop();
+            Debug.Log("노래 꺼짐");
         }
     }
 

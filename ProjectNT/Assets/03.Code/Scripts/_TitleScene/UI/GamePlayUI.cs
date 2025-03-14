@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum UIGameType
@@ -29,84 +30,59 @@ public class GamePlayUI : BaseTitleUI
     public Button randomDifficulty;
 
     private Toggle curSelectDifficulty = null;
+    private bool isSettingDifficulty = false;
 
     public override void Awake()
     {
-        Initialize();
+        musicChangeSelect.backgroundAudioSource.loop = true;
+        musicChangeSelect.backgroundAudioSource.Play();
         base.Awake();
     }
 
     private void OnEnable()
     {
-        ResetMusicSet();
+        AddEventListeners();
     }
 
     private void OnDisable()
     {
-        musicChangeSelect.StopMusic();
+        RemoveEventListeners();
     }
 
-    private void Initialize()
+    public override void AddEventListeners()//켜질때 버튼 등록
     {
+        base.AddEventListeners();
+        ResetMusicSet();
+        SetDifficulty(easy, 1);
+
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
-        musicChangeSelect.restartButton.onClick.AddListener(MusicSoundReset);
-        musicChangeSelect.backgroundAudioSource.loop = true;
-        musicChangeSelect.backgroundAudioSource.Play();
+        musicChangeSelect.restartButton.onClick.AddListener(MusicSoundRestart);
 
-        SetDifficulty(easy);
-        easy.onValueChanged.AddListener((value) => OnToggleChanged(easy));
-        normal.onValueChanged.AddListener((value) => OnToggleChanged(normal));
-        hard.onValueChanged.AddListener((value) => OnToggleChanged(hard));
-        superHade.onValueChanged.AddListener((value) => OnToggleChanged(superHade));
+        easy.onValueChanged.AddListener((value) => OnDifficultyChanged(easy, 1));
+        normal.onValueChanged.AddListener((value) => OnDifficultyChanged(normal, 2));
+        hard.onValueChanged.AddListener((value) => OnDifficultyChanged(hard, 3));
+        superHade.onValueChanged.AddListener((value) => OnDifficultyChanged(superHade, 4));
         randomDifficulty.onClick.AddListener(SelectRandomDifficulty);
     }
 
-    public void StartGame()
+    public override void RemoveEventListeners()//꺼질때 버튼 해제
     {
-        //curMusicData 로 노래가지고 게임시작 로직
-        musicChangeSelect.MusicLoop(false);
-        if (gameType == UIGameType.Muliti)
-        {
-            //멀티플레이시 노래시작
-        }
-        else
-        {
-            //싱글플레이시 노래시작
-        }
-    }
+        base.RemoveEventListeners();
+        musicChangeSelect.StopMusic();
 
-    //음악 재시작
-    public void MusicSoundReset()
-    {
-        musicChangeSelect.PlayMusic(musicChangeSelect.CurMusicData.musicClip);
-        if (gameType == UIGameType.Muliti)
-        {
-            //멀티플레이어시 음악 재시작 동기화
-        }
-    }
+        gameStartButton.onClick.RemoveListener(StartGame);
+        musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
+        musicChangeSelect.changeLeftButton.onClick.RemoveListener(PreviousMusicButton);
+        musicChangeSelect.restartButton.onClick.RemoveListener(MusicSoundRestart);
 
-    //인덱스 0번음악으로 변경(시작)
-    public void ResetMusicSet()
-    {
-        musicChangeSelect.BackToFirstSongMusic();
-        if (gameType == UIGameType.Muliti)
-        {
-            //멀티플레이어시 노래 넘어가는거 동기화
-        }
-    }
-
-    //다음 노래로 넘어감 (RightButton)
-    public void NextMusicButton()
-    {
-        musicChangeSelect.NextMusic();
-    }
-
-    //이전 노래로 넘어감 (LeftButton)
-    public void PreviousMusicButton()
-    {
-        musicChangeSelect.PreviousMusic();
+        //등록할때 람다식으로 넣어서 개별적으로 해제가 안됨, 그래서 RemoveAll로 없애기
+        easy.onValueChanged.RemoveAllListeners();
+        normal.onValueChanged.RemoveAllListeners();
+        hard.onValueChanged.RemoveAllListeners();
+        superHade.onValueChanged.RemoveAllListeners();
+        randomDifficulty.onClick.RemoveListener(SelectRandomDifficulty);
     }
 
     public override void CloseUIButtonClick()
@@ -121,13 +97,63 @@ public class GamePlayUI : BaseTitleUI
         }
     }
 
-    private void SetDifficulty(Toggle select)
+    public void StartGame()
     {
-        //이벤트 리스너 비활성화
-        easy.onValueChanged.RemoveAllListeners();
-        normal.onValueChanged.RemoveAllListeners();
-        hard.onValueChanged.RemoveAllListeners();
-        superHade.onValueChanged.RemoveAllListeners();
+        //curMusicData 로 노래가지고 게임시작 로직
+        musicChangeSelect.MusicLoop(false);
+        if (gameType == UIGameType.Muliti)
+        {
+            //멀티플레이시 노래시작
+        }
+        else
+        {
+            Debug.Log($"{TestStartGameData.Instance.musicName}");
+            Debug.Log($"{TestStartGameData.Instance.difficulty}");
+            SceneManager.LoadScene("KMJ_TestNextScene");
+            //싱글플레이시 노래시작
+        }
+    }
+
+    //음악 재시작
+    public void MusicSoundRestart()
+    {
+        Debug.Log($"노래 Restart : {musicChangeSelect.CurMusicData.musicName}");
+        musicChangeSelect.RestartMusic();
+        if (gameType == UIGameType.Muliti)
+        {
+            //멀티플레이어시 음악 재시작 동기화
+        }
+    }
+
+    //인덱스 0번음악으로 변경(시작)
+    public void ResetMusicSet()
+    {
+        musicChangeSelect.BackToFirstSongMusic();
+        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        TestStartGameData.Instance.difficulty = 1;
+        if (gameType == UIGameType.Muliti)
+        {
+            //멀티플레이어시 노래 넘어가는거 동기화
+        }
+    }
+
+    //다음 노래로 넘어감 (RightButton)
+    public void NextMusicButton()
+    {
+        musicChangeSelect.NextMusic();
+        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+    }
+
+    //이전 노래로 넘어감 (LeftButton)
+    public void PreviousMusicButton()
+    {
+        musicChangeSelect.PreviousMusic();
+        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+    }
+
+    private void SetDifficulty(Toggle select, int difficulty)
+    {
+        TestStartGameData.Instance.difficulty = difficulty;
 
         easy.isOn = false;
         normal.isOn = false;
@@ -141,28 +167,29 @@ public class GamePlayUI : BaseTitleUI
         }
         curSelectDifficulty = select;
         curSelectDifficulty.interactable = false;
-
-        //이벤트 트리거 다시 등록
-        easy.onValueChanged.AddListener((value) => OnToggleChanged(easy));
-        normal.onValueChanged.AddListener((value) => OnToggleChanged(normal));
-        hard.onValueChanged.AddListener((value) => OnToggleChanged(hard));
-        superHade.onValueChanged.AddListener((value) => OnToggleChanged(superHade));
     }
 
-    private void OnToggleChanged(Toggle select)
+    private void OnDifficultyChanged(Toggle select, int difficulty)
     {
+        if (isSettingDifficulty) return;
+        isSettingDifficulty = true;
+
         //현재 토글이 선택되지 않은 경우에만
         if (select.isOn && curSelectDifficulty != select)
         {
-            SetDifficulty(select);
+            SetDifficulty(select, difficulty);
         }
+        isSettingDifficulty = false;
     }
 
     private void SelectRandomDifficulty()
     {
+        if (isSettingDifficulty) return;
+        isSettingDifficulty = true;
         //랜덤으로 난이도 설정
         Toggle[] difficulties = new Toggle[] { easy, normal, hard, superHade };
         int randomIndex = UnityEngine.Random.Range(0, difficulties.Length);
-        SetDifficulty(difficulties[randomIndex]);
+        SetDifficulty(difficulties[randomIndex], randomIndex + 1);
+        isSettingDifficulty = false;
     }
 }

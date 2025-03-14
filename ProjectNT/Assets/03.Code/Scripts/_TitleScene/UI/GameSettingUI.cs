@@ -9,15 +9,28 @@ public class GameSettingUI : BaseTitleUI
         base.Awake();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        AddEventListeners();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        RemoveEventListeners();
+    }
+
+    public override void AddEventListeners()
+    {
+        base.AddEventListeners();
+    }
+
+    public override void RemoveEventListeners()
+    {
+        base.RemoveEventListeners();
+    }
+
+    public override void CloseUIButtonClick()
+    {
+        base.CloseUIButtonClick();
     }
 }

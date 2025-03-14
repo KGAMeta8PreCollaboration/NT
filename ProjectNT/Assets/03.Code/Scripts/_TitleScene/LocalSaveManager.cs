@@ -7,7 +7,7 @@ using UnityEngine.Purchasing.MiniJSON;
 using UnityEngine.UI;
 
 [Serializable]
-public class PlayerLocalSaveData
+public class PlayerLocalSaveData//세이브 데이터
 {
     public int lavel;
     public string playerName;
@@ -99,7 +99,7 @@ public class LocalSaveManager : MonoBehaviour
     }
 
     //로컬에 저장된 데이터들 점수순으로 정렬 후 50개까지만 유지
-    public void SortLocalData(string musicName)
+    private void SortLocalData(string musicName)
     {
         datas.Sort((player1, player2) => player2.score.CompareTo(player1.score));
         if (datas.Count > 50)

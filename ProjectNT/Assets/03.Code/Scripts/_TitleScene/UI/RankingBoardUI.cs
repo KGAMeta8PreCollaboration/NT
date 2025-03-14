@@ -20,25 +20,34 @@ public class RankingBoardUI : BaseTitleUI
 
     public override void Awake()
     {
-        Initialize();
         base.Awake();
     }
 
     private void OnEnable()
     {
-        musicCange.BackToFirstSongMusic();
-        RankingBoardUIUpdate();
+        AddEventListeners();
     }
 
     private void OnDisable()
     {
-        RankingBarUIDestroy();
+        RemoveEventListeners();
     }
 
-    private void Initialize()
+    public override void AddEventListeners()
     {
+        musicCange.BackToFirstSongMusic();
+        base.AddEventListeners();
         musicCange.changeLeftButton.onClick.AddListener(() => musicCange.PreviousMusic(RankingBoardUIUpdate));
         musicCange.changeRightButton.onClick.AddListener(() => musicCange.NextMusic(RankingBoardUIUpdate));
+        RankingBoardUIUpdate();
+    }
+
+    public override void RemoveEventListeners()
+    {
+        RankingBarUIDestroy();
+        base.RemoveEventListeners();
+        musicCange.changeLeftButton.onClick.RemoveAllListeners();
+        musicCange.changeRightButton.onClick.RemoveAllListeners();
     }
 
     public void LastUpdateTime()
@@ -73,7 +82,7 @@ public class RankingBoardUI : BaseTitleUI
             {
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
                 rankingBarUIs.Add(rankingBarUI);
-                rankingBarUI.GetComponent<RankingBarUI>().UISetting(data, rank);
+                rankingBarUI.GetComponent<RankingBar>().UISetting(data, rank);
                 rank++;
             }
         }
