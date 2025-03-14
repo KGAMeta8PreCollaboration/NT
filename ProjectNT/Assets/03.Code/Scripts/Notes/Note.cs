@@ -23,6 +23,7 @@ public class Note : MonoBehaviour
     private Vector3 _initialPosition;
     private double _spawnDspTime;
     private double _targetDspTime;
+    private double _startDspTime;
 
     public void Init(Transform target, double spawnDspTime, double targetDspTime, AudioClip hitSound = null)
     {
@@ -31,6 +32,7 @@ public class Note : MonoBehaviour
         _spawnDspTime = spawnDspTime;
         _targetDspTime = targetDspTime;
         _initialPosition = transform.position;
+        _startDspTime = AudioManager.Instance.startDspTime;
     }
 
     public void Hit(NoteType noteType)
@@ -40,12 +42,14 @@ public class Note : MonoBehaviour
         this.noteType = noteType;
         ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         effect.Play();
+        Destroy(effect.gameObject, effect.main.duration);
         OnHit?.Invoke(this);
     }
 
     private void Destroy()
     {
         OnDestroyed?.Invoke(this);
+        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 노트 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 노트 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
         Destroy(gameObject);
     }
 
@@ -76,6 +80,7 @@ public class Note : MonoBehaviour
 
     private void Miss()
     {
+        AudioPlayer.Instance.Play(hitSound);
         Destroy();
         isHit = true;
         noteType = NoteType.Bad;
@@ -86,6 +91,6 @@ public class Note : MonoBehaviour
     {
         Move();
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
-            Destroy();
+            Miss();
     }
 }

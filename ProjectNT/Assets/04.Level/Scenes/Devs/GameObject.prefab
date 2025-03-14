@@ -806,6 +806,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 97ebf994d69b0184996e65833422711a, type: 3}
   - {fileID: 8300000, guid: 80702b0a09f96784b94198a03c79d9e2, type: 3}
   - {fileID: 8300000, guid: 507213c83ed02b4499bb0c5c4ca05883, type: 3}
+  bgmAudioSource: {fileID: 0}
 --- !u!1 &826054383819449584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,9 +1039,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD310\uC815"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa3af9686cc2307448cfb8025bf592fd, type: 2}
-  m_sharedMaterial: {fileID: -5079850185086227218, guid: fa3af9686cc2307448cfb8025bf592fd,
-    type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1175,9 +1175,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa3af9686cc2307448cfb8025bf592fd, type: 2}
-  m_sharedMaterial: {fileID: -5079850185086227218, guid: fa3af9686cc2307448cfb8025bf592fd,
-    type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1754,7 +1753,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.02
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2157,7 +2156,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.02
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:

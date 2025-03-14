@@ -6,11 +6,19 @@ public class AudioManager : Singleton<AudioManager>
 {
 	public List<AudioClip> audioClips = new List<AudioClip>();
 	int currentClipIndex = 0;
+	public double startDspTime { get; private set; }
+	public AudioSource bgmAudioSource;
 	
 	
 
 	private void Start()
-	{
+	{ 
+		startDspTime = AudioSettings.dspTime;
+		foreach (AudioClip item in audioClips)
+		{
+			item.LoadAudioData();
+		}
+		bgmAudioSource.Play();
 		// AudioSetting();
 		// print(AudioSettings.GetConfiguration().speakerMode);
 		// print(AudioSettings.GetConfiguration().sampleRate);
