@@ -8,6 +8,9 @@ public class Woofer : MonoBehaviour
     private JudgementSystem _judgementSystem;
     public AudioClip hitSound { get; private set; }
 
+    // Woofer : 
+    // NoteScanner : 노트를 감지하는 기능, 감지한걸 누군가한테 알림(event, )
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -21,17 +24,17 @@ public class Woofer : MonoBehaviour
         hitSound = clip;
     }
 
-	
-	public void Hit()
-	{
-		if (_audioSource.isPlaying)
-		{
-			// _audioSource.Stop();
+
+    public void Hit()
+    {
+        if (_audioSource.isPlaying)
+        {
+            // _audioSource.Stop();
         }
-		if (_audioSource.clip != hitSound)
-			_audioSource.clip = hitSound;
-		
-		_audioSource.PlayOneShot(hitSound);
+        if (_audioSource.clip != hitSound)
+            _audioSource.clip = hitSound;
+
+        _audioSource.PlayOneShot(hitSound);
 
         if (notes.Count == 0)
             return;

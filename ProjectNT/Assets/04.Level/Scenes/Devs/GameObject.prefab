@@ -996,17 +996,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826054383902502095}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.6671827, y: 0, z: 0, w: 0.74489415}
+  m_LocalPosition: {x: 0, y: 0, z: -86.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 826054382251639277}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 83.7, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -220.56}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -93, y: -270}
+  m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &826054383902502092
 CanvasRenderer:
@@ -1038,8 +1038,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD310\uC815"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa3af9686cc2307448cfb8025bf592fd, type: 2}
-  m_sharedMaterial: {fileID: -5079850185086227218, guid: fa3af9686cc2307448cfb8025bf592fd,
+  m_fontAsset: {fileID: 11400000, guid: 394e22f3a26877447ba458a8a872f6bc, type: 2}
+  m_sharedMaterial: {fileID: -5816291803176790810, guid: 394e22f3a26877447ba458a8a872f6bc,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1175,9 +1175,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa3af9686cc2307448cfb8025bf592fd, type: 2}
-  m_sharedMaterial: {fileID: -5079850185086227218, guid: fa3af9686cc2307448cfb8025bf592fd,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3327,6 +3326,7 @@ GameObject:
   - component: {fileID: 7691417804446182387}
   - component: {fileID: 7691417804446182386}
   - component: {fileID: 7691417804446182385}
+  - component: {fileID: 3296669119364059371}
   - component: {fileID: 7691417804446182381}
   - component: {fileID: 7691417804446182382}
   - component: {fileID: 7691417804446182380}
@@ -3416,6 +3416,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 10, z: 1}
   m_Center: {x: 0.36, y: 0, z: -0.00000008940697}
+--- !u!65 &3296669119364059371
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417804446182391}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 7.5, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7691417804446182381
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3430,7 +3443,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!82 &7691417804446182382
 AudioSource:
@@ -4067,6 +4080,7 @@ GameObject:
   - component: {fileID: 7691417804651891303}
   - component: {fileID: 7691417804651891302}
   - component: {fileID: 7691417804651891301}
+  - component: {fileID: 4376070840755770190}
   - component: {fileID: 7691417804651891297}
   - component: {fileID: 7691417804651891298}
   - component: {fileID: 7691417804651891296}
@@ -4156,6 +4170,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 10, z: 1}
   m_Center: {x: 0.36, y: 0, z: -0.00000008940697}
+--- !u!65 &4376070840755770190
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417804651891307}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 7.5, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7691417804651891297
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4170,7 +4197,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!82 &7691417804651891298
 AudioSource:
@@ -4310,11 +4337,12 @@ GameObject:
   - component: {fileID: 7691417804689353890}
   - component: {fileID: 7691417804689353889}
   - component: {fileID: 7691417804689353888}
+  - component: {fileID: 1053260896}
   - component: {fileID: 7691417804689353820}
   - component: {fileID: 7691417804689353821}
   - component: {fileID: 7691417804689353891}
   - component: {fileID: 7691417804689353822}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Woofer
   m_TagString: Woofer
   m_Icon: {fileID: 0}
@@ -4399,6 +4427,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 10, z: 1}
   m_Center: {x: 0.36, y: 0, z: -0.00000008940697}
+--- !u!65 &1053260896
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417804689353894}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 7.5, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7691417804689353820
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4413,7 +4454,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!82 &7691417804689353821
 AudioSource:
@@ -4540,7 +4581,7 @@ MonoBehaviour:
   - {fileID: 7691417805305203052}
   - {fileID: 7691417804642794138}
   - {fileID: 7691417805914256159}
-  _judgementText: {fileID: 0}
+  _judgementText: {fileID: 826054383902502093}
 --- !u!1 &7691417804811940119
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,7 +5864,7 @@ MonoBehaviour:
   - {fileID: 7691417804471539037}
   - {fileID: 7691417804385556276}
   maxNoteRails: 4
-  notePrefab: {fileID: 4567978807683224838, guid: e6c7c3c6064699045b55acb962080841,
+  notePrefab: {fileID: 4567978807683224838, guid: 169514ff9e26a364cbffdd39c4aca713,
     type: 3}
   _scoreManager: {fileID: 7691417806024037887}
 --- !u!114 &7691417806024037887
@@ -7239,6 +7280,7 @@ GameObject:
   - component: {fileID: 7691417806418072810}
   - component: {fileID: 7691417806418072809}
   - component: {fileID: 7691417806418072808}
+  - component: {fileID: 1299572160585505746}
   - component: {fileID: 7691417806418072804}
   - component: {fileID: 7691417806418072805}
   - component: {fileID: 7691417806418072811}
@@ -7328,6 +7370,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 10, z: 1}
   m_Center: {x: 0.36, y: 0, z: -0.00000008940697}
+--- !u!65 &1299572160585505746
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417806418072814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 7.5, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7691417806418072804
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7342,7 +7397,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!82 &7691417806418072805
 AudioSource:
