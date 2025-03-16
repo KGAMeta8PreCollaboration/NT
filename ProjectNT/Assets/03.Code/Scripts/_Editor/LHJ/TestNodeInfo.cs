@@ -6,7 +6,7 @@ public class TestNodeInfo : MonoBehaviour
 {
     public string CurrentNodeInfo => _currentNodeInfo;
 
-    private string _currentNodeInfo;
+    public string _currentNodeInfo;
 
     private TestButtonType[] _testButtonType;
 

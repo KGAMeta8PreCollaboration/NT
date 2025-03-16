@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class TestLoad : MonoBehaviour
@@ -7,6 +8,7 @@ public class TestLoad : MonoBehaviour
     public string songName = "";
     private BeatMapManager _beatMapManager;
     private BeatMapData _beatMapData;
+    private string _tempSavePath;
 
     private void Awake()
     {
@@ -17,6 +19,8 @@ public class TestLoad : MonoBehaviour
             gridSetting = new GridSetting(),
             nodes = new List<NodeData>()
         };
+
+        _tempSavePath = Path.Combine(Application.dataPath, "tempBeatMap.json");
     }
 
     private void Start()
@@ -32,9 +36,38 @@ public class TestLoad : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            Save();
+            //Save();
+            SaveToJson();
+        }
+
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadFromJson();
+        }
+    }
+
+    private void SaveToJson()
+    {
+        BeatMapData currentData = _beatMapManager.SaveBeatMapData();
+        string json = JsonUtility.ToJson(currentData, true);
+        File.WriteAllText(_tempSavePath, json);
+        print("저장됨");
+    }
+
+    private void LoadFromJson()
+    {
+        if (File.Exists(_tempSavePath))
+        {
+            string json = File.ReadAllText(_tempSavePath);
+            BeatMapData loadedData = JsonUtility.FromJson<BeatMapData>(json);
+            _beatMapManager.LoadBeatMapData(loadedData);
+            print("로딩됨");
+        }
+        else
+        {
+            Debug.LogWarning("파일 저장 경로가 잘못됨");
         }
     }
 

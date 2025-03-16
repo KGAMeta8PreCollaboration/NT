@@ -16,7 +16,6 @@ public class NodeData
 {
     public Vector2Int index;
     public NodeType nodeType;
-    public NodeInstrument nodeInstrument; //-> 얘도 KeySound로 퉁칠 수 있을 것 같은데
     public string keySound;
 }
 

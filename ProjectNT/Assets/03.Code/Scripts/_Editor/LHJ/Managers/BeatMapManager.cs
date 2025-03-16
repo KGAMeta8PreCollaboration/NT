@@ -35,8 +35,24 @@ public class BeatMapManager : MonoBehaviour
             return;
         }
         print(2);
+
+        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));
+    }
+
+    private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
+    {
+        isLoaded = false;
+
+        //1. 오디오 Source 초기화
         _audioSourceManager.InitializeFromBeatMapManager(beatMapData.songData);
+        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
+
+        //2. grid 초기화
         _gridManager.InitializeFromBeatMapManager(beatMapData.gridSetting);
+        yield return new WaitUntil(() => _gridManager.GridTexture != null);
+
+        //3. node 초기화
+        _nodeContainer.InitializeWithNodeData(beatMapData.nodes);
 
         isLoaded = true;
     }
