@@ -18,7 +18,6 @@ public class NodeData
     public NodeType nodeType;
     public NodeInstrument nodeInstrument; //-> 얘도 KeySound로 퉁칠 수 있을 것 같은데
     public string keySound;
-    public Vector3 nodeColor;
 }
 
 [System.Serializable]

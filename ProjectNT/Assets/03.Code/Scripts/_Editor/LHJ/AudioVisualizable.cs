@@ -31,10 +31,10 @@ public class AudioVisualizable : MonoBehaviour
 
     private void Start()
     {
-        InitWaveform();
+        //InitWaveform();
     }
 
-    private void InitWaveform()
+    public void InitWaveform()
     {
         if (targetObject != null)
         {

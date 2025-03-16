@@ -15,6 +15,8 @@ public class NodeContainer : MonoBehaviour
     [SerializeField] private Button thirdButton;
     [SerializeField] private Button fourthButton;
 
+    public BeatMapData CurrentBeatMapData => _currentBeatMapData;
+
     private Camera _editorCamera;
     private GridManager _gridManager;
     private AudioSourceManager _audioSourceManager;
@@ -25,7 +27,6 @@ public class NodeContainer : MonoBehaviour
     private Color _previewNodeColor = new Color(1, 0, 0, 0.5f);
     private Material myMaterial;
     private Material myMaterialPrefab;
-
     private BeatMapData _currentBeatMapData;
               
     private void Awake()
