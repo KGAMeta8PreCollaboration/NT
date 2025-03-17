@@ -8,10 +8,15 @@ public class Woofer : MonoBehaviour
     private JudgementSystem _judgementSystem;
     private NoteScanner _noteScanner;
     public AudioClip hitSound { get; private set; }
+    
+    private AudioPlayer _audioPlayer;
+    
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        _judgementSystem = GetComponent<JudgementSystem>();
+        _audioPlayer = FindObjectOfType<AudioPlayer>();
         _judgementSystem = FindObjectOfType<JudgementSystem>();
         _noteScanner = FindObjectOfType<NoteScanner>();
 
@@ -26,24 +31,22 @@ public class Woofer : MonoBehaviour
     {
         hitSound = clip;
     }
+    
+	public void Hit()
+	{
+		// if (_audioSource.isPlaying)
+		// {
+		// 	// _audioSource.Stop();
+  //       }
+		// if (_audioSource.clip != hitSound)
+		// 	_audioSource.clip = hitSound;
+		
+		// _audioSource.PlayOneShot(hitSound);
 
-
-    public void Hit()
-    {
-        if (_audioSource.isPlaying)
-        {
-            // _audioSource.Stop();
-        }
-        if (_audioSource.clip != hitSound)
-            _audioSource.clip = hitSound;
-
-        _audioSource.PlayOneShot(hitSound);
-        print("Notes count : " + notes.Count);
         if (notes.Count == 0)
             return;
-
+        _audioPlayer.Play(hitSound);
         Note note = notes[0];
-        print(note);
         note.Hit(_judgementSystem.CheckTiming());
     }
 
