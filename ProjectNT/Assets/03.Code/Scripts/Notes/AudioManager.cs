@@ -1,6 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -8,60 +8,85 @@ public class AudioManager : Singleton<AudioManager>
 	int currentClipIndex = 0;
 	public double startDspTime { get; private set; }
 	public AudioSource bgmAudioSource;
+	private AudioPool _audioPool;
+	private List<AudioSource> _audioSources = new List<AudioSource>();
+	bool isPlay = false;
+	private NoteGenerator[] noteGenerators;
+	
+	protected override void Awake()
+	{ 
+		base.Awake();
+		foreach (AudioClip item in audioClips)
+			item.LoadAudioData();
+		_audioPool = GetComponent<AudioPool>();
+		StartCoroutine(CheckAudioPlayTime());
+	}
 
 	private void Start()
-	{ 
-		startDspTime = AudioSettings.dspTime;
-		foreach (AudioClip item in audioClips)
+	{
+		noteGenerators = FindObjectsOfType<NoteGenerator>(true);
+	}
+
+	public void Play(AudioClip clip)
+	{
+		if (_audioPool == null)
+			_audioPool = GetComponent<AudioPool>();
+		AudioSource audioSource = _audioPool.GetAudioSource();
+		_audioSources.Add(audioSource);
+		audioSource.clip = clip;
+		double playTime = AudioSettings.dspTime + 0.01; // 현재 시간보다 약간 뒤에 실행
+		// audioSource.Play();
+		// audioSource.PlayScheduled(playTime);
+		audioSource.PlayOneShot(clip);
+	}
+	
+	private IEnumerator CheckAudioPlayTime()
+	{
+		while (true)
 		{
-			item.LoadAudioData();
+			yield return new WaitForSeconds(5f);
+			print($"BGMPlayTime : {bgmAudioSource.time:F3}, DSPTime : {AudioSettings.dspTime - startDspTime:F3}, dsp - bgm : {AudioSettings.dspTime - startDspTime - bgmAudioSource.time:F3}");
+			// print($"BGM 레이턴시 : {(AudioSettings.dspTime - startDspTime)}, AudioSettings.dspTime : {AudioSettings.dspTime}, startDspTime : {startDspTime}");
 		}
-		// bgmAudioSource.Play();
-		// AudioSetting();
-		// print(AudioSettings.GetConfiguration().speakerMode);
-		// print(AudioSettings.GetConfiguration().sampleRate);
-		// print(AudioSettings.GetConfiguration().numRealVoices);
-		// print(AudioSettings.GetConfiguration().numVirtualVoices);
-		print(AudioSettings.GetConfiguration().dspBufferSize);
-
-		// printBuffer();
 	}
 	
-	#region AudioSetting
-	private static void AudioSetting()
+	private void ReturnUnusedAudioSources()
 	{
-		print(AudioSettings.GetConfiguration());
-		var config = AudioSettings.GetConfiguration();
-		// config.speakerMode = AudioSpeakerMode.Stereo;
-		// config.sampleRate = 25600;
-		// config.numRealVoices = 64;
-		// config.numVirtualVoices = 64;
-		config.dspBufferSize = 128;
-		AudioSettings.Reset(config);
-	}
-	
-	private static void printBuffer()
-	{
-		AudioSettings.GetDSPBufferSize(out int bufferLength, out int numBuffers);
-		print($"Buffer Length : {bufferLength}, Num Buffers : {numBuffers}");
+		_audioSources
+			.FindAll(audioSource => !audioSource.isPlaying)
+			.ForEach(audioSource => _audioPool.ReturnAudioSource(audioSource));
 	}
 
-	public AudioClip GetRandomAudioClip()
-	{
-		return audioClips[Random.Range(0, audioClips.Count)];
+	private void SearchBGMPlayTime()
+	{	
+		if (!isPlay && bgmAudioSource.isPlaying)
+		{
+			isPlay = true;
+			print($"BGM 레이턴시 : {(AudioSettings.dspTime - startDspTime)}, AudioSettings.dspTime : {AudioSettings.dspTime}, startDspTime : {startDspTime}");
+		}
 	}
 	
-	#endregion
 	
-	public AudioClip GetNextAudioClip()
+	public void StartBGM(double delayTime)
 	{
-		currentClipIndex %= audioClips.Count;
-		// print($"AudioManager currentClipIndex : {currentClipIndex}");
-		return audioClips[currentClipIndex++];
+		startDspTime = AudioSettings.dspTime + delayTime;
+		bgmAudioSource.Stop();
+		// bgmAudioSource.Play((ulong)delayTime);
+		bgmAudioSource.PlayScheduled(startDspTime);
+		print($"BGM Sample rate : {bgmAudioSource.clip.frequency}");
+		foreach (NoteGenerator generator in noteGenerators)
+		{
+			generator.NoteGenerateStart(startDspTime);
+		}
 	}
 	
 	public AudioClip GetAudioClipAtString(string clipName)
 	{
 		return audioClips.Find(clip => clip.name == clipName);
+	}
+	private void Update()
+	{
+		ReturnUnusedAudioSources();
+		SearchBGMPlayTime();
 	}
 }

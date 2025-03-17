@@ -9,13 +9,9 @@ public class Woofer : MonoBehaviour
     [SerializeField] private NoteScanner _noteScanner;
     public AudioClip hitSound { get; private set; }
 
-    private AudioPlayer _audioPlayer;
-
-
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
-        _audioPlayer = FindObjectOfType<AudioPlayer>();
 
         _noteScanner.OnNoteEnter += AddNote;
         _noteScanner.OnNoteExit += RemoveNote;
@@ -42,7 +38,7 @@ public class Woofer : MonoBehaviour
 
         if (notes.Count == 0)
             return;
-        _audioPlayer.Play(hitSound);
+        AudioManager.Instance.Play(hitSound);
         Note note = notes[0];
         note.Hit(_judgementSystem.CheckTiming());
     }

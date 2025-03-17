@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponentInParent<ActionBasedController>();
 
         //=============test//=============
-        logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
-        logText2 = GameObject.Find("LogText2").GetComponent<TextMeshProUGUI>();
+        logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
+        logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
         _scoreUI = FindObjectOfType<ScoreUI>();
         //=============test=============
 
@@ -107,15 +107,15 @@ public class PlayerController : MonoBehaviour
 
             print($"휘두른 속도: {velocityMagnitude}");
             print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
-            logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
-                        $"\n윗면에 충돌했는지: {isOnTop}";
+            // logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
+            //             $"\n윗면에 충돌했는지: {isOnTop}";
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 woofer.Hit();
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
-                logText2.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
+                // logText2.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
 
                 print("우퍼와 상호작용 됨");
             }

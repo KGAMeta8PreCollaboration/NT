@@ -44,4 +44,18 @@ public class AudioPool : MonoBehaviour
 		audioSource.gameObject.SetActive(false);
 		audioSourcePool.Enqueue(audioSource);
 	}
+	
+	private void OnDestroy()
+	{
+		foreach (AudioSource source in audioSourcePool)
+		{
+			if (source != null)
+			{
+				source.clip = null;
+				Destroy(source);
+			}
+		}
+		audioSourcePool.Clear();
+		Resources.UnloadUnusedAssets();
+	}
 }

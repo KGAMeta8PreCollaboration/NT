@@ -83,7 +83,7 @@ public class Note : MonoBehaviour
 
     private void Miss()
     {
-        AudioPlayer.Instance.Play(hitSound);
+        AudioManager.Instance.Play(hitSound);
         Destroy();
         isHit = true;
         noteType = NoteType.Bad;
