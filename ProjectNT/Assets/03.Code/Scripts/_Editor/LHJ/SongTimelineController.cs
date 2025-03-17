@@ -12,6 +12,7 @@ public class SongTimelineController : MonoBehaviour
 
     private AudioSourceManager _audioSourceManager;
     private BeatMapPlane _beatMapPlane;
+    private BeatMapManager _beatMapManager;
     private float _songLength;
     private float _lastSongTime;
 
@@ -19,6 +20,7 @@ public class SongTimelineController : MonoBehaviour
     {
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
         _beatMapPlane = FindObjectOfType<BeatMapPlane>();
+        _beatMapManager = FindObjectOfType<BeatMapManager>();
         if (_audioSourceManager == null)
         {
             Debug.LogError("AudioSourceManager가 씬에 존재하지 않습니다.");
@@ -28,10 +30,8 @@ public class SongTimelineController : MonoBehaviour
 
     private IEnumerator Start()                                                                                                     
     {
-        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
-        _songLength = _audioSourceManager.AudioSource.clip.length;
-        slider.value = 0;
-        slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(); });
+        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null &&  _beatMapManager.isLoaded);
+        InitalizeSlider();
     }
 
     private void Update()
@@ -44,6 +44,14 @@ public class SongTimelineController : MonoBehaviour
             UpdateTimeText(currentTime);
             _lastSongTime = currentTime;
         }
+    }
+
+    private void InitalizeSlider()
+    {
+        _songLength = _audioSourceManager.AudioSource.clip.length;
+        slider.value = 0;
+        slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(); });
+        UpdateTimeText(0);
     }
 
     private void UpdateTimeText(float time)
