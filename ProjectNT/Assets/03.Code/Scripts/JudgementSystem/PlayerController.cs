@@ -24,15 +24,18 @@ public class PlayerController : MonoBehaviour
     //test
     public TextMeshProUGUI logText;
     public TextMeshProUGUI logText2;
-    public int count;
+    private ScoreUI _scoreUI;
 
     private void Start()
     {
         _noteManager = FindObjectOfType<NoteManager>();
         _controller = GetComponentInParent<ActionBasedController>();
 
+        //=============test//=============
         logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
         logText2 = GameObject.Find("LogText2").GetComponent<TextMeshProUGUI>();
+        _scoreUI = FindObjectOfType<ScoreUI>();
+        //=============test=============
 
         _controller.activateAction.action.performed += TriggerButtonAction;
 
@@ -111,8 +114,8 @@ public class PlayerController : MonoBehaviour
             {
                 woofer.Hit();
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
-                count++;
-                logText2.text = "Hit Count: " + count;
+                _scoreUI.tempHitCount++;
+                logText2.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
 
                 print("우퍼와 상호작용 됨");
             }
