@@ -16,8 +16,8 @@ public class AudioPlayer : Singleton<AudioPlayer>
 	{
 		_audioPool = GetComponent<AudioPool>();
 		
-		bgmStartTime = AudioSettings.dspTime + 2;
-		_bgmAudioSource.PlayScheduled(AudioSettings.dspTime + 2);
+		bgmStartTime = AudioSettings.dspTime;
+		_bgmAudioSource.PlayScheduled(AudioSettings.dspTime);
 		StartCoroutine(CheckAudioPlayTime());
 	}
 	

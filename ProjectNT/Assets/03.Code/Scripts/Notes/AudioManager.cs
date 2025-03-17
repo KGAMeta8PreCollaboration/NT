@@ -11,7 +11,7 @@ public class AudioManager : Singleton<AudioManager>
 
 	private void Start()
 	{ 
-		startDspTime = AudioSettings.dspTime + 2;
+		startDspTime = AudioSettings.dspTime;
 		foreach (AudioClip item in audioClips)
 		{
 			item.LoadAudioData();

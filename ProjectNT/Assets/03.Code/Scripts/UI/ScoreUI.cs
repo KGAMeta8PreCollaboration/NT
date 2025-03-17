@@ -17,6 +17,7 @@ public class ScoreUI : MonoBehaviour
 
     private void Start()
     {
+        _startDspTime = AudioSettings.dspTime;
         _comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>();
         _scoreManager.OnComboChanged += combo => _comboCountText.text = combo.ToString();
 
@@ -27,7 +28,6 @@ public class ScoreUI : MonoBehaviour
         _scoreManager.OnJudgementChanged += noteType => _judgementText.text = noteType.ToString();
 
         _timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
-        _startDspTime = AudioSettings.dspTime;
     }
 
     private void Update()
