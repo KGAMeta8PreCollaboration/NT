@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
                 woofer.Hit();
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 count++;
-                logText2.text = "Hit Count: " + count;
+                logText2.text = "Hit Count: " + count + "\n 우퍼 번호: " + woofer.name;
 
                 print("우퍼와 상호작용 됨");
             }
