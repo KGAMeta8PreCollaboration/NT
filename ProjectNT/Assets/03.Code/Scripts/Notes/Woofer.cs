@@ -12,7 +12,7 @@ public class Woofer : MonoBehaviour
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
-        _judgementSystem = GetComponent<JudgementSystem>();
+        _judgementSystem = FindObjectOfType<JudgementSystem>();
         _noteScanner = FindObjectOfType<NoteScanner>();
 
         _noteScanner.OnNoteEnter += AddNote;
@@ -38,11 +38,12 @@ public class Woofer : MonoBehaviour
             _audioSource.clip = hitSound;
 
         _audioSource.PlayOneShot(hitSound);
-
+        print("Notes count : " + notes.Count);
         if (notes.Count == 0)
             return;
 
         Note note = notes[0];
+        print(note);
         note.Hit(_judgementSystem.CheckTiming());
     }
 

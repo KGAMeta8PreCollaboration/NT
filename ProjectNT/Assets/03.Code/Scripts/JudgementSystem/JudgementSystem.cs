@@ -8,7 +8,6 @@ using UnityEngine;
 public class JudgementSystem : MonoBehaviour
 {
     [SerializeField] private Transform[] _timingTrans; //Perfact, Great, Good의 Transform
-    [SerializeField] private TextMeshProUGUI _judgementText;
 
     private Vector2[] _timingBoxs;
 
@@ -39,7 +38,6 @@ public class JudgementSystem : MonoBehaviour
     {
         if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
         {
-            // _judgementText.text = "Miss!";
             print("미스!");
             return NoteType.Bad;
         }

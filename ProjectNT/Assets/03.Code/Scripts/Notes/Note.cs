@@ -89,6 +89,6 @@ public class Note : MonoBehaviour
     {
         Move();
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
-            Destroy();
+            Miss();
     }
 }

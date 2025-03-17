@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public GameObject tmpPointPrefab;
     //test
     public TextMeshProUGUI logText;
+    public TextMeshProUGUI logText2;
+    public int count;
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponentInParent<ActionBasedController>();
 
         logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
+        logText2 = GameObject.Find("LogText2").GetComponent<TextMeshProUGUI>();
 
         _controller.activateAction.action.performed += TriggerButtonAction;
 
@@ -95,8 +98,6 @@ public class PlayerController : MonoBehaviour
 
             float wooferTopY = wooferCenter.y + (other.bounds.extents.y - hitThreshold);
 
-            Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
-
             bool isDownwardHit = transform.position.y < prevPos.y; // 아래로 휘둘렀는지 확인
             bool isFastEnough = velocityMagnitude > velocityMagnitudeThreshold; // 일정 속도 이상 휘둘렀는지 확인
             bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
@@ -104,15 +105,19 @@ public class PlayerController : MonoBehaviour
             print($"휘두른 속도: {velocityMagnitude}");
             print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
             logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
-                $"\n윗면에 충돌했는지: {isOnTop}";
+                        $"\n윗면에 충돌했는지: {isOnTop}";
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 woofer.Hit();
+                Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
+                count++;
+                logText2.text = "Hit Count: " + count;
+
+                print("우퍼와 상호작용 됨");
             }
         }
     }
-
 
     //======================Test======================
     private IEnumerator CreateCoroutine()
