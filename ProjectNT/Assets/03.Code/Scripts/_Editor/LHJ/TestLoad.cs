@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -25,6 +24,7 @@ public class TestLoad : MonoBehaviour
 
     private void Start()
     {
+
         _beatMapData.songData.songName = songName;
         _beatMapData.songData.songLength = 60f;
         _beatMapData.gridSetting.BPM = 128f;

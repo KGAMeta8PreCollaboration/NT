@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -28,7 +26,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null); 
+        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null);
     }
 
     public void InitializeFromBeatMapManager(SongData songData)
@@ -39,13 +37,15 @@ public class AudioSourceManager : MonoBehaviour
             return;
         }
 
-        if (Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip == null)
+        // if (Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip == null)
+        if (EditorDataManager.Instance.bgmClip == null)
         {
             Debug.LogWarning("노래를 찾을 수 없습니다.");
             return;
         }
         print(3);
-        _audioSource.clip = Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip;
+        // _audioSource.clip = Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip;
+        _audioSource.clip = EditorDataManager.Instance.bgmClip;
         //올림
         _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
         _audioVisualizable.InitWaveform();
