@@ -54,10 +54,12 @@ public class SetEditorEnv : MonoBehaviour
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
+        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         //어플리케이션 종료
         Application.Quit(); 
+        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
 #endif
     }
 

@@ -6,8 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioSourceManager : MonoBehaviour
 {
+    private BeatMapManager _beatMapManager;
     private CameraController _cameraController;
-    private AudioSource _audioSource;  
+    private AudioSource _audioSource;
+    private AudioVisualizable _audioVisualizable;
+    private GridManager _gridManager;
     private int _audioDuration;
     public AudioSource AudioSource => _audioSource;
     public int AudioDuration => _audioDuration;
@@ -17,17 +20,40 @@ public class AudioSourceManager : MonoBehaviour
 
     private void Awake()
     {
+        _beatMapManager = FindObjectOfType<BeatMapManager>();
         _audioSource = GetComponent<AudioSource>();
         _cameraController = FindObjectOfType<CameraController>();
+        _audioVisualizable = FindObjectOfType<AudioVisualizable>();
+    }
 
+    private IEnumerator Start()
+    {
+        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null); 
+    }
+
+    public void InitializeFromBeatMapManager(SongData songData)
+    {
+        if (songData.songName == "")
+        {
+            Debug.LogWarning("노래 이름이 없습니다.");
+            return;
+        }
+
+        if (Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip == null)
+        {
+            Debug.LogWarning("노래를 찾을 수 없습니다.");
+            return;
+        }
+        print(3);
+        _audioSource.clip = Resources.Load($"_SongEditor/LoadedSongs/{songData.songName}") as AudioClip;
         //올림
         _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
-        print($"노래 길이 {_audioDuration}");
+        _audioVisualizable.InitWaveform();
     }
 
     private void Update()
     {
-        if (_cameraController._isRotating == false)
+        if (_cameraController._isRotating == false && _beatMapManager.isLoaded == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

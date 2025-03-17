@@ -37,6 +37,7 @@ public class GridManager : MonoBehaviour
     public Action gridInfoCallback;
 
     private AudioSourceManager _audioSourceManager;
+    private BeatMapManager _beatMapManager;
     private Texture2D _gridTexture;
     private Material _targetMaterial;
     private Vector2 _cellSize;
@@ -47,13 +48,14 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
+        _beatMapManager = FindObjectOfType<BeatMapManager>();
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
     }
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => _audioSourceManager.AudioSource != null);
-        InitGrid();
+        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && _audioSourceManager.AudioSource.clip != null);
+        //InitGrid();
     }
 
     private void OnValidate()
@@ -65,7 +67,16 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void InitGrid()
+    //불러오기 기능일때만 시작
+    public void InitializeFromBeatMapManager(GridSetting gridSetting)
+    {
+        bpm = gridSetting.BPM;
+        column = gridSetting.Column;
+        beatNum = gridSetting.BeatNum;
+        InitGrid();
+    }
+
+    public void InitGrid()
     {
         if (targetObject != null)
         {

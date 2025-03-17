@@ -44,12 +44,13 @@ public class ProjectLoader : MonoBehaviour
 
     #region 프로퍼티
     public string ProjectPath { get { return projectIO.ProjectPath; } }
-    public string SetProjectName { set { projectName_inputfield.text = value; } }
-    public string SetArtistName { set { songArtist_inputfield.text = value; } }
-    public string SetBgmName { set { bgmName_tmp.text = value; } }
-    public string SetThumbnailName { set { thumbnailName_tmp.text = value; } }
-    public Sprite SetThumbnail { set { thumbnail_img.sprite = value; } }
+    public string SetProjectTMP { set { projectName_inputfield.text = value; } }
+    public string SetArtistTMP { set { songArtist_inputfield.text = value; } }
     public string SetBpm { set { projectBpm_inputfield.text = value; } }
+    public string SetBgmTMP { set { bgmName_tmp.text = value; } }
+    public string SetThumbnailTMP { set { thumbnailName_tmp.text = value; } }
+    public string SetKeySoundTMP { set { keySound_tmp.text = value; } }
+    public Sprite SetThumbnail { set { thumbnail_img.sprite = value; } }
     public bool EditBtn { set { edit_btn.interactable = value; } }
     #endregion
     private void Awake()
@@ -96,7 +97,7 @@ public class ProjectLoader : MonoBehaviour
     {
         //TODO 다음으로 넘어가기
 
-        EditorDataManager.Instance.currentProjectData = currentProject.projectData;
+        EditorDataManager.Instance.ProjectData = currentProject.projectData;
         EditorUIManager.Instance.pathCanvas.SetActive(false);
         EditorUIManager.Instance.editorCanvas.SetActive(true);
     }
@@ -126,7 +127,8 @@ public class ProjectLoader : MonoBehaviour
             currentProject.projectData = projectData;
         }
         addProejct_btn.interactable = true;
-        edit_btn.interactable = true;
+        if (addedProjects.Count > 0)
+            edit_btn.interactable = true;
     }
 
     private void LoadSong()
@@ -140,6 +142,7 @@ public class ProjectLoader : MonoBehaviour
             string[] path = StandaloneFileBrowser.OpenFilePanel("곡을 선택해주세요.", "", extensions, false);
             bgmName_tmp.text = Path.GetFileName(path[0]);
             bgmTempPath = path[0];
+            currentProject.SetBgm(bgmName_tmp.text);
         }
         catch (Exception e)
         {
@@ -154,19 +157,20 @@ public class ProjectLoader : MonoBehaviour
         {
             new ExtensionFilter("Image Files", "jpeg","png","jpg")
         };
-        try
-        {
-            string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
+        // try
+        // {
+        string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
 
-            thumbnailName_tmp.text = Path.GetFileName(path[0]);
-            thumbnailTempPath = path[0];
-            thumbnail_img.sprite = MakeSprite(path[0], Vector2.zero);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning(e.Message);
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
-        }
+        thumbnailName_tmp.text = Path.GetFileName(path[0]);
+        thumbnailTempPath = path[0];
+        thumbnail_img.sprite = MakeSprite(path[0]);
+        currentProject.SetThumbnail(thumbnailName_tmp.text);
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.LogWarning(e.Message);
+        //     EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
+        // }
     }
 
     private void LoadKeySound()
@@ -180,8 +184,10 @@ public class ProjectLoader : MonoBehaviour
             foreach (string l in files)
             {
                 extention = Path.GetExtension(l);
-                if (extention != ".wav" || extention != ".mp3" || extention != "ogg")
+
+                if (extention != ".wav" && extention != ".mp3" && extention != ".ogg")
                 {
+                    Debug.Log(extention);
                     count++;
                 }
             }
@@ -190,7 +196,9 @@ public class ProjectLoader : MonoBehaviour
                 EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILEDETECTIONFAIL);
                 return;
             }
-            keySound_tmp.text = Path.GetFullPath(path[0]);
+            string keysoundPath = Path.GetFullPath(path[0]);
+            keySound_tmp.text = keysoundPath;
+            currentProject.SetKeySoundPath(keysoundPath);
         }
         catch (Exception e)
         {
@@ -233,32 +241,6 @@ public class ProjectLoader : MonoBehaviour
             return;
         }
 
-        //프로젝트 데이터 업데이트
-        // currentProject.projectData.projectName = projectName_inputfield.text;
-        // currentProject.ProjectName.text = projectName_inputfield.text;
-        // currentProject.projectData.artistName = songArtist_inputfield.text;
-        // currentProject.projectData.bpm = int.Parse(projectBpm_inputfield.text);
-        currentProject.SetProjectData();
-
-        string thumbTemp = null;
-        string bgmTemp = null;
-
-        if (!string.IsNullOrEmpty(currentProject.projectData.thumbnailName))
-        {
-            thumbTemp = currentProject.projectData.thumbnailName;
-        }
-        if (!string.IsNullOrEmpty(currentProject.projectData.bgmName))
-        {
-            bgmTemp = currentProject.projectData.bgmName;
-        }
-        currentProject.projectData.thumbnailName = thumbnailName_tmp.text;
-
-        currentProject.projectData.bgmName = bgmName_tmp.text;
-
-        addProejct_btn.interactable = true;
-
-        edit_btn.interactable = true;
-
         string path = Path.Combine(projectIO.ProjectPath, projectName_inputfield.text);
 
         //기존 저장 경로가 있을 시
@@ -273,7 +255,9 @@ public class ProjectLoader : MonoBehaviour
                     Directory.Move(currentProject.projectData.m_Path, path);
                     Debug.Log("디렉토리 경로 변경");
                     currentProject.projectData.m_Path = path;
+                    currentProject.SetProjectData();
                     DataSave(path);
+                    currentProject.ProjectName.text = currentProject.projectData.projectName;
                 }
                 catch (Exception e)
                 {
@@ -283,9 +267,22 @@ public class ProjectLoader : MonoBehaviour
             }   //기존 경로와 같다면
             else if (path == currentProject.projectData.m_Path)
             {
+                string thumbTemp = null;
+                string bgmTemp = null;
+
+                if (!string.IsNullOrEmpty(currentProject.projectData.thumbnailName))
+                {
+                    thumbTemp = currentProject.projectData.thumbnailName;
+                }
+                if (!string.IsNullOrEmpty(currentProject.projectData.bgmName))
+                {
+                    bgmTemp = currentProject.projectData.bgmName;
+                }
                 //바뀌기 전 기존 썸네일 및 음악 삭제
                 FindDifferent(path, thumbTemp, bgmTemp);
+                currentProject.SetProjectData();
                 DataSave(path);
+                currentProject.ProjectName.text = currentProject.projectData.projectName;
                 EditorUIManager.Instance.popUp.PopUpOpen(Detail.CHANGEPROJECTINFOCOMPLETE);
             }
         }
@@ -300,9 +297,14 @@ public class ProjectLoader : MonoBehaviour
             //없으면 하나 만들어
             Directory.CreateDirectory(path);
             currentProject.projectData.m_Path = path;
+            currentProject.SetProjectData();
             DataSave(path);
+            currentProject.ProjectName.text = currentProject.projectData.projectName;
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.MAKEPROJECTCOMPLETE);
+
         }
+        addProejct_btn.interactable = true;
+        edit_btn.interactable = true;
     }
 
     private bool FindSameProjects()
@@ -315,15 +317,12 @@ public class ProjectLoader : MonoBehaviour
             {
                 return false;
             }
-            Debug.Log(p.projectData.projectName);
-            Debug.Log(currentProject.projectData.projectName);
         }
         return true;
     }
 
     private void FindDifferent(string path, string thumb, string bgm)
     {
-        Debug.Log(thumb);
         if (thumb != null)
         {
             if (thumb != currentProject.projectData.thumbnailName)
@@ -423,47 +422,79 @@ public class ProjectLoader : MonoBehaviour
             combinePath = Path.Combine(path, currentProject.projectData.bgmName);
             File.Copy(bgmTempPath, combinePath);
         }
-        catch
+        catch (Exception e)
         {
-            Debug.LogWarning("BGM파일이 이미 존재합니다.");
+            Debug.LogWarning(e.Message);
+            Debug.Log("BGM 변경사항 없음");
         }
         try
         {
             combinePath = Path.Combine(path, currentProject.projectData.thumbnailName);
             File.Copy(thumbnailTempPath, combinePath);
         }
-        catch
+        catch (Exception e)
         {
-            Debug.LogWarning("썸네일파일이 이미 존재합니다.");
+            Debug.LogWarning(e.Message);
+            Debug.Log("썸네일 변경사항 없음");
         }
     }
 
-    public Sprite MakeSprite(string filePath, Vector2 pivot)
+    public Sprite MakeSprite(string filePath)
     {
         //경로가 없다면 돌아가기
         if (string.IsNullOrEmpty(filePath) == true) return null;
-
+        //이미지 읽어오기
+        byte[] bytes;
         try
         {
-            //이미지 읽어오기
-            byte[] bytes = File.ReadAllBytes(filePath);
-            //텍스쳐 만들기
-            Texture2D texture = new Texture2D(100, 100);
-            texture.LoadImage(bytes);
-            //스프라이트 만들기
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot);
-            sprite.name = texture.name;
-            return sprite;
-
+            bytes = File.ReadAllBytes(filePath);
         }
         catch (Exception e)
         {
             Debug.LogError(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.LOADIMGFAIL);
+            return null;
         }
-        return null;
+        if (currentProject.projectData.thumbnailData.Length < 1)
+        {
+            //텍스쳐 만들어서 반환
+            return ByteToSprite(bytes);
+        }
+        else
+        {
+            return ByteToSprite(bytes, filePath);
+        }
     }
-
+    private Sprite ByteToSprite(byte[] bytes, string filePath = null)
+    {
+        if (bytes == null)
+        {
+            bytes = currentProject.projectData.thumbnailData;
+            currentProject.SetThumbnailData(bytes);
+            Debug.Log("빔");
+        }
+        else
+        {
+            if (bytes == currentProject.projectData.thumbnailData)
+            {
+                Debug.Log("같음");
+                currentProject.SetThumbnailData(bytes);
+                currentProject.projectData.thumbnailData = bytes;
+            }
+            else
+            {
+                Debug.Log("다름");
+                currentProject.projectData.thumbnailData = bytes;
+                currentProject.SetThumbnailData(bytes);
+            }
+        }
+        Texture2D texture = new Texture2D(100, 100);
+        texture.LoadImage(bytes);
+        //스프라이트 만들기
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        sprite.name = texture.name;
+        return sprite;
+    }
     public void SetDefault()
     {
         edit_btn.interactable = false;
