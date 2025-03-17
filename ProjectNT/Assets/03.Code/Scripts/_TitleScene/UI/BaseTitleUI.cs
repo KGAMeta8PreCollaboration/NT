@@ -10,8 +10,17 @@ public class BaseTitleUI : MonoBehaviour
 
     public virtual void Awake()
     {
-        closeButton.onClick.AddListener(CloseUIButtonClick);
         gameObject.SetActive(false);
+    }
+
+    public virtual void AddEventListeners()
+    {
+        closeButton.onClick.AddListener(CloseUIButtonClick);
+    }
+
+    public virtual void RemoveEventListeners()
+    {
+        closeButton.onClick.RemoveListener(CloseUIButtonClick);
     }
 
     public virtual void CloseUIButtonClick()

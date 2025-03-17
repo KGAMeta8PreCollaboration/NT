@@ -13,7 +13,7 @@ public enum TitleUIName
     GameSetting
 }
 
-public class OutlineTrigger : MonoBehaviour
+public class InteractableObject : MonoBehaviour
 {
     public TitleUIName uiName;
     public GameObject uiNameText;
@@ -43,18 +43,6 @@ public class OutlineTrigger : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        //left.action.started += OnSelect;
-        //right.action.started += OnSelect;
-    }
-
-    private void OnDisable()
-    {
-        //left.action.started -= OnSelect;
-        //right.action.started -= OnSelect;
-    }
-
     private void OnOutLine(HoverEnterEventArgs args)
     {
         Debug.Log("OnOutLine");
@@ -67,8 +55,8 @@ public class OutlineTrigger : MonoBehaviour
                 isOutlineActive = true; //아웃라인 활성화 됨을 확인
                 if (!isEventRegistered)
                 {
-                    left.action.started += OnSelect;
-                    right.action.started += OnSelect;
+                    left.action.started += OnSelectObject;
+                    right.action.started += OnSelectObject;
                     isEventRegistered = true;
                 }
             }
@@ -87,15 +75,15 @@ public class OutlineTrigger : MonoBehaviour
                 isOutlineActive = false; //아웃라인 비활성화 됨을 확인
                 if (isEventRegistered)
                 {
-                    left.action.started -= OnSelect;
-                    right.action.started -= OnSelect;
+                    left.action.started -= OnSelectObject;
+                    right.action.started -= OnSelectObject;
                     isEventRegistered = false;
                 }
             }
         }
     }
 
-    private void OnSelect(InputAction.CallbackContext context)
+    private void OnSelectObject(InputAction.CallbackContext context)
     {
         Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화 시도");
         if (isOutlineActive)

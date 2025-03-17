@@ -10,7 +10,7 @@ public class BlurEffectManager : MonoBehaviour
 {
     public TextMeshProUGUI titleText;
     public GameObject uiCamere;
-    public float fadeOutTime = 3f;
+    public float fadeOutTime = 3f;//페이드아웃 걸리는 시간
     public Volume volume;
 
     private VolumeProfile profile;
@@ -27,13 +27,13 @@ public class BlurEffectManager : MonoBehaviour
 
     void Update()
     {
-        // 카메라의 정면 (화면 정면)을 기준으로 위치를 고정시키기 위해
-        Vector3 screenCenter = new Vector3(0.5f, 2f, 2f);  // 화면의 중앙에 고정
-        Vector3 worldPosition = Camera.main.ViewportToWorldPoint(screenCenter);  // 화면 좌표를 월드 좌표로 변환
+        //카메라의 정면 (화면 정면)을 기준으로 위치를 고정시키기 위해
+        Vector3 screenCenter = new Vector3(0.5f, 2f, 2f);//화면의 중앙에 고정
+        Vector3 worldPosition = Camera.main.ViewportToWorldPoint(screenCenter);//화면 좌표를 월드 좌표로 변환
 
-        // 타이틀 텍스트의 위치를 화면 정면으로 고정
+        //타이틀 텍스트의 위치를 화면 정면으로 고정
         titleText.transform.position = worldPosition;
-        titleText.transform.rotation = Camera.main.transform.rotation;  // 카메라의 회전을 따라가도록 설정
+        titleText.transform.rotation = Camera.main.transform.rotation;//카메라의 회전을 따라가도록 설정
     }
 
     public void ResetTitle()
@@ -53,16 +53,16 @@ public class BlurEffectManager : MonoBehaviour
         Color startColor = titleText.color;
         Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
 
-        // 타이틀 텍스트를 서서히 투명하게 만듬
+        //타이틀 텍스트를 서서히 투명하게 만듬
         while (elapsedTime < fadeOutTime)
         {
             elapsedTime += Time.deltaTime;
             titleText.color = Color.Lerp(startColor, endColor, elapsedTime / fadeOutTime);
-            yield return null;  // 매 프레임마다 업데이트
+            yield return null;//매 프레임마다 업데이트
         }
 
-        titleText.color = endColor; // 최종 색상 설정
-        titleText.gameObject.SetActive(false); // 타이틀 텍스트를 비활성화하여 화면에서 제거
+        titleText.color = endColor;//최종 색상 설정
+        titleText.gameObject.SetActive(false);//타이틀 텍스트를 비활성화하여 화면에서 제거
 
         if (depth != null)
         {
@@ -85,7 +85,7 @@ public class BlurEffectManager : MonoBehaviour
         titleText.gameObject.SetActive(true);
         uiCamere.SetActive(true);
         Color color = titleText.color;
-        color.a = 1f;  // 알파값을 1로 설정
+        color.a = 1f;
         titleText.color = color;
 
         if (profile.TryGet(out depth))
