@@ -40,9 +40,12 @@ public class Note : MonoBehaviour
         Destroy();
         isHit = true;
         this.noteType = noteType;
-        ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        effect.Play();
-        Destroy(effect.gameObject, effect.main.duration);
+        if (hitEffect != null)
+        {
+            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }
         OnHit?.Invoke(this);
     }
 

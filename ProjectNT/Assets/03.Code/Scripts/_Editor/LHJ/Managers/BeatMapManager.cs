@@ -5,25 +5,55 @@ using System.IO;
 
 public class BeatMapManager : MonoBehaviour
 {
-    [Header("매니저 참조")]
-    [SerializeField] private GridManager gridManager;
-    [SerializeField] private NodeManager nodeManager;
-    [SerializeField] private TimelineManager timelineManager;
-    [SerializeField] private InputManager inputManager;
+    public bool isLoaded = false;
 
-    private BeatMapData _currentBeatMap;
-    private string _currentBeatMapPath;
-    private bool _isEditing = false;
+    private AudioSourceManager _audioSourceManager;
+    private GridManager _gridManager;
+    private NodeContainer _nodeContainer;
 
-    //에디터 상태
-    private bool _isPaused = true;
-    private NodeType _currentNodeType = NodeType.None;
-
-    private void InitializeEdior()
+    private void Awake()
     {
-        //_currentBeatMap = new BeatMapData
-        //{
+        _audioSourceManager = FindObjectOfType<AudioSourceManager>();
+        _gridManager = FindObjectOfType<GridManager>();
+        _nodeContainer = FindObjectOfType<NodeContainer>();
+        isLoaded = false;
+    }
 
-        //}
+    //BeatMapData로 넘겨줄거임
+    public BeatMapData SaveBeatMapData()
+    {
+        _nodeContainer.SaveBeatMap();
+        return _nodeContainer.CurrentBeatMapData;
+    }
+
+    //얘도 BeatMapData로 받아올거임
+    public void LoadBeatMapData(BeatMapData beatMapData)
+    {
+        if (beatMapData == null)
+        {
+            Debug.LogWarning("넘어온 비트맵 정보가 없습니다.");
+            return;
+        }
+        print(2);
+
+        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));
+    }
+
+    private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
+    {
+        isLoaded = false;
+
+        //1. 오디오 Source 초기화
+        _audioSourceManager.InitializeFromBeatMapManager(beatMapData.songData);
+        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
+
+        //2. grid 초기화
+        _gridManager.InitializeFromBeatMapManager(beatMapData.gridSetting);
+        yield return new WaitUntil(() => _gridManager.GridTexture != null);
+
+        //3. node 초기화
+        _nodeContainer.InitializeWithNodeData(beatMapData.nodes);
+
+        isLoaded = true;
     }
 }

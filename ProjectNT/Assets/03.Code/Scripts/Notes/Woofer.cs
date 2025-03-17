@@ -6,6 +6,7 @@ public class Woofer : MonoBehaviour
     public List<Note> notes = new List<Note>();
     private AudioSource _audioSource;
     private JudgementSystem _judgementSystem;
+    private NoteScanner _noteScanner;
     public AudioClip hitSound { get; private set; }
     
     private AudioPlayer _audioPlayer;
@@ -16,6 +17,12 @@ public class Woofer : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _judgementSystem = GetComponent<JudgementSystem>();
         _audioPlayer = FindObjectOfType<AudioPlayer>();
+        _judgementSystem = FindObjectOfType<JudgementSystem>();
+        _noteScanner = FindObjectOfType<NoteScanner>();
+
+        _noteScanner.OnNoteEnter += AddNote;
+        _noteScanner.OnNoteExit += RemoveNote;
+
         if (hitSound)
             _audioSource.clip = hitSound;
     }
@@ -43,20 +50,14 @@ public class Woofer : MonoBehaviour
         note.Hit(_judgementSystem.CheckTiming());
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void AddNote(Note note)
     {
-        if (other.TryGetComponent(out Note note))
-        {
-            note.OnDestroyed += note => notes.Remove(note);
-            notes.Add(note);
-        }
+        note.OnDestroyed += note => notes.Remove(note);
+        notes.Add(note);
     }
 
-    private void OnTriggerExit(Collider other)
+    public void RemoveNote(Note note)
     {
-        if (other.TryGetComponent(out Note note))
-        {
-            notes?.Remove(note);
-        }
+        notes?.Remove(note);
     }
 }
