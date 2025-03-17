@@ -19,7 +19,7 @@ public class Note : MonoBehaviour
     public AudioClip hitSound;
 
     [SerializeField] private ParticleSystem hitEffect;
-    
+
     private Vector3 _initialPosition;
     private double _spawnDspTime;
     private double _targetDspTime;
@@ -38,8 +38,11 @@ public class Note : MonoBehaviour
         Destroy();
         isHit = true;
         this.noteType = noteType;
-        ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        effect.Play();
+        if (hitEffect != null)
+        {
+            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            effect.Play();
+        }
         OnHit?.Invoke(this);
     }
 
@@ -54,10 +57,10 @@ public class Note : MonoBehaviour
         double currentTime = AudioSettings.dspTime;
         double elapsedTime = currentTime - _spawnDspTime;
         double totalTime = _targetDspTime - _spawnDspTime;
-    
+
         //  Mathf.Clamp01 : 0 ~ 1 로 정규화
         float timeProgress = Mathf.Clamp01((float)(elapsedTime / totalTime));
-    
+
         if (target)
             transform.position = Vector3.Lerp(_initialPosition, target.position, timeProgress);
     }
@@ -86,6 +89,6 @@ public class Note : MonoBehaviour
     {
         Move();
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
-            Destroy();
+            Miss();
     }
 }

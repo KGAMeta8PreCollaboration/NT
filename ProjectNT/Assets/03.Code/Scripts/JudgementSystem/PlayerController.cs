@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerController : MonoBehaviour
@@ -12,21 +14,29 @@ public class PlayerController : MonoBehaviour
     private NoteManager _noteManager;
     //=======PC 용=========
     public float velocityMagnitude;
+    public float velocityMagnitudeThreshold;
     public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
+
     private ActionBasedController _controller;
     private Vector3 prevPos = new Vector3();
 
     public GameObject tmpPointPrefab;
+    //test
+    public TextMeshProUGUI logText;
+    public TextMeshProUGUI logText2;
+    public int count;
 
     private void Start()
     {
         _noteManager = FindObjectOfType<NoteManager>();
         _controller = GetComponentInParent<ActionBasedController>();
 
+        logText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
+        logText2 = GameObject.Find("LogText2").GetComponent<TextMeshProUGUI>();
+
         _controller.activateAction.action.performed += TriggerButtonAction;
 
         prevPos = transform.position;
-
         // TODO :                                                                                                                                                                                                                                                       
         // StartCoroutine(CreateCoroutine());
     }
@@ -37,6 +47,10 @@ public class PlayerController : MonoBehaviour
 
         velocityMagnitude = deltaPos.magnitude / Time.deltaTime;
 
+    }
+
+    private void LateUpdate()
+    {
         prevPos = transform.position;
     }
 
@@ -69,10 +83,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent<Woofer>(out Woofer woofer))
+        if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
         {
+            Collider other = collision.collider;
+
             Vector3 stickPosition = transform.position;
 
             //Vector3 closestPoint = other.ClosestPointOnBounds(stickPosition); //추후 고민해보자.
@@ -82,17 +98,23 @@ public class PlayerController : MonoBehaviour
 
             float wooferTopY = wooferCenter.y + (other.bounds.extents.y - hitThreshold);
 
-            Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
-
             bool isDownwardHit = transform.position.y < prevPos.y; // 아래로 휘둘렀는지 확인
-            bool isFastEnough = velocityMagnitude > 1.5f; // 일정 속도 이상 휘둘렀는지 확인
+            bool isFastEnough = velocityMagnitude > velocityMagnitudeThreshold; // 일정 속도 이상 휘둘렀는지 확인
             bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
 
+            print($"휘두른 속도: {velocityMagnitude}");
             print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
+            logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
+                        $"\n윗면에 충돌했는지: {isOnTop}";
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 woofer.Hit();
+                Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
+                count++;
+                logText2.text = "Hit Count: " + count;
+
+                print("우퍼와 상호작용 됨");
             }
         }
     }
