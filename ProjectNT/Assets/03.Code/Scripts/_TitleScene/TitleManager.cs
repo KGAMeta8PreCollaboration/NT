@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class TitleManager : MonoBehaviour
 {
     public static TitleManager instance;
 
     [Header("UI")]
     public GameObject singlePlayUI;
-    public GameObject multiPlayUI;
     public GameObject rankingBoardUI;
     public GameObject gameSettingUI;
+    public GameObject multiPlayUI;
 
     [SerializeField]
     private BlurEffectManager blurEffectManager;
@@ -61,9 +61,9 @@ public class TitleManager : MonoBehaviour
                 curUI = singlePlayUI;
                 break;
             case TitleUIName.MultiPlay:
-                Debug.Log($"{uiName} UI 활성화");
-                isMultiPlaye = true;
-                //멀티플레이 화면으로 넘어감
+                multiPlayUI.SetActive(true);
+                PhotonNetwork.ConnectUsingSettings(); // Photon 서버 연결
+                curUI = multiPlayUI;
                 break;
             case TitleUIName.RankingBoard:
                 Debug.Log($"{uiName} UI 활성화");

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public enum UIGameType
 {
@@ -37,7 +38,7 @@ public class GamePlayUI : BaseTitleUI
         musicChangeSelect.backgroundAudioSource.loop = true;
         musicChangeSelect.backgroundAudioSource.Play();
         base.Awake();
-    }
+     }
 
     private void OnEnable()
     {
