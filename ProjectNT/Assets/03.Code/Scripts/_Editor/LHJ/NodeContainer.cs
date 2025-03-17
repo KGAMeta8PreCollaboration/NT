@@ -4,11 +4,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.UI;
 
 public class NodeContainer : MonoBehaviour
 {
     [SerializeField] private GameObject nodePrefab;
     [SerializeField] private Transform nodeParent;
+    [SerializeField] private Button firstButton;
+    [SerializeField] private Button secondButton;
+    [SerializeField] private Button thirdButton;
+    [SerializeField] private Button fourthButton;
+
+    public BeatMapData CurrentBeatMapData => _currentBeatMapData;
 
     private Camera _editorCamera;
     private GridManager _gridManager;
@@ -20,7 +27,6 @@ public class NodeContainer : MonoBehaviour
     private Color _previewNodeColor = new Color(1, 0, 0, 0.5f);
     private Material myMaterial;
     private Material myMaterialPrefab;
-
     private BeatMapData _currentBeatMapData;
               
     private void Awake()
@@ -61,10 +67,10 @@ public class NodeContainer : MonoBehaviour
         (int column, int beatIndex) = GetGridPositionFromMouse();
         CreatePreviewNode(column, beatIndex);
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SaveBeatMap();
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    SaveBeatMap();
+        //}
         if (Input.GetKeyDown(KeyCode.A))
         {
             if (_currentBeatMapData == null)
@@ -181,13 +187,97 @@ public class NodeContainer : MonoBehaviour
          
         if (node != null)
         {
+            node.TestPrint();
             Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
             nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
             node.transform.localScale = nodeObj.transform.localScale;
-
+            node.InitializeNode(new Vector2Int(column, beatIndex));
             _nodeGrid[column, beatIndex] = node;
             //node.Initialize(column, beatIndex * (60f / _gridManager.BPM));
+        }
+    }
+
+    private List<NodeData> GetAllNodeData()
+    {
+        List<NodeData> nodeDataList = new List<NodeData>(); 
+
+        for (int i = 0; i < _gridManager.Column; i++)
+        {
+            for (int j = 0; j < _totalBeats; j++)
+            {
+                if (_nodeGrid[i, j] != null)
+                {
+                    NodeData nodeData = _nodeGrid[i, j].GetNodeData();
+                    nodeDataList.Add(nodeData);
+                }
+            }
+        }
+
+        return nodeDataList;
+    }
+
+    public void InitializeWithNodeData(List<NodeData> nodeDataList)
+    {
+        ClearAllNodes();
+        InitializeNodeGrid();
+
+        foreach (var nodeData in nodeDataList)
+        {
+            CreatNodeFromData(nodeData);
+        }
+    }
+
+    //모든 노드 정보 파괴
+    private void ClearAllNodes()
+    {
+        if (_nodeGrid == null)
+        {   
+            print($"그리드에 아무것도 없습니다");
+            return;
+        }
+
+        for (int i = 0; i < _gridManager.Column; i++)
+        {
+            for (int j = 0; j < _totalBeats; j++)
+            {
+                if ( _nodeGrid[i, j] != null)
+                {
+                    Destroy(_nodeGrid[i, j].gameObject);
+                    _nodeGrid[i, j] = null;
+                }
+            }
+        }
+    }
+
+    private void CreatNodeFromData(NodeData nodeData)
+    {
+        if (nodeData.index.x >= _gridManager.Column || nodeData.index.y >= _totalBeats)
+        {
+            Debug.LogWarning($"그리드가 이상한 곳에 찍혀있음 : ({nodeData.index.x}, {nodeData.index.y})");
+            return;
+        }
+
+        //if (_nodeGrid[nodeData.index.x, nodeData.index.y] != null)
+        //{
+        //    print("이미 그리드 위에 노드가 있습니다");
+        //    Destroy(_nodeGrid[nodeData.index.x, nodeData.index.y].gameObject);
+        //    _nodeGrid[nodeData.index.x, nodeData.index.y] = null;
+        //}
+
+        GameObject nodeObj = Instantiate(nodePrefab);
+        Node node = nodeObj.GetComponent<Node>();
+
+        if (node != null)
+        {
+            Vector2 gridPoint = _gridManager.GridPoint[nodeData.index.x, nodeData.index.y];
+            nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
+            node.transform.SetParent(nodeParent, true);
+            node.transform.localScale = nodeObj.transform.localScale;
+
+            _nodeGrid[nodeData.index.x, nodeData.index.y] = node;
+            //node.InitializeNode(nodeData.index);
+            node.SetNodeData(nodeData);
         }
     }
 
@@ -209,17 +299,21 @@ public class NodeContainer : MonoBehaviour
             BeatNum = _gridManager.BeatNum,
         };
 
-        _currentBeatMapData.nodes = new List<NodeData>();
-        for (int i = 0; i < _gridManager.Column; i++)
+        _currentBeatMapData.nodes = GetAllNodeData();
+        foreach (var node in _currentBeatMapData.nodes)
         {
-            for (int j = 0; j < _gridManager.TotalBeats; j++)
-            {
-                if (_nodeGrid != null)
-                {
-                    //_currentBeatMapData.nodes.Add(_nodeGrid[i, j])
-                }
-            }
+            print($"저장된 노드의 위치 : {node.index}");
         }
+        //for (int i = 0; i < _gridManager.Column; i++)
+        //{
+        //    for (int j = 0; j < _gridManager.TotalBeats; j++)
+        //    {
+        //        if (_nodeGrid != null)
+        //        {
+        //            //_currentBeatMapData.nodes.Add(_nodeGrid[i, j])
+        //        }
+        //    }
+        //}
     }
 
     private void PrintAllNode()
