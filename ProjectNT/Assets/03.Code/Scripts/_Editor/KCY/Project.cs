@@ -17,6 +17,7 @@ public class Project : MonoBehaviour
     private string tempName;
     private string tempArtist;
     private string tempThumbnail;
+    private byte[] tempThumbnailData;
     private string tempBgm;
     private string tempBpm;
     private string tempKeySoundPath;
@@ -52,6 +53,7 @@ public class Project : MonoBehaviour
         tempName = projectData.projectName;
         tempArtist = projectData.artistName;
         tempThumbnail = projectData.thumbnailName;
+        tempThumbnailData = projectData.thumbnailData;
         tempBgm = projectData.bgmName;
         tempBpm = projectData.bpm.ToString();
         tempKeySoundPath = projectData.m_KeysoundPath;
@@ -92,11 +94,8 @@ public class Project : MonoBehaviour
                 loader.SetBgmTMP = projectData.bgmName;
                 loader.SetThumbnailTMP = projectData.thumbnailName;
                 loader.SetKeySoundTMP = projectData.m_KeysoundPath;
-                if (sprite == null)
-                {
-                    string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
-                    sprite = loader.MakeSprite(path, Vector2.zero);
-                }
+                string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
+                sprite = loader.MakeSprite(path);
                 loader.SetThumbnail = sprite;
                 loader.EditBtn = true;
             }
@@ -130,6 +129,11 @@ public class Project : MonoBehaviour
         if (this != loader.currentProject) return;
         tempThumbnail = text;
     }
+    public void SetThumbnailData(byte[] bytes)
+    {
+        if (this != loader.currentProject) return;
+        tempThumbnailData = bytes;
+    }
     public void SetBgm(string text)
     {
         if (this != loader.currentProject) return;
@@ -146,6 +150,7 @@ public class Project : MonoBehaviour
         projectData.artistName = tempArtist;
         projectData.bpm = int.Parse(tempBpm);
         projectData.thumbnailName = tempThumbnail;
+        projectData.thumbnailData = tempThumbnailData;
         projectData.bgmName = tempBgm;
         projectData.m_KeysoundPath = tempKeySoundPath;
     }

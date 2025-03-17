@@ -157,20 +157,20 @@ public class ProjectLoader : MonoBehaviour
         {
             new ExtensionFilter("Image Files", "jpeg","png","jpg")
         };
-        try
-        {
-            string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
+        // try
+        // {
+        string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
 
-            thumbnailName_tmp.text = Path.GetFileName(path[0]);
-            thumbnailTempPath = path[0];
-            thumbnail_img.sprite = MakeSprite(path[0], Vector2.zero);
-            currentProject.SetThumbnail(thumbnailName_tmp.text);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning(e.Message);
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
-        }
+        thumbnailName_tmp.text = Path.GetFileName(path[0]);
+        thumbnailTempPath = path[0];
+        thumbnail_img.sprite = MakeSprite(path[0]);
+        currentProject.SetThumbnail(thumbnailName_tmp.text);
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.LogWarning(e.Message);
+        //     EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
+        // }
     }
 
     private void LoadKeySound()
@@ -439,32 +439,62 @@ public class ProjectLoader : MonoBehaviour
         }
     }
 
-    public Sprite MakeSprite(string filePath, Vector2 pivot)
+    public Sprite MakeSprite(string filePath)
     {
         //경로가 없다면 돌아가기
         if (string.IsNullOrEmpty(filePath) == true) return null;
-
+        //이미지 읽어오기
+        byte[] bytes;
         try
         {
-            //이미지 읽어오기
-            byte[] bytes = File.ReadAllBytes(filePath);
-            //텍스쳐 만들기
-            Texture2D texture = new Texture2D(100, 100);
-            texture.LoadImage(bytes);
-            //스프라이트 만들기
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), pivot);
-            sprite.name = texture.name;
-            return sprite;
-
+            bytes = File.ReadAllBytes(filePath);
         }
         catch (Exception e)
         {
             Debug.LogError(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.LOADIMGFAIL);
+            return null;
         }
-        return null;
+        if (currentProject.projectData.thumbnailData.Length < 1)
+        {
+            //텍스쳐 만들어서 반환
+            return ByteToSprite(bytes);
+        }
+        else
+        {
+            return ByteToSprite(bytes, filePath);
+        }
     }
-
+    private Sprite ByteToSprite(byte[] bytes, string filePath = null)
+    {
+        if (bytes == null)
+        {
+            bytes = currentProject.projectData.thumbnailData;
+            currentProject.SetThumbnailData(bytes);
+            Debug.Log("빔");
+        }
+        else
+        {
+            if (bytes == currentProject.projectData.thumbnailData)
+            {
+                Debug.Log("같음");
+                currentProject.SetThumbnailData(bytes);
+                currentProject.projectData.thumbnailData = bytes;
+            }
+            else
+            {
+                Debug.Log("다름");
+                currentProject.projectData.thumbnailData = bytes;
+                currentProject.SetThumbnailData(bytes);
+            }
+        }
+        Texture2D texture = new Texture2D(100, 100);
+        texture.LoadImage(bytes);
+        //스프라이트 만들기
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        sprite.name = texture.name;
+        return sprite;
+    }
     public void SetDefault()
     {
         edit_btn.interactable = false;

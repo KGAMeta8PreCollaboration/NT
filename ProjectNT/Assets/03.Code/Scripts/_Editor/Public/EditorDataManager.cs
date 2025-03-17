@@ -14,6 +14,7 @@ public struct ProjectData
     public int bpm;
     public string m_Path;
     public string m_KeysoundPath;
+    public byte[] thumbnailData;
 }
 
 public class EditorDataManager : Singleton<EditorDataManager>
