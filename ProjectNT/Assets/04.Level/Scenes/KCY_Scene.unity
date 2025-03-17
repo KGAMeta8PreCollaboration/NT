@@ -213,6 +213,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37949749}
   m_CullTransparentMesh: 1
+--- !u!114 &65316253 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4255654031417180328, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2354013932995868719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &81917067
 GameObject:
   m_ObjectHideFlags: 0
@@ -7587,6 +7599,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1790780779 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1643714225253922568, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2354013932995868719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1800952728
 GameObject:
   m_ObjectHideFlags: 0
@@ -10018,7 +10042,7 @@ PrefabInstance:
     - target: {fileID: 2354013932433250384, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2354013932433250476, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
         type: 3}
@@ -10330,6 +10354,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2354013932995868721, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
+        type: 3}
+      propertyPath: phase2Inputfield
+      value: 
+      objectReference: {fileID: 1790780779}
+    - target: {fileID: 2354013932995868721, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
+        type: 3}
+      propertyPath: phase3Inputfield
+      value: 
+      objectReference: {fileID: 65316253}
     - target: {fileID: 2354013933016337479, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
         type: 3}
       propertyPath: m_AnchorMax.y

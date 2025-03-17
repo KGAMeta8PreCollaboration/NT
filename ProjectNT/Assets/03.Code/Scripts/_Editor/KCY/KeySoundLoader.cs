@@ -12,18 +12,8 @@ public class KeySoundLoader : MonoBehaviour
 {
     [SerializeField] private GameObject keysound_prefab;
     [SerializeField] private ToggleGroup toggleGroup;
-    private string keySoundPath = "Assets/Resources/_SongEditor/KeySoundTemp";
-    private void Awake()
-    {
-        LoadKeySound();
-    }
 
-    private void Start()
-    {
-
-    }
-
-    private void LoadKeySound()
+    public void LoadKeySound(string keySoundPath)
     {
         if (Directory.Exists(keySoundPath))
         {
@@ -46,7 +36,6 @@ public class KeySoundLoader : MonoBehaviour
 
         string fileName;
         string destPath;
-
         foreach (string file in sortList)
         {
             fileName = Path.GetFileName(file);
@@ -54,7 +43,6 @@ public class KeySoundLoader : MonoBehaviour
             destPath = Path.Combine(keySoundPath, fileName);
             File.Copy(file, destPath);
         }
-        AssetDatabase.Refresh();
         foreach (string file in fileNameList)
         {
             KeySound keySound = Instantiate(keysound_prefab, transform, false).GetComponent<KeySound>();
