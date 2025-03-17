@@ -2904,7 +2904,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 749d0ef8378fcf64cacc1639616a2f66, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5112,6 +5112,8 @@ MonoBehaviour:
   rankingBoardUI: {fileID: 2017360316}
   gameSettingUI: {fileID: 1117693336}
   multiPlayUI: {fileID: 1467146953}
+  gameMusicAudioSource: {fileID: 177152842}
+  backgroundAudioSource: {fileID: 177152841}
   blurEffectManager: {fileID: 177152845}
 --- !u!4 &272115123
 Transform:
@@ -25703,8 +25705,6 @@ MonoBehaviour:
   changeLeftButton: {fileID: 1481211171}
   changeRightButton: {fileID: 1358360929}
   musicReplayButton: {fileID: 1708614432}
-  gameMusicAudioSource: {fileID: 177152842}
-  backgroundAudioSource: {fileID: 177152841}
 --- !u!114 &1461590995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25863,8 +25863,6 @@ MonoBehaviour:
   changeLeftButton: {fileID: 1257211003}
   changeRightButton: {fileID: 1350149236}
   musicReplayButton: {fileID: 1097874626}
-  gameMusicAudioSource: {fileID: 177152842}
-  backgroundAudioSource: {fileID: 177152841}
 --- !u!114 &1467146956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35909,8 +35907,6 @@ MonoBehaviour:
   changeLeftButton: {fileID: 281640495}
   changeRightButton: {fileID: 1770375660}
   musicReplayButton: {fileID: 0}
-  gameMusicAudioSource: {fileID: 177152842}
-  backgroundAudioSource: {fileID: 177152841}
 --- !u!114 &2017360319
 MonoBehaviour:
   m_ObjectHideFlags: 0

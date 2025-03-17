@@ -35,8 +35,6 @@ public class GamePlayUI : BaseTitleUI
 
     public override void Awake()
     {
-        musicChangeSelect.backgroundAudioSource.loop = true;
-        musicChangeSelect.backgroundAudioSource.Play();
         base.Awake();
      }
 
@@ -71,7 +69,7 @@ public class GamePlayUI : BaseTitleUI
     public override void RemoveEventListeners()//꺼질때 버튼 해제
     {
         base.RemoveEventListeners();
-        musicChangeSelect.StopMusic();
+        TitleManager.instance.StopMusic();
 
         gameStartButton.onClick.RemoveListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
@@ -101,7 +99,7 @@ public class GamePlayUI : BaseTitleUI
     public void StartGame()
     {
         //curMusicData 로 노래가지고 게임시작 로직
-        musicChangeSelect.MusicLoop(false);
+        TitleManager.instance.MusicLoop(false);
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이시 노래시작
