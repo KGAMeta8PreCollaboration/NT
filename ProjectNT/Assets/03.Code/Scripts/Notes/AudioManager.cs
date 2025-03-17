@@ -8,26 +8,26 @@ public class AudioManager : Singleton<AudioManager>
 	int currentClipIndex = 0;
 	public double startDspTime { get; private set; }
 	public AudioSource bgmAudioSource;
-	
-	
 
 	private void Start()
 	{ 
-		startDspTime = AudioSettings.dspTime;
+		startDspTime = AudioSettings.dspTime + 2;
 		foreach (AudioClip item in audioClips)
 		{
 			item.LoadAudioData();
 		}
-		bgmAudioSource.Play();
+		// bgmAudioSource.Play();
 		// AudioSetting();
 		// print(AudioSettings.GetConfiguration().speakerMode);
 		// print(AudioSettings.GetConfiguration().sampleRate);
 		// print(AudioSettings.GetConfiguration().numRealVoices);
 		// print(AudioSettings.GetConfiguration().numVirtualVoices);
-		// print(AudioSettings.GetConfiguration().dspBufferSize);
+		print(AudioSettings.GetConfiguration().dspBufferSize);
 
 		// printBuffer();
 	}
+	
+	#region AudioSetting
 	private static void AudioSetting()
 	{
 		print(AudioSettings.GetConfiguration());
@@ -50,6 +50,8 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		return audioClips[Random.Range(0, audioClips.Count)];
 	}
+	
+	#endregion
 	
 	public AudioClip GetNextAudioClip()
 	{

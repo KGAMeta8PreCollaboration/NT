@@ -10,7 +10,6 @@ public class NoteManager : MonoBehaviour
 	[SerializeField] private ScoreManager _scoreManager;
 
 	public List<Note> notes { get; private set; } = new List<Note>();
-
 	
 	public void CreateNoteFromData(LoadedNoteData noteData)
 	{
