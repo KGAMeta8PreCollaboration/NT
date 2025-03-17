@@ -19,10 +19,11 @@ public class Note : MonoBehaviour
     public AudioClip hitSound;
 
     [SerializeField] private ParticleSystem hitEffect;
-
+    
     private Vector3 _initialPosition;
     private double _spawnDspTime;
     private double _targetDspTime;
+    private double _startDspTime;
 
     public void Init(Transform target, double spawnDspTime, double targetDspTime, AudioClip hitSound = null)
     {
@@ -31,6 +32,7 @@ public class Note : MonoBehaviour
         _spawnDspTime = spawnDspTime;
         _targetDspTime = targetDspTime;
         _initialPosition = transform.position;
+        _startDspTime = AudioManager.Instance.startDspTime;
     }
 
     public void Hit(NoteType noteType)
@@ -42,6 +44,7 @@ public class Note : MonoBehaviour
         {
             ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
             effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
         }
         OnHit?.Invoke(this);
     }
@@ -49,6 +52,7 @@ public class Note : MonoBehaviour
     private void Destroy()
     {
         OnDestroyed?.Invoke(this);
+        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 노트 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 노트 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
         Destroy(gameObject);
     }
 
@@ -57,10 +61,10 @@ public class Note : MonoBehaviour
         double currentTime = AudioSettings.dspTime;
         double elapsedTime = currentTime - _spawnDspTime;
         double totalTime = _targetDspTime - _spawnDspTime;
-
+    
         //  Mathf.Clamp01 : 0 ~ 1 로 정규화
         float timeProgress = Mathf.Clamp01((float)(elapsedTime / totalTime));
-
+    
         if (target)
             transform.position = Vector3.Lerp(_initialPosition, target.position, timeProgress);
     }
@@ -79,6 +83,7 @@ public class Note : MonoBehaviour
 
     private void Miss()
     {
+        AudioPlayer.Instance.Play(hitSound);
         Destroy();
         isHit = true;
         noteType = NoteType.Bad;

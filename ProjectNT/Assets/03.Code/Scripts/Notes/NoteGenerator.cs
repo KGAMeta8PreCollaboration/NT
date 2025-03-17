@@ -36,7 +36,7 @@ public class NoteGenerator : MonoBehaviour
 
 	private async Task CheckAndGenerateNotesAsync()
 	{
-		_startDspTime = AudioSettings.dspTime;
+		_startDspTime = AudioSettings.dspTime + 2;
 		while (Application.isPlaying && loadedNotes.Count > 0)
 		{
 			double currentTime = AudioSettings.dspTime;
