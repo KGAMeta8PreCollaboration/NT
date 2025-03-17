@@ -102,9 +102,9 @@ public class PlayerController : MonoBehaviour
             bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
 
             print($"휘두른 속도: {velocityMagnitude}");
+            print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
             logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
                 $"\n윗면에 충돌했는지: {isOnTop}";
-            print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
