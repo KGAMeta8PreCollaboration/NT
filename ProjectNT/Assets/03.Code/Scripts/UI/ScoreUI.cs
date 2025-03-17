@@ -13,6 +13,8 @@ public class ScoreUI : MonoBehaviour
     public TextMeshProUGUI _timeText;
     private double _startDspTime;
 
+    public int tempHitCount;
+
     private void Start()
     {
         _comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>();

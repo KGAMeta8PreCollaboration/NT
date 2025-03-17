@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
-using Microsoft.Win32;
+
 using TMPro;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Events;
-using SFB;
+
 using UnityEngine.UI;
 
 public class ResourceIO : MonoBehaviour
@@ -29,8 +26,9 @@ public class ResourceIO : MonoBehaviour
     {
         keySoundLoader.LoadKeySound(keySoundsavePath);
         SetBgm();
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
-
+#endif
         phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, @"[0-9]", ""));
         phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, @"[0-9]", ""));
 
