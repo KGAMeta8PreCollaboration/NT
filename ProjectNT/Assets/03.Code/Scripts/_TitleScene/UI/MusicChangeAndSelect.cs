@@ -16,7 +16,7 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
 
     public Button changeLeftButton;//이전노래
     public Button changeRightButton;//다음노래
-    public Button restartButton;
+    public Button musicReplayButton;
 
     private TitleMusicData curMusicData;
     public TitleMusicData CurMusicData { get { return curMusicData; } }
@@ -36,7 +36,7 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
     {
         if (gameMusicAudioSource.isPlaying == true)
         {
-            Debug.Log("노래나오는중");
+            //Debug.Log("노래나오는중");
         }
     }
 
@@ -55,8 +55,9 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
     }
 
     //음악 처음부터 다시시작
-    public void RestartMusic()
+    public void ReplayMusic()
     {
+        Debug.Log("Music Replay 버튼 클릭");
         PlayMusic(curMusicData.musicClip);
     }
 

@@ -58,7 +58,7 @@ public class GamePlayUI : BaseTitleUI
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
-        musicChangeSelect.restartButton.onClick.AddListener(MusicSoundRestart);
+        musicChangeSelect.musicReplayButton.onClick.AddListener(MusicSoundReplay);
 
         easy.onValueChanged.AddListener((value) => OnDifficultyChanged(easy, 1));
         normal.onValueChanged.AddListener((value) => OnDifficultyChanged(normal, 2));
@@ -75,7 +75,7 @@ public class GamePlayUI : BaseTitleUI
         gameStartButton.onClick.RemoveListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.RemoveListener(PreviousMusicButton);
-        musicChangeSelect.restartButton.onClick.RemoveListener(MusicSoundRestart);
+        musicChangeSelect.musicReplayButton.onClick.RemoveListener(MusicSoundReplay);
 
         //등록할때 람다식으로 넣어서 개별적으로 해제가 안됨, 그래서 RemoveAll로 없애기
         easy.onValueChanged.RemoveAllListeners();
@@ -115,10 +115,10 @@ public class GamePlayUI : BaseTitleUI
     }
 
     //음악 재시작
-    public void MusicSoundRestart()
+    public void MusicSoundReplay()
     {
         Debug.Log($"노래 Restart : {musicChangeSelect.CurMusicData.musicName}");
-        musicChangeSelect.RestartMusic();
+        musicChangeSelect.ReplayMusic();
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 음악 재시작 동기화
@@ -140,6 +140,7 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
+        SetDifficulty(easy, 1);
         musicChangeSelect.NextMusic();
         TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -147,6 +148,7 @@ public class GamePlayUI : BaseTitleUI
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
+        SetDifficulty(easy, 1);
         musicChangeSelect.PreviousMusic();
         TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
