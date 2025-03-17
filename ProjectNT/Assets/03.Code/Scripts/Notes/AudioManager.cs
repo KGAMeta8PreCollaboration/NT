@@ -6,6 +6,8 @@ public class AudioManager : Singleton<AudioManager>
 {
 	public List<AudioClip> audioClips = new List<AudioClip>();
 	int currentClipIndex = 0;
+	
+	
 
 	private void Start()
 	{
@@ -46,5 +48,10 @@ public class AudioManager : Singleton<AudioManager>
 		currentClipIndex %= audioClips.Count;
 		// print($"AudioManager currentClipIndex : {currentClipIndex}");
 		return audioClips[currentClipIndex++];
+	}
+	
+	public AudioClip GetAudioClipAtString(string clipName)
+	{
+		return audioClips.Find(clip => clip.name == clipName);
 	}
 }

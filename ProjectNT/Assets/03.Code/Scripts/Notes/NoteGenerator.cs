@@ -9,7 +9,7 @@ public class LoadedNoteData
 {
 	public double time;
 	public int railIndex;
-	public int audioIndex;
+	public string noteAudioClipName;
 }
 
 public class NoteGenerator : MonoBehaviour
@@ -22,6 +22,10 @@ public class NoteGenerator : MonoBehaviour
 	private void Awake()
 	{
 		_noteManager = GetComponent<NoteManager>();
+		// foreach (var item in loadedNotes)
+		// {
+		// 	item.noteAudioClipName = "1-1";
+		// }
 	}
 
 	private async void Start()
