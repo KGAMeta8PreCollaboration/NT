@@ -57,16 +57,6 @@ public class AudioManager : Singleton<AudioManager>
 			.ForEach(audioSource => _audioPool.ReturnAudioSource(audioSource));
 	}
 
-	private void SearchBGMPlayTime()
-	{	
-		if (!isPlay && bgmAudioSource.isPlaying)
-		{
-			isPlay = true;
-			print($"BGM 레이턴시 : {(AudioSettings.dspTime - startDspTime)}, AudioSettings.dspTime : {AudioSettings.dspTime}, startDspTime : {startDspTime}");
-		}
-	}
-	
-	
 	public void StartBGM(double delayTime)
 	{
 		startDspTime = AudioSettings.dspTime + delayTime;
@@ -87,6 +77,5 @@ public class AudioManager : Singleton<AudioManager>
 	private void Update()
 	{
 		ReturnUnusedAudioSources();
-		SearchBGMPlayTime();
 	}
 }
