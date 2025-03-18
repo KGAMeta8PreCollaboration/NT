@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.HID;
@@ -8,12 +9,11 @@ using UnityEngine.UI;
 
 public class NodeContainer : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI phase1Text;
+    [SerializeField] private TextMeshProUGUI phase2Text;
+    [SerializeField] private TextMeshProUGUI songLengthText;
     [SerializeField] private GameObject nodePrefab;
     [SerializeField] private Transform nodeParent;
-    [SerializeField] private Button firstButton;
-    [SerializeField] private Button secondButton;
-    [SerializeField] private Button thirdButton;
-    [SerializeField] private Button fourthButton;
 
     public BeatMapData CurrentBeatMapData => _currentBeatMapData;
 
@@ -281,6 +281,14 @@ public class NodeContainer : MonoBehaviour
         }
     }
 
+    public void InitializeWithSongData(SongData songData)
+    {
+        songData ??= new SongData { songLength = 0, phase1 = 0, phase2 = 0 };
+        songLengthText.text = songData.songLength.ToString();
+        phase1Text.text = songData.phase1.ToString();
+        phase2Text.text = songData.phase2.ToString();
+    }
+
     //비트맵 저장하는 함수
     public void SaveBeatMap()
     {
@@ -289,7 +297,9 @@ public class NodeContainer : MonoBehaviour
         _currentBeatMapData.songData = new SongData
         {
             songName = _audioSourceManager.AudioSource.clip.name,
-            songLength = _audioSourceManager.AudioDuration
+            songLength = _audioSourceManager.AudioDuration,
+            phase1 = (float.Parse(phase1Text.text)),
+            phase2 = (float.Parse(phase2Text.text)),
         };
 
         _currentBeatMapData.gridSetting = new GridSetting
