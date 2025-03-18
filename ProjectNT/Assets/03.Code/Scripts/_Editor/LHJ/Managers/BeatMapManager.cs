@@ -51,6 +51,7 @@ public class BeatMapManager : MonoBehaviour
 
         //3. node 초기화
         _nodeContainer.InitializeWithNodeData(beatMapData.nodes);
+        _nodeContainer.InitializeWithSongData(beatMapData.songData);
 
         isLoaded = true;
     }
