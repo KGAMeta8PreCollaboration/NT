@@ -44,7 +44,7 @@ public class BeatMapManager : MonoBehaviour
         isLoaded = false;
 
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(beatMapData.songData);
+        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 
         //2. grid 초기화

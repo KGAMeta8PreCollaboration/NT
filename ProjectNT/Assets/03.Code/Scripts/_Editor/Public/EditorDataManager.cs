@@ -31,6 +31,8 @@ public class EditorDataManager : Singleton<EditorDataManager>
     private Enums.ModeDiff currentModeDiff;
     public Enums.ModeDiff CurrentModeDiff { set { currentModeDiff = value; } }
     private NodeContainer nodeContainer;
+    public AudioClip bgmClip;
+
     protected override void Awake()
     {
         base.Awake();
