@@ -28,9 +28,9 @@ public class SongTimelineController : MonoBehaviour
         //_audioSourceManager.callback += SliderController;
     }
 
-    private IEnumerator Start()                                                                                                     
+    private IEnumerator Start()
     {
-        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null &&  _beatMapManager.isLoaded);
+        yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null && _beatMapManager.isLoaded);
         InitalizeSlider();
     }
 

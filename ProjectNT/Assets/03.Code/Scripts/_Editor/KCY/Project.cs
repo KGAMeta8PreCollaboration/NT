@@ -31,6 +31,7 @@ public class Project : MonoBehaviour
         get { return projectName; }
         set { projectName = value; }
     }
+    public Sprite Sprite => sprite;
     public ProjectData projectData = new ProjectData();
     private void Awake()
     {

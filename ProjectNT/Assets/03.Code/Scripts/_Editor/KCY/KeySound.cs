@@ -17,8 +17,16 @@ public class KeySound : MonoBehaviour
     public Button PlayBTN
     { get { return play_btn; } set { play_btn = value; } }
 
-    private void Start()
+    private void Awake()
     {
-        // keysound_name.text = clip.name;
+        toggle.onValueChanged.AddListener(KeySoundChanged);
+    }
+    public void KeySoundChanged(bool isTrue)
+    {
+        if (isTrue)
+        {
+            Toggle.isOn = true;
+            EditorDataManager.Instance.CurKeySoundName = KeysoundName;
+        }
     }
 }

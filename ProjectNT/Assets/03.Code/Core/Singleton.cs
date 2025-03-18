@@ -30,10 +30,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 		if (_instance == null)
 		{
 			Instance = this as T;
+			DontDestroyOnLoad(gameObject);
 		}
 		else
 		{
-			Destroy(gameObject);
+			DestroyImmediate(gameObject);
 		}
 	}
 }

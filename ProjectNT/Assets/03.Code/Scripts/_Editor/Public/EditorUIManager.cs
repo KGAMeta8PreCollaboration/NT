@@ -16,8 +16,18 @@ public class EditorUIManager : Singleton<EditorUIManager>
 
         SceneManager.sceneLoaded += (x, y) =>
         {
-            //TODO 씬 전환 기능 추가 시 씬마다 필요한 캔버스 가져오기
-
+            if (SceneManager.GetActiveScene().name == "EditorPathScene")
+            {
+                if (pathCanvas == null)
+                    pathCanvas = FindObjectOfType<SetEditorEnv>().gameObject;
+            }
+            if (SceneManager.GetActiveScene().name == "SongEditorScene")
+            {
+                if (editorCanvas == null)
+                {
+                    editorCanvas = FindObjectOfType<ResourceIO>().gameObject;
+                }
+            }
         };
 
     }
