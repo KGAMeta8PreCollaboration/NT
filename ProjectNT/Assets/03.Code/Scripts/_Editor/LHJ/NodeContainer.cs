@@ -284,10 +284,18 @@ public class NodeContainer : MonoBehaviour
     public void InitializeWithSongData(SongData songData)
     {
         songData ??= new SongData { songLength = 0, phase2 = 0, phase3 = 0 };
-        songLengthText.text = songData.songLength.ToString();
-
+        UpdateTimeText(songData.songLength);
+    }
+    private void UpdateTimeText(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
+        songLengthText.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
     }
 
+    private int defaultPhase2 = 0;
+    private int defaultPhase3 = 0;
     //비트맵 저장하는 함수
     public void SaveBeatMap()
     {
@@ -297,8 +305,8 @@ public class NodeContainer : MonoBehaviour
         {
             songName = _audioSourceManager.AudioSource.clip.name,
             songLength = _audioSourceManager.AudioDuration,
-            phase2 = EditorDataManager.Instance.CurBeatMap.songData.phase2,
-            phase3 = EditorDataManager.Instance.CurBeatMap.songData.phase3,
+            phase2 = EditorDataManager.Instance.CurBeatMap?.songData?.phase2 ?? defaultPhase2,
+            phase3 = EditorDataManager.Instance.CurBeatMap?.songData?.phase3 ?? defaultPhase3,
         };
 
         _currentBeatMapData.gridSetting = new GridSetting
