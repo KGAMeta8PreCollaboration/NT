@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class BeatMapData
 {
-    public SongData songData;
+    public SongData songData = new SongData();
     public List<NodeData> nodes = new List<NodeData>();
     public GridSetting gridSetting;
 }

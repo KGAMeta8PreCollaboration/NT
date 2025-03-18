@@ -80,7 +80,7 @@ public class ProjectLoader : MonoBehaviour
         delete_btn.onClick.AddListener(DeleteUIOpen);
         loadSong_btn.onClick.AddListener(LoadSong);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
-        loadKeySound_btn.onClick.AddListener(LoadKeySound);
+        loadKeySound_btn.onClick.AddListener(KeySoundPathSet);
         edit_btn.onClick.AddListener(EditProject);
         save_btn.onClick.AddListener(SaveProject);
 
@@ -156,23 +156,17 @@ public class ProjectLoader : MonoBehaviour
         {
             new ExtensionFilter("Image Files", "jpeg","png","jpg")
         };
-        // try
-        // {
+
         string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
 
         thumbnailName_tmp.text = Path.GetFileName(path[0]);
         thumbnailTempPath = path[0];
         thumbnail_img.sprite = MakeSprite(path[0]);
         currentProject.SetThumbnail(thumbnailName_tmp.text);
-        // }
-        // catch (Exception e)
-        // {
-        //     Debug.LogWarning(e.Message);
-        //     EditorUIManager.Instance.popUp.PopUpOpen(Detail.FILELOADFAIL);
-        // }
+
     }
 
-    private void LoadKeySound()
+    private void KeySoundPathSet()
     {
         try
         {
