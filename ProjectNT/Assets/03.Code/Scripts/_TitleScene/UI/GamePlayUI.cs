@@ -108,7 +108,7 @@ public class GamePlayUI : BaseTitleUI
         {
             Debug.Log($"{TestStartGameData.Instance.musicName}");
             Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            SceneManager.LoadScene("KMJ_TestNextScene");
+            SceneManager.LoadScene("YKD_Prototype");
             //싱글플레이시 노래시작
         }
     }
