@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 [Serializable]
 public struct ProjectData
@@ -28,6 +31,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     new Dictionary<Enums.ModeDiff, BeatMapData>();
 
     private TestLoad testLoad;
+    private string bgmDestPath;
 
     public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
 
@@ -40,6 +44,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     {
         get { return beatMapDic[CurModeDiff]; }
         set { beatMapDic[CurModeDiff] = value; }
+
     }
 
     protected override void Awake()
@@ -88,4 +93,35 @@ public class EditorDataManager : Singleton<EditorDataManager>
         jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
         File.WriteAllText(path, jsonData);
     }
+    public void SetBgm()
+    {
+        string bgmSavePath = Path.Combine(Application.persistentDataPath, "bgmSaveFile");
+        string bgmPath = Path.Combine(ProjectData.m_Path, ProjectData.bgmName);
+
+        bgmDestPath = Path.Combine(bgmSavePath, ProjectData.bgmName);
+        if (Directory.Exists(bgmSavePath))
+        {
+            Directory.Delete(bgmSavePath, true);
+        }
+        Directory.CreateDirectory(bgmSavePath);
+        File.Copy(bgmPath, bgmDestPath);
+        StartCoroutine(InstantiateBGM());
+    }
+
+    private IEnumerator InstantiateBGM()
+    {
+        AudioClip clip;
+
+        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(bgmDestPath, AudioType.WAV);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Error loading audio clip : {request.error}");
+        }
+        clip = DownloadHandlerAudioClip.GetContent(request);
+        clip.name = ProjectData.bgmName;
+        bgmClip = clip;
+        yield return null;
+    }
+
 }

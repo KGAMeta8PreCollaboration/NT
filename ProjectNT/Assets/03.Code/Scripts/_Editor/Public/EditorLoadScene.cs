@@ -9,10 +9,6 @@ public class EditorLoadScene : MonoBehaviour
 {
     public static string nextScene;
 
-    private void Awake()
-    {
-
-    }
     private void Start()
     {
         StartCoroutine(LoadSceneCorou());

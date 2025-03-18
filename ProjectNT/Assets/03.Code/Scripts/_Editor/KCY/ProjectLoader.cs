@@ -95,9 +95,9 @@ public class ProjectLoader : MonoBehaviour
 
     private void EditProject()
     {
-        //TODO 다음으로 넘어가기
         EditorDataManager.Instance.thumbnail_sprite = currentProject.Sprite;
         EditorDataManager.Instance.ProjectData = currentProject.projectData;
+        EditorDataManager.Instance.SetBgm();
         EditorLoadScene.SceneLoad("SongEditorScene");
     }
 

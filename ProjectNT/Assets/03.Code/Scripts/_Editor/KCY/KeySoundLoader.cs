@@ -61,7 +61,6 @@ public class KeySoundLoader : MonoBehaviour
     // 1따봉 드립니다 :)
     private IEnumerator InstantiateKeySound()
     {
-
         yield return null;
 
         string filePath;
@@ -84,7 +83,6 @@ public class KeySoundLoader : MonoBehaviour
             clip.name = file;
             keySound.audioSource.clip = clip;
             keySound.KeysoundName = file;
-
             keySound.PlayBTN.onClick.AddListener(keySound.audioSource.Play);
         }
     }
