@@ -92,7 +92,15 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public void LoadBeatMapData()
     {
-        string path = Path.Combine(currentProjectData.m_Path, savefileName);
+        string path;
+        try
+        {
+            path = Path.Combine(currentProjectData.m_Path, savefileName);
+        }
+        catch
+        {
+            return;
+        }
         string jsonData;
         if (!File.Exists(path))
         {
@@ -106,8 +114,15 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public void SaveDataLocal()
     {
-        string path = Path.Combine(currentProjectData.m_Path, savefileName);
-        //TODO 병합 후 주석해제 예정
+        string path;
+        try
+        {
+            path = Path.Combine(currentProjectData.m_Path, savefileName);
+        }
+        catch
+        {
+            return;
+        }
         string jsonData;
         jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
         File.WriteAllText(path, jsonData);
