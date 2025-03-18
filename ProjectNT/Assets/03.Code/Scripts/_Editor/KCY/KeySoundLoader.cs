@@ -14,6 +14,7 @@ public class KeySoundLoader : MonoBehaviour
     [SerializeField] private ToggleGroup toggleGroup;
 
     private List<string> fileNameList = new List<string>();
+    private Toggle firstElem_toggle;
     private string keySoundPath;
 
     private void Start()
@@ -66,7 +67,6 @@ public class KeySoundLoader : MonoBehaviour
 
         string filePath;
         AudioClip clip;
-        fileNameList.Reverse();
         foreach (string file in fileNameList)
         {
             KeySound keySound = Instantiate(keysound_prefab, transform, false).GetComponent<KeySound>();
@@ -74,6 +74,10 @@ public class KeySoundLoader : MonoBehaviour
 
             filePath = Path.Combine(keySoundPath, file);
             UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(filePath, AudioType.WAV);
+            if (firstElem_toggle == null)
+            {
+                firstElem_toggle = keySound.Toggle;
+            }
             yield return request.SendWebRequest();
 
             if (request.result != UnityWebRequest.Result.Success)
@@ -86,6 +90,11 @@ public class KeySoundLoader : MonoBehaviour
             keySound.audioSource.clip = clip;
             keySound.KeysoundName = file;
             keySound.PlayBTN.onClick.AddListener(keySound.audioSource.Play);
+
+            if (request.isDone)
+            {
+                firstElem_toggle.onValueChanged?.Invoke(true);
+            }
         }
     }
 }

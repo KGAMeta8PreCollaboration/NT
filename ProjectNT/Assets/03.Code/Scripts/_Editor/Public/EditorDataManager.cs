@@ -35,7 +35,16 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
 
-    public Enums.ModeDiff CurModeDiff { get { return currentModeDiff; } set { currentModeDiff = value; } }
+    public Enums.ModeDiff CurModeDiff
+    {
+        get { return currentModeDiff; }
+        set
+        {
+            currentModeDiff = value;
+            beatMapLoadAction?.Invoke(CurBeatMap);
+            phaseDataAction?.Invoke();
+        }
+    }
 
     public Sprite thumbnail_sprite;
     public AudioClip bgmClip;
@@ -50,7 +59,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     { get { return curKeySoundName; } set { curKeySoundName = value; } }
 
     public Action<BeatMapData> beatMapLoadAction;
-
+    public Action phaseDataAction;
     protected override void Awake()
     {
         base.Awake();

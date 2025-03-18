@@ -95,7 +95,7 @@ public class ProjectLoader : MonoBehaviour
 
     private void EditProject()
     {
-        EditorDataManager.Instance.thumbnail_sprite = currentProject.Sprite;
+        EditorDataManager.Instance.thumbnail_sprite = thumbnail_img.sprite;
         EditorDataManager.Instance.ProjectData = currentProject.projectData;
         EditorDataManager.Instance.SetBgm();
         EditorLoadScene.SceneLoad("SongEditorScene");
@@ -355,7 +355,7 @@ public class ProjectLoader : MonoBehaviour
         {
             File.Delete(file);
         }
-        Directory.Delete(currentProject.projectData.m_Path);
+        Directory.Delete(currentProject.projectData.m_Path, true);
         addedProjects.Remove(currentProject);
         Destroy(currentProject.gameObject);
         thumbnail_img.sprite = null;

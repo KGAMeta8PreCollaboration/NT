@@ -195,7 +195,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.02
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -598,7 +598,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.02
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1632,7 +1632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9c64124d60aa942acdcb6c0de8f817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Playerview: {fileID: 8445946179281595970}
+  _playerView: {fileID: 0}
+  _leftHandCtrl: {fileID: 0}
+  _rightHandCtrl: {fileID: 0}
 --- !u!114 &8445946179281595970
 MonoBehaviour:
   m_ObjectHideFlags: 0
