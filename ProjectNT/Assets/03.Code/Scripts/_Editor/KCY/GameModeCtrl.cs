@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,24 +9,29 @@ public class GameModeCtrl : MonoBehaviour
     [SerializeField] private List<Toggle> modeToggles;
     private int diffCount;
     private int modeCount;
-
     private void Awake()
     {
         foreach (Toggle tg in diffToggles)
         {
             tg.onValueChanged.AddListener(SetDiff);
             tg.onValueChanged.AddListener((x) => tg.interactable = !x);
+            tg.onValueChanged.AddListener((x) => EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap));
         }
         foreach (Toggle tg in modeToggles)
         {
             tg.onValueChanged.AddListener(SetMode);
             tg.onValueChanged.AddListener((x) => tg.interactable = !x);
+            tg.onValueChanged.AddListener((x) => EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap));
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
         EditorDataManager.Instance.CurModeDiff = 0;
-    }
 
+    }
+    private void Start()
+    {
+        EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap);
+    }
     private void SetMode(bool isTrue)
     {
         if (isTrue)

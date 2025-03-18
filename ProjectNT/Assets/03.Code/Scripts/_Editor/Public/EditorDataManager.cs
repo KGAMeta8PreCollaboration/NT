@@ -40,12 +40,16 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public Sprite thumbnail_sprite;
     public AudioClip bgmClip;
 
+    public BeatMapManager beatMapManager;
+
     public BeatMapData CurBeatMap
     {
         get { return beatMapDic[CurModeDiff]; }
         set { beatMapDic[CurModeDiff] = value; }
 
     }
+
+    public Action<BeatMapData> beatMapLoadAction;
 
     protected override void Awake()
     {
@@ -60,6 +64,14 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 testLoad = FindObjectOfType<TestLoad>();
                 testLoad.songName = ProjectData.bgmName;
                 LoadBeatMapData();
+                beatMapManager = FindObjectOfType<BeatMapManager>();
+                beatMapLoadAction += beatMapManager.LoadBeatMapData;
+            }
+            if (SceneManager.GetActiveScene().name == "EditorLoadingScene")
+            {
+                beatMapLoadAction = null;
+                Debug.Log(beatMapLoadAction);
+
             }
         };
 
@@ -72,7 +84,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public void LoadBeatMapData()
     {
-
         string path = Path.Combine(currentProjectData.m_Path, savefileName);
         string jsonData;
         if (!File.Exists(path))
