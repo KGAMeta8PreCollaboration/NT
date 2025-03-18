@@ -37,9 +37,9 @@ public class GridSetting
 //노드 타입(상단노트, 하단 닷 노트, 하단 롱 노트)
 public enum NodeType
 {
-    TopNode,
     BottomBotNode,
-    BottomLongNode
+    BottomLongNode,
+    TopNode
 }
 
 public enum NodeInstrument

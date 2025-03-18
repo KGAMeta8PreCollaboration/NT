@@ -5,13 +5,17 @@ public class Woofer : MonoBehaviour
 {
     public List<Note> notes = new List<Note>();
     private AudioSource _audioSource;
-    private JudgementSystem _judgementSystem;
+    [SerializeField] private JudgementSystem _judgementSystem;
+    [SerializeField] private NoteScanner _noteScanner;
     public AudioClip hitSound { get; private set; }
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
-        _judgementSystem = GetComponent<JudgementSystem>();
+
+        _noteScanner.OnNoteEnter += AddNote;
+        _noteScanner.OnNoteExit += RemoveNote;
+
         if (hitSound)
             _audioSource.clip = hitSound;
     }
@@ -21,39 +25,32 @@ public class Woofer : MonoBehaviour
         hitSound = clip;
     }
 
-	
-	public void Hit()
-	{
-		if (_audioSource.isPlaying)
-		{
-			// _audioSource.Stop();
-        }
-		if (_audioSource.clip != hitSound)
-			_audioSource.clip = hitSound;
-		
-		_audioSource.PlayOneShot(hitSound);
+    public void Hit()
+    {
+        // if (_audioSource.isPlaying)
+        // {
+        // 	// _audioSource.Stop();
+        //       }
+        // if (_audioSource.clip != hitSound)
+        // 	_audioSource.clip = hitSound;
+
+        // _audioSource.PlayOneShot(hitSound);
 
         if (notes.Count == 0)
             return;
-
+        AudioManager.Instance.Play(hitSound);
         Note note = notes[0];
         note.Hit(_judgementSystem.CheckTiming());
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void AddNote(Note note)
     {
-        if (other.TryGetComponent(out Note note))
-        {
-            note.OnDestroyed += note => notes.Remove(note);
-            notes.Add(note);
-        }
+        note.OnDestroyed += note => notes.Remove(note);
+        notes.Add(note);
     }
 
-    private void OnTriggerExit(Collider other)
+    public void RemoveNote(Note note)
     {
-        if (other.TryGetComponent(out Note note))
-        {
-            notes?.Remove(note);
-        }
+        notes?.Remove(note);
     }
 }

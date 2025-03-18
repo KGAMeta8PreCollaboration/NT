@@ -9,17 +9,14 @@ public class NoteRail : MonoBehaviour
 	[HideInInspector] public NoteSpawner noteSpawner;
 	LinkedList<Note> noteList = new LinkedList<Note>();
 
+	private void Awake()
+	{
+		woofer = GetComponentInChildren<Woofer>();
+	}
+
 	private void Start()
 	{
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
-	}
-
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime)
-	{
-		onAddNote += note => AddNote(note);
-		onNoteDestroyed += note => RemoveNote(note);
-		AudioClip audioClip = AudioManager.Instance.GetNextAudioClip();
-		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
 	}
 	
 	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime, AudioClip audioClip)

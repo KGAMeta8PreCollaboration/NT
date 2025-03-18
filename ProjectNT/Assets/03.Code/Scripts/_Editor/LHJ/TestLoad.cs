@@ -31,7 +31,7 @@ public class TestLoad : MonoBehaviour
         _beatMapData.gridSetting.Column = 4;
         _beatMapData.gridSetting.BeatNum = 2;
         print(1);
-        _beatMapManager.LoadBeatMapData(_beatMapData);
+        _beatMapManager.LoadBeatMapData(EditorDataManager.Instance.beatMapDic[Enums.ModeDiff.SOLO_EXTREAM]);
     }
 
     private void Update()

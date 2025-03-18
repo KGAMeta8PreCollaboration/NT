@@ -1231,15 +1231,13 @@ MonoBehaviour:
   gameType: 0
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
     type: 3}
-  musicImage: {fileID: 1436963252}
-  musicNameText: {fileID: 1178267747}
-  musicDescriptionText: {fileID: 1576311843}
+  musicChangeSelect: {fileID: 0}
   gameStartButton: {fileID: 1726021502}
-  songChangeLeftButton: {fileID: 711614628}
-  songChangeRightButton: {fileID: 1397806505}
-  songResetButton: {fileID: 1662162479}
-  gameMusicAudioSource: {fileID: 6994772823959802487}
-  backgroundAudioSource: {fileID: 6994772823959802488}
+  easy: {fileID: 0}
+  normal: {fileID: 0}
+  hard: {fileID: 0}
+  superHade: {fileID: 0}
+  randomDifficulty: {fileID: 0}
 --- !u!1 &142578553
 GameObject:
   m_ObjectHideFlags: 0
@@ -12166,6 +12164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeButton: {fileID: 578588246}
+  gameExitButton: {fileID: 0}
 --- !u!1 &1678509472
 GameObject:
   m_ObjectHideFlags: 0
@@ -12477,6 +12476,7 @@ MonoBehaviour:
     type: 3}
   contentArea: {fileID: 250774751}
   loadingPanel: {fileID: 1755110921}
+  musicCange: {fileID: 0}
 --- !u!1 &1726021500
 GameObject:
   m_ObjectHideFlags: 0
@@ -14756,6 +14756,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datas: []
+  testButton: {fileID: 0}
+  gameMusicData: {fileID: 0}
 --- !u!1 &1944791799
 GameObject:
   m_ObjectHideFlags: 0
@@ -15030,15 +15032,13 @@ MonoBehaviour:
   gameType: 1
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
     type: 3}
-  musicImage: {fileID: 1130472167}
-  musicNameText: {fileID: 1592488684}
-  musicDescriptionText: {fileID: 1033917685}
+  musicChangeSelect: {fileID: 0}
   gameStartButton: {fileID: 470830830}
-  songChangeLeftButton: {fileID: 20460189}
-  songChangeRightButton: {fileID: 1126760342}
-  songResetButton: {fileID: 1589023080}
-  gameMusicAudioSource: {fileID: 6994772823959802487}
-  backgroundAudioSource: {fileID: 6994772823959802488}
+  easy: {fileID: 0}
+  normal: {fileID: 0}
+  hard: {fileID: 0}
+  superHade: {fileID: 0}
+  randomDifficulty: {fileID: 0}
 --- !u!114 &1965764619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17285,7 +17285,7 @@ MonoBehaviour:
   _spawnPointPlayers:
   - {fileID: 2026901330191345417}
   - {fileID: 2026901330525278311}
-  _multiLobbyUI: {fileID: 8910455907446613376}
+  _multiLobbyUI: {fileID: 0}
   _lobbyPlayer: {fileID: 5796283649865228748}
 --- !u!114 &2336668929954939146
 MonoBehaviour:
@@ -19486,24 +19486,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8910455907446613376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8910455907446613378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77180b48e19a29478958e8b91030bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _connectImagePlayer1: {fileID: 8910455908767203630}
-  _connectImagePlayer2: {fileID: 8910455908197673443}
-  _quitButton: {fileID: 1934430028}
-  _startButton: {fileID: 470830830}
-  _photonManager: {fileID: 2336668929954939145}
-  _countStartGame: {fileID: 847900558}
 --- !u!1 &8910455907446613378
 GameObject:
   m_ObjectHideFlags: 0
@@ -19513,7 +19495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8910455907446613379}
-  - component: {fileID: 8910455907446613376}
+  - component: {fileID: 8910455907446613380}
   m_Layer: 5
   m_Name: MultiLobbyUI
   m_TagString: Untagged
@@ -19542,6 +19524,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 8.25}
   m_SizeDelta: {x: 0, y: -8.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8910455907446613380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910455907446613378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db88fdf280ae2614096d04a40a229e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _connectImagePlayer1: {fileID: 8910455908767203630}
+  _connectImagePlayer2: {fileID: 8910455908197673443}
+  _quitButton: {fileID: 1934430028}
+  _startButton: {fileID: 470830830}
+  _photonManager: {fileID: 2336668929954939145}
+  _countStartGame: {fileID: 847900558}
 --- !u!114 &8910455907675592630
 MonoBehaviour:
   m_ObjectHideFlags: 0
