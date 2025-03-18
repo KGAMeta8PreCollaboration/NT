@@ -25,13 +25,13 @@ public class EditorDataManager : Singleton<EditorDataManager>
     private ProjectData currentProjectData;
     private string savefileName = "BeatMapData";
     private Enums.ModeDiff currentModeDiff;
-    private NodeContainer nodeContainer;
 
     private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
     new Dictionary<Enums.ModeDiff, BeatMapData>();
-
+    private BeatMapManager beatMapManager;
     private TestLoad testLoad;
     private string bgmDestPath;
+    private string curKeySoundName;
 
     public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
 
@@ -40,14 +40,14 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public Sprite thumbnail_sprite;
     public AudioClip bgmClip;
 
-    public BeatMapManager beatMapManager;
-
     public BeatMapData CurBeatMap
     {
         get { return beatMapDic[CurModeDiff]; }
         set { beatMapDic[CurModeDiff] = value; }
-
     }
+
+    public string CurKeySoundName
+    { get { return curKeySoundName; } set { curKeySoundName = value; } }
 
     public Action<BeatMapData> beatMapLoadAction;
 
@@ -60,13 +60,12 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
-                nodeContainer = FindObjectOfType<NodeContainer>();
                 testLoad = FindObjectOfType<TestLoad>();
                 testLoad.songName = ProjectData.bgmName;
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
-
+                SaveDataLocal();
             }
             if (SceneManager.GetActiveScene().name == "EditorLoadingScene")
             {
@@ -106,7 +105,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     }
     public void SetBgm()
     {
-        string bgmSavePath = Path.Combine(Application.persistentDataPath, "bgmSaveFile");
+        string bgmSavePath = Path.Combine(ProjectData.m_Path, "bgmSaveFile");
         string bgmPath = Path.Combine(ProjectData.m_Path, ProjectData.bgmName);
 
         bgmDestPath = Path.Combine(bgmSavePath, ProjectData.bgmName);

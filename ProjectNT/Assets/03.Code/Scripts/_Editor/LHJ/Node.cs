@@ -20,7 +20,7 @@ public class Node : MonoBehaviour
     {
         _index = index;
         //현재 키음 정보를 담아줌
-        _keySound = _testNodeInfo._currentNodeInfo;
+        _keySound = EditorDataManager.Instance.CurKeySoundName;
     }
 
     private void ChangeNodeType(string keySound)
