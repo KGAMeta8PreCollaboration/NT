@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +23,7 @@ public class GameModeCtrl : MonoBehaviour
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
-        EditorDataManager.Instance.CurrentModeDiff = 0;
+        EditorDataManager.Instance.CurModeDiff = 0;
     }
 
     private void SetMode(bool isTrue)
@@ -38,7 +37,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     modeCount = i;
                     int total = modeCount + diffCount;
-                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i += 4;
@@ -56,7 +55,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     diffCount = i;
                     int total = modeCount + diffCount;
-                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i++;

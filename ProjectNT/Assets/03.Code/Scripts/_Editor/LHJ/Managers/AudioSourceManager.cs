@@ -28,7 +28,7 @@ public class AudioSourceManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null); 
+        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null);
     }
 
     public void InitializeFromBeatMapManager(AudioClip audioClip)
@@ -38,7 +38,6 @@ public class AudioSourceManager : MonoBehaviour
             Debug.LogWarning("노래가 없습니다.");
             return;
         }
-
         _audioSource.clip = audioClip;
         //올림
         _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);

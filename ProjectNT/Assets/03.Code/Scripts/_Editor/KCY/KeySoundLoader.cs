@@ -1,26 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class KeySoundLoader : MonoBehaviour
 {
     [SerializeField] private GameObject keysound_prefab;
     [SerializeField] private ToggleGroup toggleGroup;
+    private string keySoundPath;
+    private List<string> fileNameList = new List<string>();
 
-    public void LoadKeySound(string keySoundPath)
+    private void Start()
     {
+        StartCoroutine(InstantiateKeySound());
+    }
+    public void LoadKeySound()
+    {
+        keySoundPath = Path.Combine(Application.persistentDataPath, "KeySoundTemp");
         if (Directory.Exists(keySoundPath))
         {
             Directory.Delete(keySoundPath, true);
         }
         Directory.CreateDirectory(keySoundPath);
         string path = EditorDataManager.Instance.ProjectData.m_KeysoundPath;
-        string[] files = Directory.GetFiles(path);
-
-        List<string> fileNameList = new List<string>();
+        string[] files = null;
+        try
+        {
+            files = Directory.GetFiles(path);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
         List<string> filesList = new List<string>();
         filesList.AddRange(files);
         List<string> sortList = filesList.OrderBy(x =>
@@ -36,18 +52,38 @@ public class KeySoundLoader : MonoBehaviour
         foreach (string file in sortList)
         {
             fileName = Path.GetFileName(file);
-            fileNameList.Add(Path.GetFileNameWithoutExtension(file));
+            fileNameList.Add(Path.GetFileName(file));
             destPath = Path.Combine(keySoundPath, fileName);
             File.Copy(file, destPath);
         }
+    }
+
+    // 1따봉 드립니다 :)
+    private IEnumerator InstantiateKeySound()
+    {
+        yield return null;
+
+        string filePath;
+        AudioClip clip;
         foreach (string file in fileNameList)
         {
             KeySound keySound = Instantiate(keysound_prefab, transform, false).GetComponent<KeySound>();
             keySound.Toggle.group = toggleGroup;
-            keySound.audioSource.clip = Resources.Load<AudioClip>("_SongEditor/KeySoundTemp/" + file);
+
+            filePath = Path.Combine(keySoundPath, file);
+            UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(filePath, AudioType.WAV);
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error loading audio clip: {request.error}");
+                continue;
+            }
+            clip = DownloadHandlerAudioClip.GetContent(request);
+            clip.name = file;
+            keySound.audioSource.clip = clip;
             keySound.KeysoundName = file;
             keySound.PlayBTN.onClick.AddListener(keySound.audioSource.Play);
         }
     }
-
 }

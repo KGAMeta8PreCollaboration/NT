@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 [Serializable]
 public struct ProjectData
 {
@@ -22,22 +24,45 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     private ProjectData currentProjectData;
     private string savefileName = "BeatMapData";
-    public ProjectData ProjectData
-    { get { return currentProjectData; } set { currentProjectData = value; } }
+    private Enums.ModeDiff currentModeDiff;
+    private NodeContainer nodeContainer;
 
-    public Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
+    private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
     new Dictionary<Enums.ModeDiff, BeatMapData>();
 
-    private Enums.ModeDiff currentModeDiff;
-    public Enums.ModeDiff CurrentModeDiff { set { currentModeDiff = value; } }
-    private NodeContainer nodeContainer;
+    private TestLoad testLoad;
+    private string bgmDestPath;
+
+    public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
+
+    public Enums.ModeDiff CurModeDiff { get { return currentModeDiff; } set { currentModeDiff = value; } }
+
+    public Sprite thumbnail_sprite;
     public AudioClip bgmClip;
+
+    public BeatMapData CurBeatMap
+    {
+        get { return beatMapDic[CurModeDiff]; }
+        set { beatMapDic[CurModeDiff] = value; }
+
+    }
 
     protected override void Awake()
     {
         base.Awake();
+
         //TODO 병합 후 주석해제예정
-        // if (nodeContainer == null) nodeContainer = FindObjectOfType<NodeContainer>();
+        SceneManager.sceneLoaded += (x, y) =>
+        {
+            if (SceneManager.GetActiveScene().name == "SongEditorScene")
+            {
+                nodeContainer = FindObjectOfType<NodeContainer>();
+                testLoad = FindObjectOfType<TestLoad>();
+                testLoad.songName = ProjectData.bgmName;
+                LoadBeatMapData();
+            }
+        };
+
         for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
         {
             BeatMapData beatMapData = new BeatMapData();
@@ -68,4 +93,35 @@ public class EditorDataManager : Singleton<EditorDataManager>
         jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
         File.WriteAllText(path, jsonData);
     }
+    public void SetBgm()
+    {
+        string bgmSavePath = Path.Combine(Application.persistentDataPath, "bgmSaveFile");
+        string bgmPath = Path.Combine(ProjectData.m_Path, ProjectData.bgmName);
+
+        bgmDestPath = Path.Combine(bgmSavePath, ProjectData.bgmName);
+        if (Directory.Exists(bgmSavePath))
+        {
+            Directory.Delete(bgmSavePath, true);
+        }
+        Directory.CreateDirectory(bgmSavePath);
+        File.Copy(bgmPath, bgmDestPath);
+        StartCoroutine(InstantiateBGM());
+    }
+
+    private IEnumerator InstantiateBGM()
+    {
+        AudioClip clip;
+
+        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(bgmDestPath, AudioType.WAV);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Error loading audio clip : {request.error}");
+        }
+        clip = DownloadHandlerAudioClip.GetContent(request);
+        clip.name = ProjectData.bgmName;
+        bgmClip = clip;
+        yield return null;
+    }
+
 }
