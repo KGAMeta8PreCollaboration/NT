@@ -19,7 +19,7 @@ public class TestLoad : MonoBehaviour
             nodes = new List<NodeData>()
         };
 
-        _tempSavePath = Path.Combine(Application.dataPath, "tempBeatMap.json");
+        _tempSavePath = Path.Combine(Application.persistentDataPath, "tempBeatMap.json");
     }
 
     private void Start()
@@ -31,7 +31,7 @@ public class TestLoad : MonoBehaviour
         _beatMapData.gridSetting.Column = 4;
         _beatMapData.gridSetting.BeatNum = 2;
         print(1);
-        _beatMapManager.LoadBeatMapData(EditorDataManager.Instance.beatMapDic[Enums.ModeDiff.SOLO_EXTREAM]);
+        // _beatMapManager.LoadBeatMapData(EditorDataManager.Instance.beatMapDic[Enums.ModeDiff.SOLO_EXTREAM]);
     }
 
     private void Update()
@@ -39,12 +39,14 @@ public class TestLoad : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             //Save();
-            SaveToJson();
+            // SaveToJson();
+            EditorDataManager.Instance.CurBeatMap = _beatMapManager.SaveBeatMapData();
         }
 
         else if (Input.GetKeyDown(KeyCode.L))
         {
-            LoadFromJson();
+            // LoadFromJson();
+            _beatMapManager.LoadBeatMapData(EditorDataManager.Instance.CurBeatMap);
         }
     }
 

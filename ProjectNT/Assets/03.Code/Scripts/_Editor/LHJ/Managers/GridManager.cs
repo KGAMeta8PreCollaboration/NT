@@ -58,21 +58,22 @@ public class GridManager : MonoBehaviour
         //InitGrid();
     }
 
-    private void OnValidate()
-    {
-        if (Application.isPlaying)
-        {
-            UpdateGrid();
-            gridInfoCallback?.Invoke();
-        }
-    }
+    // private void OnValidate()
+    // {
+    //     if (Application.isPlaying)
+    //     {
+    //         UpdateGrid();
+    //         gridInfoCallback?.Invoke();
+    //     }
+    // }
 
     //불러오기 기능일때만 시작
     public void InitializeFromBeatMapManager(GridSetting gridSetting)
     {
-        bpm = gridSetting.BPM;
-        column = gridSetting.Column;
-        beatNum = gridSetting.BeatNum;
+        // bpm = gridSetting.BPM;
+        bpm = 128;
+        column = 4;
+        beatNum = 4;
         InitGrid();
     }
 
@@ -82,7 +83,6 @@ public class GridManager : MonoBehaviour
         {
             Renderer renderer = targetObject.GetComponent<Renderer>();
             _targetMaterial = new Material(renderer.material);
-
             CreateGridTexture();
             GenerateGrid();
 
@@ -213,7 +213,7 @@ public class GridManager : MonoBehaviour
     //가로선 그리는 함수
     private void DrawHorizontalLine(float y, Color color, bool isSubGrid)
     {
-        float line = isSubGrid? lineThickness / 2 : lineThickness;
+        float line = isSubGrid ? lineThickness / 2 : lineThickness;
         float halfThickness = line / 2;
         float startY = y - halfThickness;
         float endY = y + halfThickness;
