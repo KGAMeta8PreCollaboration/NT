@@ -15,6 +15,9 @@ public class ResourceIO : MonoBehaviour
     [SerializeField] private TMP_InputField phase3_inputfield;
     [SerializeField] private TextMeshProUGUI songName_tmp;
     [SerializeField] private Image thumbnail_img;
+    [SerializeField] private Button save_btn;
+    [SerializeField] private Button exit_btn;
+    [SerializeField] private Button copy_btn;
     private bool isSaved = true;
     public bool IsSaved
     { get { return isSaved; } set { isSaved = value; } }
