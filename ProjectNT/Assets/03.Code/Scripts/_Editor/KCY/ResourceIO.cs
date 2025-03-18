@@ -39,8 +39,14 @@ public class ResourceIO : MonoBehaviour
 
         save_btn.onClick.AddListener(EditorDataManager.Instance.SaveBeatMap);
         SaveTracker();
-
+        exit_btn.onClick.AddListener(GoToTitle);
     }
+
+    private void GoToTitle()
+    {
+        EditorLoadScene.SceneLoad("EditorPathScene");
+    }
+
     private void Start()
     {
         EditorDataManager.Instance.phaseDataAction?.Invoke();
