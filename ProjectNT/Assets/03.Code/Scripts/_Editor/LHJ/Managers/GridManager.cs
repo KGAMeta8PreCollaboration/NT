@@ -71,7 +71,7 @@ public class GridManager : MonoBehaviour
     public void InitializeFromBeatMapManager(GridSetting gridSetting)
     {
         // bpm = gridSetting.BPM;
-        bpm = 128;
+        bpm = EditorDataManager.Instance.ProjectData.bpm;
         column = 4;
         beatNum = 4;
         InitGrid();

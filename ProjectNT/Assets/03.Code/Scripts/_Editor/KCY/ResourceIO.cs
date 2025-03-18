@@ -26,11 +26,20 @@ public class ResourceIO : MonoBehaviour
     {
         keySoundLoader.LoadKeySound();
 
-        phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, @"[0-9]", ""));
-        phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, @"[0-9]", ""));
+        phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
+
+        phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
+
+        phase2_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase2 = int.Parse(phase2_inputfield.text));
+
+        phase3_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase3 = int.Parse(phase3_inputfield.text));
+
         songName_tmp.text = EditorDataManager.Instance.ProjectData.projectName;
         thumbnail_img.sprite = EditorDataManager.Instance.thumbnail_sprite;
+
+        save_btn.onClick.AddListener(EditorDataManager.Instance.SaveBeatMap);
         SaveTracker();
+
     }
 
     private void SaveTracker()

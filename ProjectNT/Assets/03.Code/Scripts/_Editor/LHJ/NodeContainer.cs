@@ -9,8 +9,8 @@ using UnityEngine.UI;
 
 public class NodeContainer : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI phase1Text;
-    [SerializeField] private TextMeshProUGUI phase2Text;
+    // [SerializeField] private TextMeshProUGUI phase1Text;
+    // [SerializeField] private TextMeshProUGUI phase2Text;
     [SerializeField] private TextMeshProUGUI songLengthText;
     [SerializeField] private GameObject nodePrefab;
     [SerializeField] private Transform nodeParent;
@@ -28,7 +28,7 @@ public class NodeContainer : MonoBehaviour
     private Material myMaterial;
     private Material myMaterialPrefab;
     private BeatMapData _currentBeatMapData;
-              
+
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
@@ -84,12 +84,12 @@ public class NodeContainer : MonoBehaviour
 
     private void GridValueChanged()
     {
-        InitializeNodeGrid();  
+        InitializeNodeGrid();
     }
 
     //노드 이차원 배열 생성
     private void InitializeNodeGrid()
-    { 
+    {
         _totalBeats = _gridManager.TotalBeats;
         _nodeGrid = new Node[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
@@ -116,8 +116,8 @@ public class NodeContainer : MonoBehaviour
             Vector3 localHit = transform.InverseTransformPoint(hit.point);
 
             // cell의 실제 크기 계산
-            float cellWidth = 10f / _gridManager.Column; 
-            float cellHeight = 10f / _gridManager.TotalBeats;        
+            float cellWidth = 10f / _gridManager.Column;
+            float cellHeight = 10f / _gridManager.TotalBeats;
 
             //-5~5 범위의 hit 좌표를 0~10 범위로 변환
             float posX = localHit.x + 5f;
@@ -139,7 +139,7 @@ public class NodeContainer : MonoBehaviour
     }
 
     //임시 노드 생성
-    private void CreatePreviewNode(int column, int beatIndex) 
+    private void CreatePreviewNode(int column, int beatIndex)
     {
         if (column < 0 || beatIndex < 0 || column >= _gridManager.Column || beatIndex >= _totalBeats)
         {
@@ -184,7 +184,7 @@ public class NodeContainer : MonoBehaviour
 
         GameObject nodeObj = Instantiate(nodePrefab);
         Node node = nodeObj.GetComponent<Node>();
-         
+
         if (node != null)
         {
             node.TestPrint();
@@ -200,7 +200,7 @@ public class NodeContainer : MonoBehaviour
 
     private List<NodeData> GetAllNodeData()
     {
-        List<NodeData> nodeDataList = new List<NodeData>(); 
+        List<NodeData> nodeDataList = new List<NodeData>();
 
         for (int i = 0; i < _gridManager.Column; i++)
         {
@@ -232,7 +232,7 @@ public class NodeContainer : MonoBehaviour
     private void ClearAllNodes()
     {
         if (_nodeGrid == null)
-        {   
+        {
             print($"그리드에 아무것도 없습니다");
             return;
         }
@@ -241,7 +241,7 @@ public class NodeContainer : MonoBehaviour
         {
             for (int j = 0; j < _totalBeats; j++)
             {
-                if ( _nodeGrid[i, j] != null)
+                if (_nodeGrid[i, j] != null)
                 {
                     Destroy(_nodeGrid[i, j].gameObject);
                     _nodeGrid[i, j] = null;
@@ -283,10 +283,9 @@ public class NodeContainer : MonoBehaviour
 
     public void InitializeWithSongData(SongData songData)
     {
-        songData ??= new SongData { songLength = 0, phase1 = 0, phase2 = 0 };
+        songData ??= new SongData { songLength = 0, phase2 = 0, phase3 = 0 };
         songLengthText.text = songData.songLength.ToString();
-        phase1Text.text = songData.phase1.ToString();
-        phase2Text.text = songData.phase2.ToString();
+
     }
 
     //비트맵 저장하는 함수
@@ -298,8 +297,8 @@ public class NodeContainer : MonoBehaviour
         {
             songName = _audioSourceManager.AudioSource.clip.name,
             songLength = _audioSourceManager.AudioDuration,
-            phase1 = (float.Parse(phase1Text.text)),
-            phase2 = (float.Parse(phase2Text.text)),
+            phase2 = EditorDataManager.Instance.CurBeatMap.songData.phase2,
+            phase3 = EditorDataManager.Instance.CurBeatMap.songData.phase3,
         };
 
         _currentBeatMapData.gridSetting = new GridSetting

@@ -23,8 +23,8 @@ public class SongData
 {
     public string songName;
     public float songLength;
-    public float phase1;
-    public float phase2;
+    public int phase2;
+    public int phase3;
 }
 
 //그리드의 정보

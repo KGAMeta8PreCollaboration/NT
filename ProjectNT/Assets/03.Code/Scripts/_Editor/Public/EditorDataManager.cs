@@ -66,11 +66,11 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
+
             }
             if (SceneManager.GetActiveScene().name == "EditorLoadingScene")
             {
                 beatMapLoadAction = null;
-                Debug.Log(beatMapLoadAction);
 
             }
         };
@@ -96,7 +96,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         beatMapDic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, BeatMapData>(jsonData);
     }
 
-    public void SaveBeatMapData()
+    public void SaveDataLocal()
     {
         string path = Path.Combine(currentProjectData.m_Path, savefileName);
         //TODO 병합 후 주석해제 예정
@@ -135,4 +135,9 @@ public class EditorDataManager : Singleton<EditorDataManager>
         yield return null;
     }
 
+    public void SaveBeatMap()
+    {
+        CurBeatMap = beatMapManager.SaveBeatMapData();
+        SaveDataLocal();
+    }
 }
