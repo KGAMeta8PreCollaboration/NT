@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
 
 public class Node : MonoBehaviour
 {
@@ -54,7 +53,7 @@ public class Node : MonoBehaviour
         _nodeType = data.nodeType;
         _keySound = data.keySound;
     }
-    
+
     public void TestPrint()
     {
         _keySound = _testNodeInfo.CurrentNodeInfo;

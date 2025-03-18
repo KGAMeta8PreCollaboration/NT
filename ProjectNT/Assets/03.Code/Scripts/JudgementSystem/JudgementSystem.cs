@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,14 @@ using UnityEngine;
 public class JudgementSystem : MonoBehaviour
 {
     [SerializeField] private Transform[] _timingTrans; //Perfact, Great, Good의 Transform
-    [SerializeField] private TextMeshProUGUI _judgementText;
 
     private Vector2[] _timingBoxs;
 
-    private Woofer _woofer;
+    [SerializeField] private Woofer _woofer;
 
     private void Awake()
     {
-        Init();
+        //Init();
     }
 
     private void Start()
@@ -38,7 +38,6 @@ public class JudgementSystem : MonoBehaviour
     {
         if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
         {
-            // _judgementText.text = "Miss!";
             print("미스!");
             return NoteType.Bad;
         }
@@ -51,13 +50,10 @@ public class JudgementSystem : MonoBehaviour
                 NoteType noteType = i == 0 ? NoteType.Perfect :
                     i == 1 ? NoteType.Good :
                     i == 2 ? NoteType.Cool : NoteType.Bad;
-                // if (_judgementText)
-                //     _judgementText.text = noteType.ToString() + "!";
                 print(noteType.ToString() + "!");
                 return noteType;
             }
         }
-        // _judgementText.text = "Miss!";
         print("미스!");
         return NoteType.Bad;
     }
