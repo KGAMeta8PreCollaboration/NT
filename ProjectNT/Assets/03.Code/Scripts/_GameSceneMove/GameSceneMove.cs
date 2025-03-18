@@ -28,6 +28,8 @@ public class GameSceneMove : MonoBehaviour
         StartCoroutine(TestOnLight());
         //게임시작과동시에 실행할때 다른것도하는게많아서그런지
         //코루틴이 조금늦게시작함 한 2초정도
+        //빛을키고싶을때 lightController.OnLight(); 를 호출하면 됨
+        //빛강도, 시간은 인스펙터에서 조정가능
     }
 
     private IEnumerator MoveStart()
