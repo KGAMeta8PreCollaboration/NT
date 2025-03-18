@@ -14,8 +14,13 @@ public class GameManager : Singleton<GameManager>
 	private void Start()
 	{
 		_noteManager = FindObjectOfType<NoteManager>();
-		// AudioSettings.Reset(default);
-		// GameStart();
+		StartCoroutine(StartCoroutine());
+	}
+	
+	private IEnumerator StartCoroutine()
+	{
+		yield return new WaitForSeconds(5f);
+		GameStart();
 	}
 
 	public void GameStart()
