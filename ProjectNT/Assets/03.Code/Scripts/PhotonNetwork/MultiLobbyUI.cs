@@ -15,7 +15,10 @@ public class MultiLobbyUI : MonoBehaviour
     [SerializeField] private PhotonManager _photonManager;
     [SerializeField] private TextMeshProUGUI _countStartGame;
 
+    public int countStartGame;
+
     private Coroutine _startGameCoroutine;
+    private Coroutine _countStartGameCoroutine;
 
     private void Start()
     {
@@ -51,49 +54,63 @@ public class MultiLobbyUI : MonoBehaviour
 
     public void GameStart()
     {
+        if (_startGameCoroutine != null)
+        {
+            StopCoroutine(_startGameCoroutine);
+        }
+
         CountStartGameActive(true);
+        _countStartGame.text = ""; // 카운트 UI 초기화
+
         _startGameCoroutine = StartCoroutine(StartGameCoroutine());
         PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", () => _photonManager.photonView.RPC("CancelStartGame", RpcTarget.All));
     }
 
     private IEnumerator StartGameCoroutine()
     {
-        yield return StartCoroutine(CountStartGameCoroutine());
-        PhotonNetwork.LoadLevel("LSH_MultiGame");
+        _countStartGameCoroutine = StartCoroutine(CountStartGameCoroutine(countStartGame));
+        yield return _countStartGameCoroutine;
+
+        if (_startGameCoroutine != null) // 취소되지 않았는지 확인
+        {
+            PhotonNetwork.LoadLevel("LSH_MultiGame");
+        }
     }
 
-    private IEnumerator CountStartGameCoroutine()
+    private IEnumerator CountStartGameCoroutine(int count)
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
-        _countStartGame.text = "5";
-        yield return waitForSeconds;
-        _countStartGame.text = "4";
-        yield return waitForSeconds;
-        _countStartGame.text = "3";
-        yield return waitForSeconds;
-        _countStartGame.text = "2";
-        yield return waitForSeconds;
-        _countStartGame.text = "1";
-        yield return waitForSeconds;
-    }
 
-    public void CountStartGameActive(bool isActive)
-    {
-        _countStartGame.gameObject.SetActive(isActive);
-    }
+        for (int i = count; i > 0; i--)
+        {
+            _countStartGame.text = i.ToString();
+            yield return waitForSeconds;
+        }
 
+        _countStartGame.text = ""; // 게임 시작 직전에 UI 초기화
+    }
 
     public void CancelStartGame()
     {
         if (_startGameCoroutine != null)
         {
             StopCoroutine(_startGameCoroutine);
+            StopCoroutine(_countStartGameCoroutine);
             _startGameCoroutine = null;
-            Debug.Log("게임 시작이 취소되었습니다!");
+            _countStartGameCoroutine = null;
         }
 
+        Debug.Log("게임 시작이 취소되었습니다!");
+
+        _countStartGame.text = ""; // 취소 시 UI 초기화
         CountStartGameActive(false);
         PopupManager.Instance.ClosePopup<AlarmPopup>();
+    }
+
+
+    public void CountStartGameActive(bool isActive)
+    {
+        _countStartGame.gameObject.SetActive(isActive);
     }
 
     public void UpdateConnectImage(Player player, bool isQuit)

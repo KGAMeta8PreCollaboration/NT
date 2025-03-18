@@ -34,10 +34,10 @@ public class AudioManager : Singleton<AudioManager>
 		AudioSource audioSource = _audioPool.GetAudioSource();
 		_audioSources.Add(audioSource);
 		audioSource.clip = clip;
-		double playTime = AudioSettings.dspTime + 0.01; // 현재 시간보다 약간 뒤에 실행
+		double playTime = AudioSettings.dspTime + 0.01;
 		// audioSource.Play();
-		// audioSource.PlayScheduled(playTime);
-		audioSource.PlayOneShot(clip);
+		audioSource.PlayScheduled(playTime);
+		// audioSource.PlayOneShot(clip);
 	}
 	
 	private IEnumerator CheckAudioPlayTime()
