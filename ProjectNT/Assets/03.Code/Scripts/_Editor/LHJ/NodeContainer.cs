@@ -29,6 +29,10 @@ public class NodeContainer : MonoBehaviour
     private Material myMaterialPrefab;
     private BeatMapData _currentBeatMapData;
 
+    private int _currentGrid;
+    private Color _editAreaColor = new Color(0, 1, 0, 0.8f);
+    private LineRenderer[] _gridLines;
+
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
@@ -90,9 +94,67 @@ public class NodeContainer : MonoBehaviour
     //노드 이차원 배열 생성
     private void InitializeNodeGrid()
     {
+        //처음 가리키는 index는 0이다.
+        _currentGrid = 3;
         _totalBeats = _gridManager.TotalBeats;
         _nodeGrid = new Node[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
+        CreateEditAreaLine();
+        UpdateEditAreaLines();
+    }
+
+    //초록색 경계선 만드는 함수
+    private void CreateEditAreaLine()
+    {
+        _gridLines = new LineRenderer[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject lineObj = new GameObject($"GridLine_{i}");
+            lineObj.transform.SetParent(transform);
+
+            LineRenderer line = lineObj.AddComponent<LineRenderer>();
+            line.material = new Material(Shader.Find("Sprites/Default"));
+            line.startColor = line.endColor = _editAreaColor;
+            line.startWidth = line.endWidth = 0.1f;
+
+            line.positionCount = 2;
+            line.gameObject.SetActive(false);
+
+            _gridLines[i] = line;
+        }
+    }
+    private void UpdateEditAreaLines()
+    {
+        if (_currentGrid < 3 || _gridLines == null) return;
+
+        float columnWidth = 10f / _gridManager.TotalBeats;
+        float leftX = -5f;
+        float rightX = -5f;
+        float topZ = 5f + ((_currentGrid + 1) * columnWidth);
+        float bottomZ = -5f + ((_currentGrid - 1) * columnWidth);
+
+        // 왼쪽 세로선
+        _gridLines[0].SetPosition(0, new Vector3(leftX, 0.05f, bottomZ));
+        _gridLines[0].SetPosition(1, new Vector3(leftX, 0.05f, topZ));
+
+        // 오른쪽 세로선
+        _gridLines[1].SetPosition(0, new Vector3(rightX, 0.05f, bottomZ));
+        _gridLines[1].SetPosition(1, new Vector3(rightX, 0.05f, topZ));
+
+        // 위쪽 가로선
+        _gridLines[2].SetPosition(0, new Vector3(leftX, 0.05f, topZ));
+        _gridLines[2].SetPosition(1, new Vector3(rightX, 0.05f, topZ));
+
+        // 아래쪽 가로선
+        _gridLines[3].SetPosition(0, new Vector3(leftX, 0.05f, bottomZ));
+        _gridLines[3].SetPosition(1, new Vector3(rightX, 0.05f, bottomZ));
+
+        // 모든 선 활성화
+        foreach (var line in _gridLines)
+        {
+            line.gameObject.SetActive(true);
+        }
     }
 
     private void PlaceNodeMousePosition()
