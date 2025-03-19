@@ -19,20 +19,26 @@ public class Note : MonoBehaviour
     public AudioClip hitSound;
 
     [SerializeField] private ParticleSystem hitEffect;
-    
+
+    private float _speed;
     private Vector3 _initialPosition;
     private double _spawnDspTime;
     private double _targetDspTime;
     private double _startDspTime;
+    private Vector3 _direction;
+    private bool _isTargetReached;
 
     public void Init(Transform target, double spawnDspTime, double targetDspTime, AudioClip hitSound = null)
     {
+        _isTargetReached = false;
         this.target = target;
         this.hitSound = hitSound;
         _spawnDspTime = spawnDspTime;
         _targetDspTime = targetDspTime;
         _initialPosition = transform.position;
         _startDspTime = AudioManager.Instance.startDspTime;
+        _speed = CalculateSpeed();
+        _direction = (target.position - _initialPosition).normalized;
     }
 
     public void Hit(NoteType noteType)
@@ -56,22 +62,25 @@ public class Note : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private float CalculateSpeed()
+    {
+        return Vector3.Distance(_initialPosition, target.position) / (float)(_targetDspTime - _spawnDspTime);
+    }
+
     private void Move()
     {
         double currentTime = AudioSettings.dspTime;
         double elapsedTime = currentTime - _spawnDspTime;
         double totalTime = _targetDspTime - _spawnDspTime;
-    
-        //  Mathf.Clamp01 : 0 ~ 1 로 정규화
+
         float timeProgress = Mathf.Clamp01((float)(elapsedTime / totalTime));
-    
         if (target)
             transform.position = Vector3.Lerp(_initialPosition, target.position, timeProgress);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void ContinueMoving()
     {
-        // 판정 구역 접근
+        transform.position += _direction * _speed * Time.deltaTime;
     }
 
     private void OnTriggerExit(Collider other)
@@ -83,7 +92,6 @@ public class Note : MonoBehaviour
 
     private void Miss()
     {
-        AudioManager.Instance.Play(hitSound);
         Destroy();
         isHit = true;
         noteType = NoteType.Bad;
@@ -92,8 +100,16 @@ public class Note : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        if (Vector3.Distance(transform.position, target.position) < 0.1f)
-            Miss();
+        if (_isTargetReached || Vector3.Distance(transform.position, target.position) < 0.01f)
+        {
+            _isTargetReached = true;
+            _speed = CalculateSpeed();
+            _direction = (target.position - _initialPosition).normalized;
+            transform.position += _direction * _speed * Time.deltaTime;
+        }
+        else
+        {
+            Move();
+        }
     }
 }

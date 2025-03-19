@@ -28,7 +28,7 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
     [SerializeField] private Button exit_BTN;
-    private string savePath = "Assets/Resources/";
+    private string savePath;
     private PATH PATH = new PATH();
     private string projectPath;
     public string ProjectPath
@@ -137,14 +137,27 @@ public class SetEditorEnv : MonoBehaviour
     private void SavePath()
     {
         string data = JsonUtility.ToJson(PATH, true);
-        File.WriteAllText(savePath + "path", data);
+        savePath = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+        savePath = Path.Combine(savePath, "PathSaveFile");
+        File.WriteAllText(savePath, data);
     }
     private void LoadPath()
     {
-        if (!File.Exists(savePath + "path")) return;
-        string data = File.ReadAllText(savePath + "path");
+        savePath = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+        savePath = Path.Combine(savePath, "PathSaveFile");
+        if (!File.Exists(savePath)) return;
+        string data = File.ReadAllText(savePath);
         PATH = JsonUtility.FromJson<PATH>(data);
-        if (!Directory.Exists(PATH.ProjectPath))
+        savePath = Path.Combine(PATH.CurrentPath, PATH.EditorDIR_Name, PATH.ProjectDIR_Name);
+        if (!Directory.Exists(savePath))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
             PATH.Path = null;

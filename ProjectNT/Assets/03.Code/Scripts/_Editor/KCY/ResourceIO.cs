@@ -39,7 +39,25 @@ public class ResourceIO : MonoBehaviour
 
         save_btn.onClick.AddListener(EditorDataManager.Instance.SaveBeatMap);
         SaveTracker();
+        exit_btn.onClick.AddListener(GoToTitle);
+    }
 
+    private void GoToTitle()
+    {
+        EditorLoadScene.SceneLoad("EditorPathScene");
+    }
+
+    private void Start()
+    {
+        EditorDataManager.Instance.phaseDataAction?.Invoke();
+    }
+    private void OnEnable()
+    {
+        EditorDataManager.Instance.phaseDataAction += GetPhaseData;
+    }
+    private void OnDisable()
+    {
+        EditorDataManager.Instance.phaseDataAction -= GetPhaseData;
     }
 
     private void SaveTracker()
@@ -48,4 +66,9 @@ public class ResourceIO : MonoBehaviour
         phase3_inputfield.onValueChanged.AddListener(x => IsSaved = false);
     }
 
+    private void GetPhaseData()
+    {
+        phase2_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase2.ToString();
+        phase3_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase3.ToString();
+    }
 }

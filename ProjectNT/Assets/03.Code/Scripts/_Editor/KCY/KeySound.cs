@@ -25,6 +25,7 @@ public class KeySound : MonoBehaviour
     {
         if (isTrue)
         {
+            Toggle.isOn = true;
             EditorDataManager.Instance.CurKeySoundName = KeysoundName;
         }
     }

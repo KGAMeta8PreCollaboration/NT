@@ -15,13 +15,11 @@ public class GameModeCtrl : MonoBehaviour
         {
             tg.onValueChanged.AddListener(SetDiff);
             tg.onValueChanged.AddListener((x) => tg.interactable = !x);
-            tg.onValueChanged.AddListener((x) => EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap));
         }
         foreach (Toggle tg in modeToggles)
         {
             tg.onValueChanged.AddListener(SetMode);
             tg.onValueChanged.AddListener((x) => tg.interactable = !x);
-            tg.onValueChanged.AddListener((x) => EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap));
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
