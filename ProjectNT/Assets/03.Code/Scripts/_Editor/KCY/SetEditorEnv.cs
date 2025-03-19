@@ -28,6 +28,8 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
     [SerializeField] private Button exit_BTN;
+    [SerializeField] private Button back_btn;
+
     private string savePath;
     private PATH PATH = new PATH();
     private string projectPath;
@@ -40,6 +42,8 @@ public class SetEditorEnv : MonoBehaviour
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
+        back_btn.onClick.AddListener(Back);
+
     }
     private IEnumerator Start()
     {
@@ -49,17 +53,21 @@ public class SetEditorEnv : MonoBehaviour
         inputField.text = PATH.Path;
 
     }
+    private void Back()
+    {
+        projectIO.gameObject.SetActive(false);
+        defaultPath.gameObject.SetActive(true);
+    }
+
     private void Exit_BTN()
     {
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         //어플리케이션 종료
         Application.Quit(); 
-        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
 #endif
     }
 
@@ -99,6 +107,8 @@ public class SetEditorEnv : MonoBehaviour
 
     private void OpenExplorer()
     {
+        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (Directory.Exists(p)) Directory.Delete(p, true);
         var path = StandaloneFileBrowser.OpenFolderPanel("에디터 경로 선택", "", false);
         try
         {
