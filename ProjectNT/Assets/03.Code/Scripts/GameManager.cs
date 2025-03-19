@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 	public double delayTime = 2.0;
@@ -11,6 +12,9 @@ public class GameManager : Singleton<GameManager>
 	private NoteManager[] _noteManager;
 	private NoteGenerator[] _noteGenerator;
 	private ResultPanel _resultPanel;
+	
+	// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
+	[SerializeField] private GameObject endGameMenuPanel;
 	
 
 	private void Start()
@@ -33,10 +37,16 @@ public class GameManager : Singleton<GameManager>
 		AudioManager.Instance.StartBGM(delayTime);
 	}
 	
+	public void GoToLobby()
+	{
+		SceneManager.LoadScene("Prototype_Lobby");
+	}
+	
 	public void GameEnd()
 	{
 		print("Game End");
 		_resultPanel?.gameObject.SetActive(true);
+		endGameMenuPanel?.SetActive(true);
 		OnGameEnd?.Invoke();
 	}
 	
