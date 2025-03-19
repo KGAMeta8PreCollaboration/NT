@@ -15,10 +15,18 @@ public class GameManager : Singleton<GameManager>
 	{
 		_noteManager = FindObjectOfType<NoteManager>();
 		// AudioSettings.Reset(default);
-		// GameStart();
+
+		StartCoroutine(GameStartCou());
 	}
 
-	public void GameStart()
+	private IEnumerator GameStartCou()
+	{
+		yield return new WaitForSeconds(3f);
+        GameStart();
+
+    }
+
+    public void GameStart()
 	{
 		AudioManager.Instance.StartBGM(delayTime);
 	}

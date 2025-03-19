@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameSceneLightController : MonoBehaviour
@@ -11,7 +12,7 @@ public class GameSceneLightController : MonoBehaviour
     [Header("3페이즈 오브젝트들")]
     public GameSceneLightObject[] third;//3페이즈 빛날오브젝트들
 
-    private GameSceneLightObject[] curPhase;//1페이즈 빛날오브젝트들
+    public List<GameSceneLightObject> onLightObj;//빛날오브젝트들
 
     [Header("시작 빛 강도")]
     public float startIntensity;
@@ -34,32 +35,42 @@ public class GameSceneLightController : MonoBehaviour
         }
     }
 
-    public void ChangeLightObject(int phase)
+    public void AddFirstLightObject()//1페이즈 추가
     {
-        switch(phase)
-        {
-            case 1:
-                Debug.Log("1페이즈 시작");
-                curPhase = first;
-                break;
-            case 2:
-                Debug.Log("1페이즈 시작");
-                curPhase = second;
-                break;
-            case 3:
-                Debug.Log("1페이즈 시작");
-                curPhase = third;
-                break;
-            default:
-                Debug.Log("ChangeLightObject 실패");
-                break;
-        }
+        Debug.Log("1페이즈 시작");
+        onLightObj.AddRange(first);
+    }    
+    public void AddSecondLightObject()//2페이즈 추가
+    {
+        Debug.Log("2페이즈 시작");
+        onLightObj.AddRange(second);
+    }
+    public void AddThirdLightObject()//3페이즈 추가
+    {
+        Debug.Log("3페이즈 시작");
+        onLightObj.AddRange(third);
+    }
+
+    public void RemoveFirstLightObject()//1페이즈 제거
+    {
+        Debug.Log("1페이즈 시작");
+        onLightObj.RemoveAll(lightObject => first.Contains(lightObject));
+    }
+    public void RemoveSecondLightObject()//2페이즈 제거
+    {
+        Debug.Log("2페이즈 시작");
+        onLightObj.RemoveAll(lightObject => second.Contains(lightObject));
+    }
+    public void RemoveThirdLightObject()//3페이즈 제거
+    {
+        Debug.Log("3페이즈 시작");
+        onLightObj.RemoveAll(lightObject => third.Contains(lightObject));
     }
 
     public void OnLight()
     {
-        Debug.Log($"{curPhase} OnLight");
-        foreach (GameSceneLightObject light in curPhase)
+        Debug.Log($"{onLightObj} OnLight");
+        foreach (GameSceneLightObject light in onLightObj)
         {
             light.StartFadeLight(startIntensity, duration);
         }

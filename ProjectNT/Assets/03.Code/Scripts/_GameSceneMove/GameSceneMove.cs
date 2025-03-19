@@ -21,11 +21,17 @@ public class GameSceneMove : MonoBehaviour
     public GameSceneMoveAndTime third;
 
     private int testNum = 0;
+    private Action action;
 
     private void Start()
     {
+        GameSceneMoveAndLightStart();
+    }
+
+    public void GameSceneMoveAndLightStart()//이 함수불러서 이동 바로시작
+    {
+        StartCoroutine(TestOnLight());//얜 테스트용입니다
         StartCoroutine(MoveStart());
-        StartCoroutine(TestOnLight());
         //게임시작과동시에 실행할때 다른것도하는게많아서그런지
         //코루틴이 조금늦게시작함 한 2초정도
         //빛을키고싶을때 lightController.OnLight(); 를 호출하면 됨
@@ -35,16 +41,24 @@ public class GameSceneMove : MonoBehaviour
     private IEnumerator MoveStart()
     {
         Debug.Log("시작");
+
         Debug.Log("1페이즈 시작");
-        lightController.ChangeLightObject(1);
+        //1페이즈 오브젝트 추가
+        lightController.AddFirstLightObject();
+        //95%정도 이동하면 2페이즈 오브젝트도 추가
+        action += lightController.AddSecondLightObject;
         yield return StartCoroutine(MoveToPos(first));
+        //1페이즈 끝나면 1페이즈 오브젝트 제거
+        lightController.RemoveFirstLightObject();
 
         Debug.Log("2페이즈 시작");
-        lightController.ChangeLightObject(2);
+        //95%정도 이동하면 3페이즈 오브젝트도 추가
+        action += lightController.AddThirdLightObject;
         yield return StartCoroutine(MoveToPos(second));
+        //2페이즈 끝나면 2페이즈 오브젝트 제거
+        lightController.RemoveSecondLightObject();
 
         Debug.Log("3페이즈 시작");
-        lightController.ChangeLightObject(3);
         yield return StartCoroutine(MoveToPos(third));
         Debug.Log("종료");
     }
@@ -75,6 +89,12 @@ public class GameSceneMove : MonoBehaviour
             float distanceToMove = speed * Time.deltaTime;
 
             curPos += dir * distanceToMove;//현재위치를 이동
+
+            if (action != null && Vector3.Distance(curPos, endPos) < distance * 0.05f)//95% 진행했을 때
+            {
+                action?.Invoke();//다음 페이즈 오브젝트 추가
+                action = null;
+            }
 
             if (Vector3.Distance(curPos, endPos) < 0.1f)
             {
