@@ -13,9 +13,13 @@ public class JudgementSystem : MonoBehaviour
 
     [SerializeField] private Woofer _woofer;
 
+    //test
+    public TextMeshProUGUI logText2;
+
     private void Awake()
     {
         //Init();
+        logText2 = GameObject.Find("LogText2").GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -32,6 +36,44 @@ public class JudgementSystem : MonoBehaviour
             // print(diff);
             // print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
         }
+    }
+    public NoteType JudgeNote()
+    {
+        if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
+        {
+            print("미스!");
+            return NoteType.Bad;
+        }
+        Note note = _woofer.notes[0];
+
+        double musicTime = AudioSettings.dspTime;// 현재 재생 시간
+        double noteTime = note.GetTargetDspTime();
+        double timeDiff = Math.Abs(musicTime - noteTime);
+        string hitRes;
+        NoteType noteType;
+        if (timeDiff < 0.2f)
+        {
+            hitRes = "Perfect";
+            noteType = NoteType.Perfect;
+        }
+        else if (timeDiff < 0.25f)
+        {
+            hitRes = "Good";
+            noteType = NoteType.Good;
+        }
+        else if (timeDiff < 0.3f)
+        {
+            hitRes = "Cool";
+            noteType = NoteType.Cool;
+        }
+        else
+        {
+            hitRes = "Bad";
+            noteType = NoteType.Bad;
+        }
+        print($"Time : {Time.time}, 현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {hitRes}");
+        logText2.text = $"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {hitRes}";
+        return noteType;
     }
 
     public NoteType CheckTiming()

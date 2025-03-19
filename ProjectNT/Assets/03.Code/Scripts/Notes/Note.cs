@@ -112,4 +112,9 @@ public class Note : MonoBehaviour
             Move();
         }
     }
+
+    public double GetTargetDspTime()
+    {
+        return _targetDspTime;
+    }
 }
