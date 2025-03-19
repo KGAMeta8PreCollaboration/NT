@@ -1,38 +1,53 @@
 using UnityEngine;
 
-public class LongNote : MonoBehaviour
+public class LongNote : Note
 {
     public double startTargetDspTime;
     public double endTargetDspTime;
     public int divideCount = 5;
     public double[] milestones;
-    private int currentMilestoneIndex = 0;
+    public int currentMilestoneIndex = 0;
+    public bool isHolding = false;
 
     private void Start()
     {
-        startTargetDspTime = AudioSettings.dspTime + 3d; // 3초 후 시작
-        endTargetDspTime = AudioSettings.dspTime + 7d;   // 7초 후 종료
+        startTargetDspTime = AudioSettings.dspTime + 3d; //3초
+        endTargetDspTime = AudioSettings.dspTime + 7d; //7초
 
         double duration = endTargetDspTime - startTargetDspTime;
-        print($"롱노트의 지속시간: {duration.ToString("f2")}초");
 
-        CalcMilestones(duration);
+        CalculateMilestones(duration);
     }
 
-    private void CalcMilestones(double noteDuration)
+    private void CalculateMilestones(double duration)
     {
         milestones = new double[divideCount];
-        double interval = noteDuration / divideCount;
+        double interval = duration / divideCount;
         for (int i = 0; i < divideCount; i++)
         {
-            milestones[i] = startTargetDspTime + (interval * (i + 1));
-            print($"판정 시간: {(milestones[i] - startTargetDspTime).ToString("f2")}초");
+            milestones[i] = AudioSettings.dspTime + (interval * (i + 1));
+            Debug.Log($"롱노트 판정 시간: {(milestones[i] - AudioSettings.dspTime):F2}초");
         }
     }
-
-    public bool CheckMilestone()
+    protected override void Update()
     {
-        if (currentMilestoneIndex >= milestones.Length)
+
+    }
+
+    public override void Hit(NoteType noteType)
+    {
+        StartHold();
+    }
+
+    public void StartHold()
+    {
+        isHolding = true;
+        currentMilestoneIndex = 0;
+    }
+
+    public bool Hold()
+    {
+        if (!isHolding || currentMilestoneIndex >= milestones.Length)
             return false;
 
         double currentTime = AudioSettings.dspTime;
@@ -42,5 +57,12 @@ public class LongNote : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Release()
+    {
+        isHolding = false;
+        Debug.Log("롱노트 종료!");
+        Destroy();
     }
 }

@@ -16,6 +16,7 @@ public class TmpWoofer : MonoBehaviour
         {
             isHoldingLongNote = true;
             Debug.Log("롱노트 시작!");
+            currentLongNote.Hit(NoteType.Perfect);
         }
     }
 
@@ -23,7 +24,7 @@ public class TmpWoofer : MonoBehaviour
     {
         if (isHoldingLongNote && currentLongNote != null)
         {
-            if (currentLongNote.CheckMilestone()) // 특정 시간에 맞춰 판정
+            if (currentLongNote.Hold()) // 특정 시간에 맞춰 판정
             {
                 Debug.Log("롱노트 판정 성공!");
             }
@@ -40,7 +41,7 @@ public class TmpWoofer : MonoBehaviour
     {
         if (isHoldingLongNote)
         {
-            Debug.Log("롱노트 종료!");
+            currentLongNote.Release();
             isHoldingLongNote = false;
             currentLongNote = null;
         }
