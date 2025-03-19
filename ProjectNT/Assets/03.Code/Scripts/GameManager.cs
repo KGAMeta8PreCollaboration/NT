@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
 		GameStart();
 	}
 
-	public void GameStart()
+    public void GameStart()
 	{
 		AudioManager.Instance.StartBGM(delayTime);
 	}
