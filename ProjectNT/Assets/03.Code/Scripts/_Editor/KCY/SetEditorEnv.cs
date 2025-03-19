@@ -33,6 +33,9 @@ public class SetEditorEnv : MonoBehaviour
     private string savePath;
     private PATH PATH = new PATH();
     private string projectPath;
+
+    private Action quitAction;
+
     public string ProjectPath
     {
         get { return projectPath; }
@@ -53,11 +56,18 @@ public class SetEditorEnv : MonoBehaviour
         inputField.text = PATH.Path;
 
     }
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        quitAction += () => UnityEditor.EditorApplication.isPlaying = false;
+#else
+        quitAction += () => Application.Quit();
+#endif
+    }
     private void Back()
     {
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
-
     }
 
     private void Exit_BTN()
@@ -65,10 +75,10 @@ public class SetEditorEnv : MonoBehaviour
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #else
         //어플리케이션 종료
-        Application.Quit(); 
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #endif
     }
 
