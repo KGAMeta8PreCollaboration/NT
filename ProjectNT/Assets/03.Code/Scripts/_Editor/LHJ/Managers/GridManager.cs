@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float heightScale = 1f;
     [Header("Texture해상도")]
     [SerializeField] private float texturePerSecond = 2048f; // 텍스처 해상도 증가
+    [Header("GridText를 넣어주세요")]
+    [SerializeField] private TextMeshProUGUI gridText;
     [Header("Grid 설정")]
     [SerializeField] private float bpm = 120;
     [SerializeField] private int beatNum = 4; //박자의 수
@@ -75,6 +78,7 @@ public class GridManager : MonoBehaviour
         column = 4;
         beatNum = 4;
         InitGrid();
+        gridText.text = $"BPM : ({bpm})";
     }
 
     public void InitGrid()
