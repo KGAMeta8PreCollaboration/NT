@@ -10270,6 +10270,7 @@ GameObject:
   - component: {fileID: 2354013934249023667}
   - component: {fileID: 2354013933334132781}
   - component: {fileID: 1705207755}
+  - component: {fileID: 2354013934249023565}
   m_Layer: 5
   m_Name: Editor_Canvas
   m_TagString: Untagged
@@ -10277,6 +10278,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2354013934249023565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354013934249023564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d094bc45ef5b3b7439aad3991dfc6b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easy_tmp: {fileID: 2354013932490257863}
+  normal_tmp: {fileID: 2354013934040984517}
+  hard_tmp: {fileID: 2354013932402863676}
+  extreme_tmp: {fileID: 2354013934294791669}
+  solo_tmp: {fileID: 2354013933464040618}
+  duo1_tmp: {fileID: 2354013933494963942}
+  duo2_tmp: {fileID: 2354013932357387303}
 --- !u!224 &2354013934249023664
 RectTransform:
   m_ObjectHideFlags: 0

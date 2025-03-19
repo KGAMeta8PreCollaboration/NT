@@ -57,10 +57,10 @@ public class NodeContainer : MonoBehaviour
             //        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
             //    }
             //}
-            //if (EventSystem.current.IsPointerOverGameObject())
-            //{
-            //    return;
-            //}
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             PlaceNodeMousePosition();
         }
 
