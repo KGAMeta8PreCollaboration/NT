@@ -34,7 +34,6 @@ public class BeatMapManager : MonoBehaviour
             Debug.LogWarning("넘어온 비트맵 정보가 없습니다.");
             return;
         }
-        print(2);
 
         StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));
     }
@@ -42,9 +41,8 @@ public class BeatMapManager : MonoBehaviour
     private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
     {
         isLoaded = false;
-
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(beatMapData.songData);
+        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 
         //2. grid 초기화
@@ -53,6 +51,7 @@ public class BeatMapManager : MonoBehaviour
 
         //3. node 초기화
         _nodeContainer.InitializeWithNodeData(beatMapData.nodes);
+        _nodeContainer.InitializeWithSongData(beatMapData.songData);
 
         isLoaded = true;
     }

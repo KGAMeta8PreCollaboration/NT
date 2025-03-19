@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class BeatMapData
 {
-    public SongData songData;
+    public SongData songData = new SongData();
     public List<NodeData> nodes = new List<NodeData>();
     public GridSetting gridSetting;
 }
@@ -24,6 +23,8 @@ public class SongData
 {
     public string songName;
     public float songLength;
+    public int phase2;
+    public int phase3;
 }
 
 //그리드의 정보
@@ -38,9 +39,9 @@ public class GridSetting
 //노드 타입(상단노트, 하단 닷 노트, 하단 롱 노트)
 public enum NodeType
 {
-    TopNode,
     BottomBotNode,
-    BottomLongNode
+    BottomLongNode,
+    TopNode
 }
 
 public enum NodeInstrument

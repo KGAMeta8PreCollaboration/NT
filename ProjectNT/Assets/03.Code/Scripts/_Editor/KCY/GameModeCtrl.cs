@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,6 @@ public class GameModeCtrl : MonoBehaviour
     [SerializeField] private List<Toggle> modeToggles;
     private int diffCount;
     private int modeCount;
-
     private void Awake()
     {
         foreach (Toggle tg in diffToggles)
@@ -24,9 +23,13 @@ public class GameModeCtrl : MonoBehaviour
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
-        EditorDataManager.Instance.CurrentModeDiff = 0;
-    }
+        EditorDataManager.Instance.CurModeDiff = 0;
 
+    }
+    private void Start()
+    {
+        EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap);
+    }
     private void SetMode(bool isTrue)
     {
         if (isTrue)
@@ -38,7 +41,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     modeCount = i;
                     int total = modeCount + diffCount;
-                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i += 4;
@@ -56,7 +59,7 @@ public class GameModeCtrl : MonoBehaviour
                 {
                     diffCount = i;
                     int total = modeCount + diffCount;
-                    EditorDataManager.Instance.CurrentModeDiff = (Enums.ModeDiff)total;
+                    EditorDataManager.Instance.CurModeDiff = (Enums.ModeDiff)total;
                     return;
                 }
                 i++;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -10,30 +11,12 @@ public class DifficutyCtrl : MonoBehaviour
     [SerializeField] private List<Toggle> diff_Toggles;
     [SerializeField] private List<PhaseDriver> phaseDrivers = new List<PhaseDriver>();
     public PhaseDriver currentPhase;
-
     private void Awake()
     {
         Initialize();
-    }
-    private void Start()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            //세이브로드 이벤트 구독
-            // resourceIO.saveDelegate += phaseDrivers[i].AddDataList;
-            // resourceIO.loadDelegate += phaseDrivers[i].LoadData;
-        }
-    }
-    private void OnDisable()
-    {
-        for (int i = 0; i < 4; i++)
-        {
 
-            //세이브로드 이벤트 구독 해제
-            // resourceIO.saveDelegate -= phaseDrivers[i].AddDataList;
-            // resourceIO.loadDelegate -= phaseDrivers[i].LoadData;
-        }
     }
+
     private void Initialize()
     {
 
