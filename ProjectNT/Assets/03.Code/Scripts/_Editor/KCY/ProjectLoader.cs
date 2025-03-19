@@ -68,6 +68,15 @@ public class ProjectLoader : MonoBehaviour
     private void OnDisable()
     {
         delAction -= Delete;
+        currentProject = null;
+        SetDefault();
+        thumbnail_img.sprite = null;
+        projectName_inputfield.text = null;
+        songArtist_inputfield.text = null;
+        projectBpm_inputfield.text = null;
+        bgmName_tmp.text = null;
+        thumbnailName_tmp.text = null;
+        keySound_tmp.text = null;
     }
 
     private void Initialize()
@@ -362,6 +371,7 @@ public class ProjectLoader : MonoBehaviour
 
     private void Refresh()
     {
+
         LoadProjects();
     }
 

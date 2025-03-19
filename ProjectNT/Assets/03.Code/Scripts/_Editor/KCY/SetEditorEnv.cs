@@ -57,6 +57,7 @@ public class SetEditorEnv : MonoBehaviour
     {
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
+
     }
 
     private void Exit_BTN()
