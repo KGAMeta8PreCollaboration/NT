@@ -116,7 +116,6 @@ public class ProjectLoader : MonoBehaviour
         string[] paths = Directory.GetDirectories(ProjectPath);
         foreach (string path in paths)
         {
-            Debug.Log(path);
             string dataPath = Path.Combine(path, "ProjectInfos");
 
             // json 저장 파일이 없으면 다음 디렉토리 확인
@@ -182,7 +181,6 @@ public class ProjectLoader : MonoBehaviour
 
                 if (extention != ".wav" && extention != ".mp3" && extention != ".ogg")
                 {
-                    Debug.Log(extention);
                     count++;
                 }
             }
@@ -207,7 +205,6 @@ public class ProjectLoader : MonoBehaviour
         if (projectName_inputfield.text == "")
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEPROJECTNAME);
-            Debug.LogWarning("곡 이름을 기입해주세요.");
             return;
         }
         if (songArtist_inputfield.text == "")
@@ -248,15 +245,13 @@ public class ProjectLoader : MonoBehaviour
                 {
                     //디렉토리 이름 변경 시도
                     Directory.Move(currentProject.projectData.m_Path, path);
-                    Debug.Log("디렉토리 경로 변경");
                     currentProject.projectData.m_Path = path;
                     currentProject.SetProjectData();
                     DataSave(path);
                     currentProject.ProjectName.text = currentProject.projectData.projectName;
                 }
-                catch (Exception e)
+                catch
                 {
-                    Debug.LogError(e.Message);
                     EditorUIManager.Instance.popUp.PopUpOpen(Detail.SAVEFOLDEREXIST);
                 }
             }   //기존 경로와 같다면
@@ -420,7 +415,7 @@ public class ProjectLoader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogWarning(e.Message);
+            Debug.Log(e.Message);
             Debug.Log("BGM 변경사항 없음");
         }
         try
@@ -430,7 +425,7 @@ public class ProjectLoader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogWarning(e.Message);
+            Debug.Log(e.Message);
             Debug.Log("썸네일 변경사항 없음");
         }
     }
@@ -447,7 +442,6 @@ public class ProjectLoader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.LOADIMGFAIL);
             return null;
         }
@@ -467,19 +461,16 @@ public class ProjectLoader : MonoBehaviour
         {
             bytes = currentProject.projectData.thumbnailData;
             currentProject.SetThumbnailData(bytes);
-            Debug.Log("빔");
         }
         else
         {
             if (bytes == currentProject.projectData.thumbnailData)
             {
-                Debug.Log("같음");
                 currentProject.SetThumbnailData(bytes);
                 currentProject.projectData.thumbnailData = bytes;
             }
             else
             {
-                Debug.Log("다름");
                 currentProject.projectData.thumbnailData = bytes;
                 currentProject.SetThumbnailData(bytes);
             }

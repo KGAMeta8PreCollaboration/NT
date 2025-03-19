@@ -80,7 +80,6 @@ public class SetEditorEnv : MonoBehaviour
             PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
             PATH.CurrentPath = PATH.EditorPath;
             SavePath();
-            Debug.Log("에디터 폴더 생성 및 경로 저장");
         }
         else PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
         if (!Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
@@ -89,7 +88,6 @@ public class SetEditorEnv : MonoBehaviour
             PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
             PATH.CurrentPath = PATH.ProjectPath;
             SavePath();
-            Debug.Log("프로젝트 폴더 생성 및 경로 저장");
         }
         else PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
         if (Directory.Exists(PATH.ProjectPath))
@@ -124,8 +122,6 @@ public class SetEditorEnv : MonoBehaviour
                     PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
                 }
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
-                Debug.Log(path[0]);
-                Debug.Log(PATH.Path);
                 PATH.CurrentPath = PATH.Path;
                 inputField.text = PATH.CurrentPath;
                 SavePath();
@@ -140,7 +136,6 @@ public class SetEditorEnv : MonoBehaviour
         }
         catch
         {
-            Debug.LogWarning("경로 설정 중 문제");
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
         }
     }
