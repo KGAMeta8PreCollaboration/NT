@@ -40,7 +40,8 @@ public class Woofer : MonoBehaviour
         if (notes.Count == 0)
             return;
         Note note = notes[0];
-        note.Hit(_judgementSystem.CheckTiming());
+        //note.Hit(_judgementSystem.CheckTiming());
+        note.Hit(_judgementSystem.JudgeNote());
     }
 
     public void AddNote(Note note)
