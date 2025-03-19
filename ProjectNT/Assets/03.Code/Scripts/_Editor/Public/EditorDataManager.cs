@@ -32,7 +32,12 @@ public class EditorDataManager : Singleton<EditorDataManager>
     private TestLoad testLoad;
     private string bgmDestPath;
     private string curKeySoundName;
+    private bool isSaved = true;
 
+    public Action<BeatMapData> beatMapLoadAction;
+    public Action phaseDataAction;
+    public Sprite thumbnail_sprite;
+    public AudioClip bgmClip;
     public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
 
     public Enums.ModeDiff CurModeDiff
@@ -45,10 +50,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
             phaseDataAction?.Invoke();
         }
     }
-
-    public Sprite thumbnail_sprite;
-    public AudioClip bgmClip;
-
     public BeatMapData CurBeatMap
     {
         get { return beatMapDic[CurModeDiff]; }
@@ -58,8 +59,9 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public string CurKeySoundName
     { get { return curKeySoundName; } set { curKeySoundName = value; } }
 
-    public Action<BeatMapData> beatMapLoadAction;
-    public Action phaseDataAction;
+    public bool IsSaved
+    { get { return isSaved; } set { isSaved = value; } }
+
     protected override void Awake()
     {
         base.Awake();

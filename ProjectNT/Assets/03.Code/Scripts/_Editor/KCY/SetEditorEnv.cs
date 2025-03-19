@@ -33,6 +33,9 @@ public class SetEditorEnv : MonoBehaviour
     private string savePath;
     private PATH PATH = new PATH();
     private string projectPath;
+
+    private Action quitAction;
+
     public string ProjectPath
     {
         get { return projectPath; }
@@ -53,6 +56,14 @@ public class SetEditorEnv : MonoBehaviour
         inputField.text = PATH.Path;
 
     }
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        quitAction += () => UnityEditor.EditorApplication.isPlaying = false;
+#else
+        quitAction += () => Application.Quit();
+#endif
+    }
     private void Back()
     {
         projectIO.gameObject.SetActive(false);
@@ -64,10 +75,10 @@ public class SetEditorEnv : MonoBehaviour
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #else
         //어플리케이션 종료
-        Application.Quit(); 
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #endif
     }
 
@@ -79,7 +90,6 @@ public class SetEditorEnv : MonoBehaviour
             PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
             PATH.CurrentPath = PATH.EditorPath;
             SavePath();
-            Debug.Log("에디터 폴더 생성 및 경로 저장");
         }
         else PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
         if (!Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
@@ -88,7 +98,6 @@ public class SetEditorEnv : MonoBehaviour
             PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
             PATH.CurrentPath = PATH.ProjectPath;
             SavePath();
-            Debug.Log("프로젝트 폴더 생성 및 경로 저장");
         }
         else PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
         if (Directory.Exists(PATH.ProjectPath))
@@ -123,8 +132,6 @@ public class SetEditorEnv : MonoBehaviour
                     PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
                 }
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
-                Debug.Log(path[0]);
-                Debug.Log(PATH.Path);
                 PATH.CurrentPath = PATH.Path;
                 inputField.text = PATH.CurrentPath;
                 SavePath();
@@ -139,7 +146,6 @@ public class SetEditorEnv : MonoBehaviour
         }
         catch
         {
-            Debug.LogWarning("경로 설정 중 문제");
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
         }
     }

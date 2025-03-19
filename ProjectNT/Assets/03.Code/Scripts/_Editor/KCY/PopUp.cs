@@ -60,6 +60,7 @@ public class PopUp : MonoBehaviour
                 CheckBtnOn();
                 break;
             case Enums.Details.DELETEPROJECTCHECK:
+            case Enums.Details.EDITORQUIT:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 CancleBtnOn();

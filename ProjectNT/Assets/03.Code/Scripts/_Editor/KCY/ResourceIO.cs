@@ -18,9 +18,6 @@ public class ResourceIO : MonoBehaviour
     [SerializeField] private Button save_btn;
     [SerializeField] private Button exit_btn;
     [SerializeField] private Button copy_btn;
-    private bool isSaved = true;
-    public bool IsSaved
-    { get { return isSaved; } set { isSaved = value; } }
 
     private void Awake()
     {
@@ -38,7 +35,7 @@ public class ResourceIO : MonoBehaviour
         thumbnail_img.sprite = EditorDataManager.Instance.thumbnail_sprite;
 
         save_btn.onClick.AddListener(EditorDataManager.Instance.SaveBeatMap);
-        SaveTracker();
+        SaveTracking();
         exit_btn.onClick.AddListener(GoToTitle);
     }
 
@@ -60,10 +57,10 @@ public class ResourceIO : MonoBehaviour
         EditorDataManager.Instance.phaseDataAction -= GetPhaseData;
     }
 
-    private void SaveTracker()
+    private void SaveTracking()
     {
-        phase2_inputfield.onValueChanged.AddListener(x => IsSaved = false);
-        phase3_inputfield.onValueChanged.AddListener(x => IsSaved = false);
+        phase2_inputfield.onValueChanged.AddListener(x => EditorDataManager.Instance.IsSaved = false);
+        phase3_inputfield.onValueChanged.AddListener(x => EditorDataManager.Instance.IsSaved = false);
     }
 
     private void GetPhaseData()
