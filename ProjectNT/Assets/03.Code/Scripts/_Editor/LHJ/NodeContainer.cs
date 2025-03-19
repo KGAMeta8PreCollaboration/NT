@@ -346,7 +346,7 @@ public class NodeContainer : MonoBehaviour
     public void InitializeWithSongData(SongData songData)
     {
         songData ??= new SongData { songLength = 0, phase2 = 0, phase3 = 0 };
-        UpdateTimeText(songData.songLength);
+        UpdateTimeText(_audioSourceManager.AudioSource.clip.length);
     }
     private void UpdateTimeText(float time)
     {
@@ -366,7 +366,7 @@ public class NodeContainer : MonoBehaviour
         _currentBeatMapData.songData = new SongData
         {
             songName = _audioSourceManager.AudioSource.clip.name,
-            songLength = _audioSourceManager.AudioDuration,
+            songLength = _audioSourceManager.AudioSource.clip.length,
             phase2 = EditorDataManager.Instance.CurBeatMap?.songData?.phase2 ?? defaultPhase2,
             phase3 = EditorDataManager.Instance.CurBeatMap?.songData?.phase3 ?? defaultPhase3,
         };
