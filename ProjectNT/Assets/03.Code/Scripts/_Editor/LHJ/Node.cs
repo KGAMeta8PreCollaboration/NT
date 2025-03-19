@@ -56,7 +56,7 @@ public class Node : MonoBehaviour
 
     public void TestPrint()
     {
-        _keySound = _testNodeInfo.CurrentNodeInfo;
-        print($"현재 노드의 정보 : {_keySound}");
+        // _keySound = _testNodeInfo.CurrentNodeInfo;
+        // print($"현재 노드의 정보 : {_keySound}");
     }
 }
