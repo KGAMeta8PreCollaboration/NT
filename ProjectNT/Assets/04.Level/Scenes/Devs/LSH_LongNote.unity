@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -404,6 +404,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1461045527}
   - component: {fileID: 1461045528}
+  - component: {fileID: 1461045529}
+  - component: {fileID: 1461045530}
+  - component: {fileID: 1461045531}
+  - component: {fileID: 1461045532}
   m_Layer: 0
   m_Name: tmpWoofer
   m_TagString: Untagged
@@ -435,10 +439,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1461045526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be7ae9e7dc05fb348a79268f42be1727, type: 3}
+  m_Script: {fileID: 11500000, guid: cc28abe97042e61469e2e7fc40ef93c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLongNote: {fileID: 6970318214988274982}
+  notes: []
+  _judgementSystem: {fileID: 1461045529}
+  _noteScanner: {fileID: 1461045530}
+  isHoldingLongNote: 0
+--- !u!114 &1461045529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461045526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7c348d3b5bdc94db6bc2fb834bb2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timingTrans: []
+  _woofer: {fileID: 1461045528}
+  logText2: {fileID: 0}
+--- !u!114 &1461045530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461045526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cdefa4e0ce0504295e59600b61523c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1461045531
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461045526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.63, y: 2.41, z: 6.26}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1461045532
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461045526}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1477415866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,10 +2058,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae4aca5b1d1c0f4a86a3dee699f92b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 0}
+  hitEffect: {fileID: 0}
   startTargetDspTime: 0
   endTargetDspTime: 0
   divideCount: 5
   milestones: []
+  currentMilestoneIndex: 0
+  isHolding: 0
 --- !u!4 &6970318214988274983
 Transform:
   m_ObjectHideFlags: 0
