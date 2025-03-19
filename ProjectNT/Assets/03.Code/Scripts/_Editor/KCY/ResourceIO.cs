@@ -41,6 +41,7 @@ public class ResourceIO : MonoBehaviour
 
     private void GoToTitle()
     {
+        EditorDataManager.Instance.beatMapLoadAction = null;
         EditorLoadScene.SceneLoad("EditorPathScene");
     }
 

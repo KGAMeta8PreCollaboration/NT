@@ -52,8 +52,8 @@ public class SetEditorEnv : MonoBehaviour
     {
         yield return null;
         LoadPath();
-        if (PATH.Path != null) CheckPath();
         inputField.text = PATH.Path;
+        if (PATH.Path != null) CheckPath();
 
     }
     private void OnEnable()
@@ -66,6 +66,9 @@ public class SetEditorEnv : MonoBehaviour
     }
     private void Back()
     {
+        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (Directory.Exists(p)) Directory.Delete(p, true);
+        inputField.text = "";
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
     }
@@ -84,6 +87,11 @@ public class SetEditorEnv : MonoBehaviour
 
     private void CheckPath()
     {
+        if (inputField.text == "")
+        {
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            return;
+        }
         if (!Directory.Exists(PATH.Path + PATH.EditorDIR_Name))
         {
             Directory.CreateDirectory(PATH.Path + PATH.EditorDIR_Name);

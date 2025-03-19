@@ -16,7 +16,7 @@ public class EditorLoadScene : MonoBehaviour
     public static void SceneLoad(string sceneName)
     {
         nextScene = sceneName;
-        SceneManager.LoadScene("SongEditorScene");
+        SceneManager.LoadScene(nextScene);
     }
     private IEnumerator LoadSceneCorou()
     {

@@ -78,11 +78,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
                 SaveDataLocal();
             }
-            if (SceneManager.GetActiveScene().name == "EditorLoadingScene")
-            {
-                beatMapLoadAction = null;
-
-            }
         };
 
         for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
