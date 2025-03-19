@@ -32,10 +32,13 @@ public class GameManager : Singleton<GameManager>
 		GameStart();
 	}
 
-	public void GameStart()
+	// TODO: 프로토타입 임시
+    public void GameStart()
 	{
 		AudioManager.Instance.StartBGM(delayTime);
+		FindObjectOfType<GameSceneMove>().GameSceneMoveAndLightStart();
 	}
+
 	
 	public void GoToLobby()
 	{
