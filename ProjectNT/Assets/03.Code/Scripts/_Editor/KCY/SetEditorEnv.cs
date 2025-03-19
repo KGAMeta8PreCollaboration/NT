@@ -23,7 +23,7 @@ public class SetEditorEnv : MonoBehaviour
 {
     [SerializeField] private RectTransform defaultPath;
     [SerializeField] private RectTransform project;
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TextMeshProUGUI path_tmp;
     [SerializeField] private Button openFolderBTN;
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
@@ -52,7 +52,7 @@ public class SetEditorEnv : MonoBehaviour
     {
         yield return null;
         LoadPath();
-        inputField.text = PATH.Path;
+        path_tmp.text = PATH.Path;
         if (PATH.Path != null) CheckPath();
 
     }
@@ -68,7 +68,7 @@ public class SetEditorEnv : MonoBehaviour
     {
         string p = Path.Combine(Application.persistentDataPath, "EditorPath");
         if (Directory.Exists(p)) Directory.Delete(p, true);
-        inputField.text = "";
+        path_tmp.text = "";
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
     }
@@ -87,7 +87,7 @@ public class SetEditorEnv : MonoBehaviour
 
     private void CheckPath()
     {
-        if (inputField.text == "")
+        if (path_tmp.text == "")
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
             return;
@@ -141,19 +141,20 @@ public class SetEditorEnv : MonoBehaviour
                 }
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
                 PATH.CurrentPath = PATH.Path;
-                inputField.text = PATH.CurrentPath;
+                path_tmp.text = PATH.CurrentPath;
                 SavePath();
             }
             else
             {
                 PATH.Path = path[0];
                 PATH.CurrentPath = PATH.Path;
-                inputField.text = PATH.CurrentPath;
+                path_tmp.text = PATH.CurrentPath;
                 SavePath();
             }
         }
-        catch
+        catch (Exception e)
         {
+            Debug.Log(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
         }
     }
