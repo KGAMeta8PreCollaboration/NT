@@ -32,7 +32,6 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private Button loadKeySound_btn;
     [SerializeField] private Button edit_btn;
     [SerializeField] private Button save_btn;
-    [SerializeField] private Button back_btn;
     #endregion
 
     private Action delAction;
@@ -56,7 +55,6 @@ public class ProjectLoader : MonoBehaviour
     private void Awake()
     {
         Initialize();
-        LoadProjects();
         projectName_inputfield.onValueChanged.AddListener((word) => projectName_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
         songArtist_inputfield.onValueChanged.AddListener((word) => songArtist_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
         projectBpm_inputfield.onValueChanged.AddListener((word) => projectBpm_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
@@ -65,6 +63,7 @@ public class ProjectLoader : MonoBehaviour
     private void OnEnable()
     {
         delAction += Delete;
+        LoadProjects();
     }
     private void OnDisable()
     {
@@ -84,13 +83,7 @@ public class ProjectLoader : MonoBehaviour
         edit_btn.onClick.AddListener(EditProject);
         save_btn.onClick.AddListener(SaveProject);
 
-        back_btn.onClick.AddListener(Back);
         SetDefault();
-    }
-
-    private void Back()
-    {
-        //TODO 경로 설정 패널로 이동~
     }
 
     private void EditProject()
