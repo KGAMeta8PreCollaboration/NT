@@ -10,7 +10,7 @@ public class ConnectLineRenderer : MonoBehaviour
     public LineRenderer lineRenderer;
     public BoxCollider boxCollider;
 
-    private void Start()
+    public void Init()
     {
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
@@ -20,7 +20,6 @@ public class ConnectLineRenderer : MonoBehaviour
         boxCollider.size = new Vector3(x, 1, 0.4f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         lineRenderer.SetPosition(0, start.position);
