@@ -41,7 +41,7 @@ public class GameManager : Singleton<GameManager>
 	
 	public void GoToLobby()
 	{
-		SceneManager.LoadScene("Prototype_Lobby");
+		SceneManager.LoadScene("LSH_MultiLobbyMapApply");
 	}
 	
 	public void GameEnd()
