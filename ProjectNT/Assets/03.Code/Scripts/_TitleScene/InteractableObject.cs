@@ -23,9 +23,15 @@ public class InteractableObject : MonoBehaviour
     private InputActionReference right;
 
     private Outline outline; 
-    private bool isOutlineActive = false;
+    
+    
+    private bool isOutlineActive = false; // 불값 필요없는거같음
     private bool isEventRegistered = false;
     private XRSimpleInteractable simpleInteractable;
+    
+    // TODO: 프로토타입 임시
+    [SerializeField] private GameObject popupPanel;
+    
 
     private void Start()
     {
@@ -55,8 +61,8 @@ public class InteractableObject : MonoBehaviour
                 isOutlineActive = true; //아웃라인 활성화 됨을 확인
                 if (!isEventRegistered)
                 {
-                    left.action.started += OnSelectObject;
-                    right.action.started += OnSelectObject;
+                    // left.action.started += OnSelectObject;
+                    // right.action.started += OnSelectObject;
                     isEventRegistered = true;
                 }
             }
@@ -75,8 +81,8 @@ public class InteractableObject : MonoBehaviour
                 isOutlineActive = false; //아웃라인 비활성화 됨을 확인
                 if (isEventRegistered)
                 {
-                    left.action.started -= OnSelectObject;
-                    right.action.started -= OnSelectObject;
+                    // left.action.started -= OnSelectObject;
+                    // right.action.started -= OnSelectObject;
                     isEventRegistered = false;
                 }
             }
@@ -88,7 +94,9 @@ public class InteractableObject : MonoBehaviour
         Debug.Log($"클릭으로 OnSelect 호출 {uiName} UI활성화 시도");
         if (isOutlineActive)
         {
-            TitleManager.instance.OpenUI(uiName);
+            print("OnSelectObject");
+            // TitleManager.instance.OpenUI(uiName);
+            // popupPanel.SetActive(true);
             if (outline != null)
             {
                 Debug.Log($"{uiName} UI활성화 성공");

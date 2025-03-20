@@ -38,7 +38,6 @@ public class GameManager : Singleton<GameManager>
 		AudioManager.Instance.StartBGM(delayTime);
 		FindObjectOfType<GameSceneMove>().GameSceneMoveAndLightStart();
 	}
-
 	
 	public void GoToLobby()
 	{
