@@ -16,7 +16,7 @@ public class BlurEffectManager : MonoBehaviour
     private VolumeProfile profile;
     private DepthOfField depth;
 
-    void Start()
+    private void Awake()
     {
         if (volume != null)
         {

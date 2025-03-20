@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BaseTitleUI : MonoBehaviour
 {
+    public TitleManager titleManager;
     [SerializeField]
     private Button closeButton;
 
@@ -25,6 +26,7 @@ public class BaseTitleUI : MonoBehaviour
 
     public virtual void CloseUIButtonClick()
     {
-        TitleManager.instance.CloseUI();
+        titleManager.SetUIActive(false);
+        gameObject.SetActive(false);
     }
 }

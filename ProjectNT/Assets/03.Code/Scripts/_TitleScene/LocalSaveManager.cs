@@ -130,43 +130,43 @@ public class LocalSaveManager : MonoBehaviour
         yield return null;
     }
 
-    //이 아래는 테스트용
-    public Button testButton;
-    public GameMusicSampleData gameMusicData;
-    private string tsetName = "player";
-    private bool istest = false;
-    private void Awake()
-    {
-        testButton.onClick.AddListener(TestButton);
-    }
-    public void TestButton()
-    {
-        if (istest == false)
-        {
-            istest = true;
-            StartCoroutine(TestSave(() => { istest = false; }));
-        }
-        else
-        {
-            Debug.Log("테스트세이브 진행중 버튼 클릭");
-        }
-    }
-    public IEnumerator TestSave(Action action)
-    {
-        Debug.Log("테스트세이브 시작");
-        foreach (TitleMusicData data in gameMusicData.titleMusicDatas)
-        {
-            int testRandomNum = UnityEngine.Random.Range(1, 5);
-            for (int i = 0; i < testRandomNum; i++)
-            {
-                int testScore = UnityEngine.Random.Range(100, 100000);
-                int testLevel = UnityEngine.Random.Range(20, 50);
-                int testnum = UnityEngine.Random.Range(1, 10);
-                string name = tsetName + testnum.ToString();
-                yield return StartCoroutine(LocalDataSave(data.musicName, name, testLevel, testScore));
-            }
-        }
-        Debug.Log("테스트세이브 종료");
-        action.Invoke();
-    }
+    ////이 아래는 테스트용
+    //public Button testButton;
+    //public GameMusicSampleData gameMusicData;
+    //private string tsetName = "player";
+    //private bool istest = false;
+    //private void Awake()
+    //{
+    //    testButton.onClick.AddListener(TestButton);
+    //}
+    //public void TestButton()
+    //{
+    //    if (istest == false)
+    //    {
+    //        istest = true;
+    //        StartCoroutine(TestSave(() => { istest = false; }));
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("테스트세이브 진행중 버튼 클릭");
+    //    }
+    //}
+    //public IEnumerator TestSave(Action action)
+    //{
+    //    Debug.Log("테스트세이브 시작");
+    //    foreach (TitleMusicData data in gameMusicData.titleMusicDatas)
+    //    {
+    //        int testRandomNum = UnityEngine.Random.Range(1, 5);
+    //        for (int i = 0; i < testRandomNum; i++)
+    //        {
+    //            int testScore = UnityEngine.Random.Range(100, 100000);
+    //            int testLevel = UnityEngine.Random.Range(20, 50);
+    //            int testnum = UnityEngine.Random.Range(1, 10);
+    //            string name = tsetName + testnum.ToString();
+    //            yield return StartCoroutine(LocalDataSave(data.musicName, name, testLevel, testScore));
+    //        }
+    //    }
+    //    Debug.Log("테스트세이브 종료");
+    //    action.Invoke();
+    //}
 }
