@@ -1375,7 +1375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1662b838b1401443a81a1a56589fa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiName: 1
+  titleManager: {fileID: 272115122}
+  uiType: 0
+  ui: {fileID: 2017360316}
   uiNameText: {fileID: 1164854409}
   left: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   right: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -5782,6 +5784,7 @@ GameObject:
   - component: {fileID: 272115123}
   - component: {fileID: 272115122}
   - component: {fileID: 272115121}
+  - component: {fileID: 272115124}
   m_Layer: 0
   m_Name: TitleManager
   m_TagString: Untagged
@@ -5802,9 +5805,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datas: []
-  testButton: {fileID: 378722103}
-  gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
-    type: 3}
 --- !u!114 &272115122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5817,13 +5817,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf9d5d5512603747b1ebf101c1fef10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singlePlayUI: {fileID: 1461590992}
-  rankingBoardUI: {fileID: 2017360316}
-  gameSettingUI: {fileID: 1117693336}
-  multiPlayUI: {fileID: 1005297656}
-  gameMusicAudioSource: {fileID: 4418495012234651966}
-  backgroundAudioSource: {fileID: 4418495012234651953}
   blurEffectManager: {fileID: 4418495012234651952}
+  tilteSound: {fileID: 272115124}
+  isMultiPlaye: 0
 --- !u!4 &272115123
 Transform:
   m_ObjectHideFlags: 0
@@ -5838,6 +5834,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272115124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272115120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a66f609593c024ea10397b663d3530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMusicAudioSource: {fileID: 4418495012234651966}
+  backgroundAudioSource: {fileID: 4418495012234651953}
 --- !u!1 &273884318
 GameObject:
   m_ObjectHideFlags: 0
@@ -18569,6 +18579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2a6a5f2ee97004bb01df27e94d388d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilteSound: {fileID: 272115124}
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
     type: 3}
   musicImage: {fileID: 253402567}
@@ -18589,6 +18600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a6058b1446fae4a95e08d0781e7c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleManager: {fileID: 272115122}
   closeButton: {fileID: 565084105}
   gameType: 1
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
@@ -20284,6 +20296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71967f3f9d8829e45ac412ed06ed422d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleManager: {fileID: 272115122}
   closeButton: {fileID: 1394933309}
   gameExitButton: {fileID: 1495103411}
 --- !u!114 &1117693339
@@ -25709,6 +25722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2a6a5f2ee97004bb01df27e94d388d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilteSound: {fileID: 272115124}
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
     type: 3}
   musicImage: {fileID: 773771962}
@@ -25729,6 +25743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a6058b1446fae4a95e08d0781e7c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleManager: {fileID: 272115122}
   closeButton: {fileID: 396858774}
   gameType: 0
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
@@ -35019,6 +35034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2a6a5f2ee97004bb01df27e94d388d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilteSound: {fileID: 272115124}
   gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
     type: 3}
   musicImage: {fileID: 51283033}
@@ -35039,6 +35055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c6bcd50b7f9664ebcaf3e22a895b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleManager: {fileID: 272115122}
   closeButton: {fileID: 493052327}
   localSaveManager: {fileID: 272115121}
   lastUpdataTimeText: {fileID: 2137423691}
@@ -42320,7 +42337,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1662b838b1401443a81a1a56589fa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiName: 0
+  titleManager: {fileID: 272115122}
+  uiType: 0
+  ui: {fileID: 1461590992}
   uiNameText: {fileID: 1573322424}
   left: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   right: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -71295,7 +71314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1662b838b1401443a81a1a56589fa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiName: 3
+  titleManager: {fileID: 272115122}
+  uiType: 0
+  ui: {fileID: 1117693336}
   uiNameText: {fileID: 1409017204}
   left: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   right: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -71862,7 +71883,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1662b838b1401443a81a1a56589fa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiName: 2
+  titleManager: {fileID: 272115122}
+  uiType: 0
+  ui: {fileID: 0}
   uiNameText: {fileID: 475053493}
   left: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   right: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
@@ -86201,6 +86224,7 @@ MonoBehaviour:
   _photonManager: {fileID: 1157041563}
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
+  ui: {fileID: 0}
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0
