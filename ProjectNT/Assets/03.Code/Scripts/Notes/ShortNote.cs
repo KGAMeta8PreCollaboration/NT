@@ -3,47 +3,58 @@ using UnityEngine;
 
 public class ShortNote : Note
 {
-    // TODO: GameManager.Scoremanager로 변경할듯?
-    private ScoreManager _scoreManager;
+	public double targetDspTime;
 
-    public override void Hit(JudgementType noteType)
-    {
-        Destroy();
-        isHit = true;
-        this.judgementType = noteType;
+	// TODO: GameManager.Scoremanager로 변경할듯?
+	private ScoreManager _scoreManager;
 
-        if (hitEffect != null)
-        {
-            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            effect.Play();
-            Destroy(effect.gameObject, effect.main.duration);
-        }
+	public override void Init(Transform target, NoteSpawnData noteSpawnData)
+	{
+		base.Init(target, noteSpawnData);
 
-        OnHit?.Invoke(this);
-    }
+		ShortNoteSpawnData shortNoteSpawnData = noteSpawnData as ShortNoteSpawnData;
+
+		targetDspTime = shortNoteSpawnData.targetDspTime;
+	}
+
+	public override void Hit(JudgementType noteType)
+	{
+		Destroy();
+		isHit = true;
+		this.judgementType = noteType;
+
+		if (hitEffect != null)
+		{
+			ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+			effect.Play();
+			Destroy(effect.gameObject, effect.main.duration);
+		}
+
+		OnHit?.Invoke(this);
+	}
 
 
-    protected override void PostJudgement()
-    {
-        if (judgementType == JudgementType.Bad)
-            _scoreManager.ResetCombo();
-        else
-            _scoreManager.IncreaseCombo();
-        _scoreManager.AddScore(judgementType);
-        _scoreManager.ShowJudgementType(judgementType);
-    }
+	protected override void PostJudgement()
+	{
+		if (judgementType == JudgementType.Bad)
+			_scoreManager.ResetCombo();
+		else
+			_scoreManager.IncreaseCombo();
+		_scoreManager.AddScore(judgementType);
+		_scoreManager.ShowJudgementType(judgementType);
+	}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Woofer"))
-            Miss();
-    }
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag("Woofer"))
+			Miss();
+	}
 
-    private void Miss()
-    {
-        Destroy();
-        isHit = true;
-        judgementType = JudgementType.Bad;
-        OnHit?.Invoke(this);
-    }
+	private void Miss()
+	{
+		Destroy();
+		isHit = true;
+		judgementType = JudgementType.Bad;
+		OnHit?.Invoke(this);
+	}
 }

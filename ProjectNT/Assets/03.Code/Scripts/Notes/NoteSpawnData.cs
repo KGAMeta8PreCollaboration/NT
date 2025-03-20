@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class ShortNoteSpawnData : NoteSpawnData
 {
-    public double targetTime;
+	public double targetDspTime;
 
-    public ShortNoteSpawnData(double targetTime)
-    {
-        this.targetTime = targetTime;
-    }
+	public ShortNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double targetDspTime)
+		: base(notePrefab, hitSound, spawnDspTime)
+	{
+		this.targetDspTime = targetDspTime;
+	}
 }
 
 public class LongNoteSpawnData : NoteSpawnData
 {
-    public double startTargetTime;
-    public double endTargetTime;
+	public double startTargetDspTime;
+	public double endTargetDspTime;
 
-    public LongNoteSpawnData(double startTargetTime, double endTargetTime)
-    {
-        this.startTargetTime = startTargetTime;
-        this.endTargetTime = endTargetTime;
-    }
+	public LongNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double startTargetDspTime, double endTargetDspTime)
+		: base(notePrefab, hitSound, spawnDspTime)
+	{
+		this.startTargetDspTime = startTargetDspTime;
+		this.endTargetDspTime = endTargetDspTime;
+	}
 }
 
 public class NoteSpawnData
 {
+	public Note notePrefab;
+	public double spawnDspTime;
+	public AudioClip hitSound;
+
+	public NoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime)
+	{
+		this.notePrefab = notePrefab;
+		this.hitSound = hitSound;
+		this.spawnDspTime = spawnDspTime;
+	}
 }
