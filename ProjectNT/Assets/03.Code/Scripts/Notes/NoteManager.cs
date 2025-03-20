@@ -25,6 +25,7 @@ public class NoteManager : MonoBehaviour
         else
             _scoreManager.IncreaseCombo();
         _scoreManager.AddScore(note.noteType);
+        _scoreManager.AddJudgeCount(note.noteType);
         _scoreManager.ShowJudgementType(note.noteType);
     }
 

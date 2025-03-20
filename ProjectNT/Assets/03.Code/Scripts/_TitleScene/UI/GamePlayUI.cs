@@ -35,8 +35,8 @@ public class GamePlayUI : BaseTitleUI
 
     public override void Awake()
     {
-        base.Awake();
-     }
+        // base.Awake();
+    }
 
     private void OnEnable()
     {
@@ -108,7 +108,7 @@ public class GamePlayUI : BaseTitleUI
         {
             Debug.Log($"{TestStartGameData.Instance.musicName}");
             Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            SceneManager.LoadScene("KMJ_TestNextScene");
+            SceneManager.LoadScene("Prototype_Game");
             //싱글플레이시 노래시작
         }
     }

@@ -23,14 +23,14 @@ public class GameSceneMove : MonoBehaviour
     private int testNum = 0;
     private Action action;
 
-    private void Start()
-    {
-        GameSceneMoveAndLightStart();
-    }
+    // private void Start()
+    // {
+    //     GameSceneMoveAndLightStart();
+    // }
 
     public void GameSceneMoveAndLightStart()//이 함수불러서 이동 바로시작
     {
-        StartCoroutine(TestOnLight());//얜 테스트용입니다
+        //StartCoroutine(TestOnLight());//얜 테스트용입니다
         StartCoroutine(MoveStart());
         //게임시작과동시에 실행할때 다른것도하는게많아서그런지
         //코루틴이 조금늦게시작함 한 2초정도
