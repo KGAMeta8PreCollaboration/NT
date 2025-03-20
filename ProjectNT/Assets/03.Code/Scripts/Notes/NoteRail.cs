@@ -4,52 +4,58 @@ using UnityEngine;
 
 public class NoteRail : MonoBehaviour
 {
-	[SerializeField] private Woofer woofer; 
+    [SerializeField] private Woofer woofer;
 
-	[HideInInspector] public NoteSpawner noteSpawner;
-	LinkedList<Note> noteList = new LinkedList<Note>();
+    [HideInInspector] public NoteSpawner noteSpawner;
+    LinkedList<Note> noteList = new LinkedList<Note>();
 
-	private void Awake()
-	{
-		woofer = GetComponentInChildren<Woofer>();
-	}
+    private void Awake()
+    {
+        woofer = GetComponentInChildren<Woofer>();
+    }
 
-	private void Start()
-	{
-		noteSpawner = GetComponentInChildren<NoteSpawner>();
-	}
-	
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime, AudioClip audioClip)
-	{
-		onAddNote += note => AddNote(note);
-		onNoteDestroyed += note => RemoveNote(note);
-		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
-	}
+    private void Start()
+    {
+        noteSpawner = GetComponentInChildren<NoteSpawner>();
+    }
 
-	public void AddNote(Note note)
-	{
-		noteList.AddLast(note);
-		note.OnHit += OnNoteHit;
-		if (noteList.Count == 1)
-		{
-			woofer.SetAudioClip(note.hitSound);
-		}
-	}
+    public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, double spawnDspTime, double targetDspTime, AudioClip audioClip)
+    {
+        onAddNote += note => AddNote(note);
+        onNoteDestroyed += note => RemoveNote(note);
+        noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, (note) => { }, audioClip, spawnDspTime, targetDspTime);
+    }
+    public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, double spawnDspTime, double startTargetDspTime, double endTargetDspTime, AudioClip audioClip)
+    {
+        onAddNote += note => AddNote(note);
+        onNoteDestroyed += note => RemoveNote(note);
+        noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, (note) => { }, audioClip, spawnDspTime, endTargetDspTime);
+    }
 
-	public void RemoveNote(Note note)
-	{
-		noteList.Remove(note);
-	}
+    public void AddNote(Note note)
+    {
+        noteList.AddLast(note);
+        note.OnHit += OnNoteHit;
+        if (noteList.Count == 1)
+        {
+            woofer.SetAudioClip(note.hitSound);
+        }
+    }
 
-	private void OnNoteHit(Note note)
-	{
-		if (noteList.Count > 0)
-		{
-			var firstNote = noteList.First?.Value;
-			if (firstNote != null)
-			{
-				woofer.SetAudioClip(firstNote.hitSound);
-			}
-		}
-	}
+    public void RemoveNote(Note note)
+    {
+        noteList.Remove(note);
+    }
+
+    private void OnNoteHit(Note note)
+    {
+        if (noteList.Count > 0)
+        {
+            var firstNote = noteList.First?.Value;
+            if (firstNote != null)
+            {
+                woofer.SetAudioClip(firstNote.hitSound);
+            }
+        }
+    }
 }

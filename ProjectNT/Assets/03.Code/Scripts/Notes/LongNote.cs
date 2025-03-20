@@ -12,13 +12,13 @@ public class LongNote : Note
 
     private void Start()
     {
-        startTargetDspTime = AudioSettings.dspTime + 10d; //3초
-        endTargetDspTime = AudioSettings.dspTime + 20d; //7초
+        //startTargetDspTime = AudioSettings.dspTime + 10d; //3초
+        //endTargetDspTime = AudioSettings.dspTime + 20d; //7초
 
-        double duration = endTargetDspTime - startTargetDspTime;
-        print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
+        //double duration = endTargetDspTime - startTargetDspTime;
+        //print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
 
-        CalculateMilestones(duration);
+        //CalculateMilestones(duration);
     }
 
     private void CalculateMilestones(double duration)
@@ -40,18 +40,42 @@ public class LongNote : Note
         _spawnDspTime = spawnDspTime;
         this.startTargetDspTime = startTargetDspTime;
         this.endTargetDspTime = endTargetDspTime;
+        double duration = endTargetDspTime - startTargetDspTime;
+        print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
+
+        CalculateMilestones(duration);
         _initialPosition = transform.position;
         //_startDspTime = AudioManager.Instance.startDspTime;
         _speed = CalculateSpeed();
         _direction = (target.position - _initialPosition).normalized;
         _connectLineRenderer.Init();
     }
-    protected override void Update()
+
+    protected override void PostJudgement()
     {
 
     }
 
-    public override void Hit(NoteType noteType)
+    protected override void Update()
+    {
+        Move();
+    }
+
+    protected override void Move()
+    {
+        double currentTime = AudioSettings.dspTime;
+        double elapsedTime = currentTime - _spawnDspTime;
+        double totalTime = endTargetDspTime - startTargetDspTime;
+
+        float timeProgress = Mathf.Clamp01((float)(elapsedTime / totalTime));
+
+        if (target)
+        {
+            transform.position = Vector3.Lerp(_initialPosition, target.position, timeProgress);
+        }
+    }
+
+    public override void Hit(JudgementType noteType)
     {
         StartHold();
     }
@@ -106,7 +130,7 @@ public class LongNote : Note
     {
         Destroy();
         isHit = true;
-        noteType = NoteType.Bad;
+        judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);
     }
 }

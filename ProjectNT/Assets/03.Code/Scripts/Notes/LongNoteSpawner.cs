@@ -8,6 +8,16 @@ public class LongNoteSpawner : MonoBehaviour
     public Transform target; // 노트가 이동할 목표 지점
     public LongNote longNotePrefab; // 롱노트 프리팹
     public AudioClip hitSound; // 롱노트 히트 사운드
+
+    private IEnumerator Start()
+    {
+        // while (true)
+        //{
+        SpawnLongNote(AudioSettings.dspTime + 1, AudioSettings.dspTime + 1, AudioSettings.dspTime + 5);
+        yield return new WaitForSeconds(5f);
+        //}
+    }
+
     public void SpawnLongNote(double spawnDspTime, double startTargetDspTime, double endTargetDspTime)
     {
         // 지정된 DspTime에서 정확하게 스폰

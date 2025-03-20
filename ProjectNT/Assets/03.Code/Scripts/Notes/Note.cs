@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum NoteType
+public enum JudgementType
 {
     Bad,
     Good,
@@ -12,7 +12,7 @@ public enum NoteType
 public abstract class Note : MonoBehaviour
 {
     public Transform target { get; protected set; }
-    public NoteType noteType { get; protected set; }
+    public JudgementType judgementType { get; protected set; }
     public bool isHit { get; protected set; }
     public Action<Note> OnDestroyed;
     public Action<Note> OnHit;
@@ -39,8 +39,11 @@ public abstract class Note : MonoBehaviour
         _startDspTime = AudioManager.Instance.startDspTime;
         _speed = CalculateSpeed();
         _direction = (target.position - _initialPosition).normalized;
+
+        OnHit += (note) => PostJudgement();
     }
 
+    protected abstract void PostJudgement();
     protected float CalculateSpeed()
     {
         return Vector3.Distance(_initialPosition, target.position) / (float)(_targetDspTime - _spawnDspTime);
@@ -84,5 +87,5 @@ public abstract class Note : MonoBehaviour
         return _targetDspTime;
     }
 
-    public abstract void Hit(NoteType noteType);
+    public abstract void Hit(JudgementType noteType);
 }

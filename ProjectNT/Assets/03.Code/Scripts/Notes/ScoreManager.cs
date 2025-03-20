@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     public Action<int> OnComboChanged;
     public Action<int> OnScoreChanged;
-    public Action<NoteType> OnJudgementChanged;
+    public Action<JudgementType> OnJudgementChanged;
 
 
     public void AddScore(int index)
@@ -18,11 +18,11 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(score);
     }
 
-    public void AddScore(NoteType noteType)
+    public void AddScore(JudgementType noteType)
     {
-        int index = noteType == NoteType.Perfect ? 100 :
-            noteType == NoteType.Good ? 50 :
-            noteType == NoteType.Bad ? 0 : 0;
+        int index = noteType == JudgementType.Perfect ? 100 :
+            noteType == JudgementType.Good ? 50 :
+            noteType == JudgementType.Bad ? 0 : 0;
         score += index;
         OnScoreChanged?.Invoke(score);
     }
@@ -42,7 +42,7 @@ public class ScoreManager : MonoBehaviour
         OnComboChanged?.Invoke(currentCombo);
     }
 
-    public void ShowJudgementType(NoteType noteType)
+    public void ShowJudgementType(JudgementType noteType)
     {
         OnJudgementChanged?.Invoke(noteType);
     }
