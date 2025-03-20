@@ -30,6 +30,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     new Dictionary<Enums.ModeDiff, BeatMapData>();
     private BeatMapManager beatMapManager;
     private TestLoad testLoad;
+    private EditorSaveTracker editorSaveTracker;
     private string bgmDestPath;
     private string curKeySoundName;
     private bool isSaved = true;
@@ -46,6 +47,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         set
         {
             currentModeDiff = value;
+            CurBeatMap = beatMapDic[CurModeDiff];
             beatMapLoadAction?.Invoke(CurBeatMap);
             phaseDataAction?.Invoke();
         }
@@ -53,26 +55,36 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public BeatMapData CurBeatMap
     {
         get { return beatMapDic[CurModeDiff]; }
-        set { beatMapDic[CurModeDiff] = value; }
-    }
+        set
+        {
+            beatMapDic[CurModeDiff] = value;
 
+        }
+    }
+    public BeatMapData beatMapCache = new BeatMapData();
     public string CurKeySoundName
     { get { return curKeySoundName; } set { curKeySoundName = value; } }
 
     public bool IsSaved
-    { get { return isSaved; } set { isSaved = value; } }
+    {
+        get { return isSaved; }
+        set
+        {
+            isSaved = value;
+        }
+    }
 
     protected override void Awake()
     {
         base.Awake();
 
-        //TODO 병합 후 주석해제예정
         SceneManager.sceneLoaded += (x, y) =>
         {
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
                 testLoad = FindObjectOfType<TestLoad>();
                 testLoad.songName = ProjectData.bgmName;
+                editorSaveTracker = FindObjectOfType<EditorSaveTracker>();
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
@@ -157,7 +169,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public void SaveBeatMap()
     {
-        CurBeatMap = beatMapManager.SaveBeatMapData();
+        beatMapManager.SaveBeatMapData();
         SaveDataLocal();
     }
 }
