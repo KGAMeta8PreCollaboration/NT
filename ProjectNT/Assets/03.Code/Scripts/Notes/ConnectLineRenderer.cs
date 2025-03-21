@@ -10,8 +10,10 @@ public class ConnectLineRenderer : MonoBehaviour
     public LineRenderer lineRenderer;
     public BoxCollider boxCollider;
 
-    public void Init()
+    public void Init(float distance)
     {
+        end.localPosition = start.localPosition + new Vector3(distance, 0, 0);
+
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
         lineRenderer.alignment = LineAlignment.TransformZ;

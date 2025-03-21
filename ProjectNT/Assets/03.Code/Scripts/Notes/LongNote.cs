@@ -4,29 +4,26 @@ public class LongNote : Note
 {
     public double startTargetDspTime;
     public double endTargetDspTime;
-    public int divideCount = 5;
+    public int divideCount;
     public double[] milestones;
     public int currentMilestoneIndex = 0;
     public bool isHolding = false;
     [SerializeField] private ConnectLineRenderer _connectLineRenderer;
-    [SerializeField] private Transform _startTrans;
-    [SerializeField] private Transform _endTrans;
 
     private ScoreManager _scoreManager;
 
-    private void Start()
-    {
-        //startTargetDspTime = AudioSettings.dspTime + 10d; //3초
-        //endTargetDspTime = AudioSettings.dspTime + 20d; //7초
-
-        //double duration = endTargetDspTime - startTargetDspTime;
-        //print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
-
-        //CalculateMilestones(duration);
-    }
+    //콤보 공식을 위해 사용하는 임시 변수
+    public int bpm;
 
     private void CalculateMilestones(double duration)
     {
+        float beatInterval = (float)60 / (bpm * 4);
+        print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
+        int combo = Mathf.FloorToInt((float)duration / beatInterval);
+        print($"롱노트의 총 콤보 수: {combo}");
+
+        divideCount = combo;
+
         milestones = new double[divideCount];
         double interval = duration / divideCount;
         for (int i = 0; i < divideCount; i++)
@@ -43,7 +40,6 @@ public class LongNote : Note
             {
                 milestones[i] = startTargetDspTime + (interval * (i));
             }
-            Debug.Log($"롱노트 판정 시간: {(milestones[i] - startTargetDspTime):F2}초");
         }
     }
 
@@ -61,15 +57,8 @@ public class LongNote : Note
 
         _targetDspTime = startTargetDspTime;
 
-        double totalTime = _targetDspTime - _spawnDspTime;
-
-        double delta = duration / totalTime;
-        float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
-        print($"distance: {distance}");
-        _endTrans.localPosition = _startTrans.localPosition + new Vector3(distance, 0, 0);
-
         CalculateMilestones(duration);
-        _connectLineRenderer.Init();
+        _connectLineRenderer.Init(GetDistanceStartPosAndEndPos());
 
         _scoreManager = FindObjectOfType<ScoreManager>();
     }
@@ -115,6 +104,7 @@ public class LongNote : Note
     {
         isHolding = false;
     }
+
     protected override void PostJudgement()
     {
         if (judgementType == JudgementType.Bad)
@@ -151,5 +141,17 @@ public class LongNote : Note
         judgementType = JudgementType.Bad;
         print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
         OnHit?.Invoke(this);
+    }
+
+    private float GetDistanceStartPosAndEndPos()
+    {
+        double duration = endTargetDspTime - startTargetDspTime;
+        double totalTime = _targetDspTime - _spawnDspTime;
+
+        double delta = duration / totalTime;
+        float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
+        print($"distance: {distance}");
+
+        return distance;
     }
 }
