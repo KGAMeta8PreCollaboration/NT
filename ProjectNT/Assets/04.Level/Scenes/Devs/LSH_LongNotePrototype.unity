@@ -30212,7 +30212,17 @@ PrefabInstance:
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.size
-      value: 317
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[1].time
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[2].time
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -30227,12 +30237,12 @@ PrefabInstance:
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[1].endTime
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[2].endTime
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -30253,6 +30263,26 @@ PrefabInstance:
         type: 3}
       propertyPath: loadedNotes.Array.data[1].railIndex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[2].railIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[0].noteAudioClipName
+      value: 1-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[1].noteAudioClipName
+      value: 1-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[2].noteAudioClipName
+      value: 1-3
       objectReference: {fileID: 0}
     - target: {fileID: 826054383138088000, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -31880,6 +31910,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7691417806135391016, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -44798,7 +44853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axis: 0
   direction: 0
-  speed: 1
+  speed: 0
 --- !u!1001 &1000321740
 PrefabInstance:
   m_ObjectHideFlags: 0

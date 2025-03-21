@@ -66,7 +66,7 @@ public class NoteGenerator : MonoBehaviour
                 noteData.time += _startDspTime + _noteLeadTime;
 
                 //LoadedNoteData 구조화 전까지는 일단 사용. 롱노트에 대한 endTime부여
-                if (noteData.endTime != 0)
+                if (noteData.noteType == NoteType.Long)
                     noteData.endTime += _startDspTime + _noteLeadTime;
 
                 _noteManager.CreateNoteFromData(noteData);

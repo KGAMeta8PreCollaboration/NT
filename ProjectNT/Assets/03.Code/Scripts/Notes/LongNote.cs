@@ -9,6 +9,10 @@ public class LongNote : Note
     public int currentMilestoneIndex = 0;
     public bool isHolding = false;
     [SerializeField] private ConnectLineRenderer _connectLineRenderer;
+    [SerializeField] private Transform _startTrans;
+    [SerializeField] private Transform _endTrans;
+
+    private ScoreManager _scoreManager;
 
     private void Start()
     {
@@ -27,7 +31,18 @@ public class LongNote : Note
         double interval = duration / divideCount;
         for (int i = 0; i < divideCount; i++)
         {
-            milestones[i] = startTargetDspTime + (interval * (i + 1));
+            if (i == 0)
+            {
+                milestones[i] = startTargetDspTime;
+            }
+            else if (i == divideCount - 1)
+            {
+                milestones[i] = endTargetDspTime;
+            }
+            else
+            {
+                milestones[i] = startTargetDspTime + (interval * (i));
+            }
             Debug.Log($"롱노트 판정 시간: {(milestones[i] - startTargetDspTime):F2}초");
         }
     }
@@ -46,18 +61,33 @@ public class LongNote : Note
 
         _targetDspTime = startTargetDspTime;
 
+        double totalTime = _targetDspTime - _spawnDspTime;
+
+        double delta = duration / totalTime;
+        float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
+        print($"distance: {distance}");
+        _endTrans.localPosition = _startTrans.localPosition + new Vector3(distance, 0, 0);
+
         CalculateMilestones(duration);
         _connectLineRenderer.Init();
-    }
 
-    protected override void PostJudgement()
-    {
-
+        _scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     public override void Hit(JudgementType noteType)
     {
         StartHold();
+        isHit = true;
+        this.judgementType = noteType;
+
+        if (hitEffect != null)
+        {
+            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }
+
+        OnHit?.Invoke(this);
     }
 
     public void StartHold()
@@ -84,7 +114,15 @@ public class LongNote : Note
     public void Release()
     {
         isHolding = false;
-        Debug.Log("롱노트 종료!");
+    }
+    protected override void PostJudgement()
+    {
+        if (judgementType == JudgementType.Bad)
+            _scoreManager.ResetCombo();
+        else
+            _scoreManager.IncreaseCombo();
+        _scoreManager.AddScore(judgementType);
+        _scoreManager.ShowJudgementType(judgementType);
     }
 
     private void UpdateCurrentMilestoneIndex()
@@ -96,7 +134,7 @@ public class LongNote : Note
             currentMilestoneIndex++;
         }
 
-        Debug.Log($"현재 milestone 인덱스 업데이트: {currentMilestoneIndex}/{milestones.Length}, 현재 시간: {currentTime:F2}");
+        //Debug.Log($"현재 milestone 인덱스 업데이트: {currentMilestoneIndex}/{milestones.Length}, 현재 시간: {currentTime:F2}");
     }
 
 
@@ -111,6 +149,7 @@ public class LongNote : Note
         Destroy();
         isHit = true;
         judgementType = JudgementType.Bad;
+        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
         OnHit?.Invoke(this);
     }
 }
