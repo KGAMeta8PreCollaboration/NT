@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Linq;
 
 public enum UIGameType
 {
@@ -97,8 +98,8 @@ public class GamePlayUI : BaseTitleUI
         }
         else
         {
-            Debug.Log($"{TestStartGameData.Instance.musicName}");
-            Debug.Log($"{TestStartGameData.Instance.difficulty}");
+            //Debug.Log($"{TestStartGameData.Instance.musicName}");
+            //Debug.Log($"{TestStartGameData.Instance.difficulty}");
             SceneManager.LoadScene("Prototype_Game");
             //싱글플레이시 노래시작
         }
@@ -112,6 +113,7 @@ public class GamePlayUI : BaseTitleUI
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 음악 재시작 동기화
+            musicChangeSelect.SetMusicData(musicChangeSelect.CurMusicData, true);
         }
     }
 
@@ -133,6 +135,9 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.NextMusic();
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        if (gameType == UIGameType.Muliti)
+        {
+        }
     }
 
     //이전 노래로 넘어감 (LeftButton)
@@ -141,6 +146,9 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.PreviousMusic();
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        if (gameType == UIGameType.Muliti)
+        {
+        }
     }
 
     private void SetDifficulty(Toggle select, int difficulty)

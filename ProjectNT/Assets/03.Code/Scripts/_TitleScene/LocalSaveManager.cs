@@ -19,7 +19,6 @@ public class PlayerLocalSaveData//세이브 데이터
         this.lavel = lavel;
         this.playerName = playerName;
         this.score = score;
-
         this.playerImageName = imageName;
     }
 }
@@ -37,44 +36,44 @@ public class PlayerDataListWrapper//JsonUtility는 리스트를 직접 직렬화
 
 public class LocalSaveManager : MonoBehaviour
 {
-    public List<PlayerLocalSaveData> datas = new List<PlayerLocalSaveData>();
+    public List<PlayerLocalSaveData> datas = new List<PlayerLocalSaveData>();//노래 이름의 랭킹 데이터
 
     private string filePath;//저장경로
 
     void Start()
     {
-        filePath = Path.Combine(Application.persistentDataPath, "playerData");
+        filePath = Path.Combine(Application.persistentDataPath, "playerData");//json 파일들이 모여있는 폴더 주소
     }
 
     //로컬에 저장된 데이터들을 로드
     public IEnumerator LocalDataLoad(string musicName)
     {
 
-        string musicFilePath = Path.Combine(filePath, musicName + ".json");
+        string musicFilePath = Path.Combine(filePath, musicName + ".json");//filePath + 노래 이름의 랭킹 데이터 파일
         string directoryPath = Path.GetDirectoryName(musicFilePath);
 
-        if (!Directory.Exists(directoryPath))
+        if (!Directory.Exists(directoryPath))//폴더가 없으면
         {
-            Directory.CreateDirectory(directoryPath); // 디렉토리 생성
+            Directory.CreateDirectory(directoryPath); //폴더 생성
         }
 
-        if (File.Exists(musicFilePath))//파일이 존재하는지 확인
+        if (File.Exists(musicFilePath))//노래 이름의 파일이 존재하는지 확인
         {
             string json = "";
 
-            yield return StartCoroutine(ReadFileAsync(musicFilePath, result => json = result));
+            yield return StartCoroutine(ReadFileAsync(musicFilePath, result => json = result));//노래 이름의 저장 데이터를 string json에 넣기
 
             PlayerDataListWrapper dataWrapper = JsonUtility.FromJson<PlayerDataListWrapper>(json);
             if (dataWrapper != null && dataWrapper.playerDataList != null)
             {
-                datas = dataWrapper.playerDataList; // 데이터 리스트를 가져옴
+                datas = dataWrapper.playerDataList;//데이터 리스트를 가져옴
             }
             else
             {
                 datas = new List<PlayerLocalSaveData>();
             }
         }
-        else
+        else//노래 이름의 파일이 없으면 새로 생성
         {
             datas = new List<PlayerLocalSaveData>();//파일없으므로 빈리스트로 초기화
             PlayerDataListWrapper dataWrapper = new PlayerDataListWrapper(datas);//래핑
@@ -102,7 +101,7 @@ public class LocalSaveManager : MonoBehaviour
     private void SortLocalData(string musicName)
     {
         datas.Sort((player1, player2) => player2.score.CompareTo(player1.score));
-        if (datas.Count > 50)
+        if (datas.Count > 50)//일단 50개만 남기기
         {
             datas.RemoveRange(50, datas.Count - 50);
         }

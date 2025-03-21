@@ -1,6 +1,8 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +28,13 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
 
     private int musicNum = 0;
 
+    private PhotonView photonView;
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
+
     private void OnEnable()
     {
         if (tilteSound.backgroundAudioSource != null)
@@ -43,7 +52,7 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         }
     }
 
-    private void SetMusicData(TitleMusicData data)//음악 데이터들 화면에표시
+    public void SetMusicData(TitleMusicData data, bool isMulitiPlay = false)//음악 데이터들 화면에표시
     {
         Debug.Log($"{data.musicName}");
         musicImage.sprite = data.musicAlbumArtSprit;
@@ -51,6 +60,11 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         musicNameText.text = data.musicName;
         musicDesc.text = data.musicDescription;
         tilteSound.PlayGameSound(curMusicData.musicClip);
+
+        if (isMulitiPlay)//멀티 플레이일 때 isMulitiPlay를 ture로 넣기
+        {
+            photonView.RPC("SyncMusicToOtherPlayers", RpcTarget.Others, curMusicData.musicName);
+        }
     }
 
     //음악 처음부터 다시시작
@@ -61,41 +75,50 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
     }
 
     //가장 처음의 노래로 변경
-    public void BackToFirstSongMusic(Action action = null)
+    public void BackToFirstSongMusic(Action action = null, bool isMulitiPlay = false)
     {
         musicNum = 0;
-        SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
+        SetMusicData(gameMusicData.titleMusicDatas[musicNum], isMulitiPlay);
         action?.Invoke();
     }
 
     //다음노래
-    public void NextMusic(Action action = null)
+    public void NextMusic(Action action = null, bool isMulitiPlay = false)
     {
         if (musicNum < gameMusicData.titleMusicDatas.Count - 1)
         {
             musicNum++;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
+            SetMusicData(gameMusicData.titleMusicDatas[musicNum], isMulitiPlay);
         }
         else
         {
-            BackToFirstSongMusic();
+            BackToFirstSongMusic(action = null, isMulitiPlay);
         }
         action?.Invoke();
     }
 
     //이전노래
-    public void PreviousMusic(Action action = null)
+    public void PreviousMusic(Action action = null, bool isMulitiPlay = false)
     {
         if (musicNum != 0)
         {
             musicNum--;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
+            SetMusicData(gameMusicData.titleMusicDatas[musicNum], isMulitiPlay);
         }
         else
         {
             musicNum = gameMusicData.titleMusicDatas.Count - 1;
-            SetMusicData(gameMusicData.titleMusicDatas[musicNum]);
+            SetMusicData(gameMusicData.titleMusicDatas[musicNum], isMulitiPlay);
         }
         action?.Invoke();
+    }
+
+    [PunRPC]
+    public void SyncMusicToOtherPlayers(string musicName)
+    {
+        if (curMusicData.musicName != musicName)
+        {
+            SetMusicData(gameMusicData.titleMusicDatas.First(m => m.musicName == musicName), true);
+        }
     }
 }
