@@ -55,14 +55,12 @@ public class Woofer : MonoBehaviour
         if (isHoldingLongNote && notes.Count > 0)
         {
             LongNote longNote = notes[0] as LongNote;
-            if (longNote.Hold()) // 특정 시간에 맞춰 판정
-            {
-                Debug.Log($"현재 시간: {AudioSettings.dspTime.ToString("f2")}, 롱노트 Perfect 판정!");
-            }
+            longNote.Hold();
 
             if (AudioSettings.dspTime >= longNote.endTargetDspTime)
             {
                 ReleaseLongNote();
+
             }
         }
     }

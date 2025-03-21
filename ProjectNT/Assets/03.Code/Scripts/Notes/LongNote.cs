@@ -8,6 +8,8 @@ public class LongNote : Note
     public double[] milestones;
     public int currentMilestoneIndex = 0;
     public bool isHolding = false;
+    public bool isFirstHolding = false; // 첫 판정에 홀드했는지
+    public bool isDisconnected = false; // 중간에 끊긴적 있는지
     [SerializeField] private ConnectLineRenderer _connectLineRenderer;
 
     private ScoreManager _scoreManager;
@@ -58,7 +60,7 @@ public class LongNote : Note
         _targetDspTime = startTargetDspTime;
 
         CalculateMilestones(duration);
-        _connectLineRenderer.Init(GetDistanceStartPosAndEndPos());
+        _connectLineRenderer.Init(GetDistanceStartPosAndEndPos(), target);
 
         _scoreManager = FindObjectOfType<ScoreManager>();
     }
@@ -66,43 +68,54 @@ public class LongNote : Note
     public override void Hit(JudgementType noteType)
     {
         StartHold();
-        isHit = true;
-        this.judgementType = noteType;
-
-        if (hitEffect != null)
+        if (currentMilestoneIndex == 0) isFirstHolding = true;
+        if (isFirstHolding)
         {
-            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            effect.Play();
-            Destroy(effect.gameObject, effect.main.duration);
-        }
+            isHit = true;
+            this.judgementType = noteType;
 
-        OnHit?.Invoke(this);
+            if (hitEffect != null)
+            {
+                ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+                effect.Play();
+                Destroy(effect.gameObject, effect.main.duration);
+            }
+
+            OnHit?.Invoke(this);
+        }
     }
 
     public void StartHold()
     {
         isHolding = true;
-        //currentMilestoneIndex = 0;
         UpdateCurrentMilestoneIndex();
     }
 
-    public bool Hold()
+    public void Hold()
     {
-        if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
-            return false;
+        if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime) return;
 
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
+            if (isDisconnected) judgementType = JudgementType.Good;
+
+
+            if (judgementType == JudgementType.Bad)
+                _scoreManager.ResetCombo();
+            else
+                _scoreManager.IncreaseCombo();
+            _scoreManager.AddScore(judgementType);
+            _scoreManager.ShowJudgementType(judgementType);
+
             currentMilestoneIndex++;
-            return true;
         }
-        return false;
     }
 
     public void Release()
     {
         isHolding = false;
+        isDisconnected = true;
     }
 
     protected override void PostJudgement()
@@ -123,8 +136,6 @@ public class LongNote : Note
         {
             currentMilestoneIndex++;
         }
-
-        //Debug.Log($"현재 milestone 인덱스 업데이트: {currentMilestoneIndex}/{milestones.Length}, 현재 시간: {currentTime:F2}");
     }
 
 
@@ -139,7 +150,7 @@ public class LongNote : Note
         Destroy();
         isHit = true;
         judgementType = JudgementType.Bad;
-        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
+        //print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
         OnHit?.Invoke(this);
     }
 
