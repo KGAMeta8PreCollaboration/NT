@@ -64,6 +64,11 @@ public class NoteGenerator : MonoBehaviour
             if (Application.isPlaying && noteData.time <= currentTime - _startDspTime)
             {
                 noteData.time += _startDspTime + _noteLeadTime;
+
+                //LoadedNoteData 구조화 전까지는 일단 사용. 롱노트에 대한 endTime부여
+                if (noteData.endTime != 0)
+                    noteData.endTime += _startDspTime + _noteLeadTime;
+
                 _noteManager.CreateNoteFromData(noteData);
                 loadedNotes.RemoveAt(0);
             }
