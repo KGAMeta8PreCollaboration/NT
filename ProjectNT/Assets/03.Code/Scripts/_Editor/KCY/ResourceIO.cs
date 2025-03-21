@@ -35,7 +35,6 @@ public class ResourceIO : MonoBehaviour
         thumbnail_img.sprite = EditorDataManager.Instance.thumbnail_sprite;
 
         save_btn.onClick.AddListener(EditorDataManager.Instance.SaveBeatMap);
-        SaveTracking();
         exit_btn.onClick.AddListener(GoToTitle);
     }
 
@@ -58,11 +57,6 @@ public class ResourceIO : MonoBehaviour
         EditorDataManager.Instance.phaseDataAction -= GetPhaseData;
     }
 
-    private void SaveTracking()
-    {
-        phase2_inputfield.onValueChanged.AddListener(x => EditorDataManager.Instance.IsSaved = false);
-        phase3_inputfield.onValueChanged.AddListener(x => EditorDataManager.Instance.IsSaved = false);
-    }
 
     private void GetPhaseData()
     {
