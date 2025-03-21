@@ -2,113 +2,115 @@ using UnityEngine;
 
 public class LongNote : Note
 {
-	public double startTargetDspTime;
-	public double endTargetDspTime;
-	public int divideCount = 5;
-	public double[] milestones;
-	public int currentMilestoneIndex = 0;
-	public bool isHolding = false;
-	[SerializeField] private ConnectLineRenderer _connectLineRenderer;
+    public double startTargetDspTime;
+    public double endTargetDspTime;
+    public int divideCount = 5;
+    public double[] milestones;
+    public int currentMilestoneIndex = 0;
+    public bool isHolding = false;
+    [SerializeField] private ConnectLineRenderer _connectLineRenderer;
 
-	private void Start()
-	{
-		//startTargetDspTime = AudioSettings.dspTime + 10d; //3초
-		//endTargetDspTime = AudioSettings.dspTime + 20d; //7초
+    private void Start()
+    {
+        //startTargetDspTime = AudioSettings.dspTime + 10d; //3초
+        //endTargetDspTime = AudioSettings.dspTime + 20d; //7초
 
-		//double duration = endTargetDspTime - startTargetDspTime;
-		//print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
+        //double duration = endTargetDspTime - startTargetDspTime;
+        //print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
 
-		//CalculateMilestones(duration);
-	}
+        //CalculateMilestones(duration);
+    }
 
-	private void CalculateMilestones(double duration)
-	{
-		milestones = new double[divideCount];
-		double interval = duration / divideCount;
-		for (int i = 0; i < divideCount; i++)
-		{
-			milestones[i] = startTargetDspTime + (interval * (i + 1));
-			Debug.Log($"롱노트 판정 시간: {(milestones[i] - startTargetDspTime):F2}초");
-		}
-	}
+    private void CalculateMilestones(double duration)
+    {
+        milestones = new double[divideCount];
+        double interval = duration / divideCount;
+        for (int i = 0; i < divideCount; i++)
+        {
+            milestones[i] = startTargetDspTime + (interval * (i + 1));
+            Debug.Log($"롱노트 판정 시간: {(milestones[i] - startTargetDspTime):F2}초");
+        }
+    }
 
-	public override void Init(Transform target, NoteSpawnData noteSpawnData)
-	{
-		base.Init(target, noteSpawnData);
+    public override void Init(Transform target, NoteSpawnData noteSpawnData)
+    {
+        base.Init(target, noteSpawnData);
 
-		LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
+        LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
 
-		_isTargetReached = false;
-		this.startTargetDspTime = longNoteSpawnData.startTargetDspTime;
-		this.endTargetDspTime = longNoteSpawnData.endTargetDspTime;
-		double duration = endTargetDspTime - startTargetDspTime;
-		print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
+        _isTargetReached = false;
+        this.startTargetDspTime = longNoteSpawnData.startTargetDspTime;
+        this.endTargetDspTime = longNoteSpawnData.endTargetDspTime;
+        double duration = endTargetDspTime - startTargetDspTime;
+        print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
 
-		CalculateMilestones(duration);
-		_connectLineRenderer.Init();
-	}
+        _targetDspTime = startTargetDspTime;
 
-	protected override void PostJudgement()
-	{
+        CalculateMilestones(duration);
+        _connectLineRenderer.Init();
+    }
 
-	}
+    protected override void PostJudgement()
+    {
 
-	public override void Hit(JudgementType noteType)
-	{
-		StartHold();
-	}
+    }
 
-	public void StartHold()
-	{
-		isHolding = true;
-		//currentMilestoneIndex = 0;
-		UpdateCurrentMilestoneIndex();
-	}
+    public override void Hit(JudgementType noteType)
+    {
+        StartHold();
+    }
 
-	public bool Hold()
-	{
-		if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
-			return false;
+    public void StartHold()
+    {
+        isHolding = true;
+        //currentMilestoneIndex = 0;
+        UpdateCurrentMilestoneIndex();
+    }
 
-		double currentTime = AudioSettings.dspTime;
-		if (currentTime >= milestones[currentMilestoneIndex])
-		{
-			currentMilestoneIndex++;
-			return true;
-		}
-		return false;
-	}
+    public bool Hold()
+    {
+        if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
+            return false;
 
-	public void Release()
-	{
-		isHolding = false;
-		Debug.Log("롱노트 종료!");
-	}
+        double currentTime = AudioSettings.dspTime;
+        if (currentTime >= milestones[currentMilestoneIndex])
+        {
+            currentMilestoneIndex++;
+            return true;
+        }
+        return false;
+    }
 
-	private void UpdateCurrentMilestoneIndex()
-	{
-		double currentTime = AudioSettings.dspTime;
+    public void Release()
+    {
+        isHolding = false;
+        Debug.Log("롱노트 종료!");
+    }
 
-		while (currentMilestoneIndex < milestones.Length && currentTime > milestones[currentMilestoneIndex])
-		{
-			currentMilestoneIndex++;
-		}
+    private void UpdateCurrentMilestoneIndex()
+    {
+        double currentTime = AudioSettings.dspTime;
 
-		Debug.Log($"현재 milestone 인덱스 업데이트: {currentMilestoneIndex}/{milestones.Length}, 현재 시간: {currentTime:F2}");
-	}
+        while (currentMilestoneIndex < milestones.Length && currentTime > milestones[currentMilestoneIndex])
+        {
+            currentMilestoneIndex++;
+        }
+
+        Debug.Log($"현재 milestone 인덱스 업데이트: {currentMilestoneIndex}/{milestones.Length}, 현재 시간: {currentTime:F2}");
+    }
 
 
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag("Woofer"))
-			Miss();
-	}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Woofer"))
+            Miss();
+    }
 
-	private void Miss()
-	{
-		Destroy();
-		isHit = true;
-		judgementType = JudgementType.Bad;
-		OnHit?.Invoke(this);
-	}
+    private void Miss()
+    {
+        Destroy();
+        isHit = true;
+        judgementType = JudgementType.Bad;
+        OnHit?.Invoke(this);
+    }
 }

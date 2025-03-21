@@ -3,58 +3,62 @@ using UnityEngine;
 
 public class ShortNote : Note
 {
-	public double targetDspTime;
+    public double targetDspTime;
 
-	// TODO: GameManager.Scoremanager로 변경할듯?
-	private ScoreManager _scoreManager;
+    // TODO: GameManager.Scoremanager로 변경할듯?
+    private ScoreManager _scoreManager;
 
-	public override void Init(Transform target, NoteSpawnData noteSpawnData)
-	{
-		base.Init(target, noteSpawnData);
+    public override void Init(Transform target, NoteSpawnData noteSpawnData)
+    {
+        base.Init(target, noteSpawnData);
 
-		ShortNoteSpawnData shortNoteSpawnData = noteSpawnData as ShortNoteSpawnData;
+        ShortNoteSpawnData shortNoteSpawnData = noteSpawnData as ShortNoteSpawnData;
 
-		targetDspTime = shortNoteSpawnData.targetDspTime;
-	}
+        targetDspTime = shortNoteSpawnData.targetDspTime;
 
-	public override void Hit(JudgementType noteType)
-	{
-		Destroy();
-		isHit = true;
-		this.judgementType = noteType;
+        _targetDspTime = targetDspTime;
 
-		if (hitEffect != null)
-		{
-			ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-			effect.Play();
-			Destroy(effect.gameObject, effect.main.duration);
-		}
+        _scoreManager = FindObjectOfType<ScoreManager>();
+    }
 
-		OnHit?.Invoke(this);
-	}
+    public override void Hit(JudgementType noteType)
+    {
+        Destroy();
+        isHit = true;
+        this.judgementType = noteType;
+
+        if (hitEffect != null)
+        {
+            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration);
+        }
+
+        OnHit?.Invoke(this);
+    }
 
 
-	protected override void PostJudgement()
-	{
-		if (judgementType == JudgementType.Bad)
-			_scoreManager.ResetCombo();
-		else
-			_scoreManager.IncreaseCombo();
-		_scoreManager.AddScore(judgementType);
-		_scoreManager.ShowJudgementType(judgementType);
-	}
+    protected override void PostJudgement()
+    {
+        if (judgementType == JudgementType.Bad)
+            _scoreManager.ResetCombo();
+        else
+            _scoreManager.IncreaseCombo();
+        _scoreManager.AddScore(judgementType);
+        _scoreManager.ShowJudgementType(judgementType);
+    }
 
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag("Woofer"))
-			Miss();
-	}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Woofer"))
+            Miss();
+    }
 
-	private void Miss()
-	{
-		Destroy();
-		isHit = true;
-		judgementType = JudgementType.Bad;
-		OnHit?.Invoke(this);
-	}
+    private void Miss()
+    {
+        Destroy();
+        isHit = true;
+        judgementType = JudgementType.Bad;
+        OnHit?.Invoke(this);
+    }
 }

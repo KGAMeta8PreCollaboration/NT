@@ -16,8 +16,12 @@ public class ConnectLineRenderer : MonoBehaviour
         lineRenderer.useWorldSpace = true;
         lineRenderer.alignment = LineAlignment.TransformZ;
 
-        float x = Mathf.Abs(start.position.x - end.position.x);
+        float x = Mathf.Abs(start.localPosition.x - end.localPosition.x);
+
+        print($"롱노트 startPos: {start.localPosition.x}, endPos: {end.localPosition.x}");
+        print($"롱노트 startPos와 endPos의 차이: {x}");
         boxCollider.size = new Vector3(x, 1, 0.4f);
+        boxCollider.center = new Vector3(x / 2, 0, 0);
     }
 
     void Update()

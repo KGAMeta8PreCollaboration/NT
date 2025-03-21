@@ -8,11 +8,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerController : MonoBehaviour
 {
-    //=======PC 용=========
-    [SerializeField] private Woofer[] _woofers;
-
-    private NoteManager _noteManager;
-    //=======PC 용=========
     public float velocityMagnitude;
     public float velocityMagnitudeThreshold;
     public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
@@ -28,7 +23,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _noteManager = FindObjectOfType<NoteManager>();
         _controller = GetComponentInParent<ActionBasedController>();
 
         //=============test//=============
@@ -40,8 +34,6 @@ public class PlayerController : MonoBehaviour
         _controller.activateAction.action.performed += TriggerButtonAction;
 
         prevPos = transform.position;
-        // TODO :                                                                                                                                                                                                                                                       
-        // StartCoroutine(CreateCoroutine());
     }
 
     private void Update()
@@ -60,30 +52,6 @@ public class PlayerController : MonoBehaviour
     private void TriggerButtonAction(InputAction.CallbackContext context)
     {
         //상단 노트 상호작용, 일시정지, 확인 버튼 등등
-    }
-
-    public void Create(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            // _noteManager.CreateNote(int.Parse(context.control.name) - 1);
-        }
-    }
-
-    public void Hit(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            InputControl control = context.control;
-            int index = control.name.Equals("a") ? 0 :
-                control.name.Equals("s") ? 1 :
-                control.name.Equals("d") ? 2 :
-                control.name.Equals("f") ? 3 : -1;
-
-            if (index == -1) return;
-
-            _woofers[index].Hit();
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -121,22 +89,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    //======================Test======================
-    private IEnumerator CreateCoroutine()
-    {
-        while (true)
-        {
-            RandomCreate();
-            yield return new WaitForSeconds(1.5f);
-        }
-    }
-
-    private void RandomCreate()
-    {
-        // _noteManager.CreateNote(Random.Range(0, _noteManager.maxNoteRails));
-    }
-    //======================Test======================
 
     private void OnDestroy()
     {
