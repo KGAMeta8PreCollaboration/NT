@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class GameManager : Singleton<GameManager>
 {
 	public double delayTime = 2.0;
