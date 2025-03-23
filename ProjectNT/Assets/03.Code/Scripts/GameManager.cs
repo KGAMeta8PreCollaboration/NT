@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class GameManager : Singleton<GameManager>
 {
 	public double delayTime = 2.0;
@@ -19,10 +19,26 @@ public class GameManager : Singleton<GameManager>
 
 	private void Start()
 	{
+		GameSceneInit();
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+	
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		if (scene.name == "Prototype_Game")
+		{
+			GameSceneInit();
+			// 특정 씬이 로드될 때 수행할 행동들
+		}
+	}
+
+	private void GameSceneInit()
+	{
 		_noteManager = FindObjectsOfType<NoteManager>();
 		_noteGenerator = FindObjectsOfType<NoteGenerator>();
 		_resultPanel = FindObjectOfType<ResultPanel>(true);
 		_resultPanel?.gameObject.SetActive(false);
+		StopCoroutine(StartCoroutine());
 		StartCoroutine(StartCoroutine());
 	}
 	
@@ -55,7 +71,7 @@ public class GameManager : Singleton<GameManager>
 	public bool CheckGameEnd()
 	{
 		return !_noteManager.Any(item => item.notes.Count > 0)
-		       && !_noteGenerator.Any(item => item.loadedNotes.Count > 0);
+		       && _noteGenerator.All(item => item.IsAllGenerated());
 	}
 	
 	private void Update()

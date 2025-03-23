@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [Serializable]
 public class LoadedNoteData
@@ -16,6 +14,7 @@ public class LoadedNoteData
 public class NoteGenerator : MonoBehaviour
 {
 	public List<LoadedNoteData> loadedNotes = new List<LoadedNoteData>();
+	private List<LoadedNoteData> _loadedNotes = new List<LoadedNoteData>();
 	private NoteManager _noteManager;
 	private double _startDspTime;
 	private double _noteLeadTime = 3.0;
@@ -27,7 +26,14 @@ public class NoteGenerator : MonoBehaviour
 
 	private void Start()
 	{
-		loadedNotes.Sort((lh, rh) => lh.time.CompareTo(rh.time));
+		print("NoteGenerator 시작~~~~~~~~~~");
+		_loadedNotes.AddRange(loadedNotes);
+		_loadedNotes.Sort((lh, rh) => lh.time.CompareTo(rh.time));
+	}
+	
+	public bool IsAllGenerated()
+	{
+		return _loadedNotes.Count == 0;
 	}
 
 	// startTime : 현재시간 + 3초뒤
@@ -49,15 +55,15 @@ public class NoteGenerator : MonoBehaviour
 
 	private async Task CheckAndGenerateNotesAsync()
 	{
-		while (Application.isPlaying && loadedNotes.Count > 0)
+		while (Application.isPlaying && _loadedNotes.Count > 0)
 		{
 			double currentTime = AudioSettings.dspTime;
-			LoadedNoteData noteData = loadedNotes[0];
+			LoadedNoteData noteData = _loadedNotes[0];
 			if (Application.isPlaying && noteData.time <= currentTime - _startDspTime)
 			{
 				noteData.time += _startDspTime + _noteLeadTime;
 				_noteManager.CreateNoteFromData(noteData);
-				loadedNotes.RemoveAt(0);
+				_loadedNotes.RemoveAt(0);
 			}
 			else
 			{
