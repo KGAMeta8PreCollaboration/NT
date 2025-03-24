@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-public class PhotonManager : MonoBehaviourPunCallbacks
+public class LobbyPhotonManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Transform[] _spawnPointPlayers;
     [SerializeField] private MultiLobbyUI _multiLobbyUI;

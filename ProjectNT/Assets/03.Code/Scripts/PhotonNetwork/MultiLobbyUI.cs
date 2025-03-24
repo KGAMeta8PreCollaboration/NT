@@ -12,7 +12,7 @@ public class MultiLobbyUI : MonoBehaviour
     [SerializeField] private Image _connectImagePlayer2;
     [SerializeField] private Button _quitButton;
     [SerializeField] private Button _startButton;
-    [SerializeField] private PhotonManager _photonManager;
+    [SerializeField] private LobbyPhotonManager _lobbyPhotonManager;
     [SerializeField] private TextMeshProUGUI _countStartGame;
 
     public int countStartGame;
@@ -21,8 +21,6 @@ public class MultiLobbyUI : MonoBehaviour
 
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
-
-    [SerializeField] private GamePlayUI ui;
 
     private void Start()
     {
@@ -36,19 +34,19 @@ public class MultiLobbyUI : MonoBehaviour
 
     private void QuitButtonClick()
     {
-        _photonManager.LeaveRoom();
+        _lobbyPhotonManager.LeaveRoom();
     }
 
     private void StartButtonClick()
     {
         print($"플레이어 수: {PhotonNetwork.PlayerList.Length}");
-        if (PhotonNetwork.PlayerList.Length == 2)
+        if (PhotonNetwork.PlayerList.Length == 1)
         {
             //_startGameCoroutine = StartCoroutine(StartGameCoroutine());
             ////PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", CancelStartGame);
             //_photonManager.photonView.RPC("ShowStartGameAlarmPopupForAll", RpcTarget.All);
 
-            _photonManager.photonView.RPC("GameStart", RpcTarget.All);
+            _lobbyPhotonManager.photonView.RPC("GameStart", RpcTarget.All);
 
         }
         else
@@ -68,7 +66,7 @@ public class MultiLobbyUI : MonoBehaviour
         _countStartGame.text = ""; // 카운트 UI 초기화
 
         _startGameCoroutine = StartCoroutine(StartGameCoroutine());
-        _popupManager.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", () => _photonManager.photonView.RPC("CancelStartGame", RpcTarget.All));
+        _popupManager.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", () => _lobbyPhotonManager.photonView.RPC("CancelStartGame", RpcTarget.All));
     }
 
     private IEnumerator StartGameCoroutine()
