@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-public class PhotonManager : MonoBehaviourPunCallbacks
+public class LobbyPhotonManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Transform[] _spawnPointPlayers;
     [SerializeField] private MultiLobbyUI _multiLobbyUI;
@@ -142,12 +142,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         print("플레이어 컨트롤러 생성");
         if (PhotonNetwork.LocalPlayer.NickName == "Player1")
         {
-            PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
+            PhotonNetwork.Instantiate("Multi/LobbyPlayer", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
         }
         else if (PhotonNetwork.LocalPlayer.NickName == "Player2")
         {
 
-            PhotonNetwork.Instantiate("Multi/Player", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
+            PhotonNetwork.Instantiate("Multi/LobbyPlayer", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
         }
     }
 }
