@@ -11,26 +11,26 @@ namespace Game
     {
         [SerializeField] protected Button closeButton;
         protected Action closeAction;
+        protected PopupManager _popupManager;
 
-        protected virtual void OnEnable()
-        {
-            closeButton.onClick.AddListener(CloseButtonClick);
-        }
-
-        protected virtual void OnDisable()
+        protected virtual void OnDestroy()
         {
             closeButton.onClick.RemoveListener(CloseButtonClick);
         }
 
         public void CloseButtonClick()
         {
-            PopupManager.Instance.ClosePopup(this);
+            _popupManager.ClosePopup(this);
             closeAction?.Invoke();
         }
 
         /// <summary>
         /// PopupManager가 Popup을 찾는 과정에서 Init도 호출합니다.
         /// </summary>
-        public virtual void Init() { }
-    } 
+        public virtual void Init(PopupManager popupManager)
+        {
+            _popupManager = popupManager;
+            closeButton.onClick.AddListener(CloseButtonClick);
+        }
+    }
 }

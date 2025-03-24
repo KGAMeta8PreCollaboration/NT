@@ -36,7 +36,7 @@ public class GamePlayUI : BaseTitleUI
     public override void Awake()
     {
         base.Awake();
-     }
+    }
 
     private void OnEnable()
     {
@@ -51,8 +51,8 @@ public class GamePlayUI : BaseTitleUI
     public override void AddEventListeners()//켜질때 버튼 등록
     {
         base.AddEventListeners();
-        ResetMusicSet();
-        SetDifficulty(easy, 1);
+        ResetMusicSet();//0번 음악 세팅, 동시에 게임 미리듣기 음악 재생
+        SetDifficulty(easy, 1);//난이도 토글 1로 세팅
 
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
@@ -69,7 +69,6 @@ public class GamePlayUI : BaseTitleUI
     public override void RemoveEventListeners()//꺼질때 버튼 해제
     {
         base.RemoveEventListeners();
-        TitleManager.instance.StopMusic();
 
         gameStartButton.onClick.RemoveListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
@@ -86,20 +85,12 @@ public class GamePlayUI : BaseTitleUI
 
     public override void CloseUIButtonClick()
     {
-        if (gameType == UIGameType.Single)
-        {
-            base.CloseUIButtonClick();
-        }
-        else
-        {
-            //멀티플레이시 닫기 버튼을 누르면 원래 위치로 다시 이동
-        }
+        base.CloseUIButtonClick();
     }
 
     public void StartGame()
     {
         //curMusicData 로 노래가지고 게임시작 로직
-        TitleManager.instance.MusicLoop(false);
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이시 노래시작
@@ -108,7 +99,7 @@ public class GamePlayUI : BaseTitleUI
         {
             Debug.Log($"{TestStartGameData.Instance.musicName}");
             Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            SceneManager.LoadScene("KMJ_TestNextScene");
+            SceneManager.LoadScene("Prototype_Game");
             //싱글플레이시 노래시작
         }
     }
@@ -128,8 +119,8 @@ public class GamePlayUI : BaseTitleUI
     public void ResetMusicSet()
     {
         musicChangeSelect.BackToFirstSongMusic();
-        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
-        TestStartGameData.Instance.difficulty = 1;
+        //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        //TestStartGameData.Instance.difficulty = 1;
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 노래 넘어가는거 동기화
@@ -141,7 +132,7 @@ public class GamePlayUI : BaseTitleUI
     {
         SetDifficulty(easy, 1);
         musicChangeSelect.NextMusic();
-        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
 
     //이전 노래로 넘어감 (LeftButton)
@@ -149,12 +140,12 @@ public class GamePlayUI : BaseTitleUI
     {
         SetDifficulty(easy, 1);
         musicChangeSelect.PreviousMusic();
-        TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
 
     private void SetDifficulty(Toggle select, int difficulty)
     {
-        TestStartGameData.Instance.difficulty = difficulty;
+        //TestStartGameData.Instance.difficulty = difficulty;
 
         easy.isOn = false;
         normal.isOn = false;

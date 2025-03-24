@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game;
-public class PopupManager : Singleton<PopupManager>
+public class PopupManager : MonoBehaviour
 {
     public List<Popup> popupList = new List<Popup>();
 
@@ -54,7 +54,7 @@ public class PopupManager : Singleton<PopupManager>
         foreach (Popup popup in popups)
         {
             popupList.Add(popup);
-            popup.Init();
+            popup.Init(this);
             popup.gameObject.SetActive(false);
             print($"찾은 팝업: {popup.name}");
         }

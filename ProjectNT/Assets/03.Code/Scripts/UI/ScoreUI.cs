@@ -4,35 +4,41 @@ using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {
-    [SerializeField] private ScoreManager _scoreManager;
+	[SerializeField] private ScoreManager _scoreManager;
 
-    private TextMeshProUGUI _comboCountText;
-    private TextMeshProUGUI _scoreCountText;
-    private TextMeshProUGUI _judgementText;
+	private TextMeshProUGUI _comboCountText;
+	private TextMeshProUGUI _scoreCountText;
+	private TextMeshProUGUI _judgementText;
 
-    public TextMeshProUGUI _timeText;
-    private double _startDspTime;
+	public TextMeshProUGUI _timeText;
+	private double _startDspTime;
 
-    public int tempHitCount;
+	public int tempHitCount;
 
-    private void Start()
-    {
-        _startDspTime = AudioSettings.dspTime;
-        _comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>();
-        _scoreManager.OnComboChanged += combo => _comboCountText.text = combo.ToString();
+	private void Start()
+	{
+		_startDspTime = AudioSettings.dspTime;
+		_comboCountText = transform.Find("ComboCount").GetComponent<TextMeshProUGUI>();
+		_scoreManager.OnComboChanged += combo => _comboCountText.text = combo.ToString();
 
-        _scoreCountText = transform.Find("ScoreCount").GetComponent<TextMeshProUGUI>();
-        _scoreManager.OnScoreChanged += score => _scoreCountText.text = score.ToString();
+		_scoreCountText = transform.Find("ScoreCount").GetComponent<TextMeshProUGUI>();
+		_scoreManager.OnScoreChanged += score => _scoreCountText.text = score.ToString();
 
-        _judgementText = transform.Find("JudgementText").GetComponent<TextMeshProUGUI>();
-        _scoreManager.OnJudgementChanged += noteType => _judgementText.text = noteType.ToString();
+		_judgementText = transform.Find("JudgementText").GetComponent<TextMeshProUGUI>();
+		_scoreManager.OnJudgementChanged += noteType =>
+		{
+			_judgementText.text = noteType.ToString();
+			Debug.Log($"판정: {noteType.ToString()}");
 
-        _timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
-    }
+		};
 
-    private void Update()
-    {
-        _timeText.text = $"TIME\n{(AudioSettings.dspTime - _startDspTime):F2}";
-    }
+
+		_timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
+	}
+
+	private void Update()
+	{
+		_timeText.text = $"TIME\n{(AudioSettings.dspTime - _startDspTime):F2}";
+	}
 
 }

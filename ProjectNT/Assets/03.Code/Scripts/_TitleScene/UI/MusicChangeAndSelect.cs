@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어가는데 사용
 {
+    [SerializeField]
+    private TilteSound tilteSound;
+
     [Header("음악 미리보기 파일")]
     public GameMusicSampleData gameMusicData;//프리팹에 GameMusicSample 프리팹 참조
 
@@ -25,12 +28,19 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
 
     private void OnEnable()
     {
-        TitleManager.instance.BackgroundMusicPlay(false);
+        if (tilteSound.backgroundAudioSource != null)
+        {
+            tilteSound.SetBackgroundSound(false);//배경음악 끄기
+        }
     }
 
     private void OnDisable()
     {
-        TitleManager.instance.BackgroundMusicPlay(true);
+        tilteSound.StopGameSound();//미리듣기 음악 끄기
+        if (tilteSound.backgroundAudioSource != null)
+        {
+            tilteSound.SetBackgroundSound(true);//배경음악 키기
+        }
     }
 
     private void SetMusicData(TitleMusicData data)//음악 데이터들 화면에표시
@@ -40,18 +50,14 @@ public class MusicChangeAndSelect : MonoBehaviour//버튼눌러서 음악넘어�
         curMusicData = data;
         musicNameText.text = data.musicName;
         musicDesc.text = data.musicDescription;
-        if (TitleManager.instance.gameMusicAudioSource.loop == false)
-        {
-            TitleManager.instance.MusicLoop(true);//루프가 안켜져있으면
-        }
-        TitleManager.instance.PlayMusic(curMusicData.musicClip);
+        tilteSound.PlayGameSound(curMusicData.musicClip);
     }
 
     //음악 처음부터 다시시작
     public void ReplayMusic()
     {
         Debug.Log("Music Replay 버튼 클릭");
-        TitleManager.instance.PlayMusic(curMusicData.musicClip);
+        tilteSound.PlayGameSound(curMusicData.musicClip);
     }
 
     //가장 처음의 노래로 변경
