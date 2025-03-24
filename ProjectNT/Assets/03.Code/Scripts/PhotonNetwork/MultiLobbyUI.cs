@@ -22,6 +22,8 @@ public class MultiLobbyUI : MonoBehaviour
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
+    [SerializeField] private GamePlayUI ui;
+
     private void Start()
     {
         _popupManager = FindObjectOfType<PopupManager>();
@@ -35,7 +37,6 @@ public class MultiLobbyUI : MonoBehaviour
     private void QuitButtonClick()
     {
         _photonManager.LeaveRoom();
-        TitleManager.instance.CloseUI();
     }
 
     private void StartButtonClick()

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -6,11 +7,24 @@ public class ScoreManager : MonoBehaviour
     public int score { get; private set; } = 0;
     public int currentCombo { get; private set; } = 0;
     public int maxCombo { get; private set; } = 0;
+    public int[] judgeCount { get; private set; } = new int[typeof(JudgementType).GetEnumValues().Length];
 
     public Action<int> OnComboChanged;
     public Action<int> OnScoreChanged;
     public Action<JudgementType> OnJudgementChanged;
 
+    // TODO: 프로토타입 임시 할당. gameManager나 다른 객체가 해야함
+    private GameSceneLightController _gameSceneLightController;
+
+    private void Awake()
+    {
+        Array.Clear(judgeCount, 0, judgeCount.Length);
+    }
+
+    private void Start()
+    {
+        _gameSceneLightController = FindObjectOfType<GameSceneLightController>();
+    }
 
     public void AddScore(int index)
     {
@@ -24,7 +38,13 @@ public class ScoreManager : MonoBehaviour
             noteType == JudgementType.Good ? 50 :
             noteType == JudgementType.Bad ? 0 : 0;
         score += index;
+        print($"AddScore : {noteType} : total score : {score}");
         OnScoreChanged?.Invoke(score);
+    }
+
+    public void AddJudgeCount(JudgementType noteType)
+    {
+        judgeCount[(int)noteType]++;
     }
 
     public void IncreaseCombo()
@@ -32,6 +52,10 @@ public class ScoreManager : MonoBehaviour
         currentCombo++;
         if (currentCombo > maxCombo)
             maxCombo = currentCombo;
+
+        if (currentCombo != 0 && currentCombo % 10 == 0)
+            _gameSceneLightController?.OnLight();
+
         OnComboChanged?.Invoke(currentCombo);
     }
 
