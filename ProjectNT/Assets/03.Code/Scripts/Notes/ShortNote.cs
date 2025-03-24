@@ -4,9 +4,6 @@ public class ShortNote : Note
 {
     public double targetDspTime;
 
-    // TODO: GameManager.Scoremanager로 변경할듯?
-    private ScoreManager _scoreManager;
-
     public override void Init(Transform target, NoteSpawnData noteSpawnData)
     {
         base.Init(target, noteSpawnData);
@@ -16,8 +13,6 @@ public class ShortNote : Note
         targetDspTime = shortNoteSpawnData.targetDspTime;
 
         _targetDspTime = targetDspTime;
-
-        _scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     public override void Hit(JudgementType noteType)
@@ -45,6 +40,7 @@ public class ShortNote : Note
             _scoreManager.IncreaseCombo();
         _scoreManager.AddScore(judgementType);
         _scoreManager.ShowJudgementType(judgementType);
+        _scoreManager.AddJudgeCount(judgementType);
     }
 
     private void OnTriggerExit(Collider other)

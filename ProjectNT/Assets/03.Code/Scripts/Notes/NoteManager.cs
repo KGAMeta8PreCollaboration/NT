@@ -44,8 +44,10 @@ public class NoteManager : MonoBehaviour
         _scoreManager.AddJudgeCount(note.judgementType);
     }
 
+
     private void AddNote(Note note)
     {
+        note.SetScoreManager(_scoreManager);
         notes.Add(note);
     }
 
