@@ -37,7 +37,7 @@ public class Woofer : MonoBehaviour
         // 	_audioSource.clip = hitSound;
 
         // _audioSource.PlayOneShot(hitSound);
-        //AudioManager.Instance.Play(hitSound);
+        AudioManager.Instance.Play(hitSound);
 
         if (notes.Count == 0)
             return;

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class NoteRail : MonoBehaviour
 {
-	[SerializeField] private Woofer woofer;
+	[SerializeField] protected Woofer woofer;
 
 	[HideInInspector] public NoteSpawner noteSpawner;
-	LinkedList<Note> noteList = new LinkedList<Note>();
+	protected LinkedList<Note> noteList = new LinkedList<Note>();
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		woofer = GetComponentInChildren<Woofer>();
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
 	}
