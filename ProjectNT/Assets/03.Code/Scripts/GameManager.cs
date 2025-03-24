@@ -20,7 +20,8 @@ public class GameManager : Singleton<GameManager>
 
 	private void Start()
 	{
-		GameSceneInit();
+		print( "경로 : " + Application.persistentDataPath);
+		// GameSceneInit();
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 	
@@ -29,6 +30,7 @@ public class GameManager : Singleton<GameManager>
 		if (scene.name == "Prototype_Game")
 		{
 			GameSceneInit();
+			CheckGameEndCoroutine();
 			// 특정 씬이 로드될 때 수행할 행동들
 		}
 	}
@@ -76,11 +78,17 @@ public class GameManager : Singleton<GameManager>
 		       && _noteGenerator.All(item => item.IsAllGenerated());
 	}
 	
-	private void Update()
+	private IEnumerator CheckGameEndCoroutine()
 	{
-		if (CheckGameEnd())
+		while (true)
 		{
-			GameEnd();
+			if (CheckGameEnd())
+			{
+				GameEnd();
+				yield break;
+			}
+			yield return null;
 		}
 	}
+
 }
