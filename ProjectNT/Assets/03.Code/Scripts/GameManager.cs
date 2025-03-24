@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +39,7 @@ public class GameManager : Singleton<GameManager>
 		_noteGenerator = FindObjectsOfType<NoteGenerator>();
 		_resultPanel = FindObjectOfType<ResultPanel>(true);
 		_resultPanel?.gameObject.SetActive(false);
+		endGameMenuPanel = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "EndGameMenuPanel");
 		StopCoroutine(StartCoroutine());
 		StartCoroutine(StartCoroutine());
 	}
