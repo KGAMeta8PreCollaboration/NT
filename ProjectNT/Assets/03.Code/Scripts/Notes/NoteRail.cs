@@ -19,14 +19,14 @@ public class NoteRail : MonoBehaviour
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
 	}
 
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, NoteSpawnData noteSpawnData)
+	public virtual void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, NoteSpawnData noteSpawnData)
 	{
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
 		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, (note) => { }, noteSpawnData);
 	}
 
-	public void AddNote(Note note)
+	public virtual void AddNote(Note note)
 	{
 		noteList.AddLast(note);
 		note.OnHit += OnNoteHit;
@@ -36,7 +36,7 @@ public class NoteRail : MonoBehaviour
 		}
 	}
 
-	public void RemoveNote(Note note)
+	public virtual void RemoveNote(Note note)
 	{
 		noteList.Remove(note);
 	}

@@ -5,7 +5,6 @@ using UnityEngine;
 public class NoteManager : MonoBehaviour
 {
     public List<NoteRail> noteRails = new List<NoteRail>();
-    public List<TopNoteRail> topNoteRails = new List<TopNoteRail>();
     public Note shortNotePrefab;
     public Note longNotePrefab;
     public Note topNotePrefab;
@@ -28,7 +27,7 @@ public class NoteManager : MonoBehaviour
                 noteSpawnData = new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 90, 0));
                 break;
             case NoteType.Top:
-                noteSpawnData = new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(90, 0, 0));
+                noteSpawnData = new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.Euler(90, 0, 0));
                 break;
         }
 
