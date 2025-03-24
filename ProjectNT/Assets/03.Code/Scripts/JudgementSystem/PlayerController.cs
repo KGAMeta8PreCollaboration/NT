@@ -8,138 +8,107 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerController : MonoBehaviour
 {
-    //=======PC 용=========
-    [SerializeField] private Woofer[] _woofers;
+	public float velocityMagnitude;
+	public float velocityMagnitudeThreshold;
+	public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
 
-    private NoteManager _noteManager;
-    //=======PC 용=========
-    public float velocityMagnitude;
-    public float velocityMagnitudeThreshold;
-    public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
+	private ActionBasedController _controller;
+	private Vector3 prevPos = new Vector3();
 
-    private ActionBasedController _controller;
-    private Vector3 prevPos = new Vector3();
+	public GameObject tmpPointPrefab;
+	//test
+	public TextMeshProUGUI logText;
+	public TextMeshProUGUI logText2;
+	private ScoreUI _scoreUI;
 
-    public GameObject tmpPointPrefab;
-    //test
-    public TextMeshProUGUI logText;
-    public TextMeshProUGUI logText2;
-    private ScoreUI _scoreUI;
+	private void Start()
+	{
+		_controller = GetComponentInParent<ActionBasedController>();
 
-    private void Start()
-    {
-        _noteManager = FindObjectOfType<NoteManager>();
-        _controller = GetComponentInParent<ActionBasedController>();
+		//=============test//=============
+		logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
+		//logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
+		_scoreUI = FindObjectOfType<ScoreUI>();
+		//=============test=============
 
-        //=============test//=============
-        logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
-        //logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
-        _scoreUI = FindObjectOfType<ScoreUI>();
-        //=============test=============
+		_controller.activateAction.action.performed += TriggerButtonAction;
 
-        _controller.activateAction.action.performed += TriggerButtonAction;
+		prevPos = transform.position;
+	}
 
-        prevPos = transform.position;
-        // TODO :                                                                                                                                                                                                                                                       
-        // StartCoroutine(CreateCoroutine());
-    }
+	private void Update()
+	{
+		Vector3 deltaPos = transform.position - prevPos;
 
-    private void Update()
-    {
-        Vector3 deltaPos = transform.position - prevPos;
+		velocityMagnitude = deltaPos.magnitude / Time.deltaTime;
 
-        velocityMagnitude = deltaPos.magnitude / Time.deltaTime;
+	}
 
-    }
+	private void LateUpdate()
+	{
+		prevPos = transform.position;
+	}
 
-    private void LateUpdate()
-    {
-        prevPos = transform.position;
-    }
+	private void TriggerButtonAction(InputAction.CallbackContext context)
+	{
+		//상단 노트 상호작용, 일시정지, 확인 버튼 등등
+	}
 
-    private void TriggerButtonAction(InputAction.CallbackContext context)
-    {
-        //상단 노트 상호작용, 일시정지, 확인 버튼 등등
-    }
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
+		{
+			Collider other = collision.collider;
 
-    public void Create(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            // _noteManager.CreateNote(int.Parse(context.control.name) - 1);
-        }
-    }
+			Vector3 stickPosition = transform.position;
 
-    public void Hit(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            InputControl control = context.control;
-            int index = control.name.Equals("a") ? 0 :
-                control.name.Equals("s") ? 1 :
-                control.name.Equals("d") ? 2 :
-                control.name.Equals("f") ? 3 : -1;
+			//Vector3 closestPoint = other.ClosestPointOnBounds(stickPosition); //추후 고민해보자.
+			Vector3 closestPoint = other.ClosestPoint(stickPosition);
 
-            if (index == -1) return;
+			Vector3 wooferCenter = other.bounds.center;
 
-            _woofers[index].Hit();
-        }
-    }
+			float wooferTopY = wooferCenter.y + (other.bounds.extents.y - hitThreshold);
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
-        {
-            Collider other = collision.collider;
+			bool isDownwardHit = transform.position.y < prevPos.y; // 아래로 휘둘렀는지 확인
+			bool isFastEnough = velocityMagnitude > velocityMagnitudeThreshold; // 일정 속도 이상 휘둘렀는지 확인
+			bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
 
-            Vector3 stickPosition = transform.position;
+			print($"휘두른 속도: {velocityMagnitude}");
+			print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
+			// logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
+			//             $"\n윗면에 충돌했는지: {isOnTop}";
 
-            //Vector3 closestPoint = other.ClosestPointOnBounds(stickPosition); //추후 고민해보자.
-            Vector3 closestPoint = other.ClosestPoint(stickPosition);
+			if (isFastEnough && isDownwardHit && isOnTop)
+			{
+				woofer.Hit();
+				Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
+				_scoreUI.tempHitCount++;
+				logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
 
-            Vector3 wooferCenter = other.bounds.center;
+				print("우퍼와 상호작용 됨");
+			}
+		}
+	}
 
-            float wooferTopY = wooferCenter.y + (other.bounds.extents.y - hitThreshold);
+	private void OnCollisionStay(Collision collision)
+	{
 
-            bool isDownwardHit = transform.position.y < prevPos.y; // 아래로 휘둘렀는지 확인
-            bool isFastEnough = velocityMagnitude > velocityMagnitudeThreshold; // 일정 속도 이상 휘둘렀는지 확인
-            bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
+		if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
+		{
+			woofer.Hold();
+		}
+	}
 
-            print($"휘두른 속도: {velocityMagnitude}");
-            print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
-            // logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
-            //             $"\n윗면에 충돌했는지: {isOnTop}";
+	private void OnCollisionExit(Collision collision)
+	{
+		if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
+		{
+			woofer.ReleaseLongNote();
+		}
+	}
 
-            if (isFastEnough && isDownwardHit && isOnTop)
-            {
-                woofer.Hit();
-                Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
-                _scoreUI.tempHitCount++;
-                logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
-
-                print("우퍼와 상호작용 됨");
-            }
-        }
-    }
-
-    //======================Test======================
-    private IEnumerator CreateCoroutine()
-    {
-        while (true)
-        {
-            RandomCreate();
-            yield return new WaitForSeconds(1.5f);
-        }
-    }
-
-    private void RandomCreate()
-    {
-        // _noteManager.CreateNote(Random.Range(0, _noteManager.maxNoteRails));
-    }
-    //======================Test======================
-
-    private void OnDestroy()
-    {
-        _controller.activateAction.action.performed -= TriggerButtonAction;
-    }
+	private void OnDestroy()
+	{
+		_controller.activateAction.action.performed -= TriggerButtonAction;
+	}
 }

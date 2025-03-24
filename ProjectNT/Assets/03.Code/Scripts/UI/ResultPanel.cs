@@ -41,26 +41,26 @@ public class ResultPanel : MonoBehaviour
     {
         DisplayPanel();
     }
-    
-    
+
+
     public void DisplayPanel()
     {
         int totalNotes = 0;
         for (int i = 0; i < _scoreManager.judgeCount.Length; i++)
         {
             totalNotes += _scoreManager.judgeCount[i];
-            switch ((NoteType)i)
+            switch ((JudgementType)i)
             {
-                case NoteType.Perfect:
+                case JudgementType.Perfect:
                     _perfectCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Cool:
+                case JudgementType.Cool:
                     _coolCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Good:
+                case JudgementType.Good:
                     _goodCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Bad:
+                case JudgementType.Bad:
                     _badCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
             }
@@ -75,14 +75,14 @@ public class ResultPanel : MonoBehaviour
         else
             _gradeText.text = grade.ToString();
     }
-    
+
     // TODO: 연산은 ScoreManager의 역할임
     private Grade CalculateGrade()
     {
-        float perfect = _scoreManager.judgeCount[(int)NoteType.Perfect];
-        float cool = _scoreManager.judgeCount[(int)NoteType.Cool];
-        float good = _scoreManager.judgeCount[(int)NoteType.Good];
-        float bad = _scoreManager.judgeCount[(int)NoteType.Bad];
+        float perfect = _scoreManager.judgeCount[(int)JudgementType.Perfect];
+        float cool = _scoreManager.judgeCount[(int)JudgementType.Cool];
+        float good = _scoreManager.judgeCount[(int)JudgementType.Good];
+        float bad = _scoreManager.judgeCount[(int)JudgementType.Bad];
         float total = perfect + cool + good + bad;
         float grade = (perfect + cool) / total * 100;
         if (grade >= 95)

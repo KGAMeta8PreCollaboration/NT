@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4567978807683224836}
   - component: {fileID: 4567978807683224837}
   - component: {fileID: 4567978807683224834}
-  - component: {fileID: 4567978807683224838}
+  - component: {fileID: 6078158495955630708}
   m_Layer: 0
   m_Name: TmpNote
   m_TagString: Note
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4567978807683224838
+--- !u!114 &6078158495955630708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,9 +105,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4567978807683224835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0990766431c592642b07d7a81c90f6f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 05ed8cac66592124ea50297559193a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitSound: {fileID: 0}
-  hitEffect: {fileID: 198510603497850608, guid: 953acd63f3feb604da8867d4f55f7351,
-    type: 3}
+  hitEffect: {fileID: 0}

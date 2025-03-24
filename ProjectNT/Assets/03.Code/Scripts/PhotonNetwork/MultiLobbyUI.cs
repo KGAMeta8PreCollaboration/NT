@@ -17,6 +17,8 @@ public class MultiLobbyUI : MonoBehaviour
 
     public int countStartGame;
 
+    private PopupManager _popupManager;
+
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
@@ -24,6 +26,8 @@ public class MultiLobbyUI : MonoBehaviour
 
     private void Start()
     {
+        _popupManager = FindObjectOfType<PopupManager>();
+
         _quitButton.onClick.AddListener(QuitButtonClick);
         _startButton.onClick.AddListener(StartButtonClick);
 
@@ -49,7 +53,7 @@ public class MultiLobbyUI : MonoBehaviour
         }
         else
         {
-            PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("플레이어 수가 부족합니다.", "확인");
+            _popupManager.OpenPopup<AlarmPopup>().SetPopup("플레이어 수가 부족합니다.", "확인");
         }
     }
 
@@ -64,7 +68,7 @@ public class MultiLobbyUI : MonoBehaviour
         _countStartGame.text = ""; // 카운트 UI 초기화
 
         _startGameCoroutine = StartCoroutine(StartGameCoroutine());
-        PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", () => _photonManager.photonView.RPC("CancelStartGame", RpcTarget.All));
+        _popupManager.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", () => _photonManager.photonView.RPC("CancelStartGame", RpcTarget.All));
     }
 
     private IEnumerator StartGameCoroutine()
@@ -105,7 +109,7 @@ public class MultiLobbyUI : MonoBehaviour
 
         _countStartGame.text = ""; // 취소 시 UI 초기화
         CountStartGameActive(false);
-        PopupManager.Instance.ClosePopup<AlarmPopup>();
+        _popupManager.ClosePopup<AlarmPopup>();
     }
 
 

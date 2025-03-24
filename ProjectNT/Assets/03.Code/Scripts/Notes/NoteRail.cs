@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoteRail : MonoBehaviour
 {
-	[SerializeField] private Woofer woofer; 
+	[SerializeField] private Woofer woofer;
 
 	[HideInInspector] public NoteSpawner noteSpawner;
 	LinkedList<Note> noteList = new LinkedList<Note>();
@@ -18,12 +18,12 @@ public class NoteRail : MonoBehaviour
 	{
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
 	}
-	
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime, AudioClip audioClip)
+
+	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, NoteSpawnData noteSpawnData)
 	{
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
-		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
+		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, (note) => { }, noteSpawnData);
 	}
 
 	public void AddNote(Note note)
