@@ -1,9 +1,10 @@
+using Game;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultPanel : MonoBehaviour
+public class ResultPanel : Popup
 {
     private TextMeshProUGUI _totalNoteCount;
     private TextMeshProUGUI _perfectCount;

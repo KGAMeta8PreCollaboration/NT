@@ -29,6 +29,14 @@ public class PopupManager : MonoBehaviour
         return foundPopup;
     }
 
+    public void OpenPopup(string popupName)
+    {
+        if (popupList.Find(popup => popup.name == popupName))
+        {
+
+        }
+    }
+
     public void ClosePopup(Popup popup)
     {
         if (popupList.Contains(popup))

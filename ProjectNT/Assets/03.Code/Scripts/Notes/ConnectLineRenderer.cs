@@ -46,6 +46,6 @@ public class ConnectLineRenderer : MonoBehaviour
 
     public void Release()
     {
-        start = _target;
+        start = _origin;
     }
 }

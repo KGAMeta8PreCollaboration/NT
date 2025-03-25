@@ -18,7 +18,7 @@ namespace Game
             closeButton?.onClick.RemoveListener(CloseButtonClick);
         }
 
-        public void CloseButtonClick()
+        public virtual void CloseButtonClick()
         {
             _popupManager.ClosePopup(this);
             closeAction?.Invoke();
