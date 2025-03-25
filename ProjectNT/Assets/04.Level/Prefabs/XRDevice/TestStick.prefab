@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 3604768935792181950}
+  hitProjPrefab: {fileID: 4719334907694206751, guid: 854de8c34fdd4ca4499eb4304f615236,
+    type: 3}
   m_coll: {fileID: 3753415745911791281}
 --- !u!54 &816628805948609244
 Rigidbody:
@@ -315,31 +317,6 @@ PrefabInstance:
     - target: {fileID: 4076744592146404, guid: df365974c854a33438e5aea62ca4b975, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199098828882841936, guid: df365974c854a33438e5aea62ca4b975,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199774086830341144, guid: df365974c854a33438e5aea62ca4b975,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199845200909762176, guid: df365974c854a33438e5aea62ca4b975,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199858974777785312, guid: df365974c854a33438e5aea62ca4b975,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199899822510488698, guid: df365974c854a33438e5aea62ca4b975,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df365974c854a33438e5aea62ca4b975, type: 3}

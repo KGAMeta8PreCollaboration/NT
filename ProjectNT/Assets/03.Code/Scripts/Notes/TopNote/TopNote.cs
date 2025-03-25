@@ -7,8 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TopNote : Note
 {
-    [SerializeField] InputActionReference leftTrigger;
-    [SerializeField] InputActionReference rightTrigger;
+    [SerializeField] private InputActionReference leftTrigger;
+    [SerializeField] private InputActionReference rightTrigger;
+    [SerializeField] private new ParticleSystem particleSystem;
     private ScoreManager _scoreManager;
     private XRSimpleInteractable xRSimInter;
     private bool canInter = false;
@@ -23,11 +24,13 @@ public class TopNote : Note
     {
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
+        particleSystem.Play(true);
     }
     private void OnDisable()
     {
         leftTrigger.action.performed -= Hit;
         rightTrigger.action.performed -= Hit;
+        particleSystem.Play(false);
     }
 
     public override void Init(Transform target, NoteSpawnData noteSpawnData)
@@ -48,7 +51,8 @@ public class TopNote : Note
     {
         Debug.Log(xRSimInter.isHovered);
         if (!canInter || !xRSimInter.isHovered) return;
-        Destroy();
+        // Destroy();
+        PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         this.judgementType = JudgementType.Perfect;
         if (hitEffect != null)
@@ -95,7 +99,8 @@ public class TopNote : Note
 
     private void Miss()
     {
-        Destroy();
+        // Destroy();
+        PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);

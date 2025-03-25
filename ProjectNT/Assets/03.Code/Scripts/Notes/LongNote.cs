@@ -95,7 +95,8 @@ public class LongNote : Note
 	{
 		if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
 		{
-			Destroy();
+			// Destroy();
+			PoolManager.Instance.longNotePool.Push(this);
 		}
 
 		double currentTime = AudioSettings.dspTime;
@@ -105,7 +106,6 @@ public class LongNote : Note
 
 			Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
 			if (isDisconnected) judgementType = JudgementType.Good;
-
 
 			if (judgementType == JudgementType.Bad)
 				_scoreManager.ResetCombo();
@@ -147,7 +147,6 @@ public class LongNote : Note
 		}
 	}
 
-
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.CompareTag("Woofer"))
@@ -156,7 +155,9 @@ public class LongNote : Note
 
 	private void Miss()
 	{
-		Destroy();
+		// Destroy();
+		PoolManager.Instance.longNotePool.Push(this);
+
 		isHit = true;
 		judgementType = JudgementType.Bad;
 		//print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");

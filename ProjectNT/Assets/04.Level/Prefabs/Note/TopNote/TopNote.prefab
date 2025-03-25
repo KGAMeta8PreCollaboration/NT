@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 8570090476127753735}
   m_Layer: 6
   m_Name: TopNote
-  m_TagString: Untagged
+  m_TagString: TopNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
     type: 3}
   rightTrigger: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  particleSystem: {fileID: 7302803937815910939}
   targetDspTime: 0
 --- !u!114 &1073266133847819198
 MonoBehaviour:
@@ -1005,6 +1006,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9202f4dc2bb997d4bad735c38eb61a0d, type: 3}
+--- !u!198 &7302803937815910939 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1225721789264746423, guid: 9202f4dc2bb997d4bad735c38eb61a0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8384125825603308972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7302803937815910938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1225721789264746422, guid: 9202f4dc2bb997d4bad735c38eb61a0d,
