@@ -35,13 +35,14 @@ public class BeatMapManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));
+        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));  
     }
 
     private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
     {
+        print(1);
         isLoaded = false;
-        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/song.ogg 1");
+        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         print(audioSource);
         //1. 오디오 Source 초기화
         _audioSourceManager.InitializeFromBeatMapManager(audioSource);

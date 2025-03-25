@@ -34,6 +34,7 @@ public class AudioSourceManager : MonoBehaviour
         _cameraController = FindObjectOfType<CameraController>();
         _audioVisualizable = FindObjectOfType<AudioVisualizable>();
         _waveform = FindObjectOfType<Waveform>();
+        _gridManager = FindObjectOfType<GridManager>();
         //_audioSource = GetComponent<AudioSource>();
         //_audioMixer = GetComponent<AudioMixer>();
     }
@@ -46,6 +47,7 @@ public class AudioSourceManager : MonoBehaviour
     //_audioSource 초기화 및 waveform 이미지 생성
     public void InitializeFromBeatMapManager(AudioClip audioClip)
     {
+        print(2);
         if (audioClip == null)
         {
             Debug.LogWarning("노래가 없습니다.");
@@ -53,9 +55,12 @@ public class AudioSourceManager : MonoBehaviour
         }
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = audioClip;
+
+        print(3);
         //올림
         _audioDuration = _audioSource.clip.length;
         _waveform.CreateWaveform(_audioSource);
+        _gridManager.CreateNodeContainer(_audioSource);
         audioSlider.onValueChanged.AddListener(HandleAudioClip);
         //_waveform.DrawWaveform(_audioSource);
         //_audioVisualizable.InitWaveform();

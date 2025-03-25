@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Waveform : MonoBehaviour
 {
-    public int width = 1024;
-    public int height = 64;
-    public Color background = Color.black;
-    public Color waveformColor = Color.yellow;
-    public GameObject arrow = null;
-    public Camera cam = null;
+    [SerializeField] private int width = 1024;
+    [SerializeField] private int height = 64;
+    [SerializeField] private Color background = Color.black;
+    [SerializeField] private Color waveformColor = Color.yellow;
+    [SerializeField] private GameObject arrow = null;
+    [SerializeField] private Camera cam = null;
 
     private AudioSource _audioSource = null;
     private SpriteRenderer _spriteRenderer = null;
@@ -34,8 +34,8 @@ public class Waveform : MonoBehaviour
         Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
         _spriteRenderer.sprite = Sprite.Create(texture, rect, Vector2.zero);
 
-        arrow.transform.position = new Vector3(0f, 0f);
-        arrowOffsetX = -(arrow.GetComponent<SpriteRenderer>().size.x / 2f);
+        //arrow.transform.position = new Vector3(0f, 0f);
+        //arrowOffsetX = -(arrow.GetComponent<SpriteRenderer>().size.x / 2f);
 
         cam.transform.position = new Vector3(0f, 0f, -1f);
         cam.transform.Translate(Vector3.right * (_spriteRenderer.size.x / 2f));
