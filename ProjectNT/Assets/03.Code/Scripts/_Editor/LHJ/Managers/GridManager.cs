@@ -101,14 +101,15 @@ public class GridManager : MonoBehaviour
 
     private void CreateGridTexture()
     {
-        int duration = _audioSourceManager.AudioDuration;
-
-        int height = duration * (int)texturePerSecond;
+        float duration = _audioSourceManager.AudioDuration;
+        
+        //높이는 올림으로 관리
+        int height = Mathf.CeilToInt(duration * texturePerSecond);
 
         if (height > AudioVisualizable.MAX_TEXTUREWIDTH)
         {
             float ratio = AudioVisualizable.MAX_TEXTUREWIDTH / duration;
-            height = (int)(duration * ratio);
+            height = Mathf.CeilToInt(duration * ratio);
             Debug.LogWarning($"텍스처 크기가 최대 크기를 초과해서 높이 재설정 : {height} ");
         }
 
@@ -137,7 +138,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        int songDuration = _audioSourceManager.AudioDuration;
+        float songDuration = _audioSourceManager.AudioDuration;
         //초당 픽셀
         float pixelsPerSecond = _gridTexture.height / songDuration;
         print($"초당 픽셀 : {pixelsPerSecond}");

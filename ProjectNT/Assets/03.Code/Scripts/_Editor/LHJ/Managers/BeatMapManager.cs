@@ -15,7 +15,7 @@ public class BeatMapManager : MonoBehaviour
     {
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
         _gridManager = FindObjectOfType<GridManager>();
-        _nodeContainer = FindObjectOfType<NodeContainer>();
+        //_nodeContainer = FindObjectOfType<NodeContainer>();
         isLoaded = false;
     }
 
@@ -41,17 +41,19 @@ public class BeatMapManager : MonoBehaviour
     private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
     {
         isLoaded = false;
+        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/song.ogg 1");
+        print(audioSource);
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
+        _audioSourceManager.InitializeFromBeatMapManager(audioSource);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 
-        //2. grid 초기화
-        _gridManager.InitializeFromBeatMapManager(beatMapData.gridSetting);
-        yield return new WaitUntil(() => _gridManager.GridTexture != null);
+        ////2. grid 초기화
+        //_gridManager.InitializeFromBeatMapManager(beatMapData.gridSetting);
+        //yield return new WaitUntil(() => _gridManager.GridTexture != null);
 
-        //3. node 초기화
-        _nodeContainer.InitializeWithNodeData(beatMapData.nodes);
-        _nodeContainer.InitializeWithSongData(beatMapData.songData);
+        ////3. node 초기화
+        //_nodeContainer.InitializeWithNodeData(beatMapData.nodes);
+        //_nodeContainer.InitializeWithSongData(beatMapData.songData);
 
         isLoaded = true;
     }

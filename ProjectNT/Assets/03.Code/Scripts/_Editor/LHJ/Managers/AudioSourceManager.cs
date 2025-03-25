@@ -9,16 +9,21 @@ using UnityEngine.UI;
 public class AudioSourceManager : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider audioSlider;
     [SerializeField] private AudioMixer audioMixer;
+
+    //get,set 둘다 필요 -> 노래의 시간을 조절할 수 있어야하기 때문 (0~1의 값)
+    public float audioSourceValue;
 
     private BeatMapManager _beatMapManager;
     private CameraController _cameraController;
     private AudioSource _audioSource;
-    private AudioVisualizable _audioVisualizable;
+    private AudioVisualizable _audioVisualizable; //-> 변경 전 사항
+    private Waveform _waveform; //-> 변경 후 사항
     private GridManager _gridManager;
-    private int _audioDuration;
+    private float _audioDuration;
     public AudioSource AudioSource => _audioSource;
-    public int AudioDuration => _audioDuration;
+    public float AudioDuration => _audioDuration;
 
     private bool _isPlaying;
     //public Action<bool> callback;
@@ -28,7 +33,8 @@ public class AudioSourceManager : MonoBehaviour
         _beatMapManager = FindObjectOfType<BeatMapManager>();
         _cameraController = FindObjectOfType<CameraController>();
         _audioVisualizable = FindObjectOfType<AudioVisualizable>();
-        _audioSource = GetComponent<AudioSource>();
+        _waveform = FindObjectOfType<Waveform>();
+        //_audioSource = GetComponent<AudioSource>();
         //_audioMixer = GetComponent<AudioMixer>();
     }
 
@@ -37,6 +43,7 @@ public class AudioSourceManager : MonoBehaviour
         yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null);
     }
 
+    //_audioSource 초기화 및 waveform 이미지 생성
     public void InitializeFromBeatMapManager(AudioClip audioClip)
     {
         if (audioClip == null)
@@ -47,10 +54,12 @@ public class AudioSourceManager : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = audioClip;
         //올림
-        _audioDuration = Mathf.CeilToInt(_audioSource.clip.length);
-        _audioVisualizable.InitWaveform();
-
-        volumeSlider.onValueChanged.AddListener(HandleVolume);
+        _audioDuration = _audioSource.clip.length;
+        _waveform.CreateWaveform(_audioSource);
+        audioSlider.onValueChanged.AddListener(HandleAudioClip);
+        //_waveform.DrawWaveform(_audioSource);
+        //_audioVisualizable.InitWaveform();
+        //volumeSlider.onValueChanged.AddListener(HandleVolume);
     }
 
     private void Update()
@@ -63,6 +72,8 @@ public class AudioSourceManager : MonoBehaviour
                 HandlePushSpace(_isPlaying);
             }
         }
+
+        audioSlider.value = _audioSource.time / _audioDuration;
     }
 
     private void HandlePushSpace(bool clickedSpace)
@@ -72,6 +83,12 @@ public class AudioSourceManager : MonoBehaviour
             _audioSource.Pause();
         else
             _audioSource.Play();
+    }
+
+    private void HandleAudioClip(float value)
+    {
+        _audioSource.time = value * _audioDuration;
+        audioSourceValue = value;
     }
 
     private void HandleVolume(float volume)
