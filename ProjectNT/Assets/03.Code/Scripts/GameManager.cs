@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         print("Scene Loaded : " + scene.name);
-        if (scene.name == "Prototype_Game")
+        if (scene.name == "GameScene")
         {
             print("프로토타입 씬");
             GameSceneInit();
@@ -50,6 +50,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator StartCoroutine()
     {
+        FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
         yield return new WaitForSeconds(5f);
         GameStart();
         StartCoroutine(CheckGameEndCoroutine());
@@ -59,7 +60,6 @@ public class GameManager : Singleton<GameManager>
     public void GameStart()
     {
         AudioManager.Instance.StartBGM(delayTime);
-        FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
     }
 
     public void GoToLobby()

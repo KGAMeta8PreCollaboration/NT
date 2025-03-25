@@ -25,7 +25,7 @@ public class NoteManager : MonoBehaviour
                 noteSpawnData = new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity);
                 break;
             case NoteType.Long:
-                noteSpawnData = new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 90, 0));
+                noteSpawnData = new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0));
                 break;
         }
 

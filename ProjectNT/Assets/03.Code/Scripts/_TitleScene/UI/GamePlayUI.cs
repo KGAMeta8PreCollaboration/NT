@@ -97,9 +97,9 @@ public class GamePlayUI : BaseTitleUI
         }
         else
         {
-            Debug.Log($"{TestStartGameData.Instance.musicName}");
-            Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            SceneManager.LoadScene("Prototype_Game");
+            //Debug.Log($"{TestStartGameData.Instance.musicName}");
+            //Debug.Log($"{TestStartGameData.Instance.difficulty}");
+            SceneManager.LoadScene("GameScene");
             //싱글플레이시 노래시작
         }
     }

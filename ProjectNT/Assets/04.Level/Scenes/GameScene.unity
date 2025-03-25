@@ -17072,7 +17072,7 @@ RectTransform:
   m_Children:
   - {fileID: 1312812162}
   m_Father: {fileID: 1239442421}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -33904,6 +33904,16 @@ PrefabInstance:
       propertyPath: loadedNotes.Array.data[183].time
       value: 58.82
       objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[0].endTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: loadedNotes.Array.data[0].noteType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 826054383138088000, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: m_fontAsset
@@ -35334,7 +35344,7 @@ PrefabInstance:
     - target: {fileID: 826054384070464557, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 826054384070464557, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -35590,6 +35600,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9998321
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.018324912
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037886, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 7691417806135391016, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -90811,6 +90846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0597f1661b4c95b46b2291bb641a64b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeButton: {fileID: 0}
+  _scoreManager: {fileID: 0}
 --- !u!1 &1824406996
 GameObject:
   m_ObjectHideFlags: 0

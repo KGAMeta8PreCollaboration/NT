@@ -28,7 +28,7 @@ public class ResultPanel : Popup
 
     private void OnEnable()
     {
-        DisplayPanel();
+        //DisplayPanel();
     }
 
 

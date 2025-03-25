@@ -16,18 +16,21 @@ public class ConnectLineRenderer : MonoBehaviour
 
     public void Init(float distance, Transform target)
     {
-        end.localPosition = start.localPosition + new Vector3(distance, 0, 0);
+        Vector3 railDirection = (start.position - target.position).normalized;
+
+        end.localPosition = start.localPosition + (railDirection * distance);
+        //end.localPosition = start.localPosition + new Vector3(distance, 0, 0);
 
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
         lineRenderer.alignment = LineAlignment.TransformZ;
 
-        float x = Mathf.Abs(start.localPosition.x - end.localPosition.x);
+        float z = (end.localPosition.z - start.localPosition.z);
 
-        print($"롱노트 startPos: {start.localPosition.x}, endPos: {end.localPosition.x}");
-        print($"롱노트 startPos와 endPos의 차이: {x}");
-        boxCollider.size = new Vector3(x, 1, 0.4f);
-        boxCollider.center = new Vector3(x / 2, 0, 0);
+        print($"롱노트 startPos: {start.localPosition.z}, endPos: {end.localPosition.z}");
+        print($"롱노트 startPos와 endPos의 차이: {z}");
+        boxCollider.size = new Vector3(0.4f, 1, Mathf.Abs(z));
+        boxCollider.center = new Vector3(0, 0, (z / 2));
 
         _origin = start;
         _target = target;
