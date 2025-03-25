@@ -63,7 +63,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OnOutLine(HoverEnterEventArgs args)
     {
-        Debug.Log("OnOutLine");
+        // Debug.Log("OnOutLine");
         //페이드아웃이 끝나고 ui가 활성화중이 아닐때
         if (titleManager.IsComplete && !titleManager.IsUIActive)
         {
@@ -83,7 +83,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OffOutLine(HoverExitEventArgs args)
     {
-        Debug.Log("OffOutLine");
+        // Debug.Log("OffOutLine");
         if (outline.enabled == true)
         {
             if (outline != null)

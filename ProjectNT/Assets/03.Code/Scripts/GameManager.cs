@@ -17,7 +17,10 @@ public class GameManager : Singleton<GameManager>
 	// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
 	[SerializeField] private GameObject endGameMenuPanel;
 	
-
+	
+	public BeatMapData beatMapData;
+	
+	
 	private void Start()
 	{
 		print( "경로 : " + Application.persistentDataPath);
@@ -28,13 +31,19 @@ public class GameManager : Singleton<GameManager>
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		print("Scene Loaded : " + scene.name);
-		if (scene.name == "Prototype_Game")
+		if (scene.name == "GameScene")
 		{
 			print("프로토타입 씬");
 			GameSceneInit();
 			
 			// 특정 씬이 로드될 때 수행할 행동들
 		}
+	}
+
+	public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData)
+	{
+		SceneManager.LoadScene("GameScene");
+
 	}
 
 	private void GameSceneInit()
