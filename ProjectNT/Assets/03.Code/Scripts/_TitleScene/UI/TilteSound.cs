@@ -27,8 +27,8 @@ public class TilteSound : MonoBehaviour
         if (active)
         {
             if (!backgroundAudioSource.isPlaying)
-            { 
-            backgroundAudioSource.Play();
+            {
+                backgroundAudioSource.Play();
             }
         }
         else
@@ -52,11 +52,11 @@ public class TilteSound : MonoBehaviour
 
     public void StopGameSound()//게임 음악 끄기
     {
-        if (gameMusicAudioSource.isPlaying)
-        {
-            gameMusicAudioSource.Stop();
-            Debug.Log("노래 꺼짐");
-        }
+        //if (gameMusicAudioSource.isPlaying)
+        //{
+        //    gameMusicAudioSource.Stop();
+        //    Debug.Log("노래 꺼짐");
+        //}
     }
 
 }

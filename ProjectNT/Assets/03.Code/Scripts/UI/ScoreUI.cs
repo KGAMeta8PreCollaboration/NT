@@ -25,7 +25,12 @@ public class ScoreUI : MonoBehaviour
         _scoreManager.OnScoreChanged += score => _scoreCountText.text = score.ToString();
 
         _judgementText = transform.Find("JudgementText").GetComponent<TextMeshProUGUI>();
-        _scoreManager.OnJudgementChanged += noteType => _judgementText.text = noteType.ToString();
+        _scoreManager.OnJudgementChanged += noteType =>
+        {
+            _judgementText.text = noteType.ToString();
+            Debug.Log($"판정: {noteType.ToString()}");
+        };
+
 
         _timeText = transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
     }

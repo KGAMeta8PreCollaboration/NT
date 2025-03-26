@@ -2,17 +2,28 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public enum Grade
+{
+    SPlus,
+    S,
+    A,
+    B,
+    C,
+    D,
+    F
+}
+
 public class ScoreManager : MonoBehaviour
 {
     public int score { get; private set; } = 0;
     public int currentCombo { get; private set; } = 0;
     public int maxCombo { get; private set; } = 0;
-    public int[] judgeCount { get; private set; } = new int[typeof(NoteType).GetEnumValues().Length];
+    public int[] judgeCount { get; private set; } = new int[typeof(JudgementType).GetEnumValues().Length];
 
     public Action<int> OnComboChanged;
     public Action<int> OnScoreChanged;
-    public Action<NoteType> OnJudgementChanged;
-    
+    public Action<JudgementType> OnJudgementChanged;
+
     // TODO: 프로토타입 임시 할당. gameManager나 다른 객체가 해야함
     private GameSceneLightController _gameSceneLightController;
 
@@ -32,17 +43,17 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(score);
     }
 
-    public void AddScore(NoteType noteType)
+    public void AddScore(JudgementType noteType)
     {
-        int index = noteType == NoteType.Perfect ? 100 :
-            noteType == NoteType.Good ? 50 :
-            noteType == NoteType.Bad ? 0 : 0;
+        int index = noteType == JudgementType.Perfect ? 100 :
+            noteType == JudgementType.Good ? 50 :
+            noteType == JudgementType.Bad ? 0 : 0;
         score += index;
         print($"AddScore : {noteType} : total score : {score}");
         OnScoreChanged?.Invoke(score);
     }
-    
-    public void AddJudgeCount(NoteType noteType)
+
+    public void AddJudgeCount(JudgementType noteType)
     {
         judgeCount[(int)noteType]++;
     }
@@ -52,10 +63,10 @@ public class ScoreManager : MonoBehaviour
         currentCombo++;
         if (currentCombo > maxCombo)
             maxCombo = currentCombo;
-        
+
         if (currentCombo != 0 && currentCombo % 10 == 0)
-            _gameSceneLightController.OnLight();
-        
+            _gameSceneLightController?.OnLight();
+
         OnComboChanged?.Invoke(currentCombo);
     }
 
@@ -66,7 +77,7 @@ public class ScoreManager : MonoBehaviour
         OnComboChanged?.Invoke(currentCombo);
     }
 
-    public void ShowJudgementType(NoteType noteType)
+    public void ShowJudgementType(JudgementType noteType)
     {
         OnJudgementChanged?.Invoke(noteType);
     }
@@ -75,5 +86,29 @@ public class ScoreManager : MonoBehaviour
     public void EndGame()
     {
         score += maxCombo * 100;
+    }
+
+    public Grade CalculateGrade()
+    {
+        float perfect = judgeCount[(int)JudgementType.Perfect];
+        float cool = judgeCount[(int)JudgementType.Cool];
+        float good = judgeCount[(int)JudgementType.Good];
+        float bad = judgeCount[(int)JudgementType.Bad];
+        float total = perfect + cool + good + bad;
+        float grade = (perfect + cool) / total * 100;
+        if (grade >= 95)
+            return Grade.SPlus;
+        if (grade >= 90)
+            return Grade.S;
+        else if (grade >= 80)
+            return Grade.A;
+        else if (grade >= 70)
+            return Grade.B;
+        else if (grade >= 60)
+            return Grade.C;
+        else if (grade >= 50)
+            return Grade.D;
+        else
+            return Grade.F;
     }
 }

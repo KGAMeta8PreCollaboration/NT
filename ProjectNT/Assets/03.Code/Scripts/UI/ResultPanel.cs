@@ -1,20 +1,10 @@
+using Game;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Grade
-{
-    SPlus,
-    S,
-    A,
-    B,
-    C,
-    D,
-    F
-}
-
-public class ResultPanel : MonoBehaviour
+public class ResultPanel : Popup
 {
     private TextMeshProUGUI _totalNoteCount;
     private TextMeshProUGUI _perfectCount;
@@ -23,7 +13,7 @@ public class ResultPanel : MonoBehaviour
     private TextMeshProUGUI _badCount;
     private TextMeshProUGUI _gradeText;
     private TextMeshProUGUI _gradeSubText;
-    private ScoreManager _scoreManager;
+    [SerializeField] private ScoreManager _scoreManager;
 
     private void Awake()
     {
@@ -34,39 +24,38 @@ public class ResultPanel : MonoBehaviour
         _badCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
         _gradeText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
         _gradeSubText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
-        _scoreManager = FindObjectOfType<ScoreManager>(true);
     }
 
     private void OnEnable()
     {
-        DisplayPanel();
+        //DisplayPanel();
     }
-    
-    
+
+
     public void DisplayPanel()
     {
         int totalNotes = 0;
         for (int i = 0; i < _scoreManager.judgeCount.Length; i++)
         {
             totalNotes += _scoreManager.judgeCount[i];
-            switch ((NoteType)i)
+            switch ((JudgementType)i)
             {
-                case NoteType.Perfect:
+                case JudgementType.Perfect:
                     _perfectCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Cool:
+                case JudgementType.Cool:
                     _coolCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Good:
+                case JudgementType.Good:
                     _goodCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case NoteType.Bad:
+                case JudgementType.Bad:
                     _badCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
             }
         }
         _totalNoteCount.text = totalNotes.ToString();
-        Grade grade = CalculateGrade();
+        Grade grade = _scoreManager.CalculateGrade();
         if (grade == Grade.SPlus)
         {
             _gradeText.text = "S";
@@ -74,31 +63,6 @@ public class ResultPanel : MonoBehaviour
         }
         else
             _gradeText.text = grade.ToString();
-    }
-    
-    // TODO: 연산은 ScoreManager의 역할임
-    private Grade CalculateGrade()
-    {
-        float perfect = _scoreManager.judgeCount[(int)NoteType.Perfect];
-        float cool = _scoreManager.judgeCount[(int)NoteType.Cool];
-        float good = _scoreManager.judgeCount[(int)NoteType.Good];
-        float bad = _scoreManager.judgeCount[(int)NoteType.Bad];
-        float total = perfect + cool + good + bad;
-        float grade = (perfect + cool) / total * 100;
-        if (grade >= 95)
-            return Grade.SPlus;
-        if (grade >= 90)
-            return Grade.S;
-        else if (grade >= 80)
-            return Grade.A;
-        else if (grade >= 70)
-            return Grade.B;
-        else if (grade >= 60)
-            return Grade.C;
-        else if (grade >= 50)
-            return Grade.D;
-        else
-            return Grade.F;
     }
 
     public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
@@ -114,5 +78,16 @@ public class ResultPanel : MonoBehaviour
                 return result;
         }
         return null;
+    }
+
+    public override void Init(PopupManager popupManager)
+    {
+        base.Init(popupManager);
+
+        GameManager.Instance.OnGameEnd += () =>
+        {
+            popupManager.OpenPopup(this);
+            DisplayPanel();
+        };
     }
 }

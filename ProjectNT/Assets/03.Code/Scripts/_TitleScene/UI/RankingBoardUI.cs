@@ -37,7 +37,10 @@ public class RankingBoardUI : BaseTitleUI
 
     public override void AddEventListeners()
     {
+        musicCange.ChangeMusic("first");
         base.AddEventListeners();
+        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.ChangeMusic("pri", RankingBoardUIUpdate));
+        musicCange.changeRightButton.onClick.AddListener(() => musicCange.ChangeMusic("next", RankingBoardUIUpdate));
         RankingBoardUIUpdate();
         //lobbyButton.onClick.AddListener(LobbyButton);
         //musicSelectButton.onClick.AddListener(MusicSelectButton);
