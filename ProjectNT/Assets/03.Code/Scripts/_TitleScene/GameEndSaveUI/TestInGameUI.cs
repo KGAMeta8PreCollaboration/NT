@@ -16,7 +16,9 @@ public class TestInGameUI : MonoBehaviour
 
     public void TestStart()
     {
-        gameEndPanel.SetGameEndData(999999999, 999, "aa", "Easy");
-        gameEndPanel.NewHighScoreCheck();
+        int randomScroe = Random.Range(900000000, 999999999);
+        int randomCombo = Random.Range(50, 150);
+        gameEndPanel.SetGameEndData(randomScroe, randomCombo, "aa", "Easy");
+        StartCoroutine(gameEndPanel.NewHighScoreCheck());
     }
 }

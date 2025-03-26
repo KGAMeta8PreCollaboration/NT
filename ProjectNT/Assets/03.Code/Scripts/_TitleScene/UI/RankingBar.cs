@@ -28,11 +28,13 @@ public class RankingBar : MonoBehaviour//프리팹용
 
     public void UIColorChane(Color color)
     {
-        scoreUI.color = color;
-        playerNameUI.color = color;
-        comboUI.color = color;
-        gameMusicNameUI.color = color;
-        DifficultyUI.color = color;
-        rankingUI.color = color;
+        //Color를 Hex값으로 변환 예) #FF0000 이런식의 코드로 변환하지만 string에는 FF0000같은 #을 뺀 숫자만들어감
+        string colorHex = ColorUtility.ToHtmlStringRGB(color);
+        scoreUI.text = $"<color=#{colorHex}>{scoreUI.text}</color>";
+        playerNameUI.text = $"<color=#{colorHex}>{playerNameUI.text}</color>";
+        comboUI.text = $"<color=#{colorHex}>{comboUI.text}</color>";
+        gameMusicNameUI.text = $"<color=#{colorHex}>{gameMusicNameUI.text}</color>";
+        DifficultyUI.text = $"<color=#{colorHex}>{DifficultyUI.text}</color>";
+        rankingUI.text = $"<color=#{colorHex}>{rankingUI.text}</color>";
     }
 }

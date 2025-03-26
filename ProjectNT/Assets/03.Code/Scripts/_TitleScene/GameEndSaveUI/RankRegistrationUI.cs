@@ -23,7 +23,6 @@ public class RankRegistrationUI : MonoBehaviour
     public Image rankRegistrationtimer;
     public float rankRegistrationtimerTime;
 
-    public Action rankingUI = null;
     public Action registrationActuon = null;
 
     private string playerName = "";
@@ -82,7 +81,7 @@ public class RankRegistrationUI : MonoBehaviour
 
         registrationButton.onClick.RemoveListener(RegistrationButtonClick);
         StopTimer();//타이머 종료
-        rankingUI = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
+        registrationActuon = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
     }
 
     public void RegistrationButtonClick()
@@ -127,7 +126,7 @@ public class RankRegistrationUI : MonoBehaviour
         if (timerCorutine == null)
         {
             timerCorutine = StartCoroutine(Timer(rankRegistrationtimerTime, 
-                () => rankingUI?.Invoke()));//타이머 끝나면 순위표 UI 오픈
+                () => registrationActuon?.Invoke()));//타이머 끝나면 순위표 UI 오픈
         }
     }
 

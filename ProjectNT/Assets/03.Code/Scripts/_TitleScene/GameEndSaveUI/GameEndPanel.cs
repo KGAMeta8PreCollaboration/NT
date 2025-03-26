@@ -31,11 +31,12 @@ public class GameEndPanel : MonoBehaviour
         newData = new PlayerLocalSaveData(score, null, combo, gameMusicName, difficulty);
     }
 
-    public void NewHighScoreCheck()
+    public IEnumerator NewHighScoreCheck()
     {
         List<PlayerLocalSaveData> newDataList = new List<PlayerLocalSaveData>();
 
         //데이터전부 넣고
+        yield return localSaveManager.LocalDataLoad();
         newDataList.AddRange(localSaveManager.datas);
         newDataList.Add(newData);
 
@@ -77,7 +78,7 @@ public class GameEndPanel : MonoBehaviour
         newHighScroeUI.gameObject.SetActive(true);//UI키고
         newHighScroeUI.SetNewHighScroeUI(rank, newData);//최고 점수 UI에 표시
         newHighScroeUI.yesButtonAction += OpenRankRegistrationUI;//등록UI 오픈 등록
-        newHighScroeUI.musicSelectAction += OpenMusicSelectUI;//곡 선택창으로 이동 등록
+        newHighScroeUI.noButtonAction += CloseUI;//팝업 닫기
         curUI = newHighScroeUI.gameObject;
         Debug.Log("새로운 데이터 등록 창");
     }
@@ -86,8 +87,7 @@ public class GameEndPanel : MonoBehaviour
     {
         CloseUI();//켜져 있던 창 닫기
         rankRegistrationUI.gameObject.SetActive(true);
-        rankRegistrationUI.rankingUI += OpenInGameRankingUI;//순위표 UI 오픈 등록
-        rankRegistrationUI.registrationActuon += RegistrationSaveData;
+        rankRegistrationUI.registrationActuon += RegistrationSaveData;//저장 후 순위표 오픈
         curUI = rankRegistrationUI.gameObject;
         Debug.Log("등록할 이름 설정 창");
     }
@@ -95,22 +95,15 @@ public class GameEndPanel : MonoBehaviour
     public void RegistrationSaveData()//이름 저장 후 로컬 데이터 폴더에 저장
     {
         newData.playerName = rankRegistrationUI.SetPlayerName();
-        StartCoroutine(AAAAFD(OpenInGameRankingUI));
+        StartCoroutine(DataSave(OpenInGameRankingUI));
     }
 
-    public IEnumerator AAAAFD(Action action)
+    public IEnumerator DataSave(Action action)
     {
-        Debug.Log("이름 결정"); 
+        Debug.Log("이름 결정");
         yield return StartCoroutine(localSaveManager.LocalDataSave(newData));
         Debug.Log("OpenInGameRankingUI로 이동");
         action?.Invoke();
-    }
-
-    public void OpenMusicSelectUI()//곡 선택창으로 이동
-    {
-        CloseUI();
-        //곡 선택창으로 이동
-        Debug.Log("곡 선택창 이동");
     }
 
     public void OpenInGameRankingUI()//순위표 UI 오픈
@@ -118,26 +111,17 @@ public class GameEndPanel : MonoBehaviour
         CloseUI();
         inGameRankingUI.gameObject.SetActive(true);//순위표 UI 오픈
         curUI = inGameRankingUI.gameObject;
-        inGameRankingUI.lobbyUIActuon += Lobby;//로비로 이동 등록
-        inGameRankingUI.musicSelectUIActuon += OpenMusicSelectUI;//곡 선택창으로 이동 등록
-        inGameRankingUI.replayActuon += RePlay;//게임 재시작 등록
+        inGameRankingUI.timeOverAction += OpenMusicSelectUI;//로비로 이동 등록
         inGameRankingUI.newDataNumber = newDataNumber;
         Debug.Log($"newDataNumber : {newDataNumber}");
         Debug.Log("인 게임 순위표 표시");
     }
 
-    public void RePlay()//게임 재 시작
+    public void OpenMusicSelectUI()//곡 선택창으로 이동
     {
         CloseUI();
-        //게임 재시작
-        Debug.Log("게임 재 시작");
-    }
-
-    public void Lobby()//로비로 이동
-    {
-        CloseUI();
-        //로비로 이동
-        Debug.Log("로비로 이동");
+        //곡 선택창으로 이동
+        Debug.Log("곡 선택창 이동");
     }
 
     public void CloseUI()//현재 UI 끄기

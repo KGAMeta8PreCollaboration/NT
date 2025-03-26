@@ -14,9 +14,9 @@ public class RankingBoardUI : BaseTitleUI
     public RectTransform contentArea;
     public GameObject loadingPanel;
 
-    public Button lobbyButton;
-    public Button musicSelectButton;
-    public GameObject musicSelectUI;
+    //public Button lobbyButton;
+    //public Button musicSelectButton;
+    //public GameObject musicSelectUI;
 
     private List<GameObject> rankingBarUIs = new List<GameObject>();
 
@@ -39,16 +39,16 @@ public class RankingBoardUI : BaseTitleUI
     {
         base.AddEventListeners();
         RankingBoardUIUpdate();
-        lobbyButton.onClick.AddListener(LobbyButton);
-        musicSelectButton.onClick.AddListener(MusicSelectButton);
+        //lobbyButton.onClick.AddListener(LobbyButton);
+        //musicSelectButton.onClick.AddListener(MusicSelectButton);
     }
 
     public override void RemoveEventListeners()
     {
         RankingBarUIDestroy();
         base.RemoveEventListeners();
-        lobbyButton.onClick.RemoveListener(LobbyButton);
-        musicSelectButton.onClick.RemoveListener(MusicSelectButton);
+        //lobbyButton.onClick.RemoveListener(LobbyButton);
+        //musicSelectButton.onClick.RemoveListener(MusicSelectButton);
     }
 
     public void LastUpdateTime()
@@ -100,14 +100,14 @@ public class RankingBoardUI : BaseTitleUI
         rankingBarUIs.Clear();
     }
 
-    public void LobbyButton()//로비 화면으로 이동 버튼
-    {
-        CloseUIButtonClick();
-    }
+    //public void LobbyButton()//로비 화면으로 이동 버튼
+    //{
+    //    CloseUIButtonClick();
+    //}
 
-    public void MusicSelectButton()//곡 선택 화면으로 이동 버튼
-    {
-        musicSelectUI.SetActive(true);
-        gameObject.SetActive(false);
-    }
+    //public void MusicSelectButton()//곡 선택 화면으로 이동 버튼
+    //{
+    //    musicSelectUI.SetActive(true);
+    //    gameObject.SetActive(false);
+    //}
 }

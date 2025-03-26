@@ -18,7 +18,7 @@ public class NewHighScroeUI : MonoBehaviour
 
     private Coroutine timerCorutine = null;
     
-    public Action musicSelectAction = null;//곡 선택으로 이동
+    public Action noButtonAction = null;//곡 선택으로 이동
     public Action yesButtonAction = null;//등록 화면으로 이동
 
     private void OnEnable()
@@ -34,7 +34,7 @@ public class NewHighScroeUI : MonoBehaviour
         noButton.onClick.RemoveListener(NoButton);
         StopTimer();//타이머 종료
         yesButtonAction = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
-        musicSelectAction = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
+        noButtonAction = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
     }
 
     public void SetNewHighScroeUI(int rank, PlayerLocalSaveData newData)//새로운 데이터 표시
@@ -51,7 +51,7 @@ public class NewHighScroeUI : MonoBehaviour
 
     public void NoButton()
     {
-        musicSelectAction?.Invoke();//곡 선택창으로 이동
+        noButtonAction?.Invoke();//곡 선택창으로 이동
     }
 
     public void StartTimer()
@@ -59,7 +59,7 @@ public class NewHighScroeUI : MonoBehaviour
         if (timerCorutine == null)
         {
             timerCorutine = StartCoroutine(Timer(newHighScroetimerTime, 
-                () => musicSelectAction?.Invoke()));//타이머 끝나면 곡 선택창으로 이동
+                () => noButtonAction?.Invoke()));//타이머 끝나면 곡 선택창으로 이동
         }
     }
 

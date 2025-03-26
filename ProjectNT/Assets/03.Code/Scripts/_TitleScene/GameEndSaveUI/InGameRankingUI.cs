@@ -17,24 +17,13 @@ public class InGameRankingUI : MonoBehaviour
     public float timerTime;
     public Image timer;
 
-    public Button lobbyButton;
-    public Button musicSelectButton;
-    public Button replayButton;
-
-    public Action lobbyUIActuon = null;
-    public Action musicSelectUIActuon = null;
-    public Action replayActuon = null;
+    public Action timeOverAction = null;
 
     private List<GameObject> rankingBarUIs = new List<GameObject>();
 
     private Coroutine timerCorutine = null;
 
     public int newDataNumber;
-
-    private void Awake()
-    {
-        replayButton.onClick.AddListener(ReplayButton);
-    }
 
     private void OnEnable()
     {
@@ -50,19 +39,13 @@ public class InGameRankingUI : MonoBehaviour
     {
         StartTimer();//타이머 시작
         RankingBoardUIUpdate();//랭킹바에 Prefab 생성
-        lobbyButton.onClick.AddListener(LobbyButton);//로비로 이동 버튼
-        musicSelectButton.onClick.AddListener(MusicSelectButton);//곡 선택창으로 이동
     }
 
     public void RemoveEventListeners()//비활성화시 이벤트 전부 제거
     {
         StopTimer();//타이머 종료
         RankingBarUIDestroy();//랭킹바에 Prefab 전부 제거
-        lobbyButton.onClick.RemoveListener(LobbyButton);
-        musicSelectButton.onClick.RemoveListener(MusicSelectButton);
-        lobbyUIActuon = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
-        musicSelectUIActuon = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
-        replayActuon = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
+        timeOverAction = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
     }
 
     public void LastUpdateTime()//마지막 업데이트 시간 표시
@@ -100,12 +83,12 @@ public class InGameRankingUI : MonoBehaviour
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
                 rankingBarUIs.Add(rankingBarUI);
                 rankingBarUI.GetComponent<RankingBar>().UISetting(data, rank);
-                rank++;
-                if (rank == newDataNumber)//새로운 데이터는 색깔 다르게
+                if ((rank) == newDataNumber)//새로운 데이터는 색깔 다르게
                 {
                     Debug.Log("신규 데이터 색 변경");
                     rankingBarUI.GetComponent<RankingBar>().UIColorChane(Color.yellow);
                 }
+                rank++;
             }
         }
         LastUpdateTime(); //UI 업데이트 후 시간 표시
@@ -121,21 +104,6 @@ public class InGameRankingUI : MonoBehaviour
             Destroy(rankingBar);
         }
         rankingBarUIs.Clear();
-    }
-
-    public void LobbyButton()//로비 화면으로 이동 버튼
-    {
-        lobbyUIActuon?.Invoke();
-    }
-
-    public void MusicSelectButton()//곡 선택 화면으로 이동 버튼
-    {
-        musicSelectUIActuon?.Invoke();
-    }
-
-    public void ReplayButton()//다시 플레이 버튼
-    {
-        replayActuon?.Invoke();
     }
 
     public void StartTimer()
@@ -162,5 +130,6 @@ public class InGameRankingUI : MonoBehaviour
             yield return null;
         }
         timer.fillAmount = 0;
+        timeOverAction?.Invoke();
     }
 }
