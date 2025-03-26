@@ -50,7 +50,7 @@ public class ShortNote : Note
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Woofer"))
+        if (other.CompareTag("NoteScanner"))
             Miss();
     }
 

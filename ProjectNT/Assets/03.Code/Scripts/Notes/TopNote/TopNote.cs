@@ -26,9 +26,8 @@ public class TopNote : Note
         rightTrigger.action.performed += Hit;
         particleSystem.Play(true);
     }
-    protected override void OnDisable()
+    private void OnDisable()
     {
-        base.OnDisable();
         leftTrigger.action.performed -= Hit;
         rightTrigger.action.performed -= Hit;
         particleSystem.Play(false);
@@ -110,14 +109,4 @@ public class TopNote : Note
         OnHit?.Invoke(this);
         OnHit = null;
     }
-
-    float t;
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("TopNoteZone"))
-        {
-            t += Time.deltaTime;
-        }
-    }
-
 }

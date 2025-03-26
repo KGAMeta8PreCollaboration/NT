@@ -44,7 +44,15 @@ public class StickTest : MonoBehaviour
                 // Instantiate(hitProjPrefab, transform, true).GetComponent<TopNoteProjectile>();
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
+                abc.SendHapticImpulse(0.8f, 0.15f);
             }
+        }
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "Woofer")
+        {
+            abc.SendHapticImpulse(0.6f, 0.15f);
         }
     }
 }

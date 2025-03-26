@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public enum JudgementType
 {
@@ -103,9 +104,5 @@ public abstract class Note : MonoBehaviour
 		}
 		hitEffect.gameObject.transform.position = gameObject.transform.position;
 		hitEffect.gameObject.transform.rotation = transform.rotation;
-	}
-	protected virtual void OnDisable()
-	{
-
 	}
 }

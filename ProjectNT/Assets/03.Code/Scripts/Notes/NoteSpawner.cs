@@ -15,6 +15,7 @@ public class NoteSpawner : MonoBehaviour
             return;
         newNote.Init(target, noteSpawnData);
         onAddNote?.Invoke(newNote);
+        onAddNote = null;
         newNote.OnHit += onNoteHit;
         newNote.OnDestroyed += onNoteDestroyed;
     }
