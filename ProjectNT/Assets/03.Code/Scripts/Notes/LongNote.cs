@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class LongNote : Note
 {
-<<<<<<< HEAD
 	public double startTargetDspTime;
 	public double endTargetDspTime;
 	public int divideCount;
@@ -12,8 +11,6 @@ public class LongNote : Note
 	public bool isFirstHolding = false; // 첫 판정에 홀드했는지
 	public bool isDisconnected = false; // 중간에 끊긴적 있는지
 	[SerializeField] private ConnectLineRenderer _connectLineRenderer;
-
-	private ScoreManager _scoreManager;
 
 	//콤보 공식을 위해 사용하는 임시 변수
 	public int bpm;
@@ -62,8 +59,6 @@ public class LongNote : Note
 
 		CalculateMilestones(duration);
 		_connectLineRenderer.Init(GetDistanceStartPosAndEndPos(), target);
-
-		_scoreManager = FindObjectOfType<ScoreManager>();
 	}
 
 	public override void Hit(JudgementType noteType)
@@ -74,8 +69,7 @@ public class LongNote : Note
 		{
 			isHit = true;
 			this.judgementType = noteType;
-			if (judgementType != JudgementType.Bad)
-				HitEffect();
+
 			if (hitEffect != null)
 			{
 				ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
@@ -99,7 +93,6 @@ public class LongNote : Note
 		if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
 		{
 			Destroy();
-			PoolManager.Instance.longNotePool.Push(this);
 		}
 
 		double currentTime = AudioSettings.dspTime;
@@ -116,70 +109,41 @@ public class LongNote : Note
 				_scoreManager.IncreaseCombo();
 			_scoreManager.AddScore(judgementType);
 			_scoreManager.ShowJudgementType(judgementType);
-			_scoreManager.ShowJudgementType(judgementType);
-=======
-    public double startTargetDspTime;
-    public double endTargetDspTime;
-    public int divideCount;
-    public double[] milestones;
-    public int currentMilestoneIndex = 0;
-    public bool isHolding = false;
-    public bool isFirstHolding = false; // 첫 판정에 홀드했는지
-    public bool isDisconnected = false; // 중간에 끊긴적 있는지
-    [SerializeField] private ConnectLineRenderer _connectLineRenderer;
+			_scoreManager.AddJudgeCount(judgementType);
 
+			currentMilestoneIndex++;
+		}
+	}
 
-    //콤보 공식을 위해 사용하는 임시 변수
-    public int bpm;
->>>>>>> develop
+	public void Release()
+	{
+		isHolding = false;
+		isDisconnected = true;
 
-    private void CalculateMilestones(double duration)
-    {
-        float beatInterval = (float)60 / (bpm * 4);
-        print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
-        int combo = Mathf.FloorToInt((float)duration / beatInterval);
-        print($"롱노트의 총 콤보 수: {combo}");
+		_connectLineRenderer.Release();
+	}
 
-        divideCount = combo;
+	protected override void PostJudgement()
+	{
+		if (judgementType == JudgementType.Bad)
+			_scoreManager.ResetCombo();
+		else
+			_scoreManager.IncreaseCombo();
+		_scoreManager.AddScore(judgementType);
+		_scoreManager.ShowJudgementType(judgementType);
+		_scoreManager.AddJudgeCount(judgementType);
+	}
 
-        milestones = new double[divideCount];
-        double interval = duration / divideCount;
-        for (int i = 0; i < divideCount; i++)
-        {
-            if (i == 0)
-            {
-                milestones[i] = startTargetDspTime;
-            }
-            else if (i == divideCount - 1)
-            {
-                milestones[i] = endTargetDspTime;
-            }
-            else
-            {
-                milestones[i] = startTargetDspTime + (interval * (i));
-            }
-        }
-    }
+	private void UpdateCurrentMilestoneIndex()
+	{
+		double currentTime = AudioSettings.dspTime;
 
-    public override void Init(Transform target, NoteSpawnData noteSpawnData)
-    {
-        base.Init(target, noteSpawnData);
+		while (currentMilestoneIndex < milestones.Length && currentTime > milestones[currentMilestoneIndex])
+		{
+			currentMilestoneIndex++;
+		}
+	}
 
-        LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
-
-        _isTargetReached = false;
-        this.startTargetDspTime = longNoteSpawnData.startTargetDspTime;
-        this.endTargetDspTime = longNoteSpawnData.endTargetDspTime;
-        double duration = endTargetDspTime - startTargetDspTime;
-        print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
-
-        _targetDspTime = startTargetDspTime;
-
-        CalculateMilestones(duration);
-        _connectLineRenderer.Init(GetDistanceStartPosAndEndPos(), target);
-    }
-
-<<<<<<< HEAD
 	private void OnTriggerExit(Collider other)
 	{
 		if (other.CompareTag("NoteScanner"))
@@ -189,8 +153,6 @@ public class LongNote : Note
 	private void Miss()
 	{
 		Destroy();
-		PoolManager.Instance.longNotePool.Push(this);
-
 		isHit = true;
 		judgementType = JudgementType.Bad;
 		//print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
@@ -198,118 +160,16 @@ public class LongNote : Note
 		OnHit?.Invoke(this);
 		OnHit = null;
 	}
-=======
 
-    public override void Hit(JudgementType noteType)
-    {
-        StartHold();
-        if (currentMilestoneIndex == 0) isFirstHolding = true;
-        if (isFirstHolding)
-        {
-            isHit = true;
-            this.judgementType = noteType;
+	private float GetDistanceStartPosAndEndPos()
+	{
+		double duration = endTargetDspTime - startTargetDspTime;
+		double totalTime = _targetDspTime - _spawnDspTime;
 
-            if (hitEffect != null)
-            {
-                ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-                effect.Play();
-                Destroy(effect.gameObject, effect.main.duration);
-            }
->>>>>>> develop
+		double delta = duration / totalTime;
+		float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
+		print($"distance: {distance}");
 
-            OnHit?.Invoke(this);
-        }
-    }
-
-    public void StartHold()
-    {
-        isHolding = true;
-        UpdateCurrentMilestoneIndex();
-    }
-
-    public void Hold()
-    {
-        if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
-        {
-            Destroy();
-        }
-
-        double currentTime = AudioSettings.dspTime;
-        if (currentTime >= milestones[currentMilestoneIndex])
-        {
-            _connectLineRenderer.Hold();
-
-            Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
-            if (isDisconnected) judgementType = JudgementType.Good;
-
-
-            if (judgementType == JudgementType.Bad)
-                _scoreManager.ResetCombo();
-            else
-                _scoreManager.IncreaseCombo();
-            _scoreManager.AddScore(judgementType);
-            _scoreManager.ShowJudgementType(judgementType);
-            _scoreManager.AddJudgeCount(judgementType);
-
-            currentMilestoneIndex++;
-        }
-    }
-
-    public void Release()
-    {
-        isHolding = false;
-        isDisconnected = true;
-
-        _connectLineRenderer.Release();
-    }
-
-    protected override void PostJudgement()
-    {
-        if (judgementType == JudgementType.Bad)
-            _scoreManager.ResetCombo();
-        else
-            _scoreManager.IncreaseCombo();
-        _scoreManager.AddScore(judgementType);
-        _scoreManager.ShowJudgementType(judgementType);
-        _scoreManager.AddJudgeCount(judgementType);
-    }
-
-    private void UpdateCurrentMilestoneIndex()
-    {
-        double currentTime = AudioSettings.dspTime;
-
-        while (currentMilestoneIndex < milestones.Length && currentTime > milestones[currentMilestoneIndex])
-        {
-            currentMilestoneIndex++;
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Woofer"))
-            Miss();
-    }
-
-    private void Miss()
-    {
-        Destroy();
-        isHit = true;
-        judgementType = JudgementType.Bad;
-        //print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
-        print($"롱노트 Miss 호출. 삭제 시간: {AudioSettings.dspTime - _startDspTime}");
-        OnHit?.Invoke(this);
-    }
-
-    private float GetDistanceStartPosAndEndPos()
-    {
-        double duration = endTargetDspTime - startTargetDspTime;
-        double totalTime = _targetDspTime - _spawnDspTime;
-
-        double delta = duration / totalTime;
-        float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
-        print($"distance: {distance}");
-
-        return distance;
-    }
+		return distance;
+	}
 }
