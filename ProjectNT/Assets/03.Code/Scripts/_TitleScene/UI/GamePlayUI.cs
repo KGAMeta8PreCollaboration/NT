@@ -160,6 +160,7 @@ public class GamePlayUI : BaseTitleUI
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 음악 재시작 동기화
+            //musicChangeSelect.SetMusicData(musicChangeSelect.CurMusicData, true);
         }
     }
 
@@ -182,6 +183,9 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        if (gameType == UIGameType.Muliti)
+        {
+        }
     }
 
     //이전 노래로 넘어감 (LeftButton)
@@ -190,6 +194,9 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
+        if (gameType == UIGameType.Muliti)
+        {
+        }
     }
 
     private void SetDifficulty(Toggle select, int difficulty)

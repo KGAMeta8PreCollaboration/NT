@@ -6,7 +6,8 @@ using UnityEngine;
 public enum NoteType
 {
     Short,
-    Long
+    Long,
+    Top
 }
 
 [Serializable]

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public enum JudgementType
 {
@@ -82,8 +83,9 @@ public abstract class Note : MonoBehaviour
     protected virtual void Destroy()
     {
         OnDestroyed?.Invoke(this);
+        OnDestroyed = null;
         print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 
     public double GetTargetDspTime()
@@ -92,4 +94,21 @@ public abstract class Note : MonoBehaviour
     }
 
     public abstract void Hit(JudgementType noteType);
+    protected virtual void HitEffect()
+    {
+        HitEffect hitEffect = PoolManager.Instance.hitEffectPool.Pop();
+        switch (this)
+        {
+            case ShortNote _:
+            case LongNote _:
+                hitEffect.EffectHorizontal();
+                break;
+            case TopNote _:
+                hitEffect.EffectBillboard();
+                break;
+        }
+        hitEffect.gameObject.transform.position = gameObject.transform.position;
+        hitEffect.gameObject.transform.rotation = transform.rotation;
+    }
+
 }

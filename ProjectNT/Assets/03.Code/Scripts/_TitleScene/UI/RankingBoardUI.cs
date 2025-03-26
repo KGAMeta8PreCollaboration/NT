@@ -14,8 +14,6 @@ public class RankingBoardUI : BaseTitleUI
     public RectTransform contentArea;
     public GameObject loadingPanel;
 
-    [SerializeField]
-    private MusicChangeAndSelect musicCange;
     private List<GameObject> rankingBarUIs = new List<GameObject>();
 
     public override void Awake()
@@ -35,10 +33,7 @@ public class RankingBoardUI : BaseTitleUI
 
     public override void AddEventListeners()
     {
-        musicCange.ChangeMusic("first");
         base.AddEventListeners();
-        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.ChangeMusic("pri", RankingBoardUIUpdate));
-        musicCange.changeRightButton.onClick.AddListener(() => musicCange.ChangeMusic("next", RankingBoardUIUpdate));
         RankingBoardUIUpdate();
     }
 
@@ -46,8 +41,6 @@ public class RankingBoardUI : BaseTitleUI
     {
         RankingBarUIDestroy();
         base.RemoveEventListeners();
-        musicCange.changeLeftButton.onClick.RemoveAllListeners();
-        musicCange.changeRightButton.onClick.RemoveAllListeners();
     }
 
     public void LastUpdateTime()
@@ -67,8 +60,7 @@ public class RankingBoardUI : BaseTitleUI
         loadingPanel.SetActive(true);//데이터 넣는동안 로딩패널 활성화
 
         //데이터 불러오기 - 노래이름으로 그 노래의 세이브 데이터 가져오기
-        string curMusicName = musicCange.CurMusicData.musicName;
-        yield return StartCoroutine(localSaveManager.LocalDataLoad(curMusicName));
+        yield return StartCoroutine(localSaveManager.LocalDataLoad());
 
         //데이터 불러온 후
         int rank = 1;

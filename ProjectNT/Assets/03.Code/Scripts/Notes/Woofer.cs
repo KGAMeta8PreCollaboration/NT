@@ -12,8 +12,6 @@ public class Woofer : MonoBehaviour
 
     public bool isHoldingLongNote = false;
 
-    public PlayerController controller;
-
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -51,8 +49,6 @@ public class Woofer : MonoBehaviour
         {
             isHoldingLongNote = true;
         }
-
-        controller?.InvokeHaptic(0.5f, 0.3f);
     }
 
     public void Hold()
@@ -66,8 +62,6 @@ public class Woofer : MonoBehaviour
             {
                 ReleaseLongNote();
             }
-
-            controller?.InvokeHaptic(0.3f, 0.2f);
         }
     }
 
@@ -90,21 +84,5 @@ public class Woofer : MonoBehaviour
     public void RemoveNote(Note note)
     {
         notes?.Remove(note);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (TryGetComponent<PlayerController>(out PlayerController playerController))
-        {
-            controller = playerController;
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (TryGetComponent<PlayerController>(out PlayerController playerController))
-        {
-            controller = playerController;
-        }
     }
 }
