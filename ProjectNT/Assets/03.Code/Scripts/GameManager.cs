@@ -20,11 +20,13 @@ public class GameManager : Singleton<GameManager>
 
     public BeatMapData beatMapData;
 
+    [Header("로비없이 게임 시작하려면 체크")]
+    public bool skipLobby; //로비씬 없이 바로 게임 스타트 하는 개발용 변수.
 
     private void Start()
     {
         print("경로 : " + Application.persistentDataPath);
-        // GameSceneInit();
+        if (skipLobby) GameSceneInit();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 

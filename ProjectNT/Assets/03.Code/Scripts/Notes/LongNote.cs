@@ -91,7 +91,7 @@ public class LongNote : Note
 
     public void Hold()
     {
-        if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
+        if (currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
         {
             Destroy();
         }
