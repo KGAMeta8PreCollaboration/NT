@@ -12,22 +12,18 @@ public class NoteManager : MonoBehaviour
 
     public List<Note> notes { get; private set; } = new List<Note>();
 
-
     public void CreateNoteFromData(LoadedNoteData noteData)
     {
         NoteSpawnData noteSpawnData = null;
         double spawnDspTime = AudioSettings.dspTime;
         AudioClip hitSound = AudioManager.Instance.GetAudioClipAtString(noteData.noteAudioClipName);
 
-        switch (noteData.noteType)
+        noteSpawnData = noteData.noteType switch
         {
-            case NoteType.Short:
-                noteSpawnData = new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity);
-                break;
-            case NoteType.Long:
-                noteSpawnData = new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0));
-                break;
-        }
+            NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
+            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
+            _ => null
+        };
 
         if (noteSpawnData != null)
             noteRails[noteData.railIndex].SpawnNote(AddNote, RemoveNote, noteSpawnData);

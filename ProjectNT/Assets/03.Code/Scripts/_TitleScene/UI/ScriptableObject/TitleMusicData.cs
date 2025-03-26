@@ -12,4 +12,6 @@ public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
     public Sprite musicAlbumArtSprit;
     [Header("음악 파일")]
     public AudioClip musicClip;
+    [Header("음악 파일")]
+    public string beatMapDataPath;
 }
