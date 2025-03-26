@@ -18,18 +18,13 @@ public class NoteManager : MonoBehaviour
         double spawnDspTime = AudioSettings.dspTime;
         AudioClip hitSound = AudioManager.Instance.GetAudioClipAtString(noteData.noteAudioClipName);
 
-        switch (noteData.noteType)
+        noteSpawnData = noteData.noteType switch
         {
-            case NoteType.Short:
-                noteSpawnData = new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity);
-                break;
-            case NoteType.Long:
-                noteSpawnData = new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 90, 0));
-                break;
-            case NoteType.Top:
-                noteSpawnData = new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.Euler(90, 0, 0));
-                break;
-        }
+            NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
+            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
+            NoteType.Top => new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
+            _ => null
+        };
 
         if (noteSpawnData != null)
             noteRails[noteData.railIndex].SpawnNote(AddNote, RemoveNote, noteSpawnData);
@@ -48,6 +43,7 @@ public class NoteManager : MonoBehaviour
 
     private void AddNote(Note note)
     {
+        note.SetScoreManager(_scoreManager);
         notes.Add(note);
     }
 

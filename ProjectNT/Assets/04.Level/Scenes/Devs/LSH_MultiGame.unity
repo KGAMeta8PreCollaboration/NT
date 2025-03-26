@@ -21028,6 +21028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0597f1661b4c95b46b2291bb641a64b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeButton: {fileID: 0}
+  _scoreManager: {fileID: 1297459241}
 --- !u!114 &440265366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23214,13 +23216,14 @@ GameObject:
   - component: {fileID: 482424593}
   - component: {fileID: 482424592}
   - component: {fileID: 482424591}
+  - component: {fileID: 482424594}
   m_Layer: 5
   m_Name: EndGameMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &482424590
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23306,6 +23309,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482424589}
   m_CullTransparentMesh: 1
+--- !u!114 &482424594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482424589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a816a262c6c3e409d79d60aaf6f429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 1394967508}
+  _restartButton: {fileID: 1195917804}
 --- !u!1 &483956820
 GameObject:
   m_ObjectHideFlags: 0
@@ -44571,13 +44588,14 @@ GameObject:
   - component: {fileID: 896610737}
   - component: {fileID: 896610736}
   - component: {fileID: 896610735}
+  - component: {fileID: 896610734}
   m_Layer: 5
   m_Name: EndGameMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &896610733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44599,6 +44617,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &896610734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896610732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a816a262c6c3e409d79d60aaf6f429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 1070986005}
+  _restartButton: {fileID: 1430248269}
 --- !u!114 &896610735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53259,10 +53291,10 @@ RectTransform:
   m_Father: {fileID: 896610733}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -75}
-  m_SizeDelta: {x: 280, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1070986005
 MonoBehaviour:
@@ -53307,19 +53339,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1070986006}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 544954841}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GoToLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1070986006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71124,10 +71144,10 @@ RectTransform:
   m_Father: {fileID: 482424590}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -75}
-  m_SizeDelta: {x: 280, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1394967508
 MonoBehaviour:
@@ -71172,19 +71192,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394967509}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 544954841}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GoToLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1394967509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93486,6 +93494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0597f1661b4c95b46b2291bb641a64b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeButton: {fileID: 0}
+  _scoreManager: {fileID: 632283051}
 --- !u!1 &1824406996
 GameObject:
   m_ObjectHideFlags: 0
@@ -103830,6 +103840,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2015176554}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2015505493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015505494}
+  - component: {fileID: 2015505495}
+  m_Layer: 0
+  m_Name: PopupManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2015505494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015505493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2015505495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015505493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 897c3d643f9a1864cadfca26d3c4d386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupList: []
 --- !u!1 &2018897260
 GameObject:
   m_ObjectHideFlags: 0

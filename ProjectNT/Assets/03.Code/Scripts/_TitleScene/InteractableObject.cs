@@ -26,8 +26,8 @@ public class InteractableObject : MonoBehaviour
     [SerializeField]
     private InputActionReference right;
 
-    private Outline outline; 
-   
+    private Outline outline;
+
     private bool isEventRegistered = false;
     private XRSimpleInteractable simpleInteractable;
     private Action onCkilcAction;
@@ -63,7 +63,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OnOutLine(HoverEnterEventArgs args)
     {
-        Debug.Log("OnOutLine");
+        //Debug.Log("OnOutLine");
         //페이드아웃이 끝나고 ui가 활성화중이 아닐때
         if (titleManager.IsComplete && !titleManager.IsUIActive)
         {
@@ -83,7 +83,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OffOutLine(HoverExitEventArgs args)
     {
-        Debug.Log("OffOutLine");
+        //Debug.Log("OffOutLine");
         if (outline.enabled == true)
         {
             if (outline != null)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,48 +12,63 @@ public class GameManager : Singleton<GameManager>
 
     private NoteManager[] _noteManager;
     private NoteGenerator[] _noteGenerator;
-    private ResultPanel _resultPanel;
+    //private ResultPanel _resultPanel;
 
-    // TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
-    [SerializeField] private GameObject endGameMenuPanel;
+    //// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
+    //[SerializeField] private GameObject endGameMenuPanel;
+
+
+    public BeatMapData beatMapData;
 
 
     private void Start()
     {
-        GameSceneInit();
+        print("경로 : " + Application.persistentDataPath);
+        // GameSceneInit();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Prototype_Game")
+        print("Scene Loaded : " + scene.name);
+        if (scene.name == "GameScene")
         {
+            print("프로토타입 씬");
             GameSceneInit();
+
             // 특정 씬이 로드될 때 수행할 행동들
         }
+    }
+
+    public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData)
+    {
+        SceneManager.LoadScene("GameScene");
+
     }
 
     private void GameSceneInit()
     {
         _noteManager = FindObjectsOfType<NoteManager>();
         _noteGenerator = FindObjectsOfType<NoteGenerator>();
-        _resultPanel = FindObjectOfType<ResultPanel>(true);
-        _resultPanel?.gameObject.SetActive(false);
+        //_resultPanel = FindObjectOfType<ResultPanel>(true);
+        //_resultPanel?.gameObject.SetActive(false);
+        //endGameMenuPanel = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "EndGameMenuPanel");
         StopCoroutine(StartCoroutine());
         StartCoroutine(StartCoroutine());
     }
 
     private IEnumerator StartCoroutine()
     {
+        FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
         yield return new WaitForSeconds(5f);
         GameStart();
+        StartCoroutine(CheckGameEndCoroutine());
     }
 
     // TODO: 프로토타입 임시
     public void GameStart()
     {
         AudioManager.Instance.StartBGM(delayTime);
-        FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
     }
 
     public void GoToLobby()
@@ -63,8 +79,8 @@ public class GameManager : Singleton<GameManager>
     public void GameEnd()
     {
         print("Game End");
-        _resultPanel?.gameObject.SetActive(true);
-        endGameMenuPanel?.SetActive(true);
+        //_resultPanel?.gameObject.SetActive(true);
+        //endGameMenuPanel?.SetActive(true);
         OnGameEnd?.Invoke();
     }
 
@@ -74,11 +90,18 @@ public class GameManager : Singleton<GameManager>
                && _noteGenerator.All(item => item.IsAllGenerated());
     }
 
-    private void Update()
+    private IEnumerator CheckGameEndCoroutine()
     {
-        if (CheckGameEnd())
+        while (true)
         {
-            GameEnd();
+            print("CheckGameEndCoroutine");
+            if (CheckGameEnd())
+            {
+                GameEnd();
+                yield break;
+            }
+            yield return null;
         }
     }
+
 }

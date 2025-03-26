@@ -14,8 +14,10 @@ public class RankingBoardUI : BaseTitleUI
     public RectTransform contentArea;
     public GameObject loadingPanel;
 
-    [SerializeField]
-    private MusicChangeAndSelect musicCange;
+    //public Button lobbyButton;
+    //public Button musicSelectButton;
+    //public GameObject musicSelectUI;
+
     private List<GameObject> rankingBarUIs = new List<GameObject>();
 
     public override void Awake()
@@ -35,19 +37,21 @@ public class RankingBoardUI : BaseTitleUI
 
     public override void AddEventListeners()
     {
-        musicCange.BackToFirstSongMusic();
+        musicCange.ChangeMusic("first");
         base.AddEventListeners();
-        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.PreviousMusic(RankingBoardUIUpdate));
-        musicCange.changeRightButton.onClick.AddListener(() => musicCange.NextMusic(RankingBoardUIUpdate));
+        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.ChangeMusic("pri", RankingBoardUIUpdate));
+        musicCange.changeRightButton.onClick.AddListener(() => musicCange.ChangeMusic("next", RankingBoardUIUpdate));
         RankingBoardUIUpdate();
+        //lobbyButton.onClick.AddListener(LobbyButton);
+        //musicSelectButton.onClick.AddListener(MusicSelectButton);
     }
 
     public override void RemoveEventListeners()
     {
         RankingBarUIDestroy();
         base.RemoveEventListeners();
-        musicCange.changeLeftButton.onClick.RemoveAllListeners();
-        musicCange.changeRightButton.onClick.RemoveAllListeners();
+        //lobbyButton.onClick.RemoveListener(LobbyButton);
+        //musicSelectButton.onClick.RemoveListener(MusicSelectButton);
     }
 
     public void LastUpdateTime()
@@ -67,8 +71,7 @@ public class RankingBoardUI : BaseTitleUI
         loadingPanel.SetActive(true);//데이터 넣는동안 로딩패널 활성화
 
         //데이터 불러오기 - 노래이름으로 그 노래의 세이브 데이터 가져오기
-        string curMusicName = musicCange.CurMusicData.musicName;
-        yield return StartCoroutine(localSaveManager.LocalDataLoad(curMusicName));
+        yield return StartCoroutine(localSaveManager.LocalDataLoad());
 
         //데이터 불러온 후
         int rank = 1;
@@ -99,4 +102,15 @@ public class RankingBoardUI : BaseTitleUI
         }
         rankingBarUIs.Clear();
     }
+
+    //public void LobbyButton()//로비 화면으로 이동 버튼
+    //{
+    //    CloseUIButtonClick();
+    //}
+
+    //public void MusicSelectButton()//곡 선택 화면으로 이동 버튼
+    //{
+    //    musicSelectUI.SetActive(true);
+    //    gameObject.SetActive(false);
+    //}
 }

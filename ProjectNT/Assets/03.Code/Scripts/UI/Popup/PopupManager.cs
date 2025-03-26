@@ -28,6 +28,16 @@ public class PopupManager : MonoBehaviour
 
         return foundPopup;
     }
+    public T OpenPopup<T>(T popup) where T : Popup
+    {
+        if (popupList.Contains(popup))
+        {
+            popup.gameObject.SetActive(true);
+            return popup;
+        }
+        return null;
+    }
+
 
     public void ClosePopup(Popup popup)
     {
