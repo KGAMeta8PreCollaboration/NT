@@ -96,7 +96,7 @@ public class GameManager : Singleton<GameManager>
     {
         while (true)
         {
-            print("CheckGameEndCoroutine");
+            //print("CheckGameEndCoroutine");
             if (CheckGameEnd())
             {
                 GameEnd();

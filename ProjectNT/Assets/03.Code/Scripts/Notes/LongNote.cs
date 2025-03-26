@@ -29,18 +29,18 @@ public class LongNote : Note
         double interval = duration / divideCount;
         for (int i = 0; i < divideCount; i++)
         {
-            if (i == 0)
-            {
-                milestones[i] = startTargetDspTime;
-            }
-            else if (i == divideCount - 1)
-            {
-                milestones[i] = endTargetDspTime;
-            }
-            else
-            {
-                milestones[i] = startTargetDspTime + (interval * (i));
-            }
+            //if (i == 0)
+            //{
+            //    milestones[i] = startTargetDspTime;
+            //}
+            //else if (i == divideCount - 1)
+            //{
+            //    milestones[i] = endTargetDspTime;
+            //}
+            //else
+            //{
+            milestones[i] = startTargetDspTime + (interval * (i + 1));
+            //}
         }
     }
 
