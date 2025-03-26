@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -66,12 +67,12 @@ public class Woofer : MonoBehaviour
 
     public void ReleaseLongNote()
     {
-        if (isHoldingLongNote)
+        if (isHoldingLongNote && notes.Count > 0)
         {
             LongNote longNote = notes[0] as LongNote;
             longNote.Release();
-            isHoldingLongNote = false;
         }
+        isHoldingLongNote = false;
     }
 
     public void AddNote(Note note)

@@ -9,6 +9,7 @@ public class ConnectLineRenderer : MonoBehaviour
 {
     public Transform start;
     public Transform end;
+    public Transform startRenderer;
     public LineRenderer lineRenderer;
     public BoxCollider boxCollider;
     private Transform _origin;
@@ -49,6 +50,8 @@ public class ConnectLineRenderer : MonoBehaviour
 
     public void Release()
     {
-        start = _origin;
+        //start = _origin;
+        startRenderer.position = _target.position;
+        start = startRenderer;
     }
 }

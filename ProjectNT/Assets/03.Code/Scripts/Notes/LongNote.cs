@@ -24,24 +24,24 @@ public class LongNote : Note
 
 		divideCount = combo;
 
-		milestones = new double[divideCount];
-		double interval = duration / divideCount;
-		for (int i = 0; i < divideCount; i++)
-		{
-			if (i == 0)
-			{
-				milestones[i] = startTargetDspTime;
-			}
-			else if (i == divideCount - 1)
-			{
-				milestones[i] = endTargetDspTime;
-			}
-			else
-			{
-				milestones[i] = startTargetDspTime + (interval * (i));
-			}
-		}
-	}
+        milestones = new double[divideCount];
+        double interval = duration / divideCount;
+        for (int i = 0; i < divideCount; i++)
+        {
+            //if (i == 0)
+            //{
+            //    milestones[i] = startTargetDspTime;
+            //}
+            //else if (i == divideCount - 1)
+            //{
+            //    milestones[i] = endTargetDspTime;
+            //}
+            //else
+            //{
+            milestones[i] = startTargetDspTime + (interval * (i + 1));
+            //}
+        }
+    }
 
 	public override void Init(Transform target, NoteSpawnData noteSpawnData)
 	{
@@ -88,12 +88,12 @@ public class LongNote : Note
 		UpdateCurrentMilestoneIndex();
 	}
 
-	public void Hold()
-	{
-		if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
-		{
-			Destroy();
-		}
+    public void Hold()
+    {
+        if (currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
+        {
+            Destroy();
+        }
 
 		double currentTime = AudioSettings.dspTime;
 		if (currentTime >= milestones[currentMilestoneIndex])
