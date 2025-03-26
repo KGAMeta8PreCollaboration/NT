@@ -2,6 +2,17 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public enum Grade
+{
+    SPlus,
+    S,
+    A,
+    B,
+    C,
+    D,
+    F
+}
+
 public class ScoreManager : MonoBehaviour
 {
     public int score { get; private set; } = 0;
@@ -75,5 +86,29 @@ public class ScoreManager : MonoBehaviour
     public void EndGame()
     {
         score += maxCombo * 100;
+    }
+
+    public Grade CalculateGrade()
+    {
+        float perfect = judgeCount[(int)JudgementType.Perfect];
+        float cool = judgeCount[(int)JudgementType.Cool];
+        float good = judgeCount[(int)JudgementType.Good];
+        float bad = judgeCount[(int)JudgementType.Bad];
+        float total = perfect + cool + good + bad;
+        float grade = (perfect + cool) / total * 100;
+        if (grade >= 95)
+            return Grade.SPlus;
+        if (grade >= 90)
+            return Grade.S;
+        else if (grade >= 80)
+            return Grade.A;
+        else if (grade >= 70)
+            return Grade.B;
+        else if (grade >= 60)
+            return Grade.C;
+        else if (grade >= 50)
+            return Grade.D;
+        else
+            return Grade.F;
     }
 }

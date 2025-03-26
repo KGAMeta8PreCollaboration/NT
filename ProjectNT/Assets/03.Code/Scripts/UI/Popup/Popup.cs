@@ -15,10 +15,10 @@ namespace Game
 
         protected virtual void OnDestroy()
         {
-            closeButton.onClick.RemoveListener(CloseButtonClick);
+            closeButton?.onClick.RemoveListener(CloseButtonClick);
         }
 
-        public void CloseButtonClick()
+        public virtual void CloseButtonClick()
         {
             _popupManager.ClosePopup(this);
             closeAction?.Invoke();
@@ -30,7 +30,7 @@ namespace Game
         public virtual void Init(PopupManager popupManager)
         {
             _popupManager = popupManager;
-            closeButton.onClick.AddListener(CloseButtonClick);
+            closeButton?.onClick.AddListener(CloseButtonClick);
         }
     }
 }

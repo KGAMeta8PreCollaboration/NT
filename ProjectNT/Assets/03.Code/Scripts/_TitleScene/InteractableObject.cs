@@ -26,8 +26,8 @@ public class InteractableObject : MonoBehaviour
     [SerializeField]
     private InputActionReference right;
 
-    private Outline outline; 
-   
+    private Outline outline;
+
     private bool isEventRegistered = false;
     private XRSimpleInteractable simpleInteractable;
     private Action onCkilcAction;

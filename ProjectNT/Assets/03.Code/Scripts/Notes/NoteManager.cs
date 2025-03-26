@@ -21,7 +21,7 @@ public class NoteManager : MonoBehaviour
         noteSpawnData = noteData.noteType switch
         {
             NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
-            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 90, 0)),
+            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
             _ => null
         };
 
@@ -40,8 +40,10 @@ public class NoteManager : MonoBehaviour
         _scoreManager.AddJudgeCount(note.judgementType);
     }
 
+
     private void AddNote(Note note)
     {
+        note.SetScoreManager(_scoreManager);
         notes.Add(note);
     }
 
