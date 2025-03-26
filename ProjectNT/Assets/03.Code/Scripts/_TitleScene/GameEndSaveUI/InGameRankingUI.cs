@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RankingBoardUI : BaseTitleUI
+public class InGameRankingUI : MonoBehaviour
 {
     public LocalSaveManager localSaveManager;
 
@@ -14,47 +14,41 @@ public class RankingBoardUI : BaseTitleUI
     public RectTransform contentArea;
     public GameObject loadingPanel;
 
-    //public Button lobbyButton;
-    //public Button musicSelectButton;
-    //public GameObject musicSelectUI;
+    public float timerTime;
+    public Image timer;
+
+    public Action timeOverAction = null;
 
     private List<GameObject> rankingBarUIs = new List<GameObject>();
 
-    public override void Awake()
-    {
-        base.Awake();
-    }
+    private Coroutine timerCorutine = null;
+
+    public int newDataNumber;
 
     private void OnEnable()
     {
-        AddEventListeners();
+        AddEventListeners();//이벤트 등록
     }
 
     private void OnDisable()
     {
-        RemoveEventListeners();
+        RemoveEventListeners();//이벤트 전부 지우기
     }
 
-    public override void AddEventListeners()
+    public void AddEventListeners()//활성화시 초기화
     {
-        musicCange.ChangeMusic("first");
-        base.AddEventListeners();
-        musicCange.changeLeftButton.onClick.AddListener(() => musicCange.ChangeMusic("pri", RankingBoardUIUpdate));
-        musicCange.changeRightButton.onClick.AddListener(() => musicCange.ChangeMusic("next", RankingBoardUIUpdate));
-        RankingBoardUIUpdate();
-        //lobbyButton.onClick.AddListener(LobbyButton);
-        //musicSelectButton.onClick.AddListener(MusicSelectButton);
+        StartTimer();//타이머 시작
+        RankingBoardUIUpdate();//랭킹바에 Prefab 생성
     }
 
-    public override void RemoveEventListeners()
+    public void RemoveEventListeners()//비활성화시 이벤트 전부 제거
     {
-        RankingBarUIDestroy();
-        base.RemoveEventListeners();
-        //lobbyButton.onClick.RemoveListener(LobbyButton);
-        //musicSelectButton.onClick.RemoveListener(MusicSelectButton);
+        StopTimer();//타이머 종료
+        RankingBarUIDestroy();//랭킹바에 Prefab 전부 제거
+        timeOverAction = null;//액션안에 있는거 제거(혹시 모를 중복 방지)
     }
 
-    public void LastUpdateTime()
+    public void LastUpdateTime()//마지막 업데이트 시간 표시
     {
         lastUpdataTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
     }
@@ -67,6 +61,8 @@ public class RankingBoardUI : BaseTitleUI
 
     private IEnumerator LoadData()
     {
+        Debug.Log("인게임 순위표 표시 시작");
+        Debug.Log($"newDataNumber : {newDataNumber}");
         RankingBarUIDestroy();//이전 데이터들 지우기
         loadingPanel.SetActive(true);//데이터 넣는동안 로딩패널 활성화
 
@@ -83,14 +79,21 @@ public class RankingBoardUI : BaseTitleUI
             //데이터를 바탕으로 랭킹 UI 생성
             foreach (PlayerLocalSaveData data in rankingDataList)
             {
+                Debug.Log("랭킹 데이터 생성");
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
                 rankingBarUIs.Add(rankingBarUI);
                 rankingBarUI.GetComponent<RankingBar>().UISetting(data, rank);
+                if ((rank) == newDataNumber)//새로운 데이터는 색깔 다르게
+                {
+                    Debug.Log("신규 데이터 색 변경");
+                    rankingBarUI.GetComponent<RankingBar>().UIColorChane(Color.yellow);
+                }
                 rank++;
             }
         }
         LastUpdateTime(); //UI 업데이트 후 시간 표시
         loadingPanel.SetActive(false);
+        Debug.Log("인게임 순위표 표시 종료");
     }
 
     //UI프리팹들 지우기
@@ -103,14 +106,30 @@ public class RankingBoardUI : BaseTitleUI
         rankingBarUIs.Clear();
     }
 
-    //public void LobbyButton()//로비 화면으로 이동 버튼
-    //{
-    //    CloseUIButtonClick();
-    //}
+    public void StartTimer()
+    {
+        if (timerCorutine == null)
+        {
+            timerCorutine = StartCoroutine(Timer());
+        }
+    }
 
-    //public void MusicSelectButton()//곡 선택 화면으로 이동 버튼
-    //{
-    //    musicSelectUI.SetActive(true);
-    //    gameObject.SetActive(false);
-    //}
+    public void StopTimer()
+    {
+        StopCoroutine(timerCorutine);
+        timerCorutine = null;
+    }
+
+    public IEnumerator Timer()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < timerTime)
+        {
+            elapsedTime += Time.deltaTime;
+            timer.fillAmount = 1 - (elapsedTime / timerTime);
+            yield return null;
+        }
+        timer.fillAmount = 0;
+        timeOverAction?.Invoke();
+    }
 }
