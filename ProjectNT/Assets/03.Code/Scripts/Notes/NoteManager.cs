@@ -7,7 +7,7 @@ public class NoteManager : MonoBehaviour
     public List<NoteRail> noteRails = new List<NoteRail>();
     public Note shortNotePrefab;
     public Note longNotePrefab;
-
+    public Note topNotePrefab;
     [SerializeField] private ScoreManager _scoreManager;
 
     public List<Note> notes { get; private set; } = new List<Note>();
@@ -22,6 +22,7 @@ public class NoteManager : MonoBehaviour
         {
             NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
             NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
+            NoteType.Top => new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
             _ => null
         };
 
@@ -39,7 +40,6 @@ public class NoteManager : MonoBehaviour
         _scoreManager.ShowJudgementType(note.judgementType);
         _scoreManager.AddJudgeCount(note.judgementType);
     }
-
 
     private void AddNote(Note note)
     {
