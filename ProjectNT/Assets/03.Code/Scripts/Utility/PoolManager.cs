@@ -3,25 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolType
-{
-    Shortnote,
-    Longnote,
-    Topnote,
-    Projectile
-}
-
 public class PoolManager : Singleton<PoolManager>
 {
     private GameObject objectPools;
-    public ShortNote shortNotePrefab;
-    public LongNote longNotePrefab;
-    public TopNote topNotePrefab;
-    public TopNoteProjectile topNoteProjPrefab;
+    [SerializeField] private ShortNote shortNotePrefab;
+    [SerializeField] private LongNote longNotePrefab;
+    [SerializeField] private TopNote topNotePrefab;
+    [SerializeField] private TopNoteProjectile topNoteProjPrefab;
+    [SerializeField] private HitEffect hitEffectPrefab;
     public ObjectPool<ShortNote> shortNotePool;
     public ObjectPool<LongNote> longNotePool;
     public ObjectPool<TopNote> topNotePool;
     public ObjectPool<TopNoteProjectile> topNoteProjPool;
+    public ObjectPool<HitEffect> hitEffectPool;
 
     protected override void Awake()
     {
@@ -30,16 +24,19 @@ public class PoolManager : Singleton<PoolManager>
         objectPools.name = "ObjectPools";
 
         shortNotePool = new ObjectPool<ShortNote>
-        (shortNotePrefab, 10, objectPools);
+        (shortNotePrefab, 25, objectPools);
 
         longNotePool = new ObjectPool<LongNote>
-        (longNotePrefab, 10, objectPools);
+        (longNotePrefab, 20, objectPools);
 
         topNotePool = new ObjectPool<TopNote>
-        (topNotePrefab, 10, objectPools);
+        (topNotePrefab, 20, objectPools);
 
         topNoteProjPool = new ObjectPool<TopNoteProjectile>
-        (topNoteProjPrefab, 10, objectPools);
+        (topNoteProjPrefab, 20, objectPools);
+
+        hitEffectPool = new ObjectPool<HitEffect>
+        (hitEffectPrefab, 40, objectPools);
     }
 
     public Note FindNote(Note note)
@@ -77,7 +74,7 @@ public class ObjectPool<T> where T : MonoBehaviour
 
     private void AddObjectToPool()
     {
-        T newObj = GameObject.Instantiate(prefab, poolObj.transform);
+        T newObj = GameObject.Instantiate(prefab, poolObj.transform, true);
         newObj.gameObject.SetActive(false);
         pool.Enqueue(newObj);
     }

@@ -26,8 +26,9 @@ public class TopNote : Note
         rightTrigger.action.performed += Hit;
         particleSystem.Play(true);
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         leftTrigger.action.performed -= Hit;
         rightTrigger.action.performed -= Hit;
         particleSystem.Play(false);
@@ -51,10 +52,12 @@ public class TopNote : Note
     {
         Debug.Log(xRSimInter.isHovered);
         if (!canInter || !xRSimInter.isHovered) return;
-        // Destroy();
+        Destroy();
         PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         this.judgementType = JudgementType.Perfect;
+        if (judgementType != JudgementType.Bad)
+            HitEffect();
         if (hitEffect != null)
         {
             ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
@@ -62,6 +65,7 @@ public class TopNote : Note
             Destroy(effect.gameObject, effect.main.duration);
         }
         OnHit?.Invoke(this);
+        OnHit = null;
     }
 
     public override void Hit(JudgementType noteType) { }
@@ -99,11 +103,12 @@ public class TopNote : Note
 
     private void Miss()
     {
-        // Destroy();
+        Destroy();
         PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);
+        OnHit = null;
     }
 
     float t;
@@ -114,4 +119,5 @@ public class TopNote : Note
             t += Time.deltaTime;
         }
     }
+
 }

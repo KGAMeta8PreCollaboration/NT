@@ -22,19 +22,20 @@ public class ShortNote : Note
 
     public override void Hit(JudgementType noteType)
     {
-        // Destroy();
+        Destroy();
         PoolManager.Instance.shortNotePool.Push(this);
         isHit = true;
         this.judgementType = noteType;
-
+        if (judgementType != JudgementType.Bad)
+            HitEffect();
         if (hitEffect != null)
         {
             ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
             effect.Play();
             Destroy(effect.gameObject, effect.main.duration);
         }
-
         OnHit?.Invoke(this);
+        OnHit = null;
     }
 
     protected override void PostJudgement()
@@ -55,10 +56,11 @@ public class ShortNote : Note
 
     private void Miss()
     {
-        // Destroy();
+        Destroy();
         PoolManager.Instance.shortNotePool.Push(this);
         isHit = true;
         judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);
+        OnHit = null;
     }
 }

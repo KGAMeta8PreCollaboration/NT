@@ -73,7 +73,8 @@ public class LongNote : Note
 		{
 			isHit = true;
 			this.judgementType = noteType;
-
+			if (judgementType != JudgementType.Bad)
+				HitEffect();
 			if (hitEffect != null)
 			{
 				ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
@@ -82,6 +83,7 @@ public class LongNote : Note
 			}
 
 			OnHit?.Invoke(this);
+			OnHit = null;
 		}
 	}
 
@@ -95,7 +97,7 @@ public class LongNote : Note
 	{
 		if (!isHolding || currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
 		{
-			// Destroy();
+			Destroy();
 			PoolManager.Instance.longNotePool.Push(this);
 		}
 
@@ -155,7 +157,7 @@ public class LongNote : Note
 
 	private void Miss()
 	{
-		// Destroy();
+		Destroy();
 		PoolManager.Instance.longNotePool.Push(this);
 
 		isHit = true;
@@ -163,6 +165,7 @@ public class LongNote : Note
 		//print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
 		print($"롱노트 Miss 호출. 삭제 시간: {AudioSettings.dspTime - _startDspTime}");
 		OnHit?.Invoke(this);
+		OnHit = null;
 	}
 
 	private float GetDistanceStartPosAndEndPos()
