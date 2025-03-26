@@ -14,36 +14,37 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     public Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDicc = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
 
     private void Start()
-    { 
+    {
         // musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>();
         // print("musicChangeAndSelects size : " + musicChangeAndSelects.Length);
 
-        string path = Application.persistentDataPath + "/Projects";
+        //string path = Application.persistentDataPath + "/Projects";
+        string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
         print("projectList size : " + projectList.Length);
         if (projectList.Length == 0)
             return;
         SetProjectPanel(projectList);
-        
+
         for (int i = 0; i < projectList.Length; i++)
         {
             print($"프로젝트 이름 : {projectList[i].projectName}");
             beatMapDicc.Add(projectList[i].projectName, SetBeatMapData(projectList[i], path));
         }
-        
+
         // beatMapDic = SetBeatMapData(projectList[0], path);
     }
 
 
     public Dictionary<Enums.ModeDiff, BeatMapData> SetBeatMapData(ProjectData projectData, string path)
-    { 
+    {
         print("경로 : " + path + "/" + projectData.projectName + "/BeatMapData");
         return LoadBeatMapData(path + "/" + projectData.projectName + "/BeatMapData");
     }
 
     public void SetProjectPanel(ProjectData[] projectList)
     {
-        List<TitleMusicData> titleMusicData = 
+        List<TitleMusicData> titleMusicData =
             projectList.Select(ProjectDataToTitleMusicData).ToList();
 
         // musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>();
@@ -87,7 +88,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         BeatMapData loadedData = JsonUtility.FromJson<BeatMapData>(json);
         return loadedData;
     }
-    
+
     public Dictionary<Enums.ModeDiff, BeatMapData> LoadBeatMapData(string path)
     {
         string jsonData;
@@ -98,7 +99,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         jsonData = File.ReadAllText(path);
         return DictionaryJsonUtility.FromJson<Enums.ModeDiff, BeatMapData>(jsonData);
     }
-    
+
     private Sprite ByteToSprite(byte[] bytes, string filePath = null)
     {
         Texture2D texture = new Texture2D(100, 100);

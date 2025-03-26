@@ -84,7 +84,7 @@ public class GameSceneMove : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
 
-            Vector3 dir = (endPos - curPos).normalized;//이동방향
+            Vector3 dir = (curPos - endPos).normalized;//이동방향
 
             float distanceToMove = speed * Time.deltaTime;
 
