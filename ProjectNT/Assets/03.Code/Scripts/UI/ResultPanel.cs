@@ -79,4 +79,15 @@ public class ResultPanel : Popup
         }
         return null;
     }
+
+    public override void Init(PopupManager popupManager)
+    {
+        base.Init(popupManager);
+
+        GameManager.Instance.OnGameEnd += () =>
+        {
+            popupManager.OpenPopup(this);
+            DisplayPanel();
+        };
+    }
 }

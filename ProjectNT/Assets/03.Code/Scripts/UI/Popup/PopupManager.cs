@@ -29,13 +29,14 @@ public class PopupManager : MonoBehaviour
         return foundPopup;
     }
 
-    public void OpenPopup(string popupName)
+    public void OpenPopup(Popup popup)
     {
-        if (popupList.Find(popup => popup.name == popupName))
+        if (popupList.Contains(popup))
         {
-
+            popup.gameObject.SetActive(true);
         }
     }
+
 
     public void ClosePopup(Popup popup)
     {

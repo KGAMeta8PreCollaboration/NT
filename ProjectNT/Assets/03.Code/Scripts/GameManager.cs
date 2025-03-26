@@ -12,10 +12,10 @@ public class GameManager : Singleton<GameManager>
 
     private NoteManager[] _noteManager;
     private NoteGenerator[] _noteGenerator;
-    private ResultPanel _resultPanel;
+    //private ResultPanel _resultPanel;
 
     // TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
-    [SerializeField] private GameObject endGameMenuPanel;
+    //[SerializeField] private GameObject endGameMenuPanel;
 
 
     private void Start()
@@ -41,9 +41,9 @@ public class GameManager : Singleton<GameManager>
     {
         _noteManager = FindObjectsOfType<NoteManager>();
         _noteGenerator = FindObjectsOfType<NoteGenerator>();
-        _resultPanel = FindObjectOfType<ResultPanel>(true);
-        _resultPanel?.gameObject.SetActive(false);
-        endGameMenuPanel = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "EndGameMenuPanel");
+        //_resultPanel = FindObjectOfType<ResultPanel>(true);
+        //_resultPanel?.gameObject.SetActive(false);
+        //endGameMenuPanel = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "EndGameMenuPanel");
         StopCoroutine(StartCoroutine());
         StartCoroutine(StartCoroutine());
     }
@@ -70,8 +70,8 @@ public class GameManager : Singleton<GameManager>
     public void GameEnd()
     {
         print("Game End");
-        _resultPanel?.gameObject.SetActive(true);
-        endGameMenuPanel?.SetActive(true);
+        //_resultPanel?.gameObject.SetActive(true);
+        //endGameMenuPanel?.SetActive(true);
         OnGameEnd?.Invoke();
     }
 
