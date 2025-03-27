@@ -70,12 +70,7 @@ public class LongNote : Note
 			isHit = true;
 			this.judgementType = noteType;
 
-			if (hitEffect != null)
-			{
-				ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-				effect.Play();
-				Destroy(effect.gameObject, effect.main.duration);
-			}
+			//TODO 힛이펙트
 
 			OnHit?.Invoke(this);
 			OnHit = null;
@@ -88,7 +83,7 @@ public class LongNote : Note
 		UpdateCurrentMilestoneIndex();
 	}
 
-	public void Hold()
+	public void Hold(Transform wofferTransform)
 	{
 		if (currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
 		{
@@ -110,7 +105,7 @@ public class LongNote : Note
 			_scoreManager.AddScore(judgementType);
 			_scoreManager.ShowJudgementType(judgementType);
 			_scoreManager.AddJudgeCount(judgementType);
-
+			HitEffect(wofferTransform);
 			currentMilestoneIndex++;
 		}
 	}

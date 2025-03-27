@@ -56,7 +56,7 @@ public class Woofer : MonoBehaviour
         if (isHoldingLongNote && notes.Count > 0)
         {
             LongNote longNote = notes[0] as LongNote;
-            longNote.Hold();
+            longNote.Hold(transform);
 
             if (AudioSettings.dspTime >= longNote.endTargetDspTime)
             {
