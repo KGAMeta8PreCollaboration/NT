@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3756027102971880382}
-  - component: {fileID: 206476050014833972}
   - component: {fileID: 816628805948609244}
   - component: {fileID: 32990050904379084}
   m_Layer: 0
@@ -34,22 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &206476050014833972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555196556260894465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8d5d4a53429da4eae9bb1702a6e1bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 3604768935792181950}
-  hitProjPrefab: {fileID: 4719334907694206751, guid: 854de8c34fdd4ca4499eb4304f615236,
-    type: 3}
-  m_coll: {fileID: 3753415745911791281}
 --- !u!54 &816628805948609244
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -81,6 +64,7 @@ MonoBehaviour:
   velocityMagnitude: 0
   velocityMagnitudeThreshold: 1.5
   hitThreshold: 0.1
+  triggerEffect: {fileID: 3604768935792181950}
   tmpPointPrefab: {fileID: 4841513338880389929, guid: d1f3e36ab031cef4889f222eb70b16c5,
     type: 3}
   logText: {fileID: 0}
