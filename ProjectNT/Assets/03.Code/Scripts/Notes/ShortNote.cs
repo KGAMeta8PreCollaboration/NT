@@ -20,16 +20,15 @@ public class ShortNote : Note
         Destroy();
         isHit = true;
         this.judgementType = noteType;
-        OnHit?.Invoke(this);
+        if (judgementType != JudgementType.Bad)
+            //HitEffect();
+            OnHit?.Invoke(this);
         OnHit = null;
-        if (judgementType != JudgementType.MISS)
-            PoolManager.Instance.HitEffect(transform.position, true);
-
     }
 
     protected override void PostJudgement()
     {
-        if (judgementType == JudgementType.MISS)
+        if (judgementType == JudgementType.Bad)
             _scoreManager.ResetCombo();
         else
             _scoreManager.IncreaseCombo();
@@ -48,7 +47,7 @@ public class ShortNote : Note
     {
         Destroy();
         isHit = true;
-        judgementType = JudgementType.MISS;
+        judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);
         OnHit = null;
     }
