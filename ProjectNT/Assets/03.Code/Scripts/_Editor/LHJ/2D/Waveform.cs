@@ -53,32 +53,32 @@ public class Waveform : MonoBehaviour
 
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            print("마우스 클릭 감지");
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    print("마우스 클릭 감지");
+        //    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.gameObject == arrow)
-            {
-                isDragging = true;
-            }
-        }
+        //    if (hit.collider != null && hit.collider.gameObject == arrow)
+        //    {
+        //        isDragging = true;
+        //    }
+        //}
 
-        if (isDragging && Input.GetMouseButton(0))
-        {
-            print("마우스 드래그 시작");
-            mousePos.z = 0;
-            arrow.transform.position = new Vector3(mousePos.x, 0);
+        //if (isDragging && Input.GetMouseButton(0))
+        //{
+        //    print("마우스 드래그 시작");
+        //    mousePos.z = 0;
+        //    arrow.transform.position = new Vector3(0, mousePos.y);
 
-            float progress = Mathf.Clamp01((arrow.transform.position.x - arrowOffsetX) / _spriteRenderer.size.x);
-            _audioSource.time = progress * _audioSource.clip.length;
-        }
+        //    float progress = Mathf.Clamp01((arrow.transform.position.x - arrowOffsetX) / _spriteRenderer.size.x);
+        //    _audioSource.time = progress * _audioSource.clip.length;
+        //}
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            print("마우스 드래그 끝남");
-            isDragging = false;
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    print("마우스 드래그 끝남");
+        //    isDragging = false;
+        //}
 
         if (!isDragging)
         {
