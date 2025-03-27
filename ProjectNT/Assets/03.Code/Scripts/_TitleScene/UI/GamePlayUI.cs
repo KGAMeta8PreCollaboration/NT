@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -44,7 +45,7 @@ public class GamePlayUI : BaseTitleUI
     private void OnEnable()
     {
         if (musicChangeSelect != null)
-        {
+        { 
             // musicChangeAndSelect의 gameMusicData를 만들어서줘야할거같은데..
             // TmpCheckDirectory.Instance.musicChangeAndSelect = musicChangeSelect;
             AddEventListeners();
@@ -116,28 +117,31 @@ public class GamePlayUI : BaseTitleUI
         }
         else
         {
-            //Debug.Log($"{TestStartGameData.Instance.musicName}");
-            //Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            //Difficulty difficulty = GetCurrentDifficulty();
-            //BeatMapData beatMapData = new BeatMapData();
+            Debug.Log($"{TestStartGameData.Instance.musicName}");
+            Debug.Log($"{TestStartGameData.Instance.difficulty}");
+            Difficulty difficulty = GetCurrentDifficulty();
+            BeatMapData beatMapData = new BeatMapData();
 
-            //TmpCheckDirectory tmpCheckDirectory = FindObjectOfType<TmpCheckDirectory>();
-            //Dictionary<Enums.ModeDiff, BeatMapData> beatMapDataDictionary = tmpCheckDirectory.beatMapDicc["아몰랑"];
+            
+            string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
+            string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
+            TmpCheckDirectory tmpCheckDirectory = FindObjectOfType<TmpCheckDirectory>();
+            Dictionary<Enums.ModeDiff, BeatMapData> beatMapDataDictionary 
+                = tmpCheckDirectory.beatMapDic[projectName];
 
-            //beatMapData = difficulty switch
-            //{
-            //    Difficulty.Easy => beatMapDataDictionary[Enums.ModeDiff.SOLO_EASY],
-            //    Difficulty.Normal => beatMapDataDictionary[Enums.ModeDiff.SOLO_NORMAL],
-            //    Difficulty.Hard => beatMapDataDictionary[Enums.ModeDiff.SOLO_HARD],
-            //    Difficulty.SuperHard => beatMapDataDictionary[Enums.ModeDiff.SOLO_EXTREAM],
-            //    _ => beatMapData
-            //};
-
-            //GameManager.Instance.SingleGameStart(difficulty, beatMapData);
-            SceneManager.LoadScene("GameScene");
+            beatMapData = difficulty switch
+            {
+                Difficulty.Easy => beatMapDataDictionary[Enums.ModeDiff.SOLO_EASY],
+                Difficulty.Normal => beatMapDataDictionary[Enums.ModeDiff.SOLO_NORMAL],
+                Difficulty.Hard => beatMapDataDictionary[Enums.ModeDiff.SOLO_HARD],
+                Difficulty.SuperHard => beatMapDataDictionary[Enums.ModeDiff.SOLO_EXTREAM],
+                _ => beatMapData
+            };
+            // 프로젝트 이름 어디서 받아올까..? 
+            GameManager.Instance.SingleGameStart(difficulty, beatMapData, projectPath);
         }
     }
-
+    
     private Difficulty GetCurrentDifficulty()
     {
         if (easy.isOn)
@@ -149,7 +153,7 @@ public class GamePlayUI : BaseTitleUI
         if (superHade.isOn)
             return Difficulty.SuperHard;
         return Difficulty.Easy;
-
+        
     }
 
     //음악 재시작
@@ -160,7 +164,6 @@ public class GamePlayUI : BaseTitleUI
         if (gameType == UIGameType.Muliti)
         {
             //멀티플레이어시 음악 재시작 동기화
-            //musicChangeSelect.SetMusicData(musicChangeSelect.CurMusicData, true);
         }
     }
 
@@ -183,9 +186,6 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
-        if (gameType == UIGameType.Muliti)
-        {
-        }
     }
 
     //이전 노래로 넘어감 (LeftButton)
@@ -194,9 +194,6 @@ public class GamePlayUI : BaseTitleUI
         SetDifficulty(easy, 1);
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
-        if (gameType == UIGameType.Muliti)
-        {
-        }
     }
 
     private void SetDifficulty(Toggle select, int difficulty)

@@ -14,4 +14,7 @@ public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
     public AudioClip musicClip;
     [Header("음악 파일")]
     public string beatMapDataPath;
+    [Header("프로젝트 이름")]
+    public string projectName;
+    
 }

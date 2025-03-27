@@ -59,13 +59,15 @@ public class AudioManager : Singleton<AudioManager>
 
 	public void StartBGM(double delayTime)
 	{
+		print("오디오 매니저 StartBGM 1");
 		startDspTime = AudioSettings.dspTime + delayTime;
 		bgmAudioSource.Stop();
 		// bgmAudioSource.Play((ulong)delayTime);
 		bgmAudioSource.PlayScheduled(startDspTime);
 		print($"BGM Sample rate : {bgmAudioSource.clip.frequency}");
-		foreach (NoteGenerator generator in noteGenerators)
+		foreach (NoteGenerator generator in GameManager.Instance.noteGenerators)
 		{
+			print("오디오 매니저 StartBGM 2");
 			generator.NoteGenerateStart(startDspTime);
 		}
 	}
@@ -77,5 +79,10 @@ public class AudioManager : Singleton<AudioManager>
 	private void Update()
 	{
 		ReturnUnusedAudioSources();
+	}
+	
+	public void SetAudioClips(List<AudioClip> clips)
+	{
+		audioClips = clips;
 	}
 }

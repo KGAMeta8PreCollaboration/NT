@@ -1,56 +1,49 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
 {
     public ProjectData[] projectList;
     public BeatMapData beatMapData;
-
     [SerializeField] private MusicChangeAndSelect[] musicChangeAndSelects;
-    public Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic;
-    public Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDicc = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="프로젝트 이름"></param>
+    /// 
+    public Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDic
+        = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
+    
     private void Start()
     {
-        // musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>();
-        // print("musicChangeAndSelects size : " + musicChangeAndSelects.Length);
-
-        //string path = Application.persistentDataPath + "/Projects";
         string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
-        print("projectList size : " + projectList.Length);
         if (projectList.Length == 0)
             return;
         SetProjectPanel(projectList);
 
         for (int i = 0; i < projectList.Length; i++)
-        {
-            print($"프로젝트 이름 : {projectList[i].projectName}");
-            beatMapDicc.Add(projectList[i].projectName, SetBeatMapData(projectList[i], path));
-        }
-
-        // beatMapDic = SetBeatMapData(projectList[0], path);
+            beatMapDic.Add(projectList[i].projectName, SetBeatMapData(projectList[i], path));
     }
-
 
     public Dictionary<Enums.ModeDiff, BeatMapData> SetBeatMapData(ProjectData projectData, string path)
     {
-        print("경로 : " + path + "/" + projectData.projectName + "/BeatMapData");
-        return LoadBeatMapData(path + "/" + projectData.projectName + "/BeatMapData");
+        string beatMapPath = Path.Combine(path, projectData.projectName, "BeatMapData");
+        print("경로 : " + beatMapPath);
+        return LoadBeatMapData(beatMapPath);
     }
 
     public void SetProjectPanel(ProjectData[] projectList)
     {
-        List<TitleMusicData> titleMusicData =
+        List<TitleMusicData> titleMusicData = 
             projectList.Select(ProjectDataToTitleMusicData).ToList();
 
-        // musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>();
-        // print("musicChangeAndSelects size : " + musicChangeAndSelects.Length);
-
-        print("SetProjectPanel : " + titleMusicData.Count);
         foreach (MusicChangeAndSelect t in musicChangeAndSelects)
             t.Init(titleMusicData);
     }
@@ -61,19 +54,21 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         data.musicName = projectData.projectName;
         data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
         data.musicDescription = projectData.artistName;
+        data.projectName = projectData.projectName;
         return data;
     }
 
     private ProjectData[] GetLobbySongData(string path)
     {
         if (!Directory.Exists(path)) return null;
-        string[] strings = Directory.GetDirectories(path);
+        string[] directories = Directory.GetDirectories(path);
         List<ProjectData> res = new List<ProjectData>();
-        foreach (string item in strings)
+        foreach (string directory in directories)
         {
-            if (!File.Exists(item + "/ProjectInfos"))
+            string projectInfoPath = Path.Combine(directory, "ProjectInfos");
+            if (!File.Exists(projectInfoPath))
                 continue;
-            ProjectData projectData = JsonUtility.FromJson<ProjectData>(File.ReadAllText(item + "/ProjectInfos"));
+            ProjectData projectData = JsonUtility.FromJson<ProjectData>(File.ReadAllText(projectInfoPath));
             res.Add(projectData);
         }
         return res.ToArray();
@@ -81,25 +76,24 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
 
     private BeatMapData GetBeatMapData(string directory)
     {
-        string filePath = $"{directory}/BeatMapData";
+        string filePath = Path.Combine(directory, "BeatMapData");
         if (!File.Exists(filePath))
             return null;
         string json = File.ReadAllText(filePath);
         BeatMapData loadedData = JsonUtility.FromJson<BeatMapData>(json);
         return loadedData;
     }
-
+    
     public Dictionary<Enums.ModeDiff, BeatMapData> LoadBeatMapData(string path)
     {
-        string jsonData;
         if (!File.Exists(path))
         {
             return null;
         }
-        jsonData = File.ReadAllText(path);
+        string jsonData = File.ReadAllText(path);
         return DictionaryJsonUtility.FromJson<Enums.ModeDiff, BeatMapData>(jsonData);
     }
-
+    
     private Sprite ByteToSprite(byte[] bytes, string filePath = null)
     {
         Texture2D texture = new Texture2D(100, 100);
