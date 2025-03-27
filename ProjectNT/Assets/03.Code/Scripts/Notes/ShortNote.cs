@@ -20,10 +20,11 @@ public class ShortNote : Note
         Destroy();
         isHit = true;
         this.judgementType = noteType;
-        if (judgementType != JudgementType.Bad)
-            HitEffect();
         OnHit?.Invoke(this);
         OnHit = null;
+        if (judgementType != JudgementType.Bad)
+            PoolManager.Instance.HitEffect(transform.position, true);
+
     }
 
     protected override void PostJudgement()

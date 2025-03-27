@@ -69,6 +69,21 @@ public class PoolManager : Singleton<PoolManager>
                 break;
         }
     }
+
+    public void HitEffect(Vector3 spawnPosition, bool isEffectHorizontal)
+    {
+        HitEffect hitEffect = hitEffectPool.Pop();
+        hitEffect.gameObject.transform.position = spawnPosition;
+        if (isEffectHorizontal)
+        {
+            hitEffect.EffectHorizontal();
+        }
+        else
+        {
+            hitEffect.EffectBillboard();
+        }
+
+    }
 }
 
 public class ObjectPool<T> where T : MonoBehaviour
