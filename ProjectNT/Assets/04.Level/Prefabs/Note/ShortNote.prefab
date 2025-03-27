@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4567978807683224834}
   - component: {fileID: 6078158495955630708}
   m_Layer: 0
-  m_Name: TmpNote
+  m_Name: ShortNote
   m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitSound: {fileID: 0}
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 8291242464577566381, guid: aa7b60f42746f13408757f44f4d5049a,
+    type: 3}
   targetDspTime: 0
 --- !u!1 &5087418633077977808
 GameObject:
@@ -88,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 5087418633077977808}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 33}
+  m_LocalScale: {x: 20, y: 20, z: 120}
   m_Children: []
   m_Father: {fileID: 4567978807683224839}
   m_RootOrder: 0
