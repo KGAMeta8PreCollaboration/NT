@@ -21,13 +21,7 @@ public class ShortNote : Note
         isHit = true;
         this.judgementType = noteType;
         if (judgementType != JudgementType.Bad)
-            //HitEffect();
-            if (hitEffect != null)
-            {
-                ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-                effect.Play();
-                Destroy(effect.gameObject, effect.main.duration);
-            }
+            HitEffect();
         OnHit?.Invoke(this);
         OnHit = null;
     }

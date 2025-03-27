@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Purchasing.MiniJSON;
-using UnityEngine.UI;
-using static Unity.InteractiveTutorials.UnmaskedView;
 
 [Serializable]
 public class PlayerLocalSaveData//세이브 데이터

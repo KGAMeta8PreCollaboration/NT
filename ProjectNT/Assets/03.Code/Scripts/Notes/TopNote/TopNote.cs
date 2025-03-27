@@ -55,12 +55,6 @@ public class TopNote : Note
         this.judgementType = JudgementType.Perfect;
         if (judgementType != JudgementType.Bad)
             HitEffect();
-        if (hitEffect != null)
-        {
-            ParticleSystem effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-            effect.Play();
-            Destroy(effect.gameObject, effect.main.duration);
-        }
         OnHit?.Invoke(this);
         OnHit = null;
     }

@@ -18,9 +18,6 @@ public abstract class Note : MonoBehaviour
     public Action<Note> OnDestroyed;
     public Action<Note> OnHit;
     public AudioClip hitSound;
-
-    [SerializeField] protected ParticleSystem hitEffect;
-
     protected Vector3 _initialPosition;
     protected Vector3 _direction;
     protected double _spawnDspTime;
@@ -95,7 +92,7 @@ public abstract class Note : MonoBehaviour
     }
 
     public abstract void Hit(JudgementType noteType);
-    protected virtual void HitEffect()
+    protected virtual void HitEffect(Transform transform = null)
     {
         HitEffect hitEffect = PoolManager.Instance.hitEffectPool.Pop();
         switch (this)
@@ -108,7 +105,14 @@ public abstract class Note : MonoBehaviour
                 hitEffect.EffectBillboard();
                 break;
         }
-        hitEffect.gameObject.transform.position = gameObject.transform.position;
+        if (transform != null)
+        {
+            hitEffect.gameObject.transform.position = transform.position;
+        }
+        else
+        {
+            hitEffect.gameObject.transform.position = gameObject.transform.position;
+        }
         hitEffect.gameObject.transform.rotation = transform.rotation;
     }
 
