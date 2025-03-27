@@ -11,9 +11,9 @@ public class PoolManager : Singleton<PoolManager>
     [SerializeField] private TopNote topNotePrefab;
     [SerializeField] private TopNoteProjectile topNoteProjPrefab;
     [SerializeField] private HitEffect hitEffectPrefab;
-    public ObjectPool<ShortNote> shortNotePool;
-    public ObjectPool<LongNote> longNotePool;
-    public ObjectPool<TopNote> topNotePool;
+    public ObjectPool<Note> shortNotePool;
+    public ObjectPool<Note> longNotePool;
+    public ObjectPool<Note> topNotePool;
     public ObjectPool<TopNoteProjectile> topNoteProjPool;
     public ObjectPool<HitEffect> hitEffectPool;
 
@@ -23,13 +23,13 @@ public class PoolManager : Singleton<PoolManager>
         objectPools = new GameObject();
         objectPools.name = "ObjectPools";
 
-        shortNotePool = new ObjectPool<ShortNote>
+        shortNotePool = new ObjectPool<Note>
         (shortNotePrefab, 25, objectPools);
 
-        longNotePool = new ObjectPool<LongNote>
+        longNotePool = new ObjectPool<Note>
         (longNotePrefab, 20, objectPools);
 
-        topNotePool = new ObjectPool<TopNote>
+        topNotePool = new ObjectPool<Note>
         (topNotePrefab, 20, objectPools);
 
         topNoteProjPool = new ObjectPool<TopNoteProjectile>
@@ -39,7 +39,7 @@ public class PoolManager : Singleton<PoolManager>
         (hitEffectPrefab, 40, objectPools);
     }
 
-    public Note FindNote(Note note)
+    public Note PopNote(Note note)
     {
         switch (note.GetType())
         {
@@ -51,6 +51,22 @@ public class PoolManager : Singleton<PoolManager>
                 return topNotePool.Pop();
             default:
                 throw new ArgumentException("Unsupported note type");
+        }
+    }
+
+    public void PushNote(Note note)
+    {
+        switch (note.GetType())
+        {
+            case Type t when t == typeof(ShortNote):
+                shortNotePool.Push(note);
+                break;
+            case Type t when t == typeof(LongNote):
+                longNotePool.Push(note);
+                break;
+            case Type t when t == typeof(TopNote):
+                topNotePool.Push(note);
+                break;
         }
     }
 }
