@@ -18,7 +18,6 @@ public class ShortNote : Note
     public override void Hit(JudgementType noteType)
     {
         Destroy();
-        PoolManager.Instance.shortNotePool.Push(this);
         isHit = true;
         this.judgementType = noteType;
         if (judgementType != JudgementType.Bad)
@@ -53,7 +52,6 @@ public class ShortNote : Note
     private void Miss()
     {
         Destroy();
-        PoolManager.Instance.shortNotePool.Push(this);
         isHit = true;
         judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);

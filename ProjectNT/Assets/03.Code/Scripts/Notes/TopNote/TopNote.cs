@@ -10,7 +10,6 @@ public class TopNote : Note
     [SerializeField] private InputActionReference leftTrigger;
     [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
-    private ScoreManager _scoreManager;
     private XRSimpleInteractable xRSimInter;
     private bool canInter = false;
     public double targetDspTime;
@@ -52,7 +51,6 @@ public class TopNote : Note
         Debug.Log(xRSimInter.isHovered);
         if (!canInter || !xRSimInter.isHovered) return;
         Destroy();
-        PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         this.judgementType = JudgementType.Perfect;
         if (judgementType != JudgementType.Bad)
@@ -103,7 +101,6 @@ public class TopNote : Note
     private void Miss()
     {
         Destroy();
-        PoolManager.Instance.topNotePool.Push(this);
         isHit = true;
         judgementType = JudgementType.Bad;
         OnHit?.Invoke(this);
