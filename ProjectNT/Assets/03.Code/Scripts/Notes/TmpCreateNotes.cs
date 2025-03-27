@@ -29,7 +29,7 @@ public class TmpCreateNotes : MonoBehaviour
 	{
 		if (context.performed)
 		{
-			Debug.Log($"누른 시간: {AudioSettings.dspTime}");
+			// Debug.Log($"누른 시간: {AudioSettings.dspTime}");
 
 			int index = context.control.name == "a" ? 0 :
 				context.control.name == "s" ? 1 :

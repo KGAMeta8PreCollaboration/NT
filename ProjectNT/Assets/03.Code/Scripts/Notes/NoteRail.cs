@@ -29,6 +29,7 @@ public class NoteRail : MonoBehaviour
 	public virtual void AddNote(Note note)
 	{
 		noteList.AddLast(note);
+		// note.OnHit = null;
 		note.OnHit += OnNoteHit;
 		if (noteList.Count == 1)
 		{

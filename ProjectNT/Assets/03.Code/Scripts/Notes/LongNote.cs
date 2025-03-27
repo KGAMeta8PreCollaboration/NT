@@ -69,9 +69,6 @@ public class LongNote : Note
 		{
 			isHit = true;
 			this.judgementType = noteType;
-
-			//TODO 힛이펙트
-
 			OnHit?.Invoke(this);
 			OnHit = null;
 		}
@@ -105,7 +102,7 @@ public class LongNote : Note
 			_scoreManager.AddScore(judgementType);
 			_scoreManager.ShowJudgementType(judgementType);
 			_scoreManager.AddJudgeCount(judgementType);
-			HitEffect(wofferTransform);
+			PoolManager.Instance.HitEffect(wofferTransform.position, true);
 			currentMilestoneIndex++;
 		}
 	}
@@ -150,7 +147,7 @@ public class LongNote : Note
 		Destroy();
 		isHit = true;
 		judgementType = JudgementType.Bad;
-		//print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
+		print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
 		print($"롱노트 Miss 호출. 삭제 시간: {AudioSettings.dspTime - _startDspTime}");
 		OnHit?.Invoke(this);
 		OnHit = null;

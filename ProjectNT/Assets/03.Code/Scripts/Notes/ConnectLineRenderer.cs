@@ -28,8 +28,8 @@ public class ConnectLineRenderer : MonoBehaviour
 
         float z = (end.localPosition.z - start.localPosition.z);
 
-        print($"롱노트 startPos: {start.localPosition.z}, endPos: {end.localPosition.z}");
-        print($"롱노트 startPos와 endPos의 차이: {z}");
+        // print($"롱노트 startPos: {start.localPosition.z}, endPos: {end.localPosition.z}");
+        // print($"롱노트 startPos와 endPos의 차이: {z}");
         boxCollider.size = new Vector3(0.4f, 1, Mathf.Abs(z));
         boxCollider.center = new Vector3(0, 0, (z / 2));
 

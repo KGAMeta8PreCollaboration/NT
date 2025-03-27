@@ -92,28 +92,4 @@ public abstract class Note : MonoBehaviour
     }
 
     public abstract void Hit(JudgementType noteType);
-    protected virtual void HitEffect(Transform transform = null)
-    {
-        HitEffect hitEffect = PoolManager.Instance.hitEffectPool.Pop();
-        switch (this)
-        {
-            case ShortNote _:
-            case LongNote _:
-                hitEffect.EffectHorizontal();
-                break;
-            case TopNote _:
-                hitEffect.EffectBillboard();
-                break;
-        }
-        if (transform != null)
-        {
-            hitEffect.gameObject.transform.position = transform.position;
-        }
-        else
-        {
-            hitEffect.gameObject.transform.position = gameObject.transform.position;
-        }
-        hitEffect.gameObject.transform.rotation = transform.rotation;
-    }
-
 }

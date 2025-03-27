@@ -12,9 +12,9 @@ public class AudioManager : Singleton<AudioManager>
 	private List<AudioSource> _audioSources = new List<AudioSource>();
 	bool isPlay = false;
 	private NoteGenerator[] noteGenerators;
-	
+
 	protected override void Awake()
-	{ 
+	{
 		base.Awake();
 		foreach (AudioClip item in audioClips)
 			item.LoadAudioData();
@@ -39,17 +39,17 @@ public class AudioManager : Singleton<AudioManager>
 		audioSource.PlayScheduled(playTime);
 		// audioSource.PlayOneShot(clip);
 	}
-	
+
 	private IEnumerator CheckAudioPlayTime()
 	{
 		while (true)
 		{
 			yield return new WaitForSeconds(5f);
-			print($"BGMPlayTime : {bgmAudioSource.time:F3}, DSPTime : {AudioSettings.dspTime - startDspTime:F3}, dsp - bgm : {AudioSettings.dspTime - startDspTime - bgmAudioSource.time:F3}");
+			// print($"BGMPlayTime : {bgmAudioSource.time:F3}, DSPTime : {AudioSettings.dspTime - startDspTime:F3}, dsp - bgm : {AudioSettings.dspTime - startDspTime - bgmAudioSource.time:F3}");
 			// print($"BGM 레이턴시 : {(AudioSettings.dspTime - startDspTime)}, AudioSettings.dspTime : {AudioSettings.dspTime}, startDspTime : {startDspTime}");
 		}
 	}
-	
+
 	private void ReturnUnusedAudioSources()
 	{
 		_audioSources
@@ -69,7 +69,7 @@ public class AudioManager : Singleton<AudioManager>
 			generator.NoteGenerateStart(startDspTime);
 		}
 	}
-	
+
 	public AudioClip GetAudioClipAtString(string clipName)
 	{
 		return audioClips.Find(clip => clip.name == clipName);

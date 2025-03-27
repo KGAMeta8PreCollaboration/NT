@@ -54,7 +54,8 @@ public class TopNote : Note
         isHit = true;
         this.judgementType = JudgementType.Perfect;
         if (judgementType != JudgementType.Bad)
-            HitEffect();
+            PoolManager.Instance.HitEffect(transform.position, false);
+
         OnHit?.Invoke(this);
         OnHit = null;
     }

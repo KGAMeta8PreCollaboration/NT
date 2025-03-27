@@ -30,16 +30,16 @@ public class NoteManager : MonoBehaviour
             noteRails[noteData.railIndex].SpawnNote(AddNote, RemoveNote, noteSpawnData);
     }
 
-    private void OnNoteHit(Note note)
-    {
-        if (note.judgementType == JudgementType.Bad)
-            _scoreManager.ResetCombo();
-        else
-            _scoreManager.IncreaseCombo();
-        _scoreManager.AddScore(note.judgementType);
-        _scoreManager.ShowJudgementType(note.judgementType);
-        _scoreManager.AddJudgeCount(note.judgementType);
-    }
+    // private void OnNoteHit(Note note)
+    // {
+    //     if (note.judgementType == JudgementType.Bad)
+    //         _scoreManager.ResetCombo();
+    //     else
+    //         _scoreManager.IncreaseCombo();
+    //     _scoreManager.AddScore(note.judgementType);
+    //     _scoreManager.ShowJudgementType(note.judgementType);
+    //     _scoreManager.AddJudgeCount(note.judgementType);
+    // }
 
     private void AddNote(Note note)
     {
