@@ -5,14 +5,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
-
+public delegate bool HapticDelegate(float amplitude, float duration);
 public class PlayerController : MonoBehaviour
 {
     public float velocityMagnitude;
     public float velocityMagnitudeThreshold;
     public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
 
+    [SerializeField] private ParticleSystem triggerEffect;
     private ActionBasedController _controller;
+    private XRRayInteractor rayInter;
     private Vector3 prevPos = new Vector3();
 
     public GameObject tmpPointPrefab;
@@ -20,10 +22,28 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI logText;
     public TextMeshProUGUI logText2;
     private ScoreUI _scoreUI;
+    private HapticDelegate hapticDelegate;
 
-    private void Start()
+    private void Awake()
     {
         _controller = GetComponentInParent<ActionBasedController>();
+        rayInter = _controller.GetComponentInChildren<XRRayInteractor>();
+
+    }
+    private void OnEnable()
+    {
+        _controller.activateAction.action.performed += (x) => triggerEffect.Play(true);
+        _controller.activateAction.action.performed += OnTopNoteHit;
+        hapticDelegate += _controller.SendHapticImpulse;
+    }
+    private void OnDisable()
+    {
+        _controller.activateAction.action.performed -= (x) => triggerEffect.Play(true);
+        _controller.activateAction.action.performed -= OnTopNoteHit;
+        hapticDelegate -= _controller.SendHapticImpulse;
+    }
+    private void Start()
+    {
 
         //=============test//=============
         logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
@@ -89,18 +109,17 @@ public class PlayerController : MonoBehaviour
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
                 logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
-
+                _controller.SendHapticImpulse(0.6f, 0.15f);
                 print("우퍼와 상호작용 됨");
             }
         }
     }
-
     private void OnCollisionStay(Collision collision)
     {
 
         if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
         {
-            woofer.Hold();
+            woofer.Hold(hapticDelegate);
         }
     }
 
@@ -115,5 +134,21 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         _controller.activateAction.action.performed -= TriggerButtonAction;
+    }
+
+    private void OnTopNoteHit(InputAction.CallbackContext cnt)
+    {
+        if (rayInter.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        {
+            if (hit.collider.CompareTag("TopNote"))
+            {
+                TopNoteProjectile proj =
+                PoolManager.Instance.topNoteProjPool.Pop();
+                proj.transform.SetParent(transform, true);
+                proj.gameObject.transform.position = transform.position;
+                proj.Init(transform.position, hit.transform.position);
+                _controller.SendHapticImpulse(0.8f, 0.15f);
+            }
+        }
     }
 }
