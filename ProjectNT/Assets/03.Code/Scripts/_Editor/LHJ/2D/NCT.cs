@@ -18,6 +18,8 @@ public class NCT : MonoBehaviour
     [SerializeField] int pixelPerSecond = 100; //높이
     [SerializeField] Camera cam;
 
+    public double cellHeight = 0;
+
     private GridManager _gridManager;
     private AudioSourceManager _audioSourceManager;
     private SpriteRenderer _spriteRenderer;
@@ -55,6 +57,11 @@ public class NCT : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             CreateNode(GetGridPositionFromMouse());
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            RemoveNode(GetGridPositionFromMouse());
         }
 
         CreatePreviewNode(GetGridPositionFromMouse());
@@ -166,6 +173,9 @@ public class NCT : MonoBehaviour
         }
 
         _nodeGrid = new Node[_column, heightGrid.Count];
+        cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+        //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+        print($"한칸의 넓이 : {cellHeight}");
     }
 
     private Vector2Int GetGridPositionFromMouse()
@@ -275,5 +285,17 @@ public class NCT : MonoBehaviour
             node.transform.localScale = nodePrefab.transform.localScale;
             _nodeGrid[currentIndex.x, currentIndex.y] = node;
         }
+    }
+
+    private void RemoveNode(Vector2Int currentIndex)
+    {
+        if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
+        {
+            Debug.LogWarning("제거할 노드가 없음");
+            return;
+        }
+
+        Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
+        _nodeGrid[currentIndex.x, currentIndex.y] = null;
     }
 }

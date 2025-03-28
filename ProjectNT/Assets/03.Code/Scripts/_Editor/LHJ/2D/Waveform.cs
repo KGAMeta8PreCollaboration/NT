@@ -9,20 +9,22 @@ public class Waveform : MonoBehaviour
     [SerializeField] private int height = 64;
     [SerializeField] private Color background = Color.black;
     [SerializeField] private Color waveformColor = Color.yellow;
-    [SerializeField] private GameObject arrow = null;
+    [SerializeField] private GameObject playBarPrefab;
     [SerializeField] private Camera cam = null;
 
     private AudioSource _audioSource = null;
-    private SpriteRenderer _spriteRenderer = null;
+    public SpriteRenderer _spriteRenderer = null;
     private int sampleSize;
     private float[] samples = null;
     private float[] waveform = null;
     private float arrowOffsetX;
     private bool isDragging = false;
+    private bool isLoaded = false;
 
     private void Awake()
     {
         _spriteRenderer = this.GetComponent<SpriteRenderer>();
+        isLoaded = false;
     }
 
     public void CreateWaveform(AudioSource audioSource)
@@ -33,26 +35,26 @@ public class Waveform : MonoBehaviour
 
         Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
         _spriteRenderer.sprite = Sprite.Create(texture, rect, Vector2.zero);
-
         //arrow.transform.position = new Vector3(0f, 0f);
         //arrowOffsetX = -(arrow.GetComponent<SpriteRenderer>().size.x / 2f);
 
-        cam.transform.position = new Vector3(0f, 0f, -1f);
-        cam.transform.Translate(Vector3.right * (_spriteRenderer.size.x / 2f));
+        //cam.transform.position = new Vector3(0f, 0f, -1f);
+        //cam.transform.Translate(Vector3.right * (_spriteRenderer.size.x / 2f));
     }
 
     private void Update()
     {
-        if (_audioSource == null)
+        //if (_audioSource == null)
+        //{
+        //    return;
+        //}
+
+        if (isLoaded != true)
         {
             return;
         }
 
-        //현재 노래 위치에 따른 Arrow 동기화
         SetArrowPos();
-
-        Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-
         //if (Input.GetMouseButtonDown(0))
         //{
         //    print("마우스 클릭 감지");
@@ -80,11 +82,11 @@ public class Waveform : MonoBehaviour
         //    isDragging = false;
         //}
 
-        if (!isDragging)
-        {
-            float xoffset = (_audioSource.time / _audioSource.clip.length) * _spriteRenderer.size.x;
-            arrow.transform.position = new Vector3(0, xoffset + arrowOffsetX);
-        }
+        //if (!isDragging)
+        //{
+        //    float xoffset = (_audioSource.time / _audioSource.clip.length) * _spriteRenderer.size.x;
+        //    playBarPrefab.transform.position = new Vector3(0, xoffset + arrowOffsetX);
+        //}
     }
 
     private Texture2D GetWaveform()
@@ -124,14 +126,31 @@ public class Waveform : MonoBehaviour
         }
 
         texture.Apply();
-
+        isLoaded = true;
+        //MakePlayBar();
         return texture;
+    }
+
+    private void MakePlayBar()
+    {
+        if (isLoaded == false)
+        {
+            print("아직 로딩이 끝나지 않음");
+            return;
+        }
+
+        GameObject playBarObj = Instantiate(playBarPrefab);
+        PlayBar playBar = playBarObj.GetComponent<PlayBar>();
+        //playBar.transform.SetParent(transform);
+        playBar.transform.position = new Vector3(0, arrowOffsetX);
     }
 
     private void SetArrowPos()
     {
+        //progress = 현재 노래 시간 / 전체 노래 시간
         float progress = _audioSource.time / _audioSource.clip.length;
-        float xOffset = progress * _spriteRenderer.size.x;
-        arrow.transform.position = new Vector3(arrowOffsetX + xOffset, 0);
+        //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
+        float yOffset = progress * _spriteRenderer.size.x;
+        playBarPrefab.transform.position = new Vector3(0, arrowOffsetX + yOffset);
     }
 }
