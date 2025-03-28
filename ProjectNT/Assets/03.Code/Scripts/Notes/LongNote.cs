@@ -95,7 +95,7 @@ public class LongNote : Note
 			Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
 			if (isDisconnected) judgementType = JudgementType.Good;
 
-			if (judgementType == JudgementType.Bad)
+			if (judgementType == JudgementType.MISS)
 				_scoreManager.ResetCombo();
 			else
 				_scoreManager.IncreaseCombo();
@@ -117,7 +117,7 @@ public class LongNote : Note
 
 	protected override void PostJudgement()
 	{
-		if (judgementType == JudgementType.Bad)
+		if (judgementType == JudgementType.MISS)
 			_scoreManager.ResetCombo();
 		else
 			_scoreManager.IncreaseCombo();
@@ -146,7 +146,7 @@ public class LongNote : Note
 	{
 		Destroy();
 		isHit = true;
-		judgementType = JudgementType.Bad;
+		judgementType = JudgementType.MISS;
 		print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
 		print($"롱노트 Miss 호출. 삭제 시간: {AudioSettings.dspTime - _startDspTime}");
 		OnHit?.Invoke(this);

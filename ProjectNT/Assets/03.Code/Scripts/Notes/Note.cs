@@ -4,10 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public enum JudgementType
 {
-    Bad,
+    MISS,
     Good,
     Cool,
-    Perfect,
+    PERFECT,
 }
 
 public abstract class Note : MonoBehaviour
