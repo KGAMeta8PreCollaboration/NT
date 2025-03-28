@@ -14,6 +14,8 @@ public class ConnectLineRenderer : MonoBehaviour
     public BoxCollider boxCollider;
     private Transform _origin;
     private Transform _target;
+    public ConnectLineRendererOutLine leftLR;
+    public ConnectLineRendererOutLine rightLR;
 
     public void Init(float distance, Transform target)
     {
@@ -35,6 +37,9 @@ public class ConnectLineRenderer : MonoBehaviour
 
         _origin = start;
         _target = target;
+
+        leftLR.Init(target);
+        rightLR.Init(target);
     }
 
     void Update()
@@ -46,12 +51,17 @@ public class ConnectLineRenderer : MonoBehaviour
     public void Hold()
     {
         start = _target;
+        leftLR.Hold();
+        rightLR.Hold();
     }
 
     public void Release()
     {
         //start = _origin;
         startRenderer.position = _target.position;
-        start = startRenderer;
+        start = _origin;
+
+        leftLR.Release();
+        rightLR.Release();
     }
 }
