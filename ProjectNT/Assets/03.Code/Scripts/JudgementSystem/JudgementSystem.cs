@@ -22,7 +22,7 @@ public class JudgementSystem : MonoBehaviour
         if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
         {
             print("미스!");
-            return JudgementType.Bad;
+            return JudgementType.MISS;
         }
         Note note = _woofer.notes[0];
 
@@ -34,7 +34,7 @@ public class JudgementSystem : MonoBehaviour
         if (timeDiff < 0.2f)
         {
             hitRes = "Perfect";
-            noteType = JudgementType.Perfect;
+            noteType = JudgementType.PERFECT;
         }
         else if (timeDiff < 0.25f)
         {
@@ -49,7 +49,7 @@ public class JudgementSystem : MonoBehaviour
         else
         {
             hitRes = "Bad";
-            noteType = JudgementType.Bad;
+            noteType = JudgementType.MISS;
         }
         print($"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {hitRes}");
         //logText2.text = $"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {hitRes}";

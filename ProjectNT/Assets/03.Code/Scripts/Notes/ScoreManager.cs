@@ -45,9 +45,9 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(JudgementType noteType)
     {
-        int index = noteType == JudgementType.Perfect ? 100 :
+        int index = noteType == JudgementType.PERFECT ? 100 :
             noteType == JudgementType.Good ? 50 :
-            noteType == JudgementType.Bad ? 0 : 0;
+            noteType == JudgementType.MISS ? 0 : 0;
         score += index;
         print($"AddScore : {noteType} : total score : {score}");
         OnScoreChanged?.Invoke(score);
@@ -90,10 +90,10 @@ public class ScoreManager : MonoBehaviour
 
     public Grade CalculateGrade()
     {
-        float perfect = judgeCount[(int)JudgementType.Perfect];
+        float perfect = judgeCount[(int)JudgementType.PERFECT];
         float cool = judgeCount[(int)JudgementType.Cool];
         float good = judgeCount[(int)JudgementType.Good];
-        float bad = judgeCount[(int)JudgementType.Bad];
+        float bad = judgeCount[(int)JudgementType.MISS];
         float total = perfect + cool + good + bad;
         float grade = (perfect + cool) / total * 100;
         if (grade >= 95)
