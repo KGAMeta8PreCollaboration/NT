@@ -5,6 +5,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ScoreUI : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] private RectTransform judgementRect;
     [SerializeField] private TextMeshProUGUI _judgementText;
     private bool exitJudgement = false;
-    public Color perfectColor;
-    public Color coolColor;
-    public Color goodColor;
-    public Color missColor;
+    public TMP_ColorGradient perfectGradient;
+    public TMP_ColorGradient coolGradient;
+    public TMP_ColorGradient goodGradient;
+    public TMP_ColorGradient missGradient;
     public TextMeshProUGUI _timeText;
     private double _startDspTime;
     public int tempHitCount;
@@ -56,16 +57,16 @@ public class ScoreUI : MonoBehaviour
         switch (judgementType)
         {
             case JudgementType.PERFECT:
-                _judgementText.color = perfectColor;
+                _judgementText.colorGradientPreset = perfectGradient;
                 break;
             case JudgementType.Cool:
-                _judgementText.color = coolColor;
+                _judgementText.colorGradientPreset = coolGradient;
                 break;
             case JudgementType.Good:
-                _judgementText.color = goodColor;
+                _judgementText.colorGradientPreset = goodGradient;
                 break;
             case JudgementType.MISS:
-                _judgementText.color = missColor;
+                _judgementText.colorGradientPreset = missGradient;
                 break;
         }
         _judgementText.DOFade(judgementTextalpha, 0);
