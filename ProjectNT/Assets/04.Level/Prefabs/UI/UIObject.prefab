@@ -574,10 +574,10 @@ MonoBehaviour:
   _scoreCountText: {fileID: 8024723610408227832}
   judgementRect: {fileID: 8024723610744784247}
   _judgementText: {fileID: 8024723610646450523}
-  perfectColor: {r: 1, g: 0.88235295, b: 0, a: 1}
-  coolColor: {r: 0, g: 0.39215687, b: 1, a: 1}
-  goodColor: {r: 0.39215687, g: 1, b: 0.39215687, a: 1}
-  missColor: {r: 1, g: 0, b: 0, a: 1}
+  perfectGradient: {fileID: 11400000, guid: 011f9df04d346324bb9e9ec4a7725229, type: 2}
+  coolGradient: {fileID: 11400000, guid: 039ccaae4f72dd54a814383b8bffe62b, type: 2}
+  goodGradient: {fileID: 11400000, guid: 222e8fcda5500d64e87620e0da95627e, type: 2}
+  missGradient: {fileID: 11400000, guid: 3632d90a258b0f14b93cdd9928aa65d5, type: 2}
   _timeText: {fileID: 8024723610539239100}
   tempHitCount: 0
   judgementTextalpha: 0.8
@@ -1076,10 +1076,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 0.5882353}
-    bottomRight: {r: 1, g: 1, b: 1, a: 0.5882353}
+    topLeft: {r: 1, g: 0.72156864, b: 0, a: 1}
+    topRight: {r: 1, g: 0.84313726, b: 0, a: 1}
+    bottomLeft: {r: 1, g: 0.84313726, b: 0, a: 1}
+    bottomRight: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
