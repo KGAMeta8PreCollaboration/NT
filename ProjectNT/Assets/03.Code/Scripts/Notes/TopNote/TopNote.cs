@@ -52,8 +52,8 @@ public class TopNote : Note
         if (!canInter || !xRSimInter.isHovered) return;
         Destroy();
         isHit = true;
-        this.judgementType = JudgementType.Perfect;
-        if (judgementType != JudgementType.Bad)
+        this.judgementType = JudgementType.PERFECT;
+        if (judgementType != JudgementType.MISS)
             PoolManager.Instance.HitEffect(transform.position, false);
 
         OnHit?.Invoke(this);
@@ -64,7 +64,7 @@ public class TopNote : Note
 
     protected override void PostJudgement()
     {
-        if (judgementType == JudgementType.Bad)
+        if (judgementType == JudgementType.MISS)
             _scoreManager.ResetCombo();
         else
             _scoreManager.IncreaseCombo();
@@ -97,7 +97,7 @@ public class TopNote : Note
     {
         Destroy();
         isHit = true;
-        judgementType = JudgementType.Bad;
+        judgementType = JudgementType.MISS;
         OnHit?.Invoke(this);
         OnHit = null;
     }
