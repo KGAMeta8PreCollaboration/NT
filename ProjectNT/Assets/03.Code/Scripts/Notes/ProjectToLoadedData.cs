@@ -49,8 +49,20 @@ public partial class ProjectToLoadedData
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
 		foreach (string item in strings)
-			StartCoroutine(WebRequest(item));
+			StartCoroutine(AudioWebRequest(item, AddAudioClip));
 		StartCoroutine(CheckAudioClipLoad(returnCallback, strings.Length));
+	}
+	
+	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
+	
+	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
+	{
+		print("GetBgmAudioClip 1");
+		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
+		print($"projectPath = {projectPath}");
+		if (!File.Exists(projectPath)) return ;
+		print("GetBgmAudioClip 2");
+		StartCoroutine(AudioWebRequest(projectPath, returnCallback));
 	}
 	
 	private IEnumerator CheckAudioClipLoad(Action<List<AudioClip>> callback, int cnt)
@@ -60,12 +72,14 @@ public partial class ProjectToLoadedData
 		callback?.Invoke(audioClips);
 	}
 	
-	private IEnumerator WebRequest(string path)
+	private IEnumerator AudioWebRequest(string path, Action<AudioClip> callback)
 	{
 		AudioClip clip = null;
 		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
 		yield return request.SendWebRequest();
-
+		
+		if (path == "C:/Users/dbrud/AppData/LocalLow/DefaultCompany/ProjectNT\\Projects\\Test\\bgmSaveFile\\Full Song.wav")
+		print($"AudioWebRequest : {request.result}");
 		if (request.result != UnityWebRequest.Result.Success)
 		{
 			Debug.LogError($"Error loading audio clip: {request.error}");
@@ -73,7 +87,7 @@ public partial class ProjectToLoadedData
 		}
 		clip = DownloadHandlerAudioClip.GetContent(request);
 		clip.name = Path.GetFileName(path);
-		audioClips.Add(clip);
+		callback?.Invoke(clip);
 		_currentLoadClipCount++;
 	}
 

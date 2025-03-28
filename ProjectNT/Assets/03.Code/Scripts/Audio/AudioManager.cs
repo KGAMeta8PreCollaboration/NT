@@ -5,12 +5,11 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
 	public List<AudioClip> audioClips = new List<AudioClip>();
-	int currentClipIndex = 0;
+	private int currentClipIndex = 0;
 	public double startDspTime { get; private set; }
 	public AudioSource bgmAudioSource;
 	private AudioPool _audioPool;
 	private List<AudioSource> _audioSources = new List<AudioSource>();
-	bool isPlay = false;
 	private NoteGenerator[] noteGenerators;
 
 	protected override void Awake()
@@ -26,7 +25,7 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		noteGenerators = FindObjectsOfType<NoteGenerator>(true);
 	}
-
+	
 	public void Play(AudioClip clip)
 	{
 		if (_audioPool == null)
@@ -84,5 +83,10 @@ public class AudioManager : Singleton<AudioManager>
 	public void SetAudioClips(List<AudioClip> clips)
 	{
 		audioClips = clips;
+	}
+	
+	public void SetBackgroundMusic(AudioClip clip)
+	{
+		bgmAudioSource.clip = clip;
 	}
 }

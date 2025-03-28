@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -39,8 +37,6 @@ public class GameManager : Singleton<GameManager>
 			print("프로토타입 씬");
 			GameSceneInit();
 			noteGenerators[0].Init(loadedNoteDatas);
-			// _noteGenerator[0].loadedNotes = loadedNoteDatas;
-			// 특정 씬이 로드될 때 수행할 행동들
 		}
 	}
 	private ProjectToLoadedData _projectToLoadedData;
@@ -49,6 +45,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		_projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
 		_projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+		_projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
 		// returnCallback 으로 AudioManager.audioClips에 넣어주면 될듯
 		SceneManager.LoadScene("GameScene");
 		loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
