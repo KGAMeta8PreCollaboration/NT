@@ -17,7 +17,7 @@ public class Waveform : MonoBehaviour
     private int sampleSize;
     private float[] samples = null;
     private float[] waveform = null;
-    private float arrowOffsetX;
+    private float playBarOffsetX;
     private bool isDragging = false;
     private bool isLoaded = false;
 
@@ -54,7 +54,7 @@ public class Waveform : MonoBehaviour
             return;
         }
 
-        SetArrowPos();
+        SetPlayBarPos();
         //if (Input.GetMouseButtonDown(0))
         //{
         //    print("마우스 클릭 감지");
@@ -131,26 +131,26 @@ public class Waveform : MonoBehaviour
         return texture;
     }
 
-    private void MakePlayBar()
-    {
-        if (isLoaded == false)
-        {
-            print("아직 로딩이 끝나지 않음");
-            return;
-        }
+    //private void MakePlayBar()
+    //{
+    //    if (isLoaded == false)
+    //    {
+    //        print("아직 로딩이 끝나지 않음");
+    //        return;
+    //    }
 
-        GameObject playBarObj = Instantiate(playBarPrefab);
-        PlayBar playBar = playBarObj.GetComponent<PlayBar>();
-        //playBar.transform.SetParent(transform);
-        playBar.transform.position = new Vector3(0, arrowOffsetX);
-    }
+    //    GameObject playBarObj = Instantiate(playBarPrefab);
+    //    PlayBar playBar = playBarObj.GetComponent<PlayBar>();
+    //    //playBar.transform.SetParent(transform);
+    //    playBar.transform.position = new Vector3(0, playBarOffsetX);
+    //}
 
-    private void SetArrowPos()
+    private void SetPlayBarPos()
     {
         //progress = 현재 노래 시간 / 전체 노래 시간
         float progress = _audioSource.time / _audioSource.clip.length;
         //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
         float yOffset = progress * _spriteRenderer.size.x;
-        playBarPrefab.transform.position = new Vector3(0, arrowOffsetX + yOffset);
+        playBarPrefab.transform.position = new Vector3(0, playBarOffsetX + yOffset);
     }
 }

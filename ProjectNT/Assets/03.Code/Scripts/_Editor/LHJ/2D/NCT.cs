@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
+using static EPOOutline.TargetStateListener;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class NCT : MonoBehaviour
@@ -67,6 +68,7 @@ public class NCT : MonoBehaviour
         CreatePreviewNode(GetGridPositionFromMouse());
     }
 
+    public Action<double> callback;
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
         if (bpm == 0)
@@ -174,6 +176,7 @@ public class NCT : MonoBehaviour
 
         _nodeGrid = new Node[_column, heightGrid.Count];
         cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+        callback?.Invoke(cellHeight);
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
         print($"한칸의 넓이 : {cellHeight}");
     }
@@ -257,6 +260,13 @@ public class NCT : MonoBehaviour
 
     private void CreateNode(Vector2Int currentIndex)
     {
+        if (currentIndex.x < 0 || currentIndex.y < 0 ||
+        currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
+        {
+            Debug.LogWarning("노드 생성 위치가 범위를 벗어났습니다.");
+            return;
+        }
+
         if (_nodeGrid[currentIndex.x, currentIndex.y] != null)
         {
             Debug.LogWarning("이미 노드가 존재합니다.");
