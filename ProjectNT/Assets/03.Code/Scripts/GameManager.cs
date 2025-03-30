@@ -46,7 +46,6 @@ public class GameManager : Singleton<GameManager>
 		_projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
 		_projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
 		_projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
-		// returnCallback 으로 AudioManager.audioClips에 넣어주면 될듯
 		SceneManager.LoadScene("GameScene");
 		loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
 	}

@@ -44,8 +44,8 @@ public partial class ProjectToLoadedData
 	// Projects/{ProjectName}/KeySounds
 	public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
 	{
-		projectPath += "/KeySounds";
-		if (!Directory.Exists(projectPath)) return ;
+		projectPath = Path.Combine(projectPath, "KeySounds");
+		if (!Directory.Exists(projectPath)) return;
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
 		foreach (string item in strings)
@@ -57,11 +57,8 @@ public partial class ProjectToLoadedData
 	
 	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
 	{
-		print("GetBgmAudioClip 1");
 		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
-		print($"projectPath = {projectPath}");
-		if (!File.Exists(projectPath)) return ;
-		print("GetBgmAudioClip 2");
+		if (!File.Exists(projectPath)) return;
 		StartCoroutine(AudioWebRequest(projectPath, returnCallback));
 	}
 	
