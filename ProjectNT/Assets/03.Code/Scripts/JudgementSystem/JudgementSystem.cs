@@ -25,19 +25,19 @@ public class JudgementSystem : MonoBehaviour
         JudgementType noteType;
         if (timeDiff < 0.1f)
         {
-            noteType = JudgementType.Perfect;
+            noteType = JudgementType.PERFECT;
         }
         else if (timeDiff < 0.2f)
         {
-            noteType = JudgementType.Good;
+            noteType = JudgementType.Cool;
         }
         else if (timeDiff < 0.25f)
         {
-            noteType = JudgementType.Cool;
+            noteType = JudgementType.Good;
         }
         else
         {
-            noteType = JudgementType.Bad;
+            noteType = JudgementType.MISS;
         }
         print($"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {noteType.ToString()}");
         return noteType;

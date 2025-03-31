@@ -76,7 +76,8 @@ public class MultiLobbyUI : MonoBehaviour
 
         if (_startGameCoroutine != null) // 취소되지 않았는지 확인
         {
-            PhotonNetwork.LoadLevel("LSH_MultiGame");
+            //PhotonNetwork.LoadLevel("LSH_MultiGame");
+            GameManager.Instance.MultiGameStart();
         }
     }
 

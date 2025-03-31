@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Linq;
@@ -51,7 +52,13 @@ public class GameManager : Singleton<GameManager>
 
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        SceneManager.LoadScene("LSH_MultiGame");
+        PhotonNetwork.LoadLevel("LSH_MultiGame");
+        OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+    }
+    //멀티 임시 시작 메서드
+    public void MultiGameStart()
+    {
+        PhotonNetwork.LoadLevel("LSH_MultiGame");
         OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
 

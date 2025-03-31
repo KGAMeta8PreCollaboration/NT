@@ -91297,8 +91297,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 1297459241}
+  comboCountRect: {fileID: 0}
+  _comboCountText: {fileID: 0}
+  _scoreCountText: {fileID: 0}
+  judgementRect: {fileID: 0}
+  _judgementText: {fileID: 0}
+  perfectGradient: {fileID: 0}
+  coolGradient: {fileID: 0}
+  goodGradient: {fileID: 0}
+  missGradient: {fileID: 0}
   _timeText: {fileID: 1805782520}
   tempHitCount: 0
+  judgementTextalpha: 0
 --- !u!114 &1767493997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109981,8 +109991,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 632283051}
+  comboCountRect: {fileID: 0}
+  _comboCountText: {fileID: 0}
+  _scoreCountText: {fileID: 0}
+  judgementRect: {fileID: 0}
+  _judgementText: {fileID: 0}
+  perfectGradient: {fileID: 0}
+  coolGradient: {fileID: 0}
+  goodGradient: {fileID: 0}
+  missGradient: {fileID: 0}
   _timeText: {fileID: 826054383481437277}
   tempHitCount: 0
+  judgementTextalpha: 0
 --- !u!224 &826054382883744643
 RectTransform:
   m_ObjectHideFlags: 0
@@ -110638,7 +110658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &826054384025256094
 Transform:
   m_ObjectHideFlags: 0
