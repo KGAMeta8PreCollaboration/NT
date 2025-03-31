@@ -8,7 +8,6 @@ public class ConnectLineRendererOutLine : MonoBehaviour
     public Transform end;
     public LineRenderer outLineRenderer;
     public Transform _target;
-    public float outlineOffset = 0.2f; // 우퍼 양끝으로 이동할 거리
     public bool isLeft;
     public Transform origin;
 

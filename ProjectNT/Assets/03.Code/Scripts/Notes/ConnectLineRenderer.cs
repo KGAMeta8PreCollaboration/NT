@@ -8,7 +8,8 @@ using UnityEngine;
 public class ConnectLineRenderer : MonoBehaviour
 {
     public Transform start;
-    public Transform end;
+    public Transform endNote;
+    public Transform endPoint;
     public Transform startRenderer;
     public LineRenderer lineRenderer;
     public BoxCollider boxCollider;
@@ -21,14 +22,14 @@ public class ConnectLineRenderer : MonoBehaviour
     {
         Vector3 railDirection = (start.position - target.position).normalized;
 
-        end.localPosition = start.localPosition + (railDirection * distance);
+        endNote.localPosition = start.localPosition + (railDirection * distance);
         //end.localPosition = start.localPosition + new Vector3(distance, 0, 0);
 
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
         lineRenderer.alignment = LineAlignment.TransformZ;
 
-        float z = (end.localPosition.z - start.localPosition.z);
+        float z = (endNote.localPosition.z - start.localPosition.z);
 
         // print($"롱노트 startPos: {start.localPosition.z}, endPos: {end.localPosition.z}");
         // print($"롱노트 startPos와 endPos의 차이: {z}");
@@ -45,7 +46,7 @@ public class ConnectLineRenderer : MonoBehaviour
     void Update()
     {
         lineRenderer.SetPosition(0, start.position);
-        lineRenderer.SetPosition(1, end.position);
+        lineRenderer.SetPosition(1, endPoint.position);
     }
 
     public void Hold()
