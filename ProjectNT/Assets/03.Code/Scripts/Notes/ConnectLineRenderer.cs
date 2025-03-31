@@ -34,7 +34,7 @@ public class ConnectLineRenderer : MonoBehaviour
 
         // print($"롱노트 startPos: {start.localPosition.z}, endPos: {end.localPosition.z}");
         // print($"롱노트 startPos와 endPos의 차이: {z}");
-        boxCollider.size = new Vector3(0.4f, 1, Mathf.Abs(z));
+        boxCollider.size = new Vector3(0.4f, 1.5f, Mathf.Abs(z));
         boxCollider.center = new Vector3(0, 0, (z / 2));
 
         _origin = startPoint;

@@ -48,6 +48,11 @@ public class LongNote : Note
     {
         base.Init(target, noteSpawnData);
 
+        isHolding = false;
+        isFirstHolding = false; // 첫 판정에 홀드했는지
+        isDisconnected = false; // 중간에 끊긴적 있는지
+        isEnd = false;
+
         LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
 
         _isTargetReached = false;

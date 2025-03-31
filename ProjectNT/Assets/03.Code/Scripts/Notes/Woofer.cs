@@ -72,8 +72,6 @@ public class Woofer : MonoBehaviour
                 if (AudioSettings.dspTime >= longNote.endTargetDspTime)
                 {
                     ReleaseLongNote();
-                    tmp.count++;
-                    logText2.text = $"우퍼의 Release호출({tmp.count})";
                 }
             }
         }
@@ -88,6 +86,8 @@ public class Woofer : MonoBehaviour
                 LongNote longNote = notes[0] as LongNote;
                 longNote.Release();
             }
+            tmp.count++;
+            logText2.text = $"우퍼의 Release호출({tmp.count})";
         }
         isHoldingLongNote = false;
     }
