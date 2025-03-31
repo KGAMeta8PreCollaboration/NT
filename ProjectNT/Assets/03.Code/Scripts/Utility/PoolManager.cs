@@ -42,7 +42,7 @@ public class PoolManager : Singleton<PoolManager>
         (hitEffectPrefab, 40, objectPools);
 
         topNoteIndicaterPool = new ObjectPool<TopNoteIndicater>
-        (topNoteIndicaterPrefab, 20, objectPools);
+        (topNoteIndicaterPrefab, 10, objectPools);
     }
 
     public Note PopNote(Note note)

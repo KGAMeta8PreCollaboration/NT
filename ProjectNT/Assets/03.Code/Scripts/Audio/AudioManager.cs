@@ -30,10 +30,12 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		if (_audioPool == null)
 			_audioPool = GetComponent<AudioPool>();
+
 		AudioSource audioSource = _audioPool.GetAudioSource();
 		audioSource.transform.position = transform.position;
 		_audioSources.Add(audioSource);
 		audioSource.clip = clip;
+
 		double playTime = AudioSettings.dspTime + 0.01;
 		// audioSource.Play();
 		audioSource.PlayScheduled(playTime);

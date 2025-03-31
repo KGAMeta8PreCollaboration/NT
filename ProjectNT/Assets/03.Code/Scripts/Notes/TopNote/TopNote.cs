@@ -11,6 +11,7 @@ public class TopNote : Note
     [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
     private XRSimpleInteractable xRSimInter;
+    private TopNoteIndicater topNoteIndicater;
     private bool canInter = false;
     public double targetDspTime;
 
@@ -32,7 +33,7 @@ public class TopNote : Note
         particleSystem.Play(false);
     }
 
-    public override void Init(Transform target, NoteSpawnData noteSpawnData/*, Transform indicatorPos*/)
+    public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
         base.Init(target, noteSpawnData);
 
@@ -46,8 +47,8 @@ public class TopNote : Note
 
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
-        TopNoteIndicater topNoteIndicater = PoolManager.Instance.topNoteIndicaterPool.Pop();
-        // topNoteIndicater.transform.position = indicatorPos.position;
+        topNoteIndicater = PoolManager.Instance.topNoteIndicaterPool.Pop();
+        topNoteIndicater.transform.position = indicatorPos.position;
     }
     private void Hit(InputAction.CallbackContext ctn)
     {
@@ -56,11 +57,13 @@ public class TopNote : Note
         Destroy();
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
-        if (judgementType != JudgementType.MISS)
-            PoolManager.Instance.HitEffect(transform.position, false);
+        PoolManager.Instance.HitEffect(transform.position, false);
 
         OnHit?.Invoke(this);
         OnHit = null;
+        topNoteIndicater.OnHit?.Invoke();
+        topNoteIndicater.OnHit = null;
+        AudioManager.Instance.Play(hitSound);
     }
 
     public override void Hit(JudgementType noteType) { }

@@ -43,7 +43,7 @@ public class LongNote : Note
 		}
 	}
 
-	public override void Init(Transform target, NoteSpawnData noteSpawnData)
+	public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicaterPos = null)
 	{
 		base.Init(target, noteSpawnData);
 

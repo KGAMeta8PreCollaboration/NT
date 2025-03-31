@@ -76283,6 +76283,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8201433479105707240, guid: aa7b60f42746f13408757f44f4d5049a,
         type: 3}
+    - target: {fileID: 4190978391266748442, guid: ee89921cadb788048800eb64d14d0851,
+        type: 3}
+      propertyPath: topNoteIndicaterPrefab
+      value: 
+      objectReference: {fileID: 2345110771362278087, guid: 74748b73c9a2bea45a3f3d505ca37eb5,
+        type: 3}
     - target: {fileID: 4190978391266748443, guid: ee89921cadb788048800eb64d14d0851,
         type: 3}
       propertyPath: m_Name
@@ -117131,6 +117137,18 @@ Transform:
   m_Father: {fileID: 515666540}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1008218914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5950344609212932168, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1008727533
 GameObject:
   m_ObjectHideFlags: 0
@@ -191627,23 +191645,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
+      propertyPath: loadedNotes.Array.data[316].noteAudioClipName
+      value: 1-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
       propertyPath: loadedNotes.Array.data[317].noteAudioClipName
-      value: 2-46
+      value: 1-2
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[318].noteAudioClipName
-      value: 2-46
+      value: 1-3
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[319].noteAudioClipName
-      value: 2-46
+      value: 1-4
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[320].noteAudioClipName
-      value: 2-46
+      value: 1-5
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
@@ -193772,7 +193795,7 @@ PrefabInstance:
         type: 3}
       propertyPath: noteRails.Array.data[4]
       value: 
-      objectReference: {fileID: 1923565904}
+      objectReference: {fileID: 1008218914}
     - target: {fileID: 7691417806024037885, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: noteRails.Array.data[5]
@@ -226537,18 +226560,6 @@ Transform:
   m_Father: {fileID: 1447089337}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1923565904 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 858929537, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1454923943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28e5f4045795e64e8f62cc5cd45c99f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1923575834
 GameObject:
   m_ObjectHideFlags: 0
