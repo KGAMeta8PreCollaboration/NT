@@ -9,6 +9,17 @@ public class TmpCreateNotes : MonoBehaviour
 
     //LongNote Test
     public bool[] isHolding;
+    //판정 평균 Test
+    public double sum = 0;
+    public double avg = 0;
+    public int count = 0;
+
+    public void AvgPerfetDiff()
+    {
+        avg = sum / count;
+        print($"timDiff 퍼펙트 평균: {avg}");
+    }
+
     private void Start()
     {
         noteManager = FindObjectOfType<NoteManager>();
