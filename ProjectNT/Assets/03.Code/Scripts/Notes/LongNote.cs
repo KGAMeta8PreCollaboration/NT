@@ -16,6 +16,40 @@ public class LongNote : Note
     //콤보 공식을 위해 사용하는 임시 변수
     public int bpm;
 
+    protected override void Update()
+    {
+        base.Update();
+
+        double currentTime = AudioSettings.dspTime;
+
+        // milestone 도달했는데 홀드하지 않았다면 BAD 처리
+        if (currentMilestoneIndex < milestones.Length && currentTime >= milestones[currentMilestoneIndex])
+        {
+            if (!isHolding)
+            {
+                HandleMissedMilestone();
+            }
+        }
+    }
+
+    private void HandleMissedMilestone()
+    {
+        Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
+
+        // BAD 판정 적용
+        judgementType = JudgementType.Bad;
+        if (judgementType == JudgementType.Bad)
+            _scoreManager.ResetCombo();
+        else
+            _scoreManager.IncreaseCombo();
+        _scoreManager.AddScore(judgementType);
+        _scoreManager.ShowJudgementType(judgementType);
+        _scoreManager.AddJudgeCount(judgementType);
+
+        currentMilestoneIndex++;
+    }
+
+
     private void CalculateMilestones(double duration)
     {
         float beatInterval = (float)60 / (bpm * 4);
