@@ -33871,14 +33871,29 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 826054382251639276, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
+      propertyPath: judgementRect
+      value: 
+      objectReference: {fileID: 733162096}
+    - target: {fileID: 826054382251639276, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: _judgementText
+      value: 
+      objectReference: {fileID: 733162097}
+    - target: {fileID: 826054382251639276, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: comboCountRect
+      value: 
+      objectReference: {fileID: 733162098}
+    - target: {fileID: 826054382251639276, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
       propertyPath: _comboCountText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 733162095}
     - target: {fileID: 826054382251639276, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: _scoreCountText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 733162099}
     - target: {fileID: 826054382251639277, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -35965,6 +35980,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+--- !u!114 &733162095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 826054383176690956, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 733162094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &733162096 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 826054383902502094, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 733162094}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &733162097 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 826054383902502093, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 733162094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &733162098 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 826054384070464557, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 733162094}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &733162099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 826054383819449590, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 733162094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &733607556
 GameObject:
   m_ObjectHideFlags: 0
@@ -50382,27 +50445,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 996049558}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &997369558 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3902564545372132098, guid: d32b474d233496c4d974c19b591322a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 733162094}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &997369559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997369558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b778d4ce14d0bf74caa67de1ddc4ed27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axis: 0
-  direction: 0
-  speed: 0
 --- !u!1001 &1000321740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91161,7 +91203,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeButton: {fileID: 0}
+<<<<<<<< HEAD:ProjectNT/Assets/04.Level/Scenes/Devs/LSH_LongNote-Performance.unity
   _scoreManager: {fileID: 739812178}
+========
+  _scoreManager: {fileID: 0}
+>>>>>>>> 4f3d8d5 ([STYLE] : 다른 씬들과 병합 중 인스펙터, 참조 올바르게 수정):ProjectNT/Assets/04.Level/Scenes/Devs/YKD_GameScene.unity
 --- !u!1 &1824406996
 GameObject:
   m_ObjectHideFlags: 0

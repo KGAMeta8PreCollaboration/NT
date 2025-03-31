@@ -13,26 +13,32 @@ public class GameManager : Singleton<GameManager>
 	public NoteManager[] noteManagers;
 	public NoteGenerator[] noteGenerators;
 	private ResultPanel _resultPanel;
+	public bool skipLobby; //로비씬 없이 바로 게임 스타트 하는 개발용 변수.
+
+	[Header("게임 씬 이름")]
+	public string gameSceneName = "YKD_GameScene";
+	
 	
 	// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
 	[SerializeField] private GameObject endGameMenuPanel;
-	
-	public BeatMapData beatMapData;
-	public AudioManager audioManager;
-	
 	List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
 	
 	private void Start()
 	{
 		print( "경로 : " + Application.persistentDataPath);
 		// GameSceneInit();
+		if (skipLobby)
+		{
+			GameSceneInit();
+			noteGenerators[0].Init();
+		}
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 	
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		print("Scene Loaded : " + scene.name);
-		if (scene.name == "GameScene")
+		if (scene.name == gameSceneName)
 		{
 			print("프로토타입 씬");
 			GameSceneInit();
@@ -46,7 +52,7 @@ public class GameManager : Singleton<GameManager>
 		_projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
 		_projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
 		_projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
-		SceneManager.LoadScene("GameScene");
+		SceneManager.LoadScene(gameSceneName);
 		loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
 	}
 	

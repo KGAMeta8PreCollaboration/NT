@@ -21,6 +21,7 @@ public class PoolManager : Singleton<PoolManager>
     {
         base.Awake();
         objectPools = new GameObject();
+        objectPools.transform.SetParent(transform);
         objectPools.name = "ObjectPools";
 
         shortNotePool = new ObjectPool<Note>
