@@ -8,8 +8,6 @@ using UnityEngine;
 public class JudgementSystem : MonoBehaviour
 {
     [SerializeField] private Woofer _woofer;
-    //Test
-    public TmpCreateNotes tmp;
 
     public JudgementType JudgeNote()
     {
@@ -27,12 +25,6 @@ public class JudgementSystem : MonoBehaviour
         JudgementType noteType;
         if (timeDiff < 0.1f)
         {
-            tmp.sum += timeDiff;
-            if (tmp.count == 20)
-            {
-                tmp.AvgPerfetDiff();
-            }
-            tmp.count++;
             noteType = JudgementType.Perfect;
         }
         else if (timeDiff < 0.2f)
