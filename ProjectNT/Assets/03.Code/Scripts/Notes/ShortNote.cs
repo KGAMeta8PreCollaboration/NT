@@ -4,7 +4,7 @@ public class ShortNote : Note
 {
     public double targetDspTime;
 
-    public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos = null)
+    public override void Init(Transform target, NoteSpawnData noteSpawnData)
     {
         base.Init(target, noteSpawnData);
 

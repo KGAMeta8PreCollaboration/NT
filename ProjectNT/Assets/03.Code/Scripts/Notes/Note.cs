@@ -27,7 +27,7 @@ public abstract class Note : MonoBehaviour
     protected bool _isTargetReached;
     protected ScoreManager _scoreManager;
 
-    public virtual void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos = null)
+    public virtual void Init(Transform target, NoteSpawnData noteSpawnData/*, Transform indicatorPos = null*/)
     {
         _isTargetReached = false;
         this.target = target;
