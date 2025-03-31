@@ -32,7 +32,7 @@ public class TopNote : Note
         particleSystem.Play(false);
     }
 
-    public override void Init(Transform target, NoteSpawnData noteSpawnData)
+    public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
         base.Init(target, noteSpawnData);
 
@@ -45,6 +45,9 @@ public class TopNote : Note
         _scoreManager = FindObjectOfType<ScoreManager>();
 
         xRSimInter = GetComponent<XRSimpleInteractable>();
+
+        TopNoteIndicater topNoteIndicater = PoolManager.Instance.topNoteIndicaterPool.Pop();
+        topNoteIndicater.transform.position = indicatorPos.position;
     }
     private void Hit(InputAction.CallbackContext ctn)
     {
