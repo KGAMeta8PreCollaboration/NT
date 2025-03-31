@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class HitEffect : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem parentParticle;
+    [SerializeField] private ParticleSystem hitEffectParticle;
+    [SerializeField] private ParticleSystem flashParticle;
+    [SerializeField] private ParticleSystem starsParticle;
+    [SerializeField] private ParticleSystem smokeParticle;
+    [SerializeField] private ParticleSystem craterParticle;
     [SerializeField] private ParticleSystem lastParticle;
     [SerializeField] private ParticleSystemRenderer craterRenderModule;
     private void OnEnable()
     {
-        parentParticle.Play();
+        hitEffectParticle.Play();
     }
     private void Update()
     {
@@ -27,4 +31,5 @@ public class HitEffect : MonoBehaviour
     {
         craterRenderModule.renderMode = ParticleSystemRenderMode.Billboard;
     }
+
 }
