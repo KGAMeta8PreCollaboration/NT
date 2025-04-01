@@ -19,8 +19,12 @@ public class ConnectLineRenderer : MonoBehaviour
     public ConnectLineRendererOutLine leftLR;
     public ConnectLineRendererOutLine rightLR;
 
+    private Vector3 _startRendererOriginPos;
+
     public void Init(float distance, Transform target)
     {
+        _startRendererOriginPos = new Vector3(0, 0.1f, 0);
+        print($"Init 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
         Vector3 railDirection = (startNote.position - target.position).normalized;
 
         endNote.localPosition = startNote.localPosition + (railDirection * distance);
@@ -65,5 +69,17 @@ public class ConnectLineRenderer : MonoBehaviour
 
         leftLR.Release();
         rightLR.Release();
+    }
+
+    public void Destroy()
+    {
+        startPoint = _origin;
+        //_origin = null;
+        startRenderer.position = _startRendererOriginPos;
+        print($"Destroy 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
+        _target = null;
+
+        leftLR.Destroy();
+        rightLR.Destroy();
     }
 }

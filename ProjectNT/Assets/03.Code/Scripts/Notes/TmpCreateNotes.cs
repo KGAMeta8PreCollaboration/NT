@@ -18,52 +18,52 @@ public class TmpCreateNotes : MonoBehaviour
         isHolding = new bool[_woofers.Length];
     }
 
-    // public void Create(InputAction.CallbackContext context)
-    // {
-    // 	if (context.performed)
-    // 	{
-    // 		noteManager.CreateNote(int.Parse(context.control.name) - 1);
-    // 	}
-    // }
+    //public void Create(InputAction.CallbackContext context)
+    //{
+    //    if (context.performed)
+    //    {
+    //        noteManager.CreateNote(int.Parse(context.control.name) - 1);
+    //    }
+    //}
 
     public void Hit(InputAction.CallbackContext context)
     {
-        //if (context.performed)
-        //{
-        //    // Debug.Log($"누른 시간: {AudioSettings.dspTime}");
+        if (context.performed)
+        {
+            // Debug.Log($"누른 시간: {AudioSettings.dspTime}");
 
-        //    int index = context.control.name == "z" ? 0 :
-        //        context.control.name == "x" ? 1 :
-        //        context.control.name == "c" ? 2 :
-        //        context.control.name == "v" ? 3 : 0;
+            int index = context.control.name == "z" ? 0 :
+                context.control.name == "x" ? 1 :
+                context.control.name == "c" ? 2 :
+                context.control.name == "v" ? 3 : 0;
 
-        //    isHolding[index] = true;
-        //    _woofers[index].Hit();
-        //}
-        //if (context.canceled) // 키를 뗐을 때
-        //{
-        //    int index = context.control.name == "z" ? 0 :
-        //        context.control.name == "x" ? 1 :
-        //        context.control.name == "c" ? 2 :
-        //        context.control.name == "v" ? 3 : 0;
-        //    if (isHolding[index] == true)
-        //    {
-        //        _woofers[index].ReleaseLongNote(); // 롱노트 종료
-        //        isHolding[index] = false;
-        //    }
-        //}
+            isHolding[index] = true;
+            _woofers[index].Hit();
+        }
+        if (context.canceled) // 키를 뗐을 때
+        {
+            int index = context.control.name == "z" ? 0 :
+                context.control.name == "x" ? 1 :
+                context.control.name == "c" ? 2 :
+                context.control.name == "v" ? 3 : 0;
+            if (isHolding[index] == true)
+            {
+                _woofers[index].ReleaseLongNote(); // 롱노트 종료
+                isHolding[index] = false;
+            }
+        }
     }
 
-    //private void Update()
-    //{
-    //    for (int i = 0; i < _woofers.Length; i++)
-    //    {
-    //        if (isHolding[i] == true)
-    //        {
-    //            _woofers[i].Hold();
-    //        }
-    //    }
-    //}
+    private void Update()
+    {
+        for (int i = 0; i < _woofers.Length; i++)
+        {
+            if (isHolding[i] == true)
+            {
+                _woofers[i].Hold();
+            }
+        }
+    }
 
     private IEnumerator CreateCoroutine()
     {

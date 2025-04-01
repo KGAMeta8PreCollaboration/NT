@@ -52,5 +52,11 @@ public class ConnectLineRendererOutLine : MonoBehaviour
         }
         return null;
     }
+
+    public void Destroy()
+    {
+        start = origin;
+        origin = null;
+    }
 }
 
