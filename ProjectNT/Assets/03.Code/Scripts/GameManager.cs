@@ -24,9 +24,11 @@ public class GameManager : Singleton<GameManager>
     public string gameSceneName = "YKD_GameScene";
 
 
-    // TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
-    [SerializeField] private GameObject endGameMenuPanel;
+    //// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
+    //[SerializeField] private GameObject endGameMenuPanel;
     List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
+
+    public PhotonManager PhotonManager { get; private set; }
 
     private void Start()
     {
@@ -38,6 +40,8 @@ public class GameManager : Singleton<GameManager>
             noteGenerators[0].Init();
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        PhotonManager = GetComponentInChildren<PhotonManager>();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

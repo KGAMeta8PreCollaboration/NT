@@ -43731,6 +43731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8153908206073060158}
   - component: {fileID: 8153908206073060153}
+  - component: {fileID: 8153908206073060160}
   m_Layer: 5
   m_Name: MultiLobbyUI
   m_TagString: Untagged
@@ -43738,6 +43739,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8153908206073060160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153908206073060159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!224 &8153908206134124772
 RectTransform:
   m_ObjectHideFlags: 0

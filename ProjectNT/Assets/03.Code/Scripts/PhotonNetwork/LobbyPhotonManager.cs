@@ -11,6 +11,21 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private VRPlayer _lobbyPlayer;
 
+    public Action joinedRoom;
+
+    private IEnumerator Start()
+    {
+        yield return null;
+        GameManager.Instance.PhotonManager.joinedRoom += OnJoinedRoom2;
+    }
+
+    public void OnJoinedRoom2()
+    {
+        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
+        SpawnPlayer();
+        joinedRoom?.Invoke();
+    }
+
     public override void OnConnectedToMaster()
     {
         print("Photon 연결 성공!");
@@ -28,9 +43,9 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
 
         AssignPlayerRole();
+        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
         SpawnPlayer();
 
         photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
