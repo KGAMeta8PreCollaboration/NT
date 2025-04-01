@@ -1811,6 +1811,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4444866515538181206, guid: c76c9b96609123747be2d94d0c4f92a9,
+        type: 3}
+      propertyPath: gameSceneName
+      value: KCY_Alpha
+      objectReference: {fileID: 0}
     - target: {fileID: 4444866515538181207, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: m_Name
@@ -4431,7 +4436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf9d5d5512603747b1ebf101c1fef10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blurEffectManager: {fileID: 4418495012234651952}
   tilteSound: {fileID: 272115124}
   isMultiPlaye: 0
 --- !u!4 &272115123
@@ -13181,7 +13185,6 @@ MonoBehaviour:
   normal: {fileID: 1276503209}
   hard: {fileID: 969694695}
   superHade: {fileID: 761187928}
-  randomDifficulty: {fileID: 507768013}
 --- !u!114 &1005297660
 MonoBehaviour:
   m_ObjectHideFlags: 0

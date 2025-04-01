@@ -40,6 +40,11 @@ public class NoteGenerator : MonoBehaviour
         _loadedNotes.AddRange(loadedNotes);
         _loadedNotes.Sort((lh, rh) => lh.time.CompareTo(rh.time));
     }
+    public void Init()
+    {
+        _loadedNotes.AddRange(loadedNotes);
+        _loadedNotes.Sort((lh, rh) => lh.time.CompareTo(rh.time));
+    }
 
     public bool IsAllGenerated()
     {
