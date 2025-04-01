@@ -17,13 +17,13 @@ public class ResultPanel : Popup
 
     private void Awake()
     {
-        _totalNoteCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
-        _perfectCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
-        _coolCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
-        _goodCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
-        _badCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
-        _gradeText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
-        _gradeSubText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
+        _totalNoteCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
+        _perfectCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
+        _coolCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
+        _goodCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
+        _badCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
+        _gradeText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
+        _gradeSubText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
     }
 
     private void OnEnable()
@@ -63,21 +63,6 @@ public class ResultPanel : Popup
         }
         else
             _gradeText.text = grade.ToString();
-    }
-
-    public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child.GetComponent<T>();
-            }
-            T result = FindDeepChildComponent<T>(child, name);
-            if (result != null)
-                return result;
-        }
-        return null;
     }
 
     public override void Init(PopupManager popupManager)

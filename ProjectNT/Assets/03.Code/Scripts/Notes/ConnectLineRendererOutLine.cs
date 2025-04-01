@@ -13,18 +13,18 @@ public class ConnectLineRendererOutLine : MonoBehaviour
 
     public void Init(Transform target)
     {
-        Transform parentTransform = GetRootParent(transform);
+        Transform parentTransform = TransformUtil.GetRootParent(transform);
         if (isLeft)
         {
-            start = FindDeepChildComponent<Transform>(parentTransform, "LeftStart");
-            end = FindDeepChildComponent<Transform>(parentTransform, "LeftEnd");
-            _target = FindDeepChildComponent<Transform>(target, "LeftPos");
+            start = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "LeftStart");
+            end = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "LeftEnd");
+            _target = TransformUtil.FindDeepChildComponent<Transform>(target, "LeftPos");
         }
         else
         {
-            start = FindDeepChildComponent<Transform>(parentTransform, "RightStart");
-            end = FindDeepChildComponent<Transform>(parentTransform, "RightEnd");
-            _target = FindDeepChildComponent<Transform>(target, "RightPos");
+            start = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "RightStart");
+            end = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "RightEnd");
+            _target = TransformUtil.FindDeepChildComponent<Transform>(target, "RightPos");
         }
         outLineRenderer = GetComponent<LineRenderer>();
         origin = start;
@@ -48,29 +48,6 @@ public class ConnectLineRendererOutLine : MonoBehaviour
     public void Release()
     {
         start = origin;
-    }
-
-    public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child.GetComponent<T>();
-            }
-            T result = FindDeepChildComponent<T>(child, name);
-            if (result != null)
-                return result;
-        }
-        return null;
-    }
-    public Transform GetRootParent(Transform child)
-    {
-        while (child.parent != null)
-        {
-            child = child.parent;
-        }
-        return child;
     }
 
     public void Destroy()

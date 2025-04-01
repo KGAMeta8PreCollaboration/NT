@@ -21,16 +21,16 @@ public class ConnectLineRenderer : MonoBehaviour
 
     public void Init(float distance, Transform target)
     {
-        Transform parentTransform = GetRootParent(transform);
+        Transform parentTransform = TransformUtil.GetRootParent(transform);
         print($"=========={parentTransform.name}============");
-        startNote = FindDeepChildComponent<Transform>(parentTransform, "StartNote");
-        endNote = FindDeepChildComponent<Transform>(parentTransform, "EndNote");
-        startPoint = FindDeepChildComponent<Transform>(parentTransform, "Start");
-        endPoint = FindDeepChildComponent<Transform>(parentTransform, "End");
-        startRenderer = FindDeepChildComponent<Transform>(parentTransform, "Disc");
+        startNote = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "StartNote");
+        endNote = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "EndNote");
+        startPoint = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "Start");
+        endPoint = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "End");
+        startRenderer = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "Disc");
         lineRenderer = GetComponent<LineRenderer>();
-        leftLR = FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "LeftOutLineRenderer");
-        rightLR = FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "RightOutLineRenderer");
+        leftLR = TransformUtil.FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "LeftOutLineRenderer");
+        rightLR = TransformUtil.FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "RightOutLineRenderer");
 
         _startRendererOriginPos = new Vector3(0, 0.1f, 0);
         print($"Init 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
@@ -90,29 +90,5 @@ public class ConnectLineRenderer : MonoBehaviour
 
         leftLR.Destroy();
         rightLR.Destroy();
-    }
-
-    public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child.GetComponent<T>();
-            }
-            T result = FindDeepChildComponent<T>(child, name);
-            if (result != null)
-                return result;
-        }
-        return null;
-    }
-
-    public Transform GetRootParent(Transform child)
-    {
-        while (child.parent != null)
-        {
-            child = child.parent;
-        }
-        return child;
     }
 }
