@@ -75,8 +75,6 @@ public partial class ProjectToLoadedData
 		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
 		yield return request.SendWebRequest();
 		
-		if (path == "C:/Users/dbrud/AppData/LocalLow/DefaultCompany/ProjectNT\\Projects\\Test\\bgmSaveFile\\Full Song.wav")
-		print($"AudioWebRequest : {request.result}");
 		if (request.result != UnityWebRequest.Result.Success)
 		{
 			Debug.LogError($"Error loading audio clip: {request.error}");

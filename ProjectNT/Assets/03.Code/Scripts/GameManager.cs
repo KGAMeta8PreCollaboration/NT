@@ -110,9 +110,10 @@ public class GameManager : Singleton<GameManager>
 	{
 		while (true)
 		{
-			print("CheckGameEndCoroutine");
 			if (CheckGameEnd())
 			{
+				print("CheckGameEndCoroutine");
+
 				GameEnd();
 				yield break;
 			}
