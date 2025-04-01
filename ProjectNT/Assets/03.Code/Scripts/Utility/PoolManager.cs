@@ -11,16 +11,19 @@ public class PoolManager : Singleton<PoolManager>
     [SerializeField] private TopNote topNotePrefab;
     [SerializeField] private TopNoteProjectile topNoteProjPrefab;
     [SerializeField] private HitEffect hitEffectPrefab;
+    [SerializeField] private TopNoteIndicater topNoteIndicaterPrefab;
     public ObjectPool<Note> shortNotePool;
     public ObjectPool<Note> longNotePool;
     public ObjectPool<Note> topNotePool;
     public ObjectPool<TopNoteProjectile> topNoteProjPool;
     public ObjectPool<HitEffect> hitEffectPool;
+    public ObjectPool<TopNoteIndicater> topNoteIndicaterPool;
 
     protected override void Awake()
     {
         base.Awake();
         objectPools = new GameObject();
+        objectPools.transform.SetParent(transform);
         objectPools.name = "ObjectPools";
 
         shortNotePool = new ObjectPool<Note>
@@ -37,6 +40,9 @@ public class PoolManager : Singleton<PoolManager>
 
         hitEffectPool = new ObjectPool<HitEffect>
         (hitEffectPrefab, 40, objectPools);
+
+        topNoteIndicaterPool = new ObjectPool<TopNoteIndicater>
+        (topNoteIndicaterPrefab, 10, objectPools);
     }
 
     public Note PopNote(Note note)
@@ -82,8 +88,8 @@ public class PoolManager : Singleton<PoolManager>
         {
             hitEffect.EffectBillboard();
         }
-
     }
+
 }
 
 public class ObjectPool<T> where T : MonoBehaviour

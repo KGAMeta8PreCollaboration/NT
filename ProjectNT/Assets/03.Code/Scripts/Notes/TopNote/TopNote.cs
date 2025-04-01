@@ -11,6 +11,7 @@ public class TopNote : Note
     [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
     private XRSimpleInteractable xRSimInter;
+    private TopNoteIndicater topNoteIndicater;
     private bool canInter = false;
     public double targetDspTime;
 
@@ -32,7 +33,7 @@ public class TopNote : Note
         particleSystem.Play(false);
     }
 
-    public override void Init(Transform target, NoteSpawnData noteSpawnData)
+    public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
         base.Init(target, noteSpawnData);
 
@@ -45,6 +46,9 @@ public class TopNote : Note
         _scoreManager = FindObjectOfType<ScoreManager>();
 
         xRSimInter = GetComponent<XRSimpleInteractable>();
+
+        topNoteIndicater = PoolManager.Instance.topNoteIndicaterPool.Pop();
+        topNoteIndicater.transform.position = indicatorPos.position;
     }
     private void Hit(InputAction.CallbackContext ctn)
     {
@@ -52,19 +56,21 @@ public class TopNote : Note
         if (!canInter || !xRSimInter.isHovered) return;
         Destroy();
         isHit = true;
-        this.judgementType = JudgementType.Perfect;
-        if (judgementType != JudgementType.Bad)
-            PoolManager.Instance.HitEffect(transform.position, false);
+        this.judgementType = JudgementType.PERFECT;
+        PoolManager.Instance.HitEffect(transform.position, false);
 
         OnHit?.Invoke(this);
         OnHit = null;
+        topNoteIndicater.OnHit?.Invoke();
+        topNoteIndicater.OnHit = null;
+        AudioManager.Instance.Play(hitSound, transform);
     }
 
     public override void Hit(JudgementType noteType) { }
 
     protected override void PostJudgement()
     {
-        if (judgementType == JudgementType.Bad)
+        if (judgementType == JudgementType.MISS)
             _scoreManager.ResetCombo();
         else
             _scoreManager.IncreaseCombo();
@@ -97,7 +103,7 @@ public class TopNote : Note
     {
         Destroy();
         isHit = true;
-        judgementType = JudgementType.Bad;
+        judgementType = JudgementType.MISS;
         OnHit?.Invoke(this);
         OnHit = null;
     }

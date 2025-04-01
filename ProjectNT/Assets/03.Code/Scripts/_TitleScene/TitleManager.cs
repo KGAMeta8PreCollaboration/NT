@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 public class TitleManager : MonoBehaviour
-{
-    [SerializeField]
+{ 
     private BlurEffectManager blurEffectManager;
     [SerializeField]
     private TilteSound tilteSound;
@@ -18,13 +17,14 @@ public class TitleManager : MonoBehaviour
 
     private void Awake()
     {
+        blurEffectManager = FindObjectOfType<BlurEffectManager>();
         blurEffectManager.ResetTitle();
         //서버생기면 여기서 실행후 끝날때 아래함수 실행
         blurEffectManager.FadeOutStart(FadeOutEnd);
         tilteSound.SetBackgroundSound(true);
     }
 
-    private void FadeOutEnd()
+    private void FadeOutEnd() 
     {
         isComplete = true;
         Debug.Log("페이드 아웃 완료");

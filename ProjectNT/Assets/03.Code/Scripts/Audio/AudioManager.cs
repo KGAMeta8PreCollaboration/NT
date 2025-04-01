@@ -5,12 +5,11 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
 	public List<AudioClip> audioClips = new List<AudioClip>();
-	int currentClipIndex = 0;
+	private int currentClipIndex = 0;
 	public double startDspTime { get; private set; }
 	public AudioSource bgmAudioSource;
 	private AudioPool _audioPool;
 	private List<AudioSource> _audioSources = new List<AudioSource>();
-	bool isPlay = false;
 	private NoteGenerator[] noteGenerators;
 
 	protected override void Awake()
@@ -26,14 +25,17 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		noteGenerators = FindObjectsOfType<NoteGenerator>(true);
 	}
-
-	public void Play(AudioClip clip)
+	
+	public void Play(AudioClip clip, Transform transform)
 	{
 		if (_audioPool == null)
 			_audioPool = GetComponent<AudioPool>();
+
 		AudioSource audioSource = _audioPool.GetAudioSource();
+		audioSource.transform.position = transform.position;
 		_audioSources.Add(audioSource);
 		audioSource.clip = clip;
+
 		double playTime = AudioSettings.dspTime + 0.01;
 		// audioSource.Play();
 		audioSource.PlayScheduled(playTime);
@@ -59,13 +61,15 @@ public class AudioManager : Singleton<AudioManager>
 
 	public void StartBGM(double delayTime)
 	{
+		print("오디오 매니저 StartBGM 1");
 		startDspTime = AudioSettings.dspTime + delayTime;
 		bgmAudioSource.Stop();
 		// bgmAudioSource.Play((ulong)delayTime);
 		bgmAudioSource.PlayScheduled(startDspTime);
 		print($"BGM Sample rate : {bgmAudioSource.clip.frequency}");
-		foreach (NoteGenerator generator in noteGenerators)
+		foreach (NoteGenerator generator in GameManager.Instance.noteGenerators)
 		{
+			print("오디오 매니저 StartBGM 2");
 			generator.NoteGenerateStart(startDspTime);
 		}
 	}
@@ -77,5 +81,15 @@ public class AudioManager : Singleton<AudioManager>
 	private void Update()
 	{
 		ReturnUnusedAudioSources();
+	}
+	
+	public void SetAudioClips(List<AudioClip> clips)
+	{
+		audioClips = clips;
+	}
+	
+	public void SetBackgroundMusic(AudioClip clip)
+	{
+		bgmAudioSource.clip = clip;
 	}
 }

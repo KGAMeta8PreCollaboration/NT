@@ -24,6 +24,7 @@ public class NoteRail : MonoBehaviour
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
 		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, (note) => { }, noteSpawnData);
+
 	}
 
 	public virtual void AddNote(Note note)

@@ -8,12 +8,11 @@ public class NoteSpawner : MonoBehaviour
 
     public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Action<Note> onNoteHit, NoteSpawnData noteSpawnData)
     {
-        // Note newNote = Instantiate(noteSpawnData.notePrefab, spawnPoint.position, noteSpawnData.rotation);
         Note newNote = PoolManager.Instance.PopNote(noteSpawnData.notePrefab);
         NoteInit(newNote, noteSpawnData.rotation);
         if (newNote == null)
             return;
-        newNote.Init(target, noteSpawnData);
+        newNote.Init(target, noteSpawnData, transform);
         onAddNote?.Invoke(newNote);
         onAddNote = null;
         newNote.OnHit += onNoteHit;

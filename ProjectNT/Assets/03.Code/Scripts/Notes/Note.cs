@@ -4,10 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public enum JudgementType
 {
-    Bad,
+    MISS,
     Good,
     Cool,
-    Perfect,
+    PERFECT,
 }
 
 public abstract class Note : MonoBehaviour
@@ -27,7 +27,7 @@ public abstract class Note : MonoBehaviour
     protected bool _isTargetReached;
     protected ScoreManager _scoreManager;
 
-    public virtual void Init(Transform target, NoteSpawnData noteSpawnData)
+    public virtual void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos = null)
     {
         _isTargetReached = false;
         this.target = target;
@@ -81,7 +81,7 @@ public abstract class Note : MonoBehaviour
     {
         OnDestroyed?.Invoke(this);
         OnDestroyed = null;
-        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
+        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3} ,오디오 소스 : {hitSound}");
         // Destroy(gameObject);
         PoolManager.Instance.PushNote(this);
     }

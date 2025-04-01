@@ -40,7 +40,7 @@ public class ResultPanel : Popup
             totalNotes += _scoreManager.judgeCount[i];
             switch ((JudgementType)i)
             {
-                case JudgementType.Perfect:
+                case JudgementType.PERFECT:
                     _perfectCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
                 case JudgementType.Cool:
@@ -49,7 +49,7 @@ public class ResultPanel : Popup
                 case JudgementType.Good:
                     _goodCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
-                case JudgementType.Bad:
+                case JudgementType.MISS:
                     _badCount.text = _scoreManager.judgeCount[i].ToString();
                     break;
             }

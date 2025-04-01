@@ -44,21 +44,13 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-
         //=============test//=============
         logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
         //logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
         _scoreUI = FindObjectOfType<ScoreUI>();
         //=============test=============
 
-        _controller.activateAction.action.performed += TriggerButtonAction;
-
         prevPos = transform.position;
-    }
-
-    public void InvokeHaptic(float amplitude, float duration)
-    {
-        _controller.SendHapticImpulse(amplitude, duration);
     }
 
     private void Update()
@@ -72,11 +64,6 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         prevPos = transform.position;
-    }
-
-    private void TriggerButtonAction(InputAction.CallbackContext context)
-    {
-        //상단 노트 상호작용, 일시정지, 확인 버튼 등등
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -98,17 +85,15 @@ public class PlayerController : MonoBehaviour
             bool isFastEnough = velocityMagnitude > velocityMagnitudeThreshold; // 일정 속도 이상 휘둘렀는지 확인
             bool isOnTop = closestPoint.y >= wooferTopY; // 윗면에서 충돌했는지 확인
 
-            print($"휘두른 속도: {velocityMagnitude}");
-            print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
-            // logText.text = $"휘두른 속도: {velocityMagnitude.ToString("f2")}, 아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}" +
-            //             $"\n윗면에 충돌했는지: {isOnTop}";
+            //print($"휘두른 속도: {velocityMagnitude}");
+            //print($"아래로 휘둘렀는지: {isDownwardHit}, 속도는 충분했는지: {isFastEnough}, 윗면에 충돌했는지: {isOnTop}");
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 woofer.Hit();
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
-                logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
+                //logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
                 _controller.SendHapticImpulse(0.6f, 0.15f);
                 print("우퍼와 상호작용 됨");
             }
@@ -127,13 +112,9 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
         {
+            logText.text = "우퍼에서 뗏음";
             woofer.ReleaseLongNote();
         }
-    }
-
-    private void OnDestroy()
-    {
-        _controller.activateAction.action.performed -= TriggerButtonAction;
     }
 
     private void OnTopNoteHit(InputAction.CallbackContext cnt)
