@@ -183,7 +183,7 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
-        SetDifficulty(easy, 1);
+        //SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -191,7 +191,7 @@ public class GamePlayUI : BaseTitleUI
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
-        SetDifficulty(easy, 1);
+        //SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
