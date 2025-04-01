@@ -13,13 +13,25 @@ public class ConnectLineRendererOutLine : MonoBehaviour
 
     public void Init(Transform target)
     {
+        Transform parentTransform = GetRootParent(transform);
+        if (isLeft)
+        {
+            start = FindDeepChildComponent<Transform>(parentTransform, "LeftStart");
+            end = FindDeepChildComponent<Transform>(parentTransform, "LeftEnd");
+            _target = FindDeepChildComponent<Transform>(target, "LeftPos");
+        }
+        else
+        {
+            start = FindDeepChildComponent<Transform>(parentTransform, "RightStart");
+            end = FindDeepChildComponent<Transform>(parentTransform, "RightEnd");
+            _target = FindDeepChildComponent<Transform>(target, "RightPos");
+        }
+        outLineRenderer = GetComponent<LineRenderer>();
+        origin = start;
+
         outLineRenderer.positionCount = 2;
         outLineRenderer.useWorldSpace = true;
         outLineRenderer.alignment = LineAlignment.TransformZ;
-
-        origin = start;
-
-        _target = FindDeepChildComponent<Transform>(target, isLeft == true ? "LeftPos" : "RightPos");
     }
 
     private void Update()
@@ -51,6 +63,14 @@ public class ConnectLineRendererOutLine : MonoBehaviour
                 return result;
         }
         return null;
+    }
+    public Transform GetRootParent(Transform child)
+    {
+        while (child.parent != null)
+        {
+            child = child.parent;
+        }
+        return child;
     }
 
     public void Destroy()

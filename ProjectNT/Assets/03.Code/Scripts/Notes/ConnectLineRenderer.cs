@@ -1,8 +1,6 @@
-using Photon.Pun.Demo.SlotRacer.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class ConnectLineRenderer : MonoBehaviour
@@ -14,8 +12,8 @@ public class ConnectLineRenderer : MonoBehaviour
     public Transform startRenderer;
     public LineRenderer lineRenderer;
     public BoxCollider boxCollider;
-    private Transform _origin;
-    private Transform _target;
+    public Transform _origin;
+    public Transform _target;
     public ConnectLineRendererOutLine leftLR;
     public ConnectLineRendererOutLine rightLR;
 
@@ -23,6 +21,17 @@ public class ConnectLineRenderer : MonoBehaviour
 
     public void Init(float distance, Transform target)
     {
+        Transform parentTransform = GetRootParent(transform);
+        print($"=========={parentTransform.name}============");
+        startNote = FindDeepChildComponent<Transform>(parentTransform, "StartNote");
+        endNote = FindDeepChildComponent<Transform>(parentTransform, "EndNote");
+        startPoint = FindDeepChildComponent<Transform>(parentTransform, "Start");
+        endPoint = FindDeepChildComponent<Transform>(parentTransform, "End");
+        startRenderer = FindDeepChildComponent<Transform>(parentTransform, "Disc");
+        lineRenderer = GetComponent<LineRenderer>();
+        leftLR = FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "LeftOutLineRenderer");
+        rightLR = FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "RightOutLineRenderer");
+
         _startRendererOriginPos = new Vector3(0, 0.1f, 0);
         print($"Init 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
         Vector3 railDirection = (startNote.position - target.position).normalized;
@@ -81,5 +90,29 @@ public class ConnectLineRenderer : MonoBehaviour
 
         leftLR.Destroy();
         rightLR.Destroy();
+    }
+
+    public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+            {
+                return child.GetComponent<T>();
+            }
+            T result = FindDeepChildComponent<T>(child, name);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    public Transform GetRootParent(Transform child)
+    {
+        while (child.parent != null)
+        {
+            child = child.parent;
+        }
+        return child;
     }
 }
