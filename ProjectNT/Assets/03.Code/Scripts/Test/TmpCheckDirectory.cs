@@ -53,7 +53,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         TitleMusicData data = new TitleMusicData();
         data.musicName = projectData.projectName;
         data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
-        data.musicDescription = projectData.artistName;
+        data.musicArtist = projectData.artistName;
         data.projectName = projectData.projectName;
         return data;
     }

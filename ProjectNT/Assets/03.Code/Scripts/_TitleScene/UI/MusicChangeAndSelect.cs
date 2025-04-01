@@ -16,11 +16,11 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     public Image musicImage;
     public TextMeshProUGUI musicNameText;
-    public TextMeshProUGUI musicDesc;
+    public TextMeshProUGUI musicArtistText;
 
     public Button changeLeftButton;
     public Button changeRightButton;
-    public Button musicReplayButton;
+    //public Button musicReplayButton;
 
     private LinkedList<TitleMusicData> musicList;
     public LinkedListNode<TitleMusicData> currentMusicNode { get; private set; }
@@ -58,13 +58,13 @@ public class MusicChangeAndSelect : MonoBehaviour
         Debug.Log($"{data.musicName}");
         musicImage.sprite = data.musicAlbumArtSprit;
         musicNameText.text = data.musicName;
-        musicDesc.text = data.musicDescription;
+        musicArtistText.text = data.musicArtist;
         tilteSound.PlayGameSound(data.musicClip);
     }
 
     public void ReplayMusic()
     {
-        Debug.Log("Music Replay 버튼 클릭");
+        Debug.Log("Music Replay 노래 처음부터 시작");
         tilteSound.PlayGameSound(currentMusicNode.Value.musicClip);
     }
 

@@ -32,7 +32,7 @@ public class GamePlayUI : BaseTitleUI
     public Toggle normal;
     public Toggle hard;
     public Toggle superHade;
-    public Button randomDifficulty;
+    //public Button randomDifficulty;
 
     private Toggle curSelectDifficulty = null;
     private bool isSettingDifficulty = false;
@@ -75,14 +75,14 @@ public class GamePlayUI : BaseTitleUI
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
-        musicChangeSelect.musicReplayButton.onClick.AddListener(MusicSoundReplay);
+        //musicChangeSelect.musicReplayButton.onClick.AddListener(MusicSoundReplay);
         print("AddEventListeners 3");
 
         easy.onValueChanged.AddListener((value) => OnDifficultyChanged(easy, 1));
         normal.onValueChanged.AddListener((value) => OnDifficultyChanged(normal, 2));
         hard.onValueChanged.AddListener((value) => OnDifficultyChanged(hard, 3));
         superHade.onValueChanged.AddListener((value) => OnDifficultyChanged(superHade, 4));
-        randomDifficulty.onClick.AddListener(SelectRandomDifficulty);
+        //randomDifficulty.onClick.AddListener(SelectRandomDifficulty);
         print("AddEventListeners 4");
     }
 
@@ -93,14 +93,14 @@ public class GamePlayUI : BaseTitleUI
         gameStartButton.onClick.RemoveListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.RemoveListener(PreviousMusicButton);
-        musicChangeSelect.musicReplayButton.onClick.RemoveListener(MusicSoundReplay);
+        //musicChangeSelect.musicReplayButton.onClick.RemoveListener(MusicSoundReplay);
 
         //등록할때 람다식으로 넣어서 개별적으로 해제가 안됨, 그래서 RemoveAll로 없애기
         easy.onValueChanged.RemoveAllListeners();
         normal.onValueChanged.RemoveAllListeners();
         hard.onValueChanged.RemoveAllListeners();
         superHade.onValueChanged.RemoveAllListeners();
-        randomDifficulty.onClick.RemoveListener(SelectRandomDifficulty);
+        //randomDifficulty.onClick.RemoveListener(SelectRandomDifficulty);
     }
 
     public override void CloseUIButtonClick()
@@ -227,14 +227,14 @@ public class GamePlayUI : BaseTitleUI
         isSettingDifficulty = false;
     }
 
-    private void SelectRandomDifficulty()
-    {
-        if (isSettingDifficulty) return;
-        isSettingDifficulty = true;
-        //랜덤으로 난이도 설정
-        Toggle[] difficulties = new Toggle[] { easy, normal, hard, superHade };
-        int randomIndex = UnityEngine.Random.Range(0, difficulties.Length);
-        SetDifficulty(difficulties[randomIndex], randomIndex + 1);
-        isSettingDifficulty = false;
-    }
+    //private void SelectRandomDifficulty()
+    //{
+    //    if (isSettingDifficulty) return;
+    //    isSettingDifficulty = true;
+    //    //랜덤으로 난이도 설정
+    //    Toggle[] difficulties = new Toggle[] { easy, normal, hard, superHade };
+    //    int randomIndex = UnityEngine.Random.Range(0, difficulties.Length);
+    //    SetDifficulty(difficulties[randomIndex], randomIndex + 1);
+    //    isSettingDifficulty = false;
+    //}
 }
