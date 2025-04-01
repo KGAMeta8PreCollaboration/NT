@@ -63,7 +63,7 @@ public class TopNote : Note
         OnHit = null;
         topNoteIndicater.OnHit?.Invoke();
         topNoteIndicater.OnHit = null;
-        AudioManager.Instance.Play(hitSound);
+        AudioManager.Instance.Play(hitSound, transform);
     }
 
     public override void Hit(JudgementType noteType) { }
