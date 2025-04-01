@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
@@ -12,12 +14,16 @@ public class NCT : MonoBehaviour
     [SerializeField] GameObject bpmLinePrefab;
     [SerializeField] GameObject beatLinePrefab;
     [SerializeField] GameObject columnLinePrefab;
-    [SerializeField] GameObject previewNodePrefab;
-    [SerializeField] GameObject nodePrefab;
+    [SerializeField] GameObject previewLowNodePrefab;
+    [SerializeField] GameObject previewLongNodePrefab;
+    [SerializeField] GameObject lowNodePrefab;
+    [SerializeField] GameObject longNodePrefab;
     [SerializeField] Transform nodeParent;
     [SerializeField] int width = 128; //넓이
     [SerializeField] int pixelPerSecond = 100; //높이
     [SerializeField] Camera cam;
+
+    [SerializeField] TextMeshProUGUI stateTest;
 
     public double cellHeight = 0;
 
@@ -36,11 +42,17 @@ public class NCT : MonoBehaviour
     private List<GameObject> widthGrid = new List<GameObject>();
 
     private Node[,] _nodeGrid;
-    private GameObject _previewNode;
+
+    private GameObject _previewLowNode;
+    private GameObject _previewLongNode;
 
     private float _bpm;
     private int _column;
     private int _beatNum;
+
+    private INodeState _currentState;
+
+    private Plane tempPlane = new Plane();
 
     private void Awake()
     {
@@ -50,22 +62,46 @@ public class NCT : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _gridManager.InitBeatMap += CreateNodeContainer;
+
+        _currentState = new LowNodeState(this);
+        UpdateStateText();
     }
 
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
+        currentIndex = GetGridPositionFromMouse(); 
+
         if (Input.GetMouseButtonDown(0))
-        {
-            CreateNode(GetGridPositionFromMouse());
-        }
-
+            _currentState.OnLeftClick(currentIndex);
         if (Input.GetMouseButtonDown(1))
-        {
-            RemoveNode(GetGridPositionFromMouse());
-        }
+            _currentState.OnRightClick(currentIndex);
+        if (Input.GetMouseButtonDown(2))
+            _currentState.OnMiddleClick(currentIndex);
+        _currentState.UpdatePreview(currentIndex);
 
-        CreatePreviewNode(GetGridPositionFromMouse());
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    CreateNode(GetGridPositionFromMouse());
+        //}
+
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    RemoveNode(GetGridPositionFromMouse());
+        //}
+
+        //CreatePreviewNode(GetGridPositionFromMouse());
+    }
+
+    public void ChangeState(INodeState newState)
+    {
+        _currentState = newState;
+        UpdateStateText();
+    }
+
+    private void UpdateStateText()
+    {
+        stateTest.text = _currentState.GetStateName();
     }
 
     public Action<double> callback;
@@ -91,7 +127,6 @@ public class NCT : MonoBehaviour
 
         Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
         _spriteRenderer.sprite = Sprite.Create(_texture, rect, Vector2.zero);
-        print($"spriteRenderer.x : {_spriteRenderer.size.x}");
         print($"그리드 생성");
         xOffset = _spriteRenderer.size.x / 2;
         bpmLineScale = _spriteRenderer.size.x * 1.2f;
@@ -176,6 +211,10 @@ public class NCT : MonoBehaviour
 
         _nodeGrid = new Node[_column, heightGrid.Count];
         cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+
+        //NodeContainer가 SpriteRenderer로 생성되므로, 임시의 Plane을 생성해서 비교
+        tempPlane = new Plane(Vector3.forward, transform.position);
+
         callback?.Invoke(cellHeight);
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
         print($"한칸의 넓이 : {cellHeight}");
@@ -183,67 +222,62 @@ public class NCT : MonoBehaviour
 
     private Vector2Int GetGridPositionFromMouse()
     {
+        Vector2Int index = new Vector2Int(-1, -1);
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //NodeContainer가 SpriteRenderer로 생성되므로, 임시의 Plane을 생성해서 비교
-        Plane plane = new Plane(Vector3.forward, transform.position);
-
-        int column = -1;
-        int row = -1;
-        Vector2Int index = new Vector2Int(column, row);
-
         float distance;
-        if (plane.Raycast(ray, out distance))
+
+        if (tempPlane.Raycast(ray, out distance) == false)
         {
-            Vector3 worldPoint = ray.GetPoint(distance);
-            if (_spriteRenderer.bounds.Contains(worldPoint))
-            {
-                //print($"worldPoint : {worldPoint}");
-
-                //행
-                column = (int)(worldPoint.x / (_spriteRenderer.size.x / _column));
-                //열
-                row = (int)(worldPoint.y / (_spriteRenderer.size.y / heightGrid.Count));
-
-                index.x = column;
-                index.y = row;
-                index = new Vector2Int(column, row);
-                return index;
-            }
+            print($"플레인 밖이다 : {index}");
+            return index;
         }
-        index = new Vector2Int(column, row);
-        return index;
 
+        Vector3 worldPoint = ray.GetPoint(distance);
+        if (_spriteRenderer.bounds.Contains(worldPoint) == false)
+        {
+            print($"플레인 밖이다 : {index}");
+            return index;
+        }
+
+
+        int column = (int)(worldPoint.x / (_spriteRenderer.size.x / _column));
+        //열
+        int row = (int)(worldPoint.y / (_spriteRenderer.size.y / heightGrid.Count));
+
+        return new Vector2Int(column, row);
     }
 
-    private void CreatePreviewNode(Vector2Int currentIndex)
+    public void CreatePreviewLowNode(Vector2Int currentIndex)
     {
+        if (_previewLowNode == null)
+        {
+            _previewLowNode = Instantiate(previewLowNodePrefab);
+            _previewLowNode.transform.SetParent(nodeParent, true);
+            _previewLowNode.transform.localScale = previewLowNodePrefab.transform.localScale;
+            _previewLowNode.SetActive(false);
+            print($"하단 노드 생성됨");
+        }
+
         if (currentIndex.x < 0 ||  currentIndex.y < 0 || currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
         {
-            if (_previewNode != null)
+            if (_previewLowNode != null)
             {
-                Destroy(_previewNode);
-                _previewNode = null;
+                _previewLowNode.SetActive(false);
             }
             return;
         }
 
         if (_nodeGrid[currentIndex.x, currentIndex.y] != null)
         {
-            if (_previewNode != null)
+            if (_previewLowNode != null)
             {
-                Destroy(_previewNode);
-                _previewNode = null;
+                _previewLowNode.SetActive(false);
             }
             return;
         }
 
+        _previewLowNode.SetActive(true);
         print($"현재 좌표 : {currentIndex.x} X {currentIndex.y}");
-        if (_previewNode == null)
-        {
-            _previewNode = Instantiate(previewNodePrefab);
-            _previewNode.transform.SetParent(nodeParent, true);
-            _previewNode.transform.localScale = previewNodePrefab.transform.localScale;
-        }
 
         float columnSize = _spriteRenderer.size.x / _column;
         float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌
@@ -254,11 +288,11 @@ public class NCT : MonoBehaviour
         // 중앙 정렬을 위해 offset 적용
         Vector3 worldPos = new Vector3(xPos, yPos, 0);
 
-        _previewNode.transform.position = worldPos;
-        _previewNode.transform.localScale = previewNodePrefab.transform.localScale;
+        _previewLowNode.transform.position = worldPos;
+        //_previewLowNode.transform.localScale = previewLowNodePrefab.transform.localScale;
     }
 
-    private void CreateNode(Vector2Int currentIndex)
+    public void CreateLowNode(Vector2Int currentIndex)
     {
         if (currentIndex.x < 0 || currentIndex.y < 0 ||
         currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
@@ -273,13 +307,13 @@ public class NCT : MonoBehaviour
             return;
         }
 
-        GameObject nodeObj = Instantiate(nodePrefab);
+        GameObject nodeObj = Instantiate(lowNodePrefab);
         Node node = nodeObj.AddComponent<Node>();
 
         if (node != null)
         {
             node.transform.SetParent(nodeParent, true);
-            node.transform.localScale = nodePrefab.transform.localScale;
+            node.transform.localScale = lowNodePrefab.transform.localScale;
             print("노드 생성 완료");
 
             float columnSize = _spriteRenderer.size.x / _column;
@@ -292,12 +326,12 @@ public class NCT : MonoBehaviour
             Vector3 worldPos = new Vector3(xPos, yPos, 0);
 
             node.transform.position = worldPos;
-            node.transform.localScale = nodePrefab.transform.localScale;
+            node.transform.localScale = lowNodePrefab.transform.localScale;
             _nodeGrid[currentIndex.x, currentIndex.y] = node;
         }
     }
 
-    private void RemoveNode(Vector2Int currentIndex)
+    public void RemoveLowNode(Vector2Int currentIndex)
     {
         if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
         {
@@ -307,5 +341,108 @@ public class NCT : MonoBehaviour
 
         Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
         _nodeGrid[currentIndex.x, currentIndex.y] = null;
+    }
+
+    public bool _makingPreviewNode = false;
+    public void CreatePreviewLongNode(Vector2Int start, Vector2Int end)
+    {
+        if (_previewLongNode == null)
+        {
+            _previewLongNode = Instantiate(previewLongNodePrefab, nodeParent);
+            _previewLongNode.SetActive(false);
+            print($"롱 노드 생성됨");
+        }
+
+        if (start.x < 0 ||  start.y < 0 || start.x >= _column || start.y >= heightGrid.Count)
+        {
+            return;
+        }
+        //_makingPreviewNode = false;
+
+        //같은 행에서만 생성 가능
+        if (start.x != end.x)
+        {
+            _previewLongNode.SetActive(false);
+            return;
+        }
+
+        _makingPreviewNode = true;
+        _previewLongNode.SetActive(true);
+
+        LineRenderer lineRenderer = _previewLongNode.GetComponent<LineRenderer>();
+
+        float columnSize = _spriteRenderer.size.x / _column;
+        float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
+
+        float xPos = columnSize * start.x + columnSize / 2;
+        float startY = rowSize * start.y - (rowSize / 2);
+        float endY = rowSize * end.y + (rowSize / 2);
+
+        lineRenderer.SetPosition(0, new Vector3(xPos, startY, -0.01f));
+        lineRenderer.SetPosition(1, new Vector3(xPos, endY, -0.01f));
+        lineRenderer.startWidth = columnSize * 0.75f;
+        lineRenderer.endWidth = columnSize * 0.75f;
+        print($"롱노트 시작 점 : {start.y} ~ {end.y}");
+    }
+
+    public void CreateLongNode(Vector2Int start, Vector2Int end)
+    {
+        if (start.x != end.x) return;
+        _makingPreviewNode = false;
+        int minY = Mathf.Min(start.y, end.y);
+        int maxY = Mathf.Max(start.y, end.y);
+
+        for (int y = minY; y <= maxY; y++)
+        {
+            if (_nodeGrid[start.x, y] != null)
+            {
+                Debug.LogWarning("이미 노드가 존재합니다");
+                HideLongNodePreview();
+                return;
+            }
+        }
+
+        GameObject longNode = Instantiate(longNodePrefab, nodeParent);
+        Node node = longNode.GetComponent<Node>();
+        LineRenderer lineRenderer = longNode.GetComponent<LineRenderer>();
+        //lineRenderer.material = _previewLongNode.GetComponent<LineRenderer>().material;
+        lineRenderer.startColor = Color.yellow;
+        lineRenderer.endColor = Color.cyan;
+
+        float columnSize = _spriteRenderer.size.x / _column;
+        float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
+
+        float xPos = columnSize * start.x + columnSize / 2;
+        float startY = rowSize * start.y - (rowSize / 2);
+        float endY = rowSize * end.y + (rowSize / 2);
+
+        lineRenderer.SetPosition(0, new Vector3(xPos, startY, -0.01f));
+        lineRenderer.SetPosition(1, new Vector3(xPos, endY, -0.01f));
+        lineRenderer.startWidth = columnSize * 0.75f;
+        lineRenderer.endWidth = columnSize * 0.75f;
+        lineRenderer.positionCount = 2;
+
+        for (int y = minY; y <= maxY; y++)
+        {
+            _nodeGrid[start.x, y] = node;
+        }
+
+        HideLongNodePreview();
+    }
+
+    public void HideLongNodePreview()
+    {
+        if (_previewLongNode != null)
+        {
+            _previewLongNode.SetActive(false);
+        }
+    }
+
+    public void HideLowNodePreview()
+    {
+        if (_previewLowNode != null)
+        {
+            _previewLowNode.SetActive(false);
+        }
     }
 }
