@@ -59,7 +59,7 @@ public class Woofer : MonoBehaviour
         }
     }
 
-    public void Hold()
+    public void Hold(HapticDelegate hapticDelegate = null)
     {
         if (isHoldingLongNote && notes.Count > 0)
         {
@@ -68,7 +68,7 @@ public class Woofer : MonoBehaviour
                 LongNote longNote = notes[0] as LongNote;
                 if (!longNote.isEnd)
                     longNote.Hold(transform);
-
+                hapticDelegate?.Invoke(0.6f, 0.15f);
                 if (AudioSettings.dspTime >= longNote.endTargetDspTime)
                 {
                     ReleaseLongNote();
@@ -87,7 +87,7 @@ public class Woofer : MonoBehaviour
                 longNote.Release();
             }
             tmp.count++;
-            logText2.text = $"우퍼의 Release호출({tmp.count})";
+            logText2.text = $"������ Releaseȣ��({tmp.count})";
         }
         isHoldingLongNote = false;
     }
