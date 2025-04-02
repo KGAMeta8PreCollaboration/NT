@@ -17,6 +17,7 @@ public class ResultPanel : Popup
 
     //추가
     private TextMeshProUGUI _scoreCount;//결과창에 표시될 최종 점수 텍스트
+    private TextMeshProUGUI _maxComboCount;//결과창에 표시될 최고 콤보 수 텍스트
     [SerializeField] private TextMeshProUGUI _musicNameText;//음악 이름 텍스트
     [SerializeField] private TextMeshProUGUI _musicArtistText;//음악 아티스트 이름 텍스트
     [SerializeField] private Image musicImage;//음악 이미지
@@ -35,6 +36,7 @@ public class ResultPanel : Popup
 
         //추가
         _scoreCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
+        _maxComboCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
         restartButton.onClick.AddListener(Restart);//재시작 버튼
         musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
     }
@@ -79,6 +81,7 @@ public class ResultPanel : Popup
 
         //추가
         _scoreCount.text = _scoreManager.score.ToString();
+        _maxComboCount.text = _scoreManager.maxCombo.ToString();
         //musicImage.sprite = //음악 이미지
         //_musicNameText.text = //음악 이름 텍스트
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
