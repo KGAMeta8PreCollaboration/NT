@@ -6,6 +6,7 @@ public class BeatMapData
 {
     public SongData songData = new SongData();
     public List<NodeData> nodes = new List<NodeData>();
+    public List<UpperNodeData> upperNodes = new List<UpperNodeData>();
     public GridSetting gridSetting;
 }
 
@@ -19,9 +20,12 @@ public class NodeData
     public string keySound;
 }
 
+//상단 노드의 정보
+[System.Serializable]
 public class UpperNodeData
 {
-    public int index;
+    public int gridIndex;
+    public List<int> nodeIndexs;
 }
 
 [System.Serializable]

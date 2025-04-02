@@ -23,27 +23,15 @@ public class PlayBar : MonoBehaviour
 
     private void Update()
     {
-        if (_cellHeight == 0)
-        {
-            return;
-        }
+        if (_cellHeight <= 0) return;
 
         _yPos = transform.position.y;
-
-        // 현재 위치를 cell 높이로 나눈 값
-        double gridPosition = _yPos / _cellHeight;
-        int currentGrid = Mathf.RoundToInt((float)gridPosition);
-
-        // 가장 가까운 정수값과의 차이 계산
-        double distanceToNearestGrid = Math.Abs(gridPosition - Math.Round(gridPosition));
+        int currentGrid = Mathf.RoundToInt((float)(_yPos / _cellHeight));
 
         // 현재 그리드가 변경될 때만 SetText 호출
-        if (distanceToNearestGrid < epsilon)
+        if (_upperNodeTest._currentGridIndex != currentGrid)
         {
-            if (_upperNodeTest._currentGridIndex != currentGrid)
-            {
-                _upperNodeTest.SetText(currentGrid);
-            }
+            _upperNodeTest.GetGridIndex(currentGrid);
         }
     }
 
