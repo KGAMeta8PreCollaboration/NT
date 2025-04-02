@@ -23,6 +23,7 @@ public class ResultPanel : Popup
     [SerializeField] private Image musicImage;//음악 이미지
     [SerializeField] private Button restartButton;//재시작 버튼
     [SerializeField] private Button musicSelectButton;//곡 선택 이동 버튼
+    [SerializeField] private GameEndPanel endPanel;//최고점수 갱신시 활성화될 UI
 
     private void Awake()
     {
@@ -85,6 +86,7 @@ public class ResultPanel : Popup
         //musicImage.sprite = //음악 이미지
         //_musicNameText.text = //음악 이름 텍스트
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
+        //endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, )//음악이름, 난이도 추가
     }
 
     public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
