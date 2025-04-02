@@ -52,18 +52,17 @@ public class TopNote : Note
     }
     private void Hit(InputAction.CallbackContext ctn)
     {
-        Debug.Log(xRSimInter.isHovered);
         if (!canInter || !xRSimInter.isHovered) return;
-        Destroy();
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
-        PoolManager.Instance.HitEffect(transform.position, false);
-
         OnHit?.Invoke(this);
         OnHit = null;
-        topNoteIndicater.OnHit?.Invoke();
-        topNoteIndicater.OnHit = null;
+
         AudioManager.Instance.Play(hitSound, transform);
+
+        PoolManager.Instance.HitEffect(transform.position, false);
+        topNoteIndicater.OnHit?.Invoke();
+        Destroy();
     }
 
     public override void Hit(JudgementType noteType) { }
@@ -101,10 +100,11 @@ public class TopNote : Note
 
     private void Miss()
     {
-        Destroy();
         isHit = true;
         judgementType = JudgementType.MISS;
         OnHit?.Invoke(this);
         OnHit = null;
+        topNoteIndicater.OnHit?.Invoke();
+        Destroy();
     }
 }
