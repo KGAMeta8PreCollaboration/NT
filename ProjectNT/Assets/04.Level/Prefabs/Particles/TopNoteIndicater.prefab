@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8355025856233475777}
   - component: {fileID: 4155748337401265073}
   - component: {fileID: 3709148564856641476}
+  - component: {fileID: 211890655309529801}
   m_Layer: 0
   m_Name: Flare 2
   m_TagString: Untagged
@@ -4874,6 +4875,29 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &211890655309529801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291723350380957377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 4155748337401265073}
+  Speed: 2
 --- !u!1 &2345110769961580173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,6 +4909,7 @@ GameObject:
   - component: {fileID: 2345110769961580274}
   - component: {fileID: 2345110769961580272}
   - component: {fileID: 2345110769961580275}
+  - component: {fileID: 4918162145605412194}
   m_Layer: 0
   m_Name: Expansive Wave
   m_TagString: Untagged
@@ -9748,6 +9773,29 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &4918162145605412194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345110769961580173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 2345110769961580272}
+  Speed: 2
 --- !u!1 &2345110771362278082
 GameObject:
   m_ObjectHideFlags: 0
@@ -9760,6 +9808,7 @@ GameObject:
   - component: {fileID: 2345110771362278080}
   - component: {fileID: 2345110771362278083}
   - component: {fileID: 2345110771362278087}
+  - component: {fileID: 5826649734949932704}
   m_Layer: 0
   m_Name: TopNoteIndicater
   m_TagString: Untagged
@@ -14639,6 +14688,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05af482ef7af4974ea82e2e9111867c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5826649734949932704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345110771362278082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 2345110771362278080}
+  Speed: 2
 --- !u!1 &2345110771791767650
 GameObject:
   m_ObjectHideFlags: 0
@@ -14650,6 +14722,7 @@ GameObject:
   - component: {fileID: 2345110771791767651}
   - component: {fileID: 2345110771791767649}
   - component: {fileID: 2345110771791767648}
+  - component: {fileID: 1177886582917546154}
   m_Layer: 0
   m_Name: Glow
   m_TagString: Untagged
@@ -19513,6 +19586,29 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1177886582917546154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345110771791767650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 2345110771791767649}
+  Speed: 2
 --- !u!1 &8941217062354082709
 GameObject:
   m_ObjectHideFlags: 0
@@ -19524,6 +19620,7 @@ GameObject:
   - component: {fileID: 8941217062354082704}
   - component: {fileID: 8941217062354082711}
   - component: {fileID: 8941217062354082710}
+  - component: {fileID: 2419776614369863690}
   m_Layer: 0
   m_Name: Trails
   m_TagString: Untagged
@@ -23579,8 +23676,8 @@ ParticleSystem:
     colorOverLifetime:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 1, b: 1, a: 0.24705882}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.3137255}
+      minColor: {r: 0.32549024, g: 0.38207933, b: 1, a: 0.24705882}
+      maxColor: {r: 0.025627613, g: 0, b: 1, a: 0.3137255}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -24376,7 +24473,7 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 1
+  m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
@@ -24388,3 +24485,26 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2419776614369863690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8941217062354082709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 8941217062354082711}
+  Speed: 2
