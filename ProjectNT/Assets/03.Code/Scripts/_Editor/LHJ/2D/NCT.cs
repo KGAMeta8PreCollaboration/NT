@@ -6,7 +6,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
-using static EPOOutline.TargetStateListener;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class NCT : MonoBehaviour
@@ -79,18 +78,6 @@ public class NCT : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
             _currentState.OnMiddleClick(currentIndex);
         _currentState.UpdatePreview(currentIndex);
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    CreateNode(GetGridPositionFromMouse());
-        //}
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    RemoveNode(GetGridPositionFromMouse());
-        //}
-
-        //CreatePreviewNode(GetGridPositionFromMouse());
     }
 
     public void ChangeState(INodeState newState)
@@ -209,7 +196,7 @@ public class NCT : MonoBehaviour
             //print($"widthGrid.Count : {widthGrid.Count}" );
         }
 
-        _nodeGrid = new Node[_column, heightGrid.Count];
+        _nodeGrid = new LowNode[_column, heightGrid.Count];
         cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
 
         //NodeContainer가 SpriteRenderer로 생성되므로, 임시의 Plane을 생성해서 비교
@@ -308,7 +295,7 @@ public class NCT : MonoBehaviour
         }
 
         GameObject nodeObj = Instantiate(lowNodePrefab);
-        Node node = nodeObj.AddComponent<Node>();
+        LowNode node = nodeObj.AddComponent<LowNode>();
 
         if (node != null)
         {
@@ -327,7 +314,13 @@ public class NCT : MonoBehaviour
 
             node.transform.position = worldPos;
             node.transform.localScale = lowNodePrefab.transform.localScale;
-            _nodeGrid[currentIndex.x, currentIndex.y] = node;
+
+            //노드 위치 및 키음 초기화
+            node.InitializeNode(currentIndex);
+
+            _nodeGrid[currentIndex.x, currentIndex.y] = node as LowNode;
+
+            HideLowNodePreview();
         }
     }
 
@@ -339,8 +332,12 @@ public class NCT : MonoBehaviour
             return;
         }
 
-        Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
-        _nodeGrid[currentIndex.x, currentIndex.y] = null;
+        if (_nodeGrid[currentIndex.x, currentIndex.y] is LowNode)
+        {
+            Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
+            _nodeGrid[currentIndex.x, currentIndex.y] = null;
+            print($"일반 노드 제거 완료 : {currentIndex}");
+        }
     }
 
     public bool _makingPreviewNode = false;
@@ -387,7 +384,12 @@ public class NCT : MonoBehaviour
 
     public void CreateLongNode(Vector2Int start, Vector2Int end)
     {
-        if (start.x != end.x) return;
+        if (start.x != end.x || start.y >= end.y)
+        {
+            HideLongNodePreview();
+            return;
+        }
+
         _makingPreviewNode = false;
         int minY = Mathf.Min(start.y, end.y);
         int maxY = Mathf.Max(start.y, end.y);
@@ -403,11 +405,11 @@ public class NCT : MonoBehaviour
         }
 
         GameObject longNode = Instantiate(longNodePrefab, nodeParent);
-        Node node = longNode.GetComponent<Node>();
+        LongNode node = longNode.GetComponent<LongNode>();
         LineRenderer lineRenderer = longNode.GetComponent<LineRenderer>();
         //lineRenderer.material = _previewLongNode.GetComponent<LineRenderer>().material;
-        lineRenderer.startColor = Color.yellow;
-        lineRenderer.endColor = Color.cyan;
+        //lineRenderer.startColor = Color.yellow;
+        //lineRenderer.endColor = Color.cyan;
 
         float columnSize = _spriteRenderer.size.x / _column;
         float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
@@ -424,8 +426,11 @@ public class NCT : MonoBehaviour
 
         for (int y = minY; y <= maxY; y++)
         {
-            _nodeGrid[start.x, y] = node;
+            _nodeGrid[start.x, y] = node as Node;
         }
+
+        //노드 위치 및 키음 초기화
+        node.InitializeNode(currentIndex);
 
         HideLongNodePreview();
     }
