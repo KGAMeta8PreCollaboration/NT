@@ -1,18 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Toggle))]
 public class UpperNode : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color selectedColor;
+    private int _index;
+    private bool _isOn;
+
+    public void SetUpperNodeIndex(int index)
     {
-        
+        _index = index;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitializeUpperNode(int index)
     {
-        
+        _isOn = _index == index;
+        SetColor();
+    }
+
+    private void SetColor()
+    {
+        if (_isOn)
+        {
+            gameObject.GetComponent<Image>().color = selectedColor;
+        }
+        else
+        {
+            gameObject.GetComponent<Image>().color = normalColor;
+        }
     }
 }

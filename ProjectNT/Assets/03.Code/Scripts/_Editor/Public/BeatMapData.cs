@@ -19,6 +19,11 @@ public class NodeData
     public string keySound;
 }
 
+public class UpperNodeData
+{
+    public int index;
+}
+
 [System.Serializable]
 public class SongData
 {

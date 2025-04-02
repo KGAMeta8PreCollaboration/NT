@@ -11,6 +11,7 @@ public class UpperNodeTest : MonoBehaviour
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
     public Toggle[] toggles;
+    private UpperNode[] upperNodes;
 
     public int _currentGridIndex = -1;
     private Dictionary<int, List<int>> _upperToggleDic = new Dictionary<int, List<int>>();
@@ -18,6 +19,12 @@ public class UpperNodeTest : MonoBehaviour
 
     private void Awake()
     {
+        upperNodes = GetComponentsInChildren<UpperNode>();
+        for (int i = 0; i < upperNodes.Length; i++)
+        {
+            upperNodes[i].SetUpperNodeIndex(i);
+        }
+
         _upperToggles = new List<int>();
         toggles = GetComponentsInChildren<Toggle>();
 
@@ -35,7 +42,7 @@ public class UpperNodeTest : MonoBehaviour
             Image toggleImage = toggle.gameObject.GetComponent<Image>();
             toggleImage.color = normalColor;
 
-            toggle.onValueChanged.AddListener((isOn) => OnClickToggle(isOn, toggle, index));
+            toggle.onValueChanged.AddListener((isOn) => OnClickToggle(isOn, toggle, i));
         }
     }
 
@@ -57,6 +64,7 @@ public class UpperNodeTest : MonoBehaviour
         {
             if (!_upperToggles.Contains(index))
                 _upperToggles.Add(index);
+            print($"인덱스 : {index}");
         }
         else
         {
