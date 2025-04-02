@@ -23,7 +23,6 @@ public class PoolManager : Singleton<PoolManager>
     {
         base.Awake();
         objectPools = new GameObject();
-        objectPools.transform.SetParent(transform);
         objectPools.name = "ObjectPools";
 
         shortNotePool = new ObjectPool<Note>
@@ -33,7 +32,7 @@ public class PoolManager : Singleton<PoolManager>
         (longNotePrefab, 20, objectPools);
 
         topNotePool = new ObjectPool<Note>
-        (topNotePrefab, 20, objectPools);
+        (topNotePrefab, 30, objectPools);
 
         topNoteProjPool = new ObjectPool<TopNoteProjectile>
         (topNoteProjPrefab, 20, objectPools);
@@ -42,7 +41,7 @@ public class PoolManager : Singleton<PoolManager>
         (hitEffectPrefab, 40, objectPools);
 
         topNoteIndicaterPool = new ObjectPool<TopNoteIndicater>
-        (topNoteIndicaterPrefab, 10, objectPools);
+        (topNoteIndicaterPrefab, 30, objectPools);
     }
 
     public Note PopNote(Note note)
