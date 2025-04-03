@@ -86,6 +86,7 @@ public class LongNote : Note
         isFirstHolding = false; // 첫 판정에 홀드했는지
         isDisconnected = false; // 중간에 끊긴적 있는지
         isEnd = false;
+        currentMilestoneIndex = 0;
 
         LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
 
@@ -208,7 +209,7 @@ public class LongNote : Note
     protected override void Destroy()
     {
         isEnd = true;
-        _connectLineRenderer.Destroy();
+        //_connectLineRenderer.Destroy();
         base.Destroy();
 
     }
