@@ -51,8 +51,10 @@ public class EditorDataManager : Singleton<EditorDataManager>
         get { return currentModeDiff; }
         set
         {
-            if (beatMapManager != null)
-                CurBeatMap = beatMapManager.SaveBeatMapData();
+
+            // TODO 저장관련 메서드 새로 전달받아야함.
+            // if (beatMapManager != null)
+            //     CurBeatMap = beatMapManager.SaveBeatMapData();
             currentModeDiff = value;
             CurBeatMap = beatMapDic[CurModeDiff];
             beatMapLoadAction?.Invoke(CurBeatMap);
