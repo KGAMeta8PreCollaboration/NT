@@ -36,7 +36,6 @@ public class ProjectLoader : MonoBehaviour
 
     private Action delAction;
     private string bgmTempPath;
-    private string thumbnailTempPath;
     public Project currentProject;
     public ToggleGroup projects_Group;
     public List<Project> addedProjects = new List<Project>();
@@ -138,7 +137,7 @@ public class ProjectLoader : MonoBehaviour
         {
             string[] path = StandaloneFileBrowser.OpenFilePanel("곡을 선택해주세요.", "", extensions, false);
             bgmName_tmp.text = Path.GetFileName(path[0]);
-            bgmTempPath = path[0];
+            currentProject.projectData.bgmPath = path[0];
             currentProject.SetBgm(bgmName_tmp.text);
         }
         catch (Exception e)
@@ -158,7 +157,6 @@ public class ProjectLoader : MonoBehaviour
         string[] path = StandaloneFileBrowser.OpenFilePanel("썸네일을 선택해주세요.", "", extensions, false);
 
         thumbnailName_tmp.text = Path.GetFileName(path[0]);
-        thumbnailTempPath = path[0];
         thumbnail_img.sprite = MakeSprite(path[0]);
         currentProject.SetThumbnail(thumbnailName_tmp.text);
 
@@ -261,9 +259,9 @@ public class ProjectLoader : MonoBehaviour
                 {
                     thumbTemp = currentProject.projectData.thumbnailName;
                 }
-                if (!string.IsNullOrEmpty(currentProject.projectData.bgmName))
+                if (!string.IsNullOrEmpty(currentProject.projectData.bgmPath))
                 {
-                    bgmTemp = currentProject.projectData.bgmName;
+                    bgmTemp = currentProject.projectData.bgmPath;
                 }
                 //바뀌기 전 기존 썸네일 및 음악 삭제
                 FindDifferent(path, thumbTemp, bgmTemp);
@@ -320,7 +318,7 @@ public class ProjectLoader : MonoBehaviour
         }
         if (bgm != null)
         {
-            if (bgm != currentProject.projectData.bgmName)
+            if (bgm != currentProject.projectData.bgmPath)
             {
                 string p = Path.Combine(path, bgm);
                 File.Delete(p);
@@ -406,26 +404,25 @@ public class ProjectLoader : MonoBehaviour
         combinePath = Path.Combine(path, "ProjectInfos");
         string json = JsonUtility.ToJson(currentProject.projectData, true);
         File.WriteAllText(combinePath, json);
-        try
-        {
-            combinePath = Path.Combine(path, currentProject.projectData.bgmName);
-            File.Copy(bgmTempPath, combinePath);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            Debug.Log("BGM 변경사항 없음");
-        }
-        try
-        {
-            combinePath = Path.Combine(path, currentProject.projectData.thumbnailName);
-            File.Copy(thumbnailTempPath, combinePath);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            Debug.Log("썸네일 변경사항 없음");
-        }
+        // try
+        // {
+        //     combinePath = Path.Combine(path, currentProject.projectData.bgmName);
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.Log(e.Message);
+        //     Debug.Log("BGM 변경사항 없음");
+        // }
+        // try
+        // {
+        //     combinePath = Path.Combine(path, currentProject.projectData.thumbnailName);
+        //     File.Copy(thumbnailTempPath, combinePath);
+        // }
+        // catch (Exception e)
+        // {
+        //     Debug.Log(e.Message);
+        //     Debug.Log("썸네일 변경사항 없음");
+        // }
     }
 
     public Sprite MakeSprite(string filePath)
@@ -453,7 +450,7 @@ public class ProjectLoader : MonoBehaviour
             return ByteToSprite(bytes, filePath);
         }
     }
-    private Sprite ByteToSprite(byte[] bytes, string filePath = null)
+    public Sprite ByteToSprite(byte[] bytes, string filePath = null)
     {
         if (bytes == null)
         {
