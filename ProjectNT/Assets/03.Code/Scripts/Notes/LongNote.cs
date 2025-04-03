@@ -113,6 +113,10 @@ public class LongNote : Note
             OnHit?.Invoke(this);
             OnHit = null;
         }
+        else
+        {
+            this.judgementType = JudgementType.Good;
+        }
     }
 
     public void StartHold()
@@ -128,10 +132,10 @@ public class LongNote : Note
             Destroy();
         }
 
+        _connectLineRenderer.Hold();
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
-            _connectLineRenderer.Hold();
 
             Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;
@@ -209,7 +213,7 @@ public class LongNote : Note
     protected override void Destroy()
     {
         isEnd = true;
-        //_connectLineRenderer.Destroy();
+        _connectLineRenderer.Destroy();
         base.Destroy();
 
     }

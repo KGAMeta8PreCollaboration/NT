@@ -83,9 +83,8 @@ public class ConnectLineRenderer : MonoBehaviour
     public void Destroy()
     {
         startPoint = _origin;
-        //_origin = null;
-        startRenderer.position = _startRendererOriginPos;
-        print($"Destroy 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
+        _origin = null;
+        startRenderer.localPosition = _startRendererOriginPos;
         _target = null;
 
         leftLR.Destroy();
