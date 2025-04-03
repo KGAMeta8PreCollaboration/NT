@@ -20,57 +20,63 @@ public class GameManager : Singleton<GameManager>
 
     public bool skipLobby; //로비씬 없이 바로 게임 스타트 하는 개발용 변수.
 
-	[Header("게임 씬 이름")]
-	public string gameSceneName = "YKD_GameScene";
-	
-	
-	// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
-	[SerializeField] private GameObject endGameMenuPanel;
-	List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
-	
-	private void Start()
-	{
-		print( "경로 : " + Application.persistentDataPath);
-		// GameSceneInit();
-		if (skipLobby)
-		{
-			GameSceneInit();
-			noteGenerators[0].Init();
-		}
-		SceneManager.sceneLoaded += OnSceneLoaded;
-	}
-	
-	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-	{
-		print("Scene Loaded : " + scene.name);
-		if (scene.name == gameSceneName)
-		{
-			print("프로토타입 씬");
-			GameSceneInit();
-			noteGenerators[0].Init(loadedNoteDatas);
-		}
-		else if (scene.name == "LSH_MultiGame2")
-		{
-			print("멀티 게임 씬");
-			GameSceneInit();
-			noteGenerators[0].Init();
-			noteGenerators[1].Init();
-		}
-	}
-	private ProjectToLoadedData _projectToLoadedData;
+    [Header("게임 씬 이름")]
+    public string gameSceneName = "YKD_GameScene";
 
-	public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath)
-	{
-		_projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-		_projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
-		_projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
-		SceneManager.LoadScene(gameSceneName);
-		loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
-	}
-	
-	private IEnumerator StartCo()
-	{
-		yield return new WaitForSeconds(5f);
+
+    //// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
+    //[SerializeField] private GameObject endGameMenuPanel;
+    List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
+
+    public PhotonManager PhotonManager { get; private set; }
+
+    private void Start()
+    {
+        print("경로 : " + Application.persistentDataPath);
+        // GameSceneInit();
+        if (skipLobby)
+        {
+            GameSceneInit();
+            noteGenerators[0].Init();
+        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        PhotonManager = GetComponentInChildren<PhotonManager>();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        print("Scene Loaded : " + scene.name);
+        if (scene.name == gameSceneName)
+        {
+            print("프로토타입 씬");
+            GameSceneInit();
+            noteGenerators[0].Init(loadedNoteDatas);
+        }
+        else if (scene.name == "LSH_MultiGame2")
+        {
+            print("멀티 게임 씬");
+            GameSceneInit();
+            _gamePhotonManager = FindObjectOfType<GamePhotonManager>();
+            OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+            noteGenerators[0].Init();
+            noteGenerators[1].Init();
+        }
+    }
+    private ProjectToLoadedData _projectToLoadedData;
+
+    public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath)
+    {
+        _projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+        _projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+        _projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
+        SceneManager.LoadScene(gameSceneName);
+        loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
+    }
+
+    private IEnumerator StartCo()
+    {
+        yield return new WaitForSeconds(5f);
 
         GameStart();
         StartCoroutine(CheckGameEndCoroutine());
@@ -78,13 +84,13 @@ public class GameManager : Singleton<GameManager>
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
         PhotonNetwork.LoadLevel("LSH_MultiGame2");
-        OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
         PhotonNetwork.LoadLevel("LSH_MultiGame2");
-        OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
 
     private void GameSceneInit()
@@ -128,7 +134,7 @@ public class GameManager : Singleton<GameManager>
     {
         while (true)
         {
-            print("CheckGameEndCoroutine");
+            //print("CheckGameEndCoroutine");
             if (CheckGameEnd())
             {
                 GameEnd();
