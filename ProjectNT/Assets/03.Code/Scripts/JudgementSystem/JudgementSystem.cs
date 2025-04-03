@@ -7,59 +7,39 @@ using UnityEngine;
 
 public class JudgementSystem : MonoBehaviour
 {
-    [SerializeField] private Transform[] _timingTrans; //Perfact, Great, Good의 Transform
+	[SerializeField] private Woofer _woofer;
 
-    private Vector2[] _timingBoxs;
+	public JudgementType JudgeNote()
+	{
+		if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
+		{
+			print("미스!");
+			return JudgementType.MISS;
+		}
+		Note note = _woofer.notes[0];
 
-    [SerializeField] private Woofer _woofer;
+		double musicTime = AudioSettings.dspTime;// 현재 재생 시간
+		double noteTime = note.GetTargetDspTime();
+		double timeDiff = Math.Abs(musicTime - noteTime);
 
-    private void Awake()
-    {
-        //Init();
-    }
-
-    private void Start()
-    {
-        _timingBoxs = new Vector2[_timingTrans.Length];
-        for (int i = 0; i < _timingTrans.Length; i++)
-        {
-            float minX = _timingTrans[i].position.x - (_timingTrans[i].localScale.x / 2f);
-            float maxX = _timingTrans[i].position.x + (_timingTrans[i].localScale.x / 2f);
-
-            _timingBoxs[i].Set(minX, maxX);
-
-            float diff = Mathf.Abs(minX - maxX);
-            // print(diff);
-            // print(_timingBoxs[i].x + ", " + _timingBoxs[i].y);
-        }
-    }
-
-    public NoteType CheckTiming()
-    {
-        if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
-        {
-            print("미스!");
-            return NoteType.Bad;
-        }
-
-        float notePosX = _woofer.notes[0].transform.position.x;
-        for (int i = 0; i < _timingBoxs.Length; i++)
-        {
-            if (_timingBoxs[i].x <= notePosX && notePosX <= _timingBoxs[i].y)
-            {
-                NoteType noteType = i == 0 ? NoteType.Perfect :
-                    i == 1 ? NoteType.Good :
-                    i == 2 ? NoteType.Cool : NoteType.Bad;
-                print(noteType.ToString() + "!");
-                return noteType;
-            }
-        }
-        print("미스!");
-        return NoteType.Bad;
-    }
-
-    private void Init()
-    {
-        _woofer = GetComponent<Woofer>();
-    }
+		JudgementType noteType;
+		if (timeDiff < 0.1f)
+		{
+			noteType = JudgementType.PERFECT;
+		}
+		else if (timeDiff < 0.2f)
+		{
+			noteType = JudgementType.Cool;
+		}
+		else if (timeDiff < 0.25f)
+		{
+			noteType = JudgementType.Good;
+		}
+		else
+		{
+			noteType = JudgementType.MISS;
+		}
+		print($"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {noteType.ToString()}");
+		return noteType;
+	}
 }

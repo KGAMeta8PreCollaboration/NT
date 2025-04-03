@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Woofer : MonoBehaviour
@@ -9,8 +11,17 @@ public class Woofer : MonoBehaviour
     [SerializeField] private NoteScanner _noteScanner;
     public AudioClip hitSound { get; private set; }
 
+    public bool isHoldingLongNote = false;
+
+    //Test
+    public TextMeshProUGUI logText2;
+    public TmpCreateNotes tmp;
     private void Awake()
     {
+        //Test
+        logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
+        tmp = FindObjectOfType<TmpCreateNotes>();
+
         _audioSource = GetComponent<AudioSource>();
 
         _noteScanner.OnNoteEnter += AddNote;
@@ -35,12 +46,50 @@ public class Woofer : MonoBehaviour
         // 	_audioSource.clip = hitSound;
 
         // _audioSource.PlayOneShot(hitSound);
-        AudioManager.Instance.Play(hitSound);
+        AudioManager.Instance.Play(hitSound, transform);
 
         if (notes.Count == 0)
             return;
         Note note = notes[0];
-        note.Hit(_judgementSystem.CheckTiming());
+        //note.Hit(_judgementSystem.CheckTiming());
+        note.Hit(_judgementSystem.JudgeNote());
+        if (note is LongNote)
+        {
+            isHoldingLongNote = true;
+        }
+    }
+
+    public void Hold(HapticDelegate hapticDelegate = null)
+    {
+        if (isHoldingLongNote && notes.Count > 0)
+        {
+            if (notes[0] is LongNote)
+            {
+                LongNote longNote = notes[0] as LongNote;
+                if (!longNote.isEnd)
+                    longNote.Hold(transform);
+                hapticDelegate?.Invoke(0.6f, 0.15f);
+                if (AudioSettings.dspTime >= longNote.endTargetDspTime)
+                {
+                    ReleaseLongNote();
+                }
+            }
+        }
+    }
+
+    public void ReleaseLongNote()
+    {
+        if (isHoldingLongNote && notes.Count > 0)
+        {
+            if (notes[0] is LongNote)
+            {
+                LongNote longNote = notes[0] as LongNote;
+                longNote.Release();
+            }
+            tmp.count++;
+            logText2.text = $"������ Releaseȣ��({tmp.count})";
+        }
+        isHoldingLongNote = false;
     }
 
     public void AddNote(Note note)

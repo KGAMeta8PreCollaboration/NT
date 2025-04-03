@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class NoteRail : MonoBehaviour
 {
-	[SerializeField] private Woofer woofer; 
+	[SerializeField] protected Woofer woofer;
 
 	[HideInInspector] public NoteSpawner noteSpawner;
-	LinkedList<Note> noteList = new LinkedList<Note>();
+	protected LinkedList<Note> noteList = new LinkedList<Note>();
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		woofer = GetComponentInChildren<Woofer>();
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
 		noteSpawner = GetComponentInChildren<NoteSpawner>();
 	}
-	
-	public void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, Note notePrefab, Action<Note> onNoteHit, double spawnDspTime, double targetDspTime, AudioClip audioClip)
+
+	public virtual void SpawnNote(Action<Note> onAddNote, Action<Note> onNoteDestroyed, NoteSpawnData noteSpawnData)
 	{
 		onAddNote += note => AddNote(note);
 		onNoteDestroyed += note => RemoveNote(note);
-		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, notePrefab, onNoteHit, audioClip, spawnDspTime, targetDspTime);
+		noteSpawner.SpawnNote(onAddNote, onNoteDestroyed, (note) => { }, noteSpawnData);
+
 	}
 
-	public void AddNote(Note note)
+	public virtual void AddNote(Note note)
 	{
 		noteList.AddLast(note);
+		// note.OnHit = null;
 		note.OnHit += OnNoteHit;
 		if (noteList.Count == 1)
 		{
@@ -36,7 +38,7 @@ public class NoteRail : MonoBehaviour
 		}
 	}
 
-	public void RemoveNote(Note note)
+	public virtual void RemoveNote(Note note)
 	{
 		noteList.Remove(note);
 	}

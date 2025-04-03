@@ -16,7 +16,7 @@ public class BlurEffectManager : MonoBehaviour
     private VolumeProfile profile;
     private DepthOfField depth;
 
-    void Start()
+    private void Awake()
     {
         if (volume != null)
         {
@@ -97,7 +97,6 @@ public class BlurEffectManager : MonoBehaviour
             depth.focalLength.value = 300f;
             depth.aperture.value = 32f;
             depth.bladeCount.value = 6;
-            Debug.Log("블러 효과 성공");
         }
         else
         {
