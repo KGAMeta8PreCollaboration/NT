@@ -12,7 +12,7 @@ public struct ProjectData
     public string projectName;
     public string artistName;
     public string thumbnailName;
-    public string bgmName;
+    public string bgmPath;
     public int bpm;
     public string m_Path;
     public string m_KeysoundPath;
@@ -21,7 +21,6 @@ public struct ProjectData
 
 public class EditorDataManager : Singleton<EditorDataManager>
 {
-
     private ProjectData currentProjectData;
     private Enums.ModeDiff currentModeDiff;
     private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
@@ -29,7 +28,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     private BeatMapManager beatMapManager;
     private TestLoad testLoad;
 
-    private string savefileName = "BeatMapData";
+    private string savefolderName = "BeatMapData";
     private string curKeySoundName;
     private string bgmDestPath;
     private bool isSaved;
@@ -57,10 +56,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
             currentModeDiff = value;
             CurBeatMap = beatMapDic[CurModeDiff];
             beatMapLoadAction?.Invoke(CurBeatMap);
-            // if (beatMapManager != null)
-            // {
-            //     beatMapManager.LoadBeatMapData(CurBeatMap);
-            // }
             beatMapCache = CurBeatMap;
 
             phaseDataAction?.Invoke();
@@ -72,7 +67,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
         set
         {
             beatMapDic[CurModeDiff] = value;
-            Debug.Log("에잉");
         }
     }
 
@@ -117,53 +111,64 @@ public class EditorDataManager : Singleton<EditorDataManager>
     }
     public void LoadBeatMapData()
     {
-        string path;
-        try
+        string folderPath;
+        if (string.IsNullOrEmpty(currentProjectData.m_Path))
         {
-            path = Path.Combine(currentProjectData.m_Path, savefileName);
-        }
-        catch
-        {
+            Debug.LogError("현재 프로젝트의 설정된 경로가 없습니다.");
             return;
         }
-        string jsonData;
-        if (!File.Exists(path))
+
+        folderPath = Path.Combine(currentProjectData.m_Path, savefolderName);
+        if (Directory.Exists(folderPath))
         {
-            jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
-            File.WriteAllText(path, jsonData);
-            return;
+            string[] filesPath = Directory.GetFiles(folderPath);
+            string fileName;
+            string jsonData;
+            foreach (string filePath in filesPath)
+            {
+
+                fileName = Path.GetFileName(filePath);
+                jsonData = File.ReadAllText(filePath);
+                beatMapDic[(Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), fileName)] =
+                JsonUtility.FromJson<BeatMapData>(jsonData);
+            }
         }
-        jsonData = File.ReadAllText(path);
-        beatMapDic = DictionaryJsonUtility.FromJson<Enums.ModeDiff, BeatMapData>(jsonData);
     }
 
     public void SaveDataLocal()
     {
-        string path;
-        try
+        string folderPath;
+        string jsonData;
+        string filePath;
+        if (string.IsNullOrEmpty(currentProjectData.m_Path))
         {
-            path = Path.Combine(currentProjectData.m_Path, savefileName);
-        }
-        catch
-        {
+            Debug.LogError("현재 프로젝트의 설정된 경로가 없습니다.");
             return;
         }
-        string jsonData;
-        jsonData = DictionaryJsonUtility.ToJson(beatMapDic, true);
-        File.WriteAllText(path, jsonData);
+        folderPath = Path.Combine(currentProjectData.m_Path, savefolderName);
+        if (false == Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        foreach (Enums.ModeDiff modi in Enum.GetValues(typeof(Enums.ModeDiff)))
+        {
+            jsonData = JsonUtility.ToJson(beatMapDic[modi], true);
+            filePath = Path.Combine(folderPath, modi.ToString());
+            File.WriteAllText(filePath, jsonData);
+        }
     }
     public void SetBgm()
     {
         string bgmSavePath = Path.Combine(ProjectData.m_Path, "bgmSaveFile");
-        string bgmPath = Path.Combine(ProjectData.m_Path, ProjectData.bgmName);
-
-        bgmDestPath = Path.Combine(bgmSavePath, ProjectData.bgmName);
+        string fileName = Path.GetFileName(ProjectData.bgmPath);
+        string[] extension = fileName.Split('.');
+        bgmDestPath = Path.Combine(bgmSavePath, "MainTheme" + '.' + extension[1]);
         if (Directory.Exists(bgmSavePath))
         {
             Directory.Delete(bgmSavePath, true);
         }
         Directory.CreateDirectory(bgmSavePath);
-        File.Copy(bgmPath, bgmDestPath);
+        File.Copy(ProjectData.bgmPath, bgmDestPath);
         StartCoroutine(InstantiateBGM());
     }
 
@@ -178,7 +183,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
             Debug.LogError($"Error loading audio clip : {request.error}");
         }
         clip = DownloadHandlerAudioClip.GetContent(request);
-        clip.name = ProjectData.bgmName;
+        clip.name = ProjectData.bgmPath;
         bgmClip = clip;
         yield return null;
     }
