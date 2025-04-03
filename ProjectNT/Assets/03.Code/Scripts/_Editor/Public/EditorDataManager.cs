@@ -101,7 +101,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
                 testLoad = FindObjectOfType<TestLoad>();
-                testLoad.songName = ProjectData.bgmName;
+                //testLoad.songName = ProjectData.bgmName;
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;

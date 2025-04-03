@@ -21,7 +21,7 @@ public class NodeContainer : MonoBehaviour
     private GridManager _gridManager;
     private AudioSourceManager _audioSourceManager;
     private Texture2D _texture;
-    private Node[,] _nodeGrid;
+    private LowNode[,] _nodeGrid;
     private int _totalBeats;
     private GameObject _previewNode;
     private Color _previewNodeColor = new Color(1, 0, 0, 0.5f);
@@ -97,7 +97,7 @@ public class NodeContainer : MonoBehaviour
         //처음 가리키는 index는 0이다.
         _currentGrid = 3;
         _totalBeats = _gridManager.TotalBeats;
-        _nodeGrid = new Node[_gridManager.Column, _totalBeats];
+        _nodeGrid = new LowNode[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
         CreateEditAreaLine();
         UpdateEditAreaLines();
@@ -245,11 +245,10 @@ public class NodeContainer : MonoBehaviour
         }
 
         GameObject nodeObj = Instantiate(nodePrefab);
-        Node node = nodeObj.GetComponent<Node>();
+        LowNode node = nodeObj.GetComponent<LowNode>();
 
         if (node != null)
         {
-            node.TestPrint();
             Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
             nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
@@ -328,7 +327,7 @@ public class NodeContainer : MonoBehaviour
         //}
 
         GameObject nodeObj = Instantiate(nodePrefab);
-        Node node = nodeObj.GetComponent<Node>();
+        LowNode node = nodeObj.GetComponent<LowNode>();
 
         if (node != null)
         {
