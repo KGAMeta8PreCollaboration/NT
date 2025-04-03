@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MusicChangeAndSelect : MonoBehaviour
 {
     [SerializeField]
-    private TilteSound tilteSound;
+    private TitleSound tilteSound;
 
     [Header("음악 미리보기 파일")]
     public List<TitleMusicData> titleMusicDatas;
