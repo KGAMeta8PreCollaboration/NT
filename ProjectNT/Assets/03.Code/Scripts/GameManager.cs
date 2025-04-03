@@ -16,21 +16,14 @@ public class GameManager : Singleton<GameManager>
 
     public NoteManager[] noteManagers;
     public NoteGenerator[] noteGenerators;
-   
-    private GamePhotonManager _gamePhotonManager;
-
     public BeatMapData beatMapData;
-
     public bool skipLobby; //로비씬 없이 바로 게임 스타트 하는 개발용 변수.
 
 	[Header("게임 씬 이름")]
 	public string gameSceneName = "YKD_GameScene";
 	
-	
-	// TODO : 프로토타입용 임시 UI, 나중에 UIManager든 뭐든 뺄것
-	[SerializeField] private GameObject endGameMenuPanel;
 	List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
-	
+	public PhotonManager PhotonManager { get; private set; }
 	private void Start()
 	{
 		if (skipLobby)
@@ -39,6 +32,7 @@ public class GameManager : Singleton<GameManager>
 			noteGenerators[0].Init();
 		}
 		SceneManager.sceneLoaded += OnSceneLoaded;
+		PhotonManager = GetComponentInChildren<PhotonManager>();
 	}
 	
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -53,11 +47,13 @@ public class GameManager : Singleton<GameManager>
 		else if (scene.name == "LSH_MultiGame2")
 		{
 			print("멀티 게임 씬");
+			OnGoToLobby += () => PhotonManager.LeaveRoom();
 			GameSceneInit();
 			noteGenerators[0].Init();
 			noteGenerators[1].Init();
 		}
 	}
+	private ProjectToLoadedData _projectToLoadedData;
 
 	public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath)
 	{
@@ -77,14 +73,14 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        PhotonNetwork.LoadLevel("LSH_MultiGame2");
-        OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+        PhotonNetwork.LoadLevel("MultiGame");
+        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
-        PhotonNetwork.LoadLevel("LSH_MultiGame2");
-        OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+        PhotonNetwork.LoadLevel("MultiGame");
+        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
 
     private void GameSceneInit()

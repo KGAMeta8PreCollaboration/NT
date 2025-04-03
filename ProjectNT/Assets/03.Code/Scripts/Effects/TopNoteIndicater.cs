@@ -17,7 +17,6 @@ public class TopNoteIndicater : MonoBehaviour
     }
     private void Push()
     {
-
         PoolManager.Instance.topNoteIndicaterPool.Push(this);
     }
 }

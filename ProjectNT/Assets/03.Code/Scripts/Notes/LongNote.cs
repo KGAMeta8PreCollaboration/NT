@@ -86,6 +86,7 @@ public class LongNote : Note
         isFirstHolding = false; // 첫 판정에 홀드했는지
         isDisconnected = false; // 중간에 끊긴적 있는지
         isEnd = false;
+        currentMilestoneIndex = 0;
 
         LongNoteSpawnData longNoteSpawnData = noteSpawnData as LongNoteSpawnData;
 
@@ -112,6 +113,10 @@ public class LongNote : Note
             OnHit?.Invoke(this);
             OnHit = null;
         }
+        else
+        {
+            this.judgementType = JudgementType.Good;
+        }
     }
 
     public void StartHold()
@@ -127,10 +132,10 @@ public class LongNote : Note
             Destroy();
         }
 
+        _connectLineRenderer.Hold();
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
-            _connectLineRenderer.Hold();
 
             Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;

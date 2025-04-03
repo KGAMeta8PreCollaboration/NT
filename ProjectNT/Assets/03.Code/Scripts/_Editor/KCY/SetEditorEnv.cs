@@ -23,14 +23,19 @@ public class SetEditorEnv : MonoBehaviour
 {
     [SerializeField] private RectTransform defaultPath;
     [SerializeField] private RectTransform project;
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TextMeshProUGUI path_tmp;
     [SerializeField] private Button openFolderBTN;
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
     [SerializeField] private Button exit_BTN;
+    [SerializeField] private Button back_btn;
+
     private string savePath;
     private PATH PATH = new PATH();
     private string projectPath;
+
+    private Action quitAction;
+
     public string ProjectPath
     {
         get { return projectPath; }
@@ -40,38 +45,59 @@ public class SetEditorEnv : MonoBehaviour
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
+        back_btn.onClick.AddListener(Back);
+
     }
     private IEnumerator Start()
     {
         yield return null;
         LoadPath();
+        path_tmp.text = PATH.Path;
         if (PATH.Path != null) CheckPath();
-        inputField.text = PATH.Path;
 
     }
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        quitAction += () => UnityEditor.EditorApplication.isPlaying = false;
+#else
+        quitAction += () => Application.Quit();
+#endif
+    }
+    private void Back()
+    {
+        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (Directory.Exists(p)) Directory.Delete(p, true);
+        path_tmp.text = "";
+        projectIO.gameObject.SetActive(false);
+        defaultPath.gameObject.SetActive(true);
+    }
+
     private void Exit_BTN()
     {
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #else
         //어플리케이션 종료
-        Application.Quit(); 
-        Directory.Delete("Assets/Resources/_SongEditor/KeySoundTemp", true);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
 #endif
     }
 
     private void CheckPath()
     {
+        if (path_tmp.text == "")
+        {
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            return;
+        }
         if (!Directory.Exists(PATH.Path + PATH.EditorDIR_Name))
         {
             Directory.CreateDirectory(PATH.Path + PATH.EditorDIR_Name);
             PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
             PATH.CurrentPath = PATH.EditorPath;
             SavePath();
-            Debug.Log("에디터 폴더 생성 및 경로 저장");
         }
         else PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
         if (!Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
@@ -80,7 +106,6 @@ public class SetEditorEnv : MonoBehaviour
             PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
             PATH.CurrentPath = PATH.ProjectPath;
             SavePath();
-            Debug.Log("프로젝트 폴더 생성 및 경로 저장");
         }
         else PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
         if (Directory.Exists(PATH.ProjectPath))
@@ -99,6 +124,8 @@ public class SetEditorEnv : MonoBehaviour
 
     private void OpenExplorer()
     {
+        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (Directory.Exists(p)) Directory.Delete(p, true);
         var path = StandaloneFileBrowser.OpenFolderPanel("에디터 경로 선택", "", false);
         try
         {
@@ -113,23 +140,21 @@ public class SetEditorEnv : MonoBehaviour
                     PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
                 }
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
-                Debug.Log(path[0]);
-                Debug.Log(PATH.Path);
                 PATH.CurrentPath = PATH.Path;
-                inputField.text = PATH.CurrentPath;
+                path_tmp.text = PATH.CurrentPath;
                 SavePath();
             }
             else
             {
                 PATH.Path = path[0];
                 PATH.CurrentPath = PATH.Path;
-                inputField.text = PATH.CurrentPath;
+                path_tmp.text = PATH.CurrentPath;
                 SavePath();
             }
         }
-        catch
+        catch (Exception e)
         {
-            Debug.LogWarning("경로 설정 중 문제");
+            Debug.Log(e.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
         }
     }

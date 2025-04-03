@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun.UtilityScripts;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -11,10 +13,8 @@ public class TopNote : Note
     [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
     private XRSimpleInteractable xRSimInter;
-    private TopNoteIndicater topNoteIndicater;
     private bool canInter = false;
-    public double targetDspTime;
-
+    private bool isIndicatorOn;
     private void Awake()
     {
         xRSimInter = GetComponent<XRSimpleInteractable>();
@@ -24,60 +24,69 @@ public class TopNote : Note
     {
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
-        particleSystem.Play(true);
     }
     private void OnDisable()
     {
         leftTrigger.action.performed -= Hit;
         rightTrigger.action.performed -= Hit;
-        particleSystem.Play(false);
+        particleSystem.Stop();
     }
+    protected override void Update()
+    {
+        base.Update();
+        if (true == isIndicatorOn)
+        {
+            return;
+        }
 
+        if (_targetDspTime - AudioSettings.dspTime <= 1)
+        {
+            particleSystem.Play();
+            isIndicatorOn = true;
+        }
+
+    }
     public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
         base.Init(target, noteSpawnData);
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
 
-        targetDspTime = topNoteSpawnData.canInterDspTime;
-
-        _targetDspTime = targetDspTime;
+        _targetDspTime = topNoteSpawnData.targetDspTime;
 
         _scoreManager = FindObjectOfType<ScoreManager>();
 
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
-        topNoteIndicater = PoolManager.Instance.topNoteIndicaterPool.Pop();
-        topNoteIndicater.transform.position = indicatorPos.position;
     }
     private void Hit(InputAction.CallbackContext ctn)
     {
-        Debug.Log(xRSimInter.isHovered);
         if (!canInter || !xRSimInter.isHovered) return;
-        Destroy();
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
-        PoolManager.Instance.HitEffect(transform.position, false);
-
         OnHit?.Invoke(this);
         OnHit = null;
-        topNoteIndicater.OnHit?.Invoke();
-        topNoteIndicater.OnHit = null;
+
         AudioManager.Instance.Play(hitSound, transform);
-    }
+        PoolManager.Instance.HitEffect(transform.position, false);
+        EditorApplication.isPaused = true;
 
-    public override void Hit(JudgementType noteType) { }
-
-    protected override void PostJudgement()
-    {
         if (judgementType == JudgementType.MISS)
+        {
             _scoreManager.ResetCombo();
+        }
         else
+        {
             _scoreManager.IncreaseCombo();
+        }
+
         _scoreManager.AddScore(judgementType);
         _scoreManager.ShowJudgementType(judgementType);
         _scoreManager.AddJudgeCount(judgementType);
+        Destroy();
     }
+
+    public override void Hit(JudgementType noteType) { }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -101,10 +110,12 @@ public class TopNote : Note
 
     private void Miss()
     {
-        Destroy();
         isHit = true;
         judgementType = JudgementType.MISS;
         OnHit?.Invoke(this);
         OnHit = null;
+        Destroy();
     }
+
+    protected override void PostJudgement() { }
 }
