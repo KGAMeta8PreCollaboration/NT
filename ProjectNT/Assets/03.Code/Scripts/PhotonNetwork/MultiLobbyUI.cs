@@ -40,7 +40,7 @@ public class MultiLobbyUI : MonoBehaviour
     private void StartButtonClick()
     {
         print($"플레이어 수: {PhotonNetwork.PlayerList.Length}");
-        if (PhotonNetwork.PlayerList.Length == 2)
+        if (PhotonNetwork.PlayerList.Length == 1)
         {
             //_startGameCoroutine = StartCoroutine(StartGameCoroutine());
             ////PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", CancelStartGame);

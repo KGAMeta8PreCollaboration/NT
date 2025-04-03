@@ -52,7 +52,7 @@ public class GameManager : Singleton<GameManager>
             GameSceneInit();
             noteGenerators[0].Init(loadedNoteDatas);
         }
-        else if (scene.name == "LSH_MultiGame2")
+        else if (scene.name == "MultiGame")
         {
             print("멀티 게임 씬");
             GameSceneInit();
@@ -81,13 +81,13 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        PhotonNetwork.LoadLevel("LSH_MultiGame2");
+        PhotonNetwork.LoadLevel("MultiGame");
         //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
-        PhotonNetwork.LoadLevel("LSH_MultiGame2");
+        PhotonNetwork.LoadLevel("MultiGame");
         //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
 

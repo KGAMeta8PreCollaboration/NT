@@ -209,7 +209,7 @@ public class LongNote : Note
     protected override void Destroy()
     {
         isEnd = true;
-        //_connectLineRenderer.Destroy();
+        _connectLineRenderer.Destroy();
         base.Destroy();
 
     }
