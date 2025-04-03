@@ -12,7 +12,7 @@ public class AudioVisualizable : MonoBehaviour
     [Header("waveform의 너비(클수록 가로로 길어짐)")]
     [SerializeField] private float widthScale = 1f;
     [Header("1초당 표시될 waveform의 높이(클수록 새로로 길어짐)")]
-    [SerializeField] private float higthScale = 1f;
+    [SerializeField] private float heightScale = 1f;
     [Header("1초당 샘플링할 횟수(높을수록 해상도 높아짐)")]
     [SerializeField] private float samplesPerSecond = 100;
     [SerializeField] private Color backgroundColor = Color.black;
@@ -22,126 +22,199 @@ public class AudioVisualizable : MonoBehaviour
     private Texture2D _waveformTexture;
     //픽셀을 그릴 배열
     private Color[] _pixels;
-    private Material _targetMaterial;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
-    }
-
-    private void Start()
-    {
-        //InitWaveform();
-    }
-
-    public void InitWaveform()
-    {
         if (targetObject != null)
         {
-            Renderer renderer = targetObject.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                _targetMaterial = new Material(renderer.material);
-
-                CreateWaveformTexture();
-                GenerateWaveform();
-
-                _targetMaterial.mainTexture = _waveformTexture;
-                renderer.material = _targetMaterial;
-
-                float duration = _audioSourceManager.AudioDuration;
-                float height = duration * higthScale;
-                targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
-            }
+            _spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
         }
     }
-
-    //waveform 텍스쳐 생성 후 _pixels에 담아줌
-    private void CreateWaveformTexture()
+    public void GenerateWaveform()
     {
-        int duration = _audioSourceManager.AudioDuration;
-        print($"오디오 클립의 길이 : {duration}");
-        //텍스쳐의 높이 = 오디오의 길이 * 초당 샘플링 수(샘플링 수가 높아질 수록 자세한 파형을 그릴 수 있다)
-        int height = duration * (int)samplesPerSecond;
-
-        if (height > MAX_TEXTUREWIDTH)
+        if (_audioSourceManager == null || _audioSourceManager.AudioSource.clip == null)
         {
-            float ratio = MAX_TEXTUREWIDTH / duration;
-            height = (int)(duration * ratio);
-            print($"heightPerSecond의 최대값 : {ratio}");
+            Debug.LogError("No audio clip found!");
+            return;
         }
 
-        //거의 256이면 깨끗한 해상도가 나옴
-        int textureWidth = 256;
-        //픽셀 초기화
-        _waveformTexture = new Texture2D(textureWidth, height, TextureFormat.RGBA32, false);
-        //픽셀 배열 크기 초기화
-        _pixels = new Color[textureWidth * height];
-    }
+        AudioClip clip = _audioSourceManager.AudioSource.clip;
+        float[] samples = new float[clip.samples];
+        clip.GetData(samples, 0);
 
-    private void GenerateWaveform()
-    {
-        //sample은 0 ~ 1 사이의 값
-        float[] samples = new float[_audioSourceManager.AudioSource.clip.samples];
-        //0 -> 샘플을 0초부터 가져옴(44100이 1초)
-        _audioSourceManager.AudioSource.clip.GetData(samples, 0);
+        // 텍스처 생성
+        int width = 512;  // 고정 너비
+        int height = Mathf.CeilToInt(clip.length * 100);  // 1초당 100픽셀
+        _waveformTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
 
-        ClearTexture();
-
-        //1픽셀 당 샘플 수
-        int samplesPerPixel = samples.Length / _waveformTexture.height;
-
-        //가로 픽셀에 대해 반복
-        for (int y = 0; y < _waveformTexture.height; y++)
+        // 배경색 설정
+        Color[] pixels = new Color[width * height];
+        for (int i = 0; i < pixels.Length; i++)
         {
-            //최대 진폭값 -> 픽셀안에 대표값
-            float maxSample = 0f;
+            pixels[i] = backgroundColor;
+        }
 
-            //1픽셀에 있는 샘플 안에서 
-            for (int i = 0; i < samplesPerPixel; i++)
+        // 샘플당 픽셀 수 계산
+        float samplesPerPixel = (float)samples.Length / height;
+
+        // 파형 그리기
+        for (int y = 0; y < height; y++)
+        {
+            // 현재 높이에 해당하는 샘플 범위 계산
+            int startSample = Mathf.FloorToInt(y * samplesPerPixel);
+            int endSample = Mathf.FloorToInt((y + 1) * samplesPerPixel);
+
+            // 해당 범위의 최대 진폭 찾기
+            float maxAmplitude = 0f;
+            for (int s = startSample; s < endSample && s < samples.Length; s++)
             {
-                //샘플들을 배열처럼 확인
-                int sampleIndex = y * samplesPerPixel + i;
-                //끝에 값 예외
-                if (sampleIndex < samples.Length)
-                {
-                    //각 배열들의 값 확인
-                    float sample = Mathf.Abs(samples[sampleIndex]);
-                    //1픽셀 안에 대표값만 필요
-                    maxSample = Mathf.Max(maxSample, sample);
-                }
+                float amplitude = Mathf.Abs(samples[s]);
+                if (amplitude > maxAmplitude) maxAmplitude = amplitude;
             }
 
-            //텍스쳐의 중앙
-            int centerX = _waveformTexture.width / 2;
-            //샘플의 넓이 = 최대 진폭값 * 텍스쳐 높이
-            int sampleWidth = (int)(maxSample * _waveformTexture.width);
+            // 진폭을 너비로 변환
+            int centerX = width / 2;
+            int waveWidth = Mathf.RoundToInt(maxAmplitude * width * 0.5f);
 
-            //위 아래로 왔다갔다 하면서 그림
-            for (int x = centerX - sampleWidth / 2; x < centerX + sampleWidth / 2; x++)
+            // 파형 그리기 (중앙에서 좌우로)
+            for (int x = centerX - waveWidth; x < centerX + waveWidth; x++)
             {
-                //범위 제한
-                if (x >= 0 && x < _waveformTexture.width)
+                if (x >= 0 && x < width)
                 {
-                    //2차원 배열을 1차원 배열로 나타냄
-                    _pixels[y * _waveformTexture.width + x] = waveColor;
+                    pixels[y * width + x] = waveColor;
                 }
             }
         }
-        //즉 위에 내용
-        //1. 1픽셀 안에서의 최대값을 구함
-        //2. 텍스쳐 중앙에서 그 값을 위 아래로 뺀 값에 계속해서 pixel을 찍음
-        //3. 1, 2번 반복
 
-        _waveformTexture.SetPixels(_pixels);
+        // 텍스처에 픽셀 적용
+        _waveformTexture.SetPixels(pixels);
         _waveformTexture.Apply();
-    }
 
-    private void ClearTexture()
-    {
-        for (int i = 0; i < _pixels.Length; i++)
+        // 스프라이트 생성 및 적용
+        _waveformTexture.filterMode = FilterMode.Bilinear;
+        Sprite waveformSprite = Sprite.Create(
+            _waveformTexture,
+            new Rect(0, 0, _waveformTexture.width, _waveformTexture.height),
+            new Vector2(0.5f, 0.5f),
+            100f
+        );
+
+        // 스프라이트 렌더러에 적용
+        if (_spriteRenderer != null)
         {
-            _pixels[i] = backgroundColor;
+            _spriteRenderer.sprite = waveformSprite;
+            targetObject.transform.localScale = new Vector3(widthScale, heightScale, 1);
         }
     }
 }
+//    public void InitWaveform()
+//    {
+//        if (targetObject != null)
+//        {
+//            _targetSpriteRenderer = targetObject.GetComponent<SpriteRenderer>();
+//            if (_targetSpriteRenderer != null)
+//            {
+//                CreateWaveformTexture();
+//                GenerateWaveform();
+//                CreateAndApplySprite();
+
+//                float duration = _audioSourceManager.AudioDuration;
+//                float height = duration * heightScale;
+//                targetObject.transform.localScale = new Vector3(widthScale, height, 1);
+//            }
+//        }
+//    }
+
+//    //waveform 텍스쳐 생성 후 _pixels에 담아줌
+//    private void CreateWaveformTexture()
+//    {
+//        int duration = _audioSourceManager.AudioDuration;
+//        print($"오디오 클립의 길이 : {duration}");
+//        int height = duration * (int)samplesPerSecond;
+
+//        if (height > MAX_TEXTUREWIDTH)
+//        {
+//            float ratio = MAX_TEXTUREWIDTH / duration;
+//            height = (int)(duration * ratio);
+//            print($"heightPerSecond의 최대값 : {ratio}");
+//        }
+
+//        int textureWidth = 512; // 해상도 증가
+//        _waveformTexture = new Texture2D(textureWidth, height, TextureFormat.RGBA32, false);
+//        _pixels = new Color[textureWidth * height];
+//    }
+
+//    private void GenerateWaveform()
+//    {
+//        float[] samples = new float[_audioSourceManager.AudioSource.clip.samples];
+//        _audioSourceManager.AudioSource.clip.GetData(samples, 0);
+
+//        ClearTexture();
+
+//        int samplesPerPixel = samples.Length / _waveformTexture.height;
+
+//        for (int y = 0; y < _waveformTexture.height; y++)
+//        {
+//            float maxSample = 0f;
+
+//            for (int i = 0; i < samplesPerPixel; i++)
+//            {
+//                int sampleIndex = y * samplesPerPixel + i;
+//                if (sampleIndex < samples.Length)
+//                {
+//                    float sample = Mathf.Abs(samples[sampleIndex]);
+//                    maxSample = Mathf.Max(maxSample, sample);
+//                }
+//            }
+
+//            int centerX = _waveformTexture.width / 2;
+//            float sampleWidth = maxSample * _waveformTexture.width;
+
+//            // 안티앨리어싱을 위한 부드러운 그리기
+//            float leftX = centerX - sampleWidth / 2;
+//            float rightX = centerX + sampleWidth / 2;
+
+//            for (float x = leftX; x < rightX; x += 0.5f)
+//            {
+//                int pixelX = Mathf.RoundToInt(x);
+//                if (pixelX >= 0 && pixelX < _waveformTexture.width)
+//                {
+//                    _pixels[y * _waveformTexture.width + pixelX] = waveColor;
+//                    // 주변 픽셀에 알파값이 있는 색상 적용
+//                    if (pixelX > 0)
+//                        _pixels[y * _waveformTexture.width + (pixelX - 1)] = new Color(waveColor.r, waveColor.g, waveColor.b, 0.5f);
+//                    if (pixelX < _waveformTexture.width - 1)
+//                        _pixels[y * _waveformTexture.width + (pixelX + 1)] = new Color(waveColor.r, waveColor.g, waveColor.b, 0.5f);
+//                }
+//            }
+//        }
+
+//        _waveformTexture.SetPixels(_pixels);
+//        _waveformTexture.Apply();
+//    }
+
+//    private void CreateAndApplySprite()
+//    {
+//        _waveformTexture.filterMode = FilterMode.Bilinear;
+//        _waveformTexture.wrapMode = TextureWrapMode.Clamp;
+
+//        Sprite waveformSprite = Sprite.Create(
+//            _waveformTexture,
+//            new Rect(0, 0, _waveformTexture.width, _waveformTexture.height),
+//            new Vector2(0.5f, 0.5f),
+//            100f
+//        );
+
+//        _targetSpriteRenderer.sprite = waveformSprite;
+//    }
+
+//    private void ClearTexture()
+//    {
+//        for (int i = 0; i < _pixels.Length; i++)
+//        {
+//            _pixels[i] = backgroundColor;
+//        }
+//    }
+//}

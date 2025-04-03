@@ -6,6 +6,7 @@ public class BeatMapData
 {
     public SongData songData = new SongData();
     public List<NodeData> nodes = new List<NodeData>();
+    public List<UpperNodeData> upperNodes = new List<UpperNodeData>();
     public GridSetting gridSetting;
 }
 
@@ -14,8 +15,17 @@ public class BeatMapData
 public class NodeData
 {
     public Vector2Int index;
-    public NodeType nodeType;
+    public Vector2Int? endIndex;
+    public EditorNoteType nodeType;
     public string keySound;
+}
+
+//상단 노드의 정보
+[System.Serializable]
+public class UpperNodeData
+{
+    public int gridIndex;
+    public List<int> nodeIndexs;
 }
 
 [System.Serializable]
@@ -37,11 +47,11 @@ public class GridSetting
 }
 
 //노드 타입(상단노트, 하단 닷 노트, 하단 롱 노트)
-public enum NodeType
+public enum EditorNoteType
 {
-    BottomBotNode,
-    BottomLongNode,
-    TopNode
+    ShortNote,
+    LongNote,
+    TopNote
 }
 
 public enum NodeInstrument

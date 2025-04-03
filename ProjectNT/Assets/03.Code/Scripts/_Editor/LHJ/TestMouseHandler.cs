@@ -21,7 +21,7 @@ public class TestMouseHandler : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Node clickedNode = hit.collider.GetComponent<Node>();
+                LowNode clickedNode = hit.collider.GetComponent<LowNode>();
                 if (clickedNode != null)
                 {
                     NodeData nodeData = clickedNode.GetNodeData();

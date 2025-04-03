@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -8,11 +9,13 @@ public class GridManager : MonoBehaviour
     [Header("그리드를 그릴 오브젝트")]
     [SerializeField] private GameObject targetObject;
     [Header("가로 길이(클수록 가로로 길어짐)")]
-    [SerializeField] private float widthScale = 1f;
+    [SerializeField] private int widthScale = 1024;
     [Header("세로 길이(클수록 세로로 길어짐)")]
-    [SerializeField] private float heightScale = 1f;
+    [SerializeField] private int heightScale = 64;
     [Header("Texture해상도")]
     [SerializeField] private float texturePerSecond = 2048f; // 텍스처 해상도 증가
+    [Header("GridText를 넣어주세요")]
+    [SerializeField] private TextMeshProUGUI gridText;
     [Header("Grid 설정")]
     [SerializeField] private float bpm = 120;
     [SerializeField] private int beatNum = 4; //박자의 수
@@ -45,6 +48,7 @@ public class GridManager : MonoBehaviour
     private int _totalBeats;
     private const float BASE_BPM = 120f; //기준이 되는 BPM
     private const int BASE_BEAT = 1; //기준이 되는 박자 수
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -52,11 +56,11 @@ public class GridManager : MonoBehaviour
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
     }
 
-    private IEnumerator Start()
-    {
-        yield return new WaitUntil(() => _beatMapManager.isLoaded == true && _audioSourceManager.AudioSource.clip != null);
-        //InitGrid();
-    }
+    //private IEnumerator Start()
+    //{
+    //    yield return new WaitUntil(() => _beatMapManager.isLoaded == true && _audioSourceManager.AudioSource.clip != null);
+    //    //InitGrid();
+    //}
 
     // private void OnValidate()
     // {
@@ -74,37 +78,56 @@ public class GridManager : MonoBehaviour
         bpm = EditorDataManager.Instance.ProjectData.bpm;
         column = 4;
         beatNum = 4;
-        InitGrid();
+        //CreateGrid();
+        gridText.text = $"BPM : ({bpm})";
     }
 
-    public void InitGrid()
+    public Action<float, int, int> InitBeatMap; 
+    public void CreateNodeContainer(AudioSource audioSource)
     {
-        if (targetObject != null)
-        {
-            Renderer renderer = targetObject.GetComponent<Renderer>();
-            _targetMaterial = new Material(renderer.material);
-            CreateGridTexture();
-            GenerateGrid();
+        InitBeatMap?.Invoke(bpm, column, beatNum);
+        print(4);
+        //if (targetObject == null)
+        //{
+        //    Debug.LogWarning("그리드를 그릴 오브젝트가 없습니다.");
+        //    return;
+        //}
+        _audioSource = audioSource;
 
-            _targetMaterial.mainTexture = _gridTexture;
-            renderer.material = _targetMaterial;
+        //int width = 64;
+        //int height = Mathf.CeilToInt(_audioSource.clip.length) * 100;
+        //Texture2D texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 
-            float duration = _audioSourceManager.AudioDuration;
-            float height = duration * heightScale;
-            targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
-        }
+        ////Texture2D texture = GetTexture();
+
+        //Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
+        //SpriteRenderer spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
+        //spriteRenderer.sprite = Sprite.Create(texture, rect, Vector2.zero);
+        //Renderer renderer = targetObject.GetComponent<Renderer>();
+        //_targetMaterial = new Material(renderer.material);
+        //CreateGridTexture();
+        //GenerateGrid();
+
+        //_targetMaterial.mainTexture = _gridTexture;
+        //renderer.material = _targetMaterial;
+
+        //float duration = _audioSourceManager.AudioDuration;
+        //float height = duration * heightScale;
+        //targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
+        
     }
 
     private void CreateGridTexture()
     {
-        int duration = _audioSourceManager.AudioDuration;
-
-        int height = duration * (int)texturePerSecond;
+        float duration = _audioSourceManager.AudioDuration;
+        
+        //높이는 올림으로 관리
+        int height = Mathf.CeilToInt(duration * texturePerSecond);
 
         if (height > AudioVisualizable.MAX_TEXTUREWIDTH)
         {
             float ratio = AudioVisualizable.MAX_TEXTUREWIDTH / duration;
-            height = (int)(duration * ratio);
+            height = Mathf.CeilToInt(duration * ratio);
             Debug.LogWarning($"텍스처 크기가 최대 크기를 초과해서 높이 재설정 : {height} ");
         }
 
@@ -114,12 +137,20 @@ public class GridManager : MonoBehaviour
         _gridTexture.filterMode = FilterMode.Bilinear; // 선명한 텍스처를 위해 필터모드 설정
     }
 
-    private void UpdateGrid()
+    //private void UpdateGrid()
+    //{
+    //    if (heightScale > 0f && widthScale > 0f)
+    //    {
+    //        CreateGrid();
+    //    }
+    //}
+
+    private Texture2D GetTexture()
     {
-        if (heightScale > 0f && widthScale > 0f)
-        {
-            InitGrid();
-        }
+        widthScale = Mathf.CeilToInt(_audioSource.clip.length) * 100;
+        Texture2D texture = new Texture2D(widthScale, heightScale, TextureFormat.RGBA32, false);
+        texture.Apply();
+        return texture;
     }
 
     private void GenerateGrid()
@@ -133,7 +164,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        int songDuration = _audioSourceManager.AudioDuration;
+        float songDuration = _audioSourceManager.AudioDuration;
         //초당 픽셀
         float pixelsPerSecond = _gridTexture.height / songDuration;
         print($"초당 픽셀 : {pixelsPerSecond}");
