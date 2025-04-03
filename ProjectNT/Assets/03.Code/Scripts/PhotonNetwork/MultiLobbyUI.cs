@@ -55,6 +55,7 @@ public class MultiLobbyUI : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void GameStart()
     {
         if (_startGameCoroutine != null)

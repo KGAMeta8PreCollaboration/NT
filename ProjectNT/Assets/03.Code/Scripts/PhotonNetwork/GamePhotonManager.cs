@@ -3,7 +3,6 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GamePhotonManager : MonoBehaviourPunCallbacks
 {
@@ -59,7 +58,7 @@ public class GamePhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         print("포톤 연결 해제");
-        SceneManager.LoadScene("Prototype_Lobby");
+        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.LocalPlayer.NickName = "";
         print(PhotonNetwork.LocalPlayer.NickName);
     }

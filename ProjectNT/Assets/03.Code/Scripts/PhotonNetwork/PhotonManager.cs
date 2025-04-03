@@ -4,28 +4,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class LobbyPhotonManager : MonoBehaviourPunCallbacks
+
+public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private Transform[] _spawnPointPlayers;
-    [SerializeField] private MultiLobbyUI _multiLobbyUI;
-
-    [SerializeField] private VRPlayer _lobbyPlayer;
-
-    public Action joinedRoom;
-
-    private IEnumerator Start()
-    {
-        yield return null;
-        GameManager.Instance.PhotonManager.joinedRoom += OnJoinedRoom2;
-    }
-
-    public void OnJoinedRoom2()
-    {
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
-        SpawnPlayer();
-        joinedRoom?.Invoke();
-    }
-
+    public Action joinedRoom; //방에 플레이어가 입장 했을 때 호출
+    public Action disconnectedServer; //서버 연결이 해제될 때 호출
+    public Action<Player> leftRoomPlayer; //플레이어가 방을 나갔을 때 호출
     public override void OnConnectedToMaster()
     {
         print("Photon 연결 성공!");
@@ -38,17 +22,10 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-
         print("방 참가 성공!");
-
         PhotonNetwork.AutomaticallySyncScene = true;
-
-
-        AssignPlayerRole();
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
-        SpawnPlayer();
-
-        photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
+        AssignPlayerRole(); //플레이어 닉네임 설정
+        joinedRoom?.Invoke();
     }
 
     public void LeaveRoom()
@@ -76,18 +53,16 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         print("로비 나감");
-        //연결 끊기
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.Disconnect(); //연결 끊기
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        PhotonNetwork.LocalPlayer.NickName = ""; //플레이어 닉네임 초기화
         print("포톤 연결 해제");
-        _multiLobbyUI.ResetConnectImage();
-        PhotonNetwork.LocalPlayer.NickName = "";
-        print(PhotonNetwork.LocalPlayer.NickName);
+        print($"로컬 플레이어: {PhotonNetwork.LocalPlayer.NickName}");
 
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(true);
+        disconnectedServer?.Invoke();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -98,8 +73,8 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         print("나간 플레이어: " + otherPlayer.NickName);
-        _multiLobbyUI.UpdateConnectImage(otherPlayer, true);
         otherPlayer.NickName = "";
+        leftRoomPlayer?.Invoke(otherPlayer);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -125,43 +100,6 @@ public class LobbyPhotonManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LocalPlayer.NickName = "Player2";
             Debug.Log("새로운 Player2 설정됨: " + PhotonNetwork.LocalPlayer.NickName);
-        }
-    }
-
-    [PunRPC]
-    public void UpdateMultiLobbyUI()
-    {
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            _multiLobbyUI.UpdateConnectImage(player, false);
-        }
-    }
-
-    [PunRPC]
-    public void GameStart()
-    {
-        _multiLobbyUI.GameStart();
-    }
-
-    [PunRPC]
-    public void CancelStartGame()
-    {
-        _multiLobbyUI.CancelStartGame();
-    }
-
-
-
-    private void SpawnPlayer()
-    {
-        print("플레이어 컨트롤러 생성");
-        if (PhotonNetwork.LocalPlayer.NickName == "Player1")
-        {
-            PhotonNetwork.Instantiate("Multi/LobbyPlayer", _spawnPointPlayers[0].position, _spawnPointPlayers[0].rotation).GetComponent<VRPlayer>();
-        }
-        else if (PhotonNetwork.LocalPlayer.NickName == "Player2")
-        {
-
-            PhotonNetwork.Instantiate("Multi/LobbyPlayer", _spawnPointPlayers[1].position, _spawnPointPlayers[1].rotation).GetComponent<VRPlayer>();
         }
     }
 }
