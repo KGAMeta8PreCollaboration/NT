@@ -79,13 +79,13 @@ public class NoteGenerator : MonoBehaviour
             LoadedNoteData noteData = _loadedNotes[0];
             if (Application.isPlaying && noteData.time <= currentTime - _startDspTime)
             {
-                print("노트 생성기 비동기 생성 시작 2");
+                // print("노트 생성기 비동기 생성 시작 2");
                 noteData.time += _startDspTime + _noteLeadTime;
                 //LoadedNoteData 구조화 전까지는 일단 사용. 롱노트에 대한 endTime부여
                 if (noteData.noteType == NoteType.Long)
                     noteData.endTime += _startDspTime + _noteLeadTime;
 
-                print("노트 생성기 비동기 생성 시작 3");
+                // print("노트 생성기 비동기 생성 시작 3");
                 _noteManager.CreateNoteFromData(noteData);
                 _loadedNotes.RemoveAt(0);
             }

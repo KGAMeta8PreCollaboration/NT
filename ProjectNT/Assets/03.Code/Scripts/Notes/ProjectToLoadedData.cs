@@ -9,6 +9,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
 {
 	public List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
 	public List<AudioClip> audioClips = new List<AudioClip>();
+	public AudioClip bgmAudioClip;
 	
 	public List<LoadedNoteData> BeatMapDataToLoadedNoteData(BeatMapData beatMapData)
 	{
@@ -49,8 +50,20 @@ public partial class ProjectToLoadedData
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
 		foreach (string item in strings)
-			StartCoroutine(AudioWebRequest(item, AddAudioClip));
-		StartCoroutine(CheckAudioClipLoad(returnCallback, strings.Length));
+		{
+			try
+			{
+				byte[] wavData = File.ReadAllBytes(item);
+				AudioClip audioClip = WavUtility.WavToAudioClip(wavData, Path.GetFileName(item));
+				AddAudioClip(audioClip);
+			}
+			catch (ArgumentException e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		returnCallback?.Invoke(audioClips);
 	}
 	
 	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
@@ -59,7 +72,10 @@ public partial class ProjectToLoadedData
 	{
 		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
 		if (!File.Exists(projectPath)) return;
-		StartCoroutine(AudioWebRequest(projectPath, returnCallback));
+		AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
+		bgmAudioClip = clip;
+		returnCallback?.Invoke(clip);
+		// StartCoroutine(BGMWebRequest(projectPath, returnCallback));
 	}
 	
 	private IEnumerator CheckAudioClipLoad(Action<List<AudioClip>> callback, int cnt)
@@ -72,18 +88,37 @@ public partial class ProjectToLoadedData
 	private IEnumerator AudioWebRequest(string path, Action<AudioClip> callback)
 	{
 		AudioClip clip = null;
+		path = Path.Combine("file://", path);
 		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
 		yield return request.SendWebRequest();
-		
+
 		if (request.result != UnityWebRequest.Result.Success)
 		{
-			Debug.LogError($"Error loading audio clip: {request.error}");
+			bool isFile = File.Exists(path);
+			Debug.LogError($"파일 체크 : {isFile}, SFX Error loading audio clip: {request.error}, {path}");
 			yield break;
 		}
 		clip = DownloadHandlerAudioClip.GetContent(request);
 		clip.name = Path.GetFileName(path);
 		callback?.Invoke(clip);
 		_currentLoadClipCount++;
+	}
+
+	private IEnumerator BGMWebRequest(string path, Action<AudioClip> callback)
+	{
+		AudioClip clip = null;
+		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
+		yield return request.SendWebRequest();
+		
+		if (request.result != UnityWebRequest.Result.Success)
+		{
+			Debug.LogError($"BGM Error loading audio clip: {request.error}, {path}");
+			yield break;
+		}
+		clip = DownloadHandlerAudioClip.GetContent(request);
+		clip.name = Path.GetFileName(path);
+		bgmAudioClip = clip;
+		callback?.Invoke(clip);
 	}
 
 }

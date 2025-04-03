@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
     public double delayTime = 2.0;
     public Action OnGameEnd;
     public Action OnGoToLobby;
+    public ProjectToLoadedData projectToLoadedData;
 
     public NoteManager[] noteManagers;
     public NoteGenerator[] noteGenerators;
+   
     private GamePhotonManager _gamePhotonManager;
 
     public BeatMapData beatMapData;
@@ -30,8 +33,6 @@ public class GameManager : Singleton<GameManager>
 	
 	private void Start()
 	{
-		print( "경로 : " + Application.persistentDataPath);
-		// GameSceneInit();
 		if (skipLobby)
 		{
 			GameSceneInit();
@@ -57,21 +58,20 @@ public class GameManager : Singleton<GameManager>
 			noteGenerators[1].Init();
 		}
 	}
-	private ProjectToLoadedData _projectToLoadedData;
 
 	public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath)
 	{
-		_projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-		_projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
-		_projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
+		projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+		projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+		projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
+		loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
 		SceneManager.LoadScene(gameSceneName);
-		loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
 	}
 	
-	private IEnumerator StartCo()
+	private IEnumerator GameSceneInitCo()
 	{
 		yield return new WaitForSeconds(5f);
-
+		
         GameStart();
         StartCoroutine(CheckGameEndCoroutine());
     }
@@ -92,8 +92,8 @@ public class GameManager : Singleton<GameManager>
         noteManagers = FindObjectsOfType<NoteManager>();
         noteGenerators = FindObjectsOfType<NoteGenerator>();
 
-        StopCoroutine(StartCo());
-        StartCoroutine(StartCo());
+        StopCoroutine(GameSceneInitCo());
+        StartCoroutine(GameSceneInitCo());
     }
 
     // TODO: 프로토타입 임시
@@ -128,9 +128,9 @@ public class GameManager : Singleton<GameManager>
     {
         while (true)
         {
-            print("CheckGameEndCoroutine");
             if (CheckGameEnd())
             {
+				print("CheckGameEndCoroutine");
                 GameEnd();
                 yield break;
             }

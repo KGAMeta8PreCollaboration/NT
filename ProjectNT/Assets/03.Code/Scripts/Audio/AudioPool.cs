@@ -13,6 +13,7 @@ public class AudioPool : MonoBehaviour
 	void Start()
 	{
 		poolParent = new GameObject("AudioSourcePool").transform;
+		poolParent.SetParent(transform);
 		for (int i = 0; i < poolSize; i++)
 		{
 			GameObject audioObj = Instantiate(audioSourcePrefab, poolParent, false); 

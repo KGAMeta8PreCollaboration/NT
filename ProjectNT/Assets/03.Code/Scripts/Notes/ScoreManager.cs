@@ -49,7 +49,7 @@ public class ScoreManager : MonoBehaviour
             noteType == JudgementType.Good ? 50 :
             noteType == JudgementType.MISS ? 0 : 0;
         score += index;
-        print($"AddScore : {noteType} : total score : {score}");
+        // print($"AddScore : {noteType} : total score : {score}");
         OnScoreChanged?.Invoke(score);
     }
 

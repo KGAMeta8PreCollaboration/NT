@@ -132,6 +132,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         string bgmSavePath = Path.Combine(ProjectData.m_Path, "bgmSaveFile");
         string bgmPath = Path.Combine(ProjectData.m_Path, ProjectData.bgmName);
 
+        print("SetBGM : " + bgmPath);
         bgmDestPath = Path.Combine(bgmSavePath, ProjectData.bgmName);
         if (Directory.Exists(bgmSavePath))
         {
@@ -148,9 +149,10 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
         UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(bgmDestPath, AudioType.WAV);
         yield return request.SendWebRequest();
+        print("InstantiateBGM : " + bgmDestPath);
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"Error loading audio clip : {request.error}");
+            Debug.LogError($"Error loading audio clip : {request.error}, name : {bgmDestPath}");
         }
         clip = DownloadHandlerAudioClip.GetContent(request);
         clip.name = ProjectData.bgmName;
