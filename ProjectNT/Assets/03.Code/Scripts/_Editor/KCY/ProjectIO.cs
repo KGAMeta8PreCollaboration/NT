@@ -16,7 +16,6 @@ public class ProjectIO : MonoBehaviour
     }
     private void Awake()
     {
-        pathVisual_TMP.text = editorEnv.ProjectPath;
         if (Directory.Exists(editorEnv.ProjectPath))
         {
             Debug.Log("파일 경로 확인");
@@ -25,6 +24,11 @@ public class ProjectIO : MonoBehaviour
         {
             Debug.LogError("파일 경로를 읽어올 수 없습니다.");
         }
+    }
+
+    private void OnEnable()
+    {
+        pathVisual_TMP.text = editorEnv.ProjectPath;
     }
     //TODO 프로젝트의 저장정보를 ProjectLoader에게 보내기
 }

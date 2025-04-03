@@ -8,20 +8,32 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("마우스 이동 속도")]
-    [SerializeField] private float movementSpeed = 5f;
+    [Header("마우스 휠 속도")]
+    [SerializeField] private float wheelSpeed = 5f;
     [Header("마우스 민감도")]
     [SerializeField] private float mouseSensitivity = 2f;
     [Header("메인 카메라")]
     [SerializeField] private Camera mainCamera;
     [Header("카메라 시작 포인트")]
     [SerializeField] private Vector3 initCameraPos;
+    [SerializeField] private float minDistance = 5f;
+    [SerializeField] private float maxDistance = 20f;
+
+    //text
+    [SerializeField] private Slider slider;
 
     //마우스 오른쪽 클릭 o -> true / x -> false
     public bool _isRotating = false;
     private Vector2 _savedMousePos = Vector2.zero;
     private Vector3 _moveDirection;
     private float _mouseX, _mouseY;
+
+    private AudioSourceManager _audioSourceManager;
+
+    private void Awake()
+    {
+        _audioSourceManager = FindObjectOfType<AudioSourceManager>();
+    }
 
     private void Start()
     {
@@ -32,17 +44,23 @@ public class CameraController : MonoBehaviour
 
         //초기 카메라 위치 설정
         mainCamera.transform.position = initCameraPos;
+        slider.onValueChanged.AddListener(HandleCamera);
     }
 
     private void Update()
     {
-        HandleMouseInput();
-        if (_isRotating == true)
-        {
-            HandleKeyboardInput();
-            MoveCamera();
-            RotateCamera();
-        }
+        //HandleMouseInput();
+        //if (_isRotating == true)
+        //{
+        //    HandleKeyboardInput();
+        //    MoveCamera();
+        //    RotateCamera();
+        //}
+        float wheelAmount = Input.GetAxis("Mouse ScrollWheel") * wheelSpeed;
+        float distance = mainCamera.transform.position.z - wheelAmount;
+
+        distance = Mathf.Clamp(distance, minDistance, maxDistance);
+        //HandleCamera(distance);
     }
 
     private void HandleMouseInput()
@@ -92,7 +110,7 @@ public class CameraController : MonoBehaviour
     {
         if (_moveDirection.magnitude >= 0.1f)
         {
-            mainCamera.transform.position += _moveDirection.normalized * (movementSpeed * Time.deltaTime);
+            mainCamera.transform.position += _moveDirection.normalized * (wheelSpeed * Time.deltaTime);
         }
     }
 
@@ -102,6 +120,13 @@ public class CameraController : MonoBehaviour
         {
             mainCamera.transform.rotation = Quaternion.Euler(_mouseY, _mouseX, 0f);
         }
+    }
+
+    private void HandleCamera(float value)
+    {
+        //_audioSourceManager.audioSourceValue = value;
+        //print($"들어온 값 : {value}");
+        slider.value = value;
     }
 
     //InputSystem 사용시 아래껄 R&D 하자

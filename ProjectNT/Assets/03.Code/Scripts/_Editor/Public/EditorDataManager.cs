@@ -23,63 +23,89 @@ public class EditorDataManager : Singleton<EditorDataManager>
 {
 
     private ProjectData currentProjectData;
-    private string savefileName = "BeatMapData";
     private Enums.ModeDiff currentModeDiff;
-
     private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
     new Dictionary<Enums.ModeDiff, BeatMapData>();
     private BeatMapManager beatMapManager;
     private TestLoad testLoad;
-    private string bgmDestPath;
-    private string curKeySoundName;
 
-    public ProjectData ProjectData { get { return currentProjectData; } set { currentProjectData = value; } }
+    private string savefileName = "BeatMapData";
+    private string curKeySoundName;
+    private string bgmDestPath;
+    private bool isSaved;
+
+    public BeatMapData beatMapCache = new BeatMapData();
+    public Sprite thumbnail_sprite;
+    public AudioClip bgmClip;
+
+    public Action<BeatMapData> beatMapLoadAction;
+    public Action saveTrackingAction;
+    public Action phaseDataAction;
+
+    //TODO 복사할 때를 위한 캐싱...? 아직 확정아님
+
+    public ProjectData ProjectData
+    { get { return currentProjectData; } set { currentProjectData = value; } }
 
     public Enums.ModeDiff CurModeDiff
     {
         get { return currentModeDiff; }
         set
         {
+            if (beatMapManager != null)
+                CurBeatMap = beatMapManager.SaveBeatMapData();
             currentModeDiff = value;
+            CurBeatMap = beatMapDic[CurModeDiff];
             beatMapLoadAction?.Invoke(CurBeatMap);
+            // if (beatMapManager != null)
+            // {
+            //     beatMapManager.LoadBeatMapData(CurBeatMap);
+            // }
+            beatMapCache = CurBeatMap;
+
             phaseDataAction?.Invoke();
         }
     }
-
-    public Sprite thumbnail_sprite;
-    public AudioClip bgmClip;
-
     public BeatMapData CurBeatMap
     {
         get { return beatMapDic[CurModeDiff]; }
-        set { beatMapDic[CurModeDiff] = value; }
+        set
+        {
+            beatMapDic[CurModeDiff] = value;
+            Debug.Log("에잉");
+        }
     }
 
     public string CurKeySoundName
     { get { return curKeySoundName; } set { curKeySoundName = value; } }
+    public bool IsSaved
+    {
+        get { return isSaved; }
+        set
+        {
+            isSaved = value;
+            if (isSaved == false)
+            {
+                // TODO *인보크
+                saveTrackingAction?.Invoke();
+            }
+        }
+    }
 
-    public Action<BeatMapData> beatMapLoadAction;
-    public Action phaseDataAction;
     protected override void Awake()
     {
         base.Awake();
 
-        //TODO 병합 후 주석해제예정
         SceneManager.sceneLoaded += (x, y) =>
         {
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
                 testLoad = FindObjectOfType<TestLoad>();
-                testLoad.songName = ProjectData.bgmName;
+                //testLoad.songName = ProjectData.bgmName;
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
                 SaveDataLocal();
-            }
-            if (SceneManager.GetActiveScene().name == "EditorLoadingScene")
-            {
-                beatMapLoadAction = null;
-
             }
         };
 
@@ -89,7 +115,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
             beatMapDic.Add(Enums.ModeDiff.SOLO_EASY + i, beatMapData);
         }
     }
-
     public void LoadBeatMapData()
     {
         string path;
@@ -160,7 +185,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public void SaveBeatMap()
     {
-        CurBeatMap = beatMapManager.SaveBeatMapData();
         SaveDataLocal();
     }
 }

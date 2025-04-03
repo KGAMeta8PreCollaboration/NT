@@ -21,13 +21,17 @@ public class NodeContainer : MonoBehaviour
     private GridManager _gridManager;
     private AudioSourceManager _audioSourceManager;
     private Texture2D _texture;
-    private Node[,] _nodeGrid;
+    private LowNode[,] _nodeGrid;
     private int _totalBeats;
     private GameObject _previewNode;
     private Color _previewNodeColor = new Color(1, 0, 0, 0.5f);
     private Material myMaterial;
     private Material myMaterialPrefab;
     private BeatMapData _currentBeatMapData;
+
+    private int _currentGrid;
+    private Color _editAreaColor = new Color(0, 1, 0, 0.8f);
+    private LineRenderer[] _gridLines;
 
     private void Awake()
     {
@@ -57,10 +61,10 @@ public class NodeContainer : MonoBehaviour
             //        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue);
             //    }
             //}
-            //if (EventSystem.current.IsPointerOverGameObject())
-            //{
-            //    return;
-            //}
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             PlaceNodeMousePosition();
         }
 
@@ -90,9 +94,67 @@ public class NodeContainer : MonoBehaviour
     //노드 이차원 배열 생성
     private void InitializeNodeGrid()
     {
+        //처음 가리키는 index는 0이다.
+        _currentGrid = 3;
         _totalBeats = _gridManager.TotalBeats;
-        _nodeGrid = new Node[_gridManager.Column, _totalBeats];
+        _nodeGrid = new LowNode[_gridManager.Column, _totalBeats];
         print($"그리드 생성 완료 : {_gridManager.Column} x {_totalBeats}");
+        CreateEditAreaLine();
+        UpdateEditAreaLines();
+    }
+
+    //초록색 경계선 만드는 함수
+    private void CreateEditAreaLine()
+    {
+        _gridLines = new LineRenderer[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject lineObj = new GameObject($"GridLine_{i}");
+            lineObj.transform.SetParent(transform);
+
+            LineRenderer line = lineObj.AddComponent<LineRenderer>();
+            line.material = new Material(Shader.Find("Sprites/Default"));
+            line.startColor = line.endColor = _editAreaColor;
+            line.startWidth = line.endWidth = 0.1f;
+
+            line.positionCount = 2;
+            line.gameObject.SetActive(false);
+
+            _gridLines[i] = line;
+        }
+    }
+    private void UpdateEditAreaLines()
+    {
+        if (_currentGrid < 3 || _gridLines == null) return;
+
+        float columnWidth = 10f / _gridManager.TotalBeats;
+        float leftX = -5f;
+        float rightX = -5f;
+        float topZ = 5f + ((_currentGrid + 1) * columnWidth);
+        float bottomZ = -5f + ((_currentGrid - 1) * columnWidth);
+
+        // 왼쪽 세로선
+        _gridLines[0].SetPosition(0, new Vector3(leftX, 0.05f, bottomZ));
+        _gridLines[0].SetPosition(1, new Vector3(leftX, 0.05f, topZ));
+
+        // 오른쪽 세로선
+        _gridLines[1].SetPosition(0, new Vector3(rightX, 0.05f, bottomZ));
+        _gridLines[1].SetPosition(1, new Vector3(rightX, 0.05f, topZ));
+
+        // 위쪽 가로선
+        _gridLines[2].SetPosition(0, new Vector3(leftX, 0.05f, topZ));
+        _gridLines[2].SetPosition(1, new Vector3(rightX, 0.05f, topZ));
+
+        // 아래쪽 가로선
+        _gridLines[3].SetPosition(0, new Vector3(leftX, 0.05f, bottomZ));
+        _gridLines[3].SetPosition(1, new Vector3(rightX, 0.05f, bottomZ));
+
+        // 모든 선 활성화
+        foreach (var line in _gridLines)
+        {
+            line.gameObject.SetActive(true);
+        }
     }
 
     private void PlaceNodeMousePosition()
@@ -183,11 +245,10 @@ public class NodeContainer : MonoBehaviour
         }
 
         GameObject nodeObj = Instantiate(nodePrefab);
-        Node node = nodeObj.GetComponent<Node>();
+        LowNode node = nodeObj.GetComponent<LowNode>();
 
         if (node != null)
         {
-            node.TestPrint();
             Vector2 gridPoint = _gridManager.GridPoint[column, beatIndex];
             nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
@@ -266,7 +327,7 @@ public class NodeContainer : MonoBehaviour
         //}
 
         GameObject nodeObj = Instantiate(nodePrefab);
-        Node node = nodeObj.GetComponent<Node>();
+        LowNode node = nodeObj.GetComponent<LowNode>();
 
         if (node != null)
         {
@@ -284,10 +345,18 @@ public class NodeContainer : MonoBehaviour
     public void InitializeWithSongData(SongData songData)
     {
         songData ??= new SongData { songLength = 0, phase2 = 0, phase3 = 0 };
-        songLengthText.text = songData.songLength.ToString();
-
+        UpdateTimeText(_audioSourceManager.AudioSource.clip.length);
+    }
+    private void UpdateTimeText(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
+        songLengthText.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
     }
 
+    private int defaultPhase2 = 0;
+    private int defaultPhase3 = 0;
     //비트맵 저장하는 함수
     public void SaveBeatMap()
     {
@@ -296,9 +365,9 @@ public class NodeContainer : MonoBehaviour
         _currentBeatMapData.songData = new SongData
         {
             songName = _audioSourceManager.AudioSource.clip.name,
-            songLength = _audioSourceManager.AudioDuration,
-            phase2 = EditorDataManager.Instance.CurBeatMap.songData.phase2,
-            phase3 = EditorDataManager.Instance.CurBeatMap.songData.phase3,
+            songLength = _audioSourceManager.AudioSource.clip.length,
+            phase2 = EditorDataManager.Instance.CurBeatMap?.songData?.phase2 ?? defaultPhase2,
+            phase3 = EditorDataManager.Instance.CurBeatMap?.songData?.phase3 ?? defaultPhase3,
         };
 
         _currentBeatMapData.gridSetting = new GridSetting
