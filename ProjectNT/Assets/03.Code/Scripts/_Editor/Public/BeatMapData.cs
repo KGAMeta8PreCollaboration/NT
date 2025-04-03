@@ -16,7 +16,7 @@ public class NodeData
 {
     public Vector2Int index;
     public Vector2Int? endIndex;
-    public NodeType nodeType;
+    public EditorNoteType nodeType;
     public string keySound;
 }
 
@@ -47,11 +47,11 @@ public class GridSetting
 }
 
 //노드 타입(상단노트, 하단 닷 노트, 하단 롱 노트)
-public enum NodeType
+public enum EditorNoteType
 {
-    LowNode,
-    LongNode,
-    UpperNode
+    ShortNote,
+    LongNote,
+    TopNote
 }
 
 public enum NodeInstrument

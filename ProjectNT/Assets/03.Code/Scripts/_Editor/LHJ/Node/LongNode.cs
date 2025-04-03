@@ -12,7 +12,7 @@ public class LongNode : Node
     {
         _index = start;
         _endIndex = end;
-        _nodeType = NodeType.LongNode;
+        _nodeType = EditorNoteType.LongNote;
         _keySound = EditorDataManager.Instance.CurKeySoundName;
 
         //프로퍼티 초기화

@@ -7,7 +7,7 @@ public class LowNode : Node
     public override void InitializeNode(Vector2Int index)
     {
         base.InitializeNode(index);
-        _nodeType = NodeType.LowNode;
+        _nodeType = EditorNoteType.ShortNote;
     }
 
     //저장할때 사용

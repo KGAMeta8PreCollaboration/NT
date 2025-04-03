@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Node : MonoBehaviour
 {
     protected Vector2Int _index;
-    protected NodeType _nodeType;
+    protected EditorNoteType _nodeType;
     protected string _keySound;
 
     public virtual void InitializeNode(Vector2Int index)
