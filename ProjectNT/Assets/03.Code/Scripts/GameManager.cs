@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
 
     public NoteManager[] noteManagers;
     public NoteGenerator[] noteGenerators;
-    private GamePhotonManager _gamePhotonManager;
 
     public BeatMapData beatMapData;
 
@@ -57,8 +56,7 @@ public class GameManager : Singleton<GameManager>
         {
             print("멀티 게임 씬");
             GameSceneInit();
-            _gamePhotonManager = FindObjectOfType<GamePhotonManager>();
-            OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
+            OnGoToLobby += () => PhotonManager.LeaveRoom();
             noteGenerators[0].Init();
             noteGenerators[1].Init();
         }
