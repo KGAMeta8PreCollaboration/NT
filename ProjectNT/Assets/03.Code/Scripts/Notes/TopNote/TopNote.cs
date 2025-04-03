@@ -107,4 +107,5 @@ public class TopNote : Note
         topNoteIndicater.OnHit?.Invoke();
         Destroy();
     }
+
 }
