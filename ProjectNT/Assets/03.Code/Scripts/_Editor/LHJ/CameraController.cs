@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
         {
             mainCamera = Camera.main;
         }
-
+        _isRotating = true;
         //초기 카메라 위치 설정
         mainCamera.transform.position = initCameraPos;
         slider.onValueChanged.AddListener(HandleCamera);

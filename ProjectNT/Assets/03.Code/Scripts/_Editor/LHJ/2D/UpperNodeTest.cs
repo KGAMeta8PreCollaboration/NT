@@ -113,12 +113,24 @@ public class UpperNodeTest : MonoBehaviour
 
     public void InitializeWithNodeData(List<UpperNodeData> nodeDatas)
     {
+        // 기존 데이터 초기화
+        _upperNodeDic.Clear();
+        _upperToggles.Clear();
+        _currentGridIndex = -1;
+
+        if (nodeDatas == null) return;
+
         foreach (var nodeData in nodeDatas)
         {
-            _currentGridIndex = nodeData.gridIndex;
-            _upperNodeDic[nodeData.gridIndex] = nodeData.nodeIndexs;
-
-            GetGridIndex(nodeData.gridIndex);
+            _upperNodeDic[nodeData.gridIndex] = new List<int>(nodeData.nodeIndexs);
         }
+
+        // 첫 번째 그리드 인덱스로 초기화
+        if (_upperNodeDic.Count > 0)
+        {
+            GetGridIndex(_upperNodeDic.Keys.First());
+        }
+
+        UpdateAllNodes();
     }
 }

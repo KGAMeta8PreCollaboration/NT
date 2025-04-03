@@ -69,7 +69,7 @@ public class AudioSourceManager : MonoBehaviour
         //올림
         _audioDuration = _audioSource.clip.length;
         _waveform.CreateWaveform(_audioSource);
-        _gridManager.CreateNodeContainer(_audioSource);
+        //_gridManager.CreateNodeContainer(_audioSource);
         audioSlider.onValueChanged.AddListener(HandleAudioClip);
         //_waveform.DrawWaveform(_audioSource);
         //_audioVisualizable.InitWaveform();
@@ -85,14 +85,13 @@ public class AudioSourceManager : MonoBehaviour
     private double gridTimeStep;
     private void Update()
     {
-        if (_cameraController._isRotating == false && _beatMapManager.isLoaded == true)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _isPlaying = !_isPlaying;
-                HandlePushSpace(_isPlaying);
-            }
+            print($"스페이스바 들어옴");
+            _isPlaying = !_isPlaying;
+            HandlePushSpace(_isPlaying);
         }
+
 
         //-0.1 ~ 0.1사이값이 나옴
         float scroll = Input.GetAxis("Mouse ScrollWheel");

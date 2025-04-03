@@ -63,10 +63,14 @@ public class NCT : MonoBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _gridManager.InitBeatMap += CreateNodeContainer;
 
         _currentState = new LowNodeState(this);
         UpdateStateText();
+    }
+
+    private void Start()
+    {
+        _gridManager.InitBeatMap += CreateNodeContainer;
     }
 
     Vector2Int currentIndex = new Vector2Int();
@@ -81,11 +85,6 @@ public class NCT : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
             _currentState.OnMiddleClick(currentIndex);
         _currentState.UpdatePreview(currentIndex);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Temp();
-        }
     }
 
     public void ChangeState(INodeState newState)
@@ -101,20 +100,42 @@ public class NCT : MonoBehaviour
 
     public void InitializeWithNodeData(List<NodeData> nodeDatas)
     {
-        foreach (var nodedata in nodeDatas)
+        if (nodeDatas == null) return;
+
+        // 기존 노드들 제거
+        if (_nodeGrid != null)
         {
-            if (nodedata.nodeType == EditorNoteType.ShortNote)
+            for (int x = 0; x < _column; x++)
             {
-                CreateLowNode(nodedata.index);
+                for (int y = 0; y < RowGridNum; y++)
+                {
+                    if (_nodeGrid[x, y] != null)
+                    {
+                        Destroy(_nodeGrid[x, y].gameObject);
+                        _nodeGrid[x, y] = null;
+                    }
+                }
             }
-            else if (nodedata.nodeType == EditorNoteType.LongNote && nodedata.endIndex.HasValue)
+        }
+        _longNodePosition.Clear();
+
+        // 새로운 노드들 생성
+        foreach (var nodeData in nodeDatas)
+        {
+            if (nodeData.nodeType == EditorNoteType.ShortNote)
             {
-                CreateLongNode(nodedata.index, nodedata.endIndex.Value);
+                CreateLowNode(nodeData.index);
+            }
+            else if (nodeData.nodeType == EditorNoteType.LongNote && nodeData.endIndex.HasValue)
+            {
+                _longNodePosition[nodeData.index] = nodeData.endIndex.Value;
+                CreateLongNode(nodeData.index, nodeData.endIndex.Value);
             }
         }
     }
 
     public Action<double> callback;
+    public bool isLoaded = false;
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
         if (bpm == 0)
@@ -123,7 +144,9 @@ public class NCT : MonoBehaviour
             return;
         }
 
-        _bpm = bpm;
+
+    isLoaded = false;
+    _bpm = bpm;
         _column = column;
         _beatNum = beatNum;
         print($"bpm : {_bpm}, column : {_column}, beatNum : {_beatNum}");
@@ -229,6 +252,7 @@ public class NCT : MonoBehaviour
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
 
        RowGridNum = heightGrid.Count;
+        isLoaded = true;
         print($"한칸의 넓이 : {cellHeight}");
     }
 
@@ -555,5 +579,26 @@ public class NCT : MonoBehaviour
             }
         }
         print("=== 노드 정보 출력 끝 ===");
+    }
+
+    public void ClearAllNodes()
+    {
+        // 기존 노드들 제거
+        if (nodeParent != null)
+        {
+            foreach (Transform child in nodeParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        _longNodePosition.Clear();
+        // 그리드 라인들 제거
+        heightGrid.ForEach(x => Destroy(x));
+        widthGrid.ForEach(x => Destroy(x));
+        heightGrid.Clear();
+        widthGrid.Clear();
+
+        _nodeGrid = null;
     }
 }

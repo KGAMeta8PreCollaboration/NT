@@ -14,8 +14,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int heightScale = 64;
     [Header("Texture해상도")]
     [SerializeField] private float texturePerSecond = 2048f; // 텍스처 해상도 증가
-    [Header("GridText를 넣어주세요")]
-    [SerializeField] private TextMeshProUGUI gridText;
+    //[Header("GridText를 넣어주세요")]
+    //[SerializeField] private TextMeshProUGUI gridText;
     [Header("Grid 설정")]
     [SerializeField] private float bpm = 120;
     [SerializeField] private int beatNum = 4; //박자의 수
@@ -74,12 +74,13 @@ public class GridManager : MonoBehaviour
     //불러오기 기능일때만 시작
     public void InitializeFromBeatMapManager(GridSetting gridSetting)
     {
-        // bpm = gridSetting.BPM;
-        bpm = EditorDataManager.Instance.ProjectData.bpm;
+        bpm = gridSetting.BPM;
+        //bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
         column = 4;
         beatNum = 4;
         //CreateGrid();
-        gridText.text = $"BPM : ({bpm})";
+        //gridText.text = $"BPM : ({bpm})";
+        CreateNodeContainer(_audioSourceManager.AudioSource);
     }
 
     public Action<float, int, int> InitBeatMap; 
