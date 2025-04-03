@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8291242464577566381}
   - component: {fileID: 8293180423363516039}
   - component: {fileID: 8201433479105707240}
+  - component: {fileID: -1223961936082442742}
   m_Layer: 0
   m_Name: HitEffect
   m_TagString: Untagged
@@ -4898,6 +4899,29 @@ MonoBehaviour:
   craterParticle: {fileID: 8291307548735435511}
   lastParticle: {fileID: 8291262544625737665}
   craterRenderModule: {fileID: 8292377909146491827}
+--- !u!114 &-1223961936082442742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8201433479105707243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14275460eb1f53d41b0293b4211ef347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBezier: 0
+  BezierSmoothSens: 20
+  CameraWaitTime: 0
+  IsCameraFollow: 0
+  CameraSpeed: 10
+  IsApprove: 1
+  IsPath: 0
+  Waypoints: []
+  IsHideInInspector: 0
+  PS: {fileID: 8291242464577566381}
+  Speed: 2
 --- !u!1 &8202790067256275911
 GameObject:
   m_ObjectHideFlags: 0

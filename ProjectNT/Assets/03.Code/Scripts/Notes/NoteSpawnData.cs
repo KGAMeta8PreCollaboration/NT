@@ -27,12 +27,12 @@ public class LongNoteSpawnData : NoteSpawnData
 }
 public class TopNoteSpawnData : NoteSpawnData
 {
-    public double canInterDspTime;
+    public double targetDspTime;
 
-    public TopNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double canInterDspTime, Quaternion rotation)
+    public TopNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double targetDspTime, Quaternion rotation)
         : base(notePrefab, hitSound, spawnDspTime, rotation)
     {
-        this.canInterDspTime = canInterDspTime;
+        this.targetDspTime = targetDspTime;
     }
 }
 

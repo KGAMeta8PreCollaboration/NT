@@ -9,6 +9,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
 {
 	public List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
 	public List<AudioClip> audioClips = new List<AudioClip>();
+	public AudioClip bgmAudioClip;
 	
 	public List<LoadedNoteData> BeatMapDataToLoadedNoteData(BeatMapData beatMapData)
 	{
@@ -20,12 +21,12 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		}
 		return loadedNoteDatas;
 	}
-	
+
 	private static LoadedNoteData NodeToNoteData(NodeData nodeData, GridSetting gridSetting)
 	{
 		return new LoadedNoteData
 		{
-			noteType = nodeData.nodeType == NodeType.BottomLongNode ? NoteType.Long : NoteType.Short,
+			noteType = nodeData.nodeType == EditorNoteType.LongNote ? NoteType.Long : NoteType.Short,
 			time = 60 * nodeData.index.y / (gridSetting.BeatNum * gridSetting.BPM),
 			endTime = 0,
 			railIndex = nodeData.index.x,
@@ -35,12 +36,11 @@ public partial class ProjectToLoadedData : MonoBehaviour
 
 }
 
-
 // Project에서 오디오 소스 반환받기 위한 함수들
 public partial class ProjectToLoadedData
 {
 	private int _currentLoadClipCount = 0;
-	
+
 	// Projects/{ProjectName}/KeySounds
 	public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
 	{
@@ -49,27 +49,61 @@ public partial class ProjectToLoadedData
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
 		foreach (string item in strings)
-			StartCoroutine(AudioWebRequest(item, AddAudioClip));
-		StartCoroutine(CheckAudioClipLoad(returnCallback, strings.Length));
+		{
+			try
+			{
+				byte[] wavData = File.ReadAllBytes(item);
+				AudioClip audioClip = WavUtility.WavToAudioClip(wavData, Path.GetFileName(item));
+				AddAudioClip(audioClip);
+			}
+			catch (ArgumentException e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		returnCallback?.Invoke(audioClips);
 	}
-	
+
 	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
-	
+
 	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
 	{
 		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
 		if (!File.Exists(projectPath)) return;
-		StartCoroutine(AudioWebRequest(projectPath, returnCallback));
+		AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
+		bgmAudioClip = clip;
+		returnCallback?.Invoke(clip);
+		// StartCoroutine(BGMWebRequest(projectPath, returnCallback));
 	}
-	
+
 	private IEnumerator CheckAudioClipLoad(Action<List<AudioClip>> callback, int cnt)
 	{
 		while (_currentLoadClipCount < cnt)
 			yield return null;
 		callback?.Invoke(audioClips);
 	}
-	
+
 	private IEnumerator AudioWebRequest(string path, Action<AudioClip> callback)
+	{
+		AudioClip clip = null;
+		path = Path.Combine("file://", path);
+		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
+		yield return request.SendWebRequest();
+
+		if (request.result != UnityWebRequest.Result.Success)
+		{
+			bool isFile = File.Exists(path);
+			Debug.LogError($"파일 체크 : {isFile}, SFX Error loading audio clip: {request.error}, {path}");
+			yield break;
+		}
+		clip = DownloadHandlerAudioClip.GetContent(request);
+		clip.name = Path.GetFileName(path);
+		callback?.Invoke(clip);
+		_currentLoadClipCount++;
+	}
+
+	private IEnumerator BGMWebRequest(string path, Action<AudioClip> callback)
 	{
 		AudioClip clip = null;
 		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
@@ -77,13 +111,13 @@ public partial class ProjectToLoadedData
 		
 		if (request.result != UnityWebRequest.Result.Success)
 		{
-			Debug.LogError($"Error loading audio clip: {request.error}");
+			Debug.LogError($"BGM Error loading audio clip: {request.error}, {path}");
 			yield break;
 		}
 		clip = DownloadHandlerAudioClip.GetContent(request);
 		clip.name = Path.GetFileName(path);
+		bgmAudioClip = clip;
 		callback?.Invoke(clip);
-		_currentLoadClipCount++;
 	}
 
 }

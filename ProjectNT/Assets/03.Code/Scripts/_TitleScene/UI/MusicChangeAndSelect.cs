@@ -34,7 +34,6 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     public void Init(List<TitleMusicData> titleMusicData)
     {
-        print("MusicChgeAndSelect Init");
         musicList = new LinkedList<TitleMusicData>(titleMusicData);
         currentMusicNode = musicList.First;
         SetInternalData(currentMusicNode.Value);
@@ -55,22 +54,22 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        Debug.Log($"{data.musicName}");
+        // Debug.Log($"{data.musicName}");
         musicImage.sprite = data.musicAlbumArtSprit;
         musicNameText.text = data.musicName;
-        musicArtistText.text = data.musicArtist;
+        // musicArtistText.text = data.musicArtist;
         tilteSound.PlayGameSound(data.musicClip);
     }
 
     public void ReplayMusic()
     {
-        Debug.Log("Music Replay 노래 처음부터 시작");
+        // Debug.Log("Music Replay 노래 처음부터 시작");
         tilteSound.PlayGameSound(currentMusicNode.Value.musicClip);
     }
 
     public void ChangeMusic(string direction, Action action = null)
     {
-        print("MusicChangeAndSelect ChangeMusic : " + direction);
+        // print("MusicChangeAndSelect ChangeMusic : " + direction);
         currentMusicNode = direction switch
         {
             "first" => musicList.First,

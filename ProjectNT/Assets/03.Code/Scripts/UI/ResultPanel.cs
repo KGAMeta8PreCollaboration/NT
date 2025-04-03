@@ -27,17 +27,17 @@ public class ResultPanel : Popup
 
     private void Awake()
     {
-        _totalNoteCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
-        _perfectCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
-        _coolCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
-        _goodCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
-        _badCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
-        _gradeText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
-        _gradeSubText = FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
+        _totalNoteCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
+        _perfectCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
+        _coolCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
+        _goodCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
+        _badCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
+        _gradeText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
+        _gradeSubText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
 
         //추가
-        _scoreCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
-        _maxComboCount = FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
+        _scoreCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
+        _maxComboCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
         restartButton.onClick.AddListener(Restart);//재시작 버튼
         musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
     }
@@ -88,22 +88,6 @@ public class ResultPanel : Popup
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
         //endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, )//음악이름, 난이도 추가
     }
-
-    public T FindDeepChildComponent<T>(Transform parent, string name) where T : Component
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child.GetComponent<T>();
-            }
-            T result = FindDeepChildComponent<T>(child, name);
-            if (result != null)
-                return result;
-        }
-        return null;
-    }
-
     public override void Init(PopupManager popupManager)
     {
         base.Init(popupManager);

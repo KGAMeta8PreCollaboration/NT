@@ -23,12 +23,11 @@ public class GameModeCtrl : MonoBehaviour
         }
         diffToggles[0].isOn = true;
         modeToggles[0].isOn = true;
-        EditorDataManager.Instance.CurModeDiff = 0;
-
     }
     private void Start()
     {
         EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap);
+        EditorDataManager.Instance.CurModeDiff = 0;
     }
     private void SetMode(bool isTrue)
     {

@@ -27,7 +27,7 @@ public class TitleManager : MonoBehaviour
     private void FadeOutEnd() 
     {
         isComplete = true;
-        Debug.Log("페이드 아웃 완료");
+        // Debug.Log("페이드 아웃 완료");
     }
 
     public void SetUIActive(bool active)//UI켜짐/UI꺼짐
