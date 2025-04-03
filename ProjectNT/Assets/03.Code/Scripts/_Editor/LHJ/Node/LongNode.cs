@@ -5,6 +5,8 @@ using UnityEngine;
 public class LongNode : Node
 {
     private Vector2Int _endIndex;
+    public Vector2Int StartIndex { get; private set; }
+    public Vector2Int EndIndex { get; private set; }
 
     public void InitializeLongNode(Vector2Int start, Vector2Int end)
     {
@@ -12,6 +14,10 @@ public class LongNode : Node
         _endIndex = end;
         _nodeType = NodeType.LongNode;
         _keySound = EditorDataManager.Instance.CurKeySoundName;
+
+        //프로퍼티 초기화
+        StartIndex = start;
+        EndIndex = end;
     }
 
     public override NodeData GetNodeData()

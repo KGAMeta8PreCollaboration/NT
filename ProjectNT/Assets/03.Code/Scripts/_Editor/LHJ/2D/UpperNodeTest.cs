@@ -68,11 +68,14 @@ public class UpperNodeTest : MonoBehaviour
         }
 
         // 현재 토글 상태를 Dictionary에 저장
-        if (!_upperToggleDic.ContainsKey(_currentGridIndex))
+        if (_upperToggles.Count > 0)
         {
-            _upperToggleDic[_currentGridIndex] = new List<int>();
+            _upperToggleDic[_currentGridIndex] = new List<int>(_upperToggles);
         }
-        _upperToggleDic[_currentGridIndex] = new List<int>(_upperToggles);
+        else
+        {
+            _upperToggleDic.Remove(_currentGridIndex);
+        }
 
         UpdateAllNodes();
     }
