@@ -14,7 +14,7 @@ public class UpperNodeTest : MonoBehaviour
     private List<UpperNode> upperNodes = new List<UpperNode>();
 
     public int _currentGridIndex = -1;
-    private Dictionary<int, List<int>> _upperToggleDic = new Dictionary<int, List<int>>();
+    public Dictionary<int, List<int>> _upperNodeDic = new Dictionary<int, List<int>>();
     private List<int> _upperToggles = new List<int>();
 
     private void Awake()
@@ -41,7 +41,7 @@ public class UpperNodeTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            foreach (var node in _upperToggleDic)
+            foreach (var node in _upperNodeDic)
             {
                 int[] temp = node.Value.ToArray();
                 print($"grid : {node.Key}, index : {temp}");
@@ -70,11 +70,11 @@ public class UpperNodeTest : MonoBehaviour
         // 현재 토글 상태를 Dictionary에 저장
         if (_upperToggles.Count > 0)
         {
-            _upperToggleDic[_currentGridIndex] = new List<int>(_upperToggles);
+            _upperNodeDic[_currentGridIndex] = new List<int>(_upperToggles);
         }
         else
         {
-            _upperToggleDic.Remove(_currentGridIndex);
+            _upperNodeDic.Remove(_currentGridIndex);
         }
 
         UpdateAllNodes();
@@ -89,7 +89,7 @@ public class UpperNodeTest : MonoBehaviour
 
         //새로운 그리드일때 한번 초기화
         _upperToggles.Clear();
-        if (_upperToggleDic.TryGetValue(grid, out var toggles))
+        if (_upperNodeDic.TryGetValue(grid, out var toggles))
         {
             _upperToggles.AddRange(toggles);
         }
@@ -108,6 +108,17 @@ public class UpperNodeTest : MonoBehaviour
         for (int i = 0; i < upperNodes.Count; i++)
         {
             upperNodes[i].UpdateState(_upperToggles);
+        }
+    }
+
+    public void InitializeWithNodeData(List<UpperNodeData> nodeDatas)
+    {
+        foreach (var nodeData in nodeDatas)
+        {
+            _currentGridIndex = nodeData.gridIndex;
+            _upperNodeDic[nodeData.gridIndex] = nodeData.nodeIndexs;
+
+            GetGridIndex(nodeData.gridIndex);
         }
     }
 }

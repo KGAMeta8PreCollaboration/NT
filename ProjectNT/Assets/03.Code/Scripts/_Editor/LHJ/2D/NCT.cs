@@ -24,6 +24,8 @@ public class NCT : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI stateTest;
 
+    public int RowGridNum;
+
     public double cellHeight = 0;
 
     private GridManager _gridManager;
@@ -40,7 +42,8 @@ public class NCT : MonoBehaviour
     private List<GameObject> heightGrid = new List<GameObject>();
     private List<GameObject> widthGrid = new List<GameObject>();
 
-    public Node[,] _nodeGrid;
+    private Node[,] _nodeGrid;
+    public Node[,] NodeGrid {  get { return _nodeGrid; } }
 
     private GameObject _previewLowNode;
     private GameObject _previewLongNode;
@@ -78,6 +81,11 @@ public class NCT : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
             _currentState.OnMiddleClick(currentIndex);
         _currentState.UpdatePreview(currentIndex);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Temp();
+        }
     }
 
     public void ChangeState(INodeState newState)
@@ -89,6 +97,21 @@ public class NCT : MonoBehaviour
     private void UpdateStateText()
     {
         stateTest.text = _currentState.GetStateName();
+    }
+
+    public void InitializeWithNodeData(List<NodeData> nodeDatas)
+    {
+        foreach (var nodedata in nodeDatas)
+        {
+            if (nodedata.nodeType == EditorNoteType.ShortNote)
+            {
+                CreateLowNode(nodedata.index);
+            }
+            else if (nodedata.nodeType == EditorNoteType.LongNote && nodedata.endIndex.HasValue)
+            {
+                CreateLongNode(nodedata.index, nodedata.endIndex.Value);
+            }
+        }
     }
 
     public Action<double> callback;
@@ -196,7 +219,7 @@ public class NCT : MonoBehaviour
             //print($"widthGrid.Count : {widthGrid.Count}" );
         }
 
-        _nodeGrid = new LowNode[_column, heightGrid.Count];
+        _nodeGrid = new Node[_column, heightGrid.Count];
         cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
 
         //NodeContainer가 SpriteRenderer로 생성되므로, 임시의 Plane을 생성해서 비교
@@ -204,6 +227,8 @@ public class NCT : MonoBehaviour
 
         callback?.Invoke(cellHeight);
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+
+       RowGridNum = heightGrid.Count;
         print($"한칸의 넓이 : {cellHeight}");
     }
 
@@ -324,7 +349,27 @@ public class NCT : MonoBehaviour
         }
     }
 
-    public void RemoveLowNode(Vector2Int currentIndex)
+    //public void RemoveLowNode(Vector2Int currentIndex)
+    //{
+    //    if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
+    //    {
+    //        Debug.LogWarning("제거할 노드가 없음");
+    //        return;
+    //    }
+    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LongNode)
+    //    {
+    //        print("그것은 롱노트여");
+    //    }
+
+    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LowNode)
+    //    {
+    //        Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
+    //        _nodeGrid[currentIndex.x, currentIndex.y] = null;
+    //        print($"일반 노드 제거 완료 : {currentIndex}");
+    //    }
+    //}
+
+    public void RemoveNode(Vector2Int currentIndex)
     {
         if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
         {
@@ -338,43 +383,38 @@ public class NCT : MonoBehaviour
             _nodeGrid[currentIndex.x, currentIndex.y] = null;
             print($"일반 노드 제거 완료 : {currentIndex}");
         }
-    }
 
-    public void RemoveLongNode(Vector2Int currentIndex)
-    {
-        if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
+        else if (_nodeGrid[currentIndex.x, currentIndex.y] is LongNode)
         {
-            Debug.LogWarning("제거할 노드가 없음");
-            return;
-        }
-
-        LongNode clickedNode = _nodeGrid[currentIndex.x, currentIndex.y] as LongNode;
-        if (clickedNode == null) return;
-        Vector2Int? startPos = null;
-        foreach (var kvp in _longNodePosition)
-        {
-            if (currentIndex.x == kvp.Key.x &&
-                currentIndex.y >= kvp.Key.y &&
-                currentIndex.y <= kvp.Value.y)
+            LongNode clickedNode = _nodeGrid[currentIndex.x, currentIndex.y] as LongNode;
+            if (clickedNode == null) return;
+            Vector2Int? startPos = null;
+            foreach (var kvp in _longNodePosition)
             {
-                startPos = kvp.Key;
-                break;
-            }
-        }
-
-        if (startPos.HasValue)
-        {
-            Vector2Int endPos = _longNodePosition[startPos.Value];
-            // 그리드에서 노드 참조 제거
-            for (int y = startPos.Value.y; y <= endPos.y; y++)
-            {
-                _nodeGrid[startPos.Value.x, y] = null;
+                if (currentIndex.x == kvp.Key.x &&
+                    currentIndex.y >= kvp.Key.y &&
+                    currentIndex.y <= kvp.Value.y)
+                {
+                    startPos = kvp.Key;
+                    break;
+                }
             }
 
-            // 게임오브젝트 삭제
-            Destroy(clickedNode.gameObject);
-            // Dictionary에서 제거
-            _longNodePosition.Remove(startPos.Value);
+            if (startPos.HasValue)
+            {
+                Vector2Int endPos = _longNodePosition[startPos.Value];
+                // 그리드에서 노드 참조 제거
+                for (int y = startPos.Value.y; y <= endPos.y; y++)
+                {
+                    _nodeGrid[startPos.Value.x, y] = null;
+                }
+
+                // 게임오브젝트 삭제
+                Destroy(clickedNode.gameObject);
+                // Dictionary에서 제거
+                _longNodePosition.Remove(startPos.Value);
+                print($"롱노드 제거 완료");
+            }
         }
     }
 
@@ -450,12 +490,7 @@ public class NCT : MonoBehaviour
         //삭제시 dic으로 찾음
         _longNodePosition[start] = end;
 
-        for (int y = minY; y <= maxY; y++)
-        {
-            _nodeGrid[start.x, y] = node as Node;
-            print($"롱 노드 생성 y값 : {start.x} ~ {y}");
-        }
-        //lineRenderer.material = _previewLongNode.GetComponent<LineRenderer>().material;
+        //;lineRenderer.material = _previewLongNode.GetComponent<LineRenderer>().material;
         //lineRenderer.startColor = Color.yellow;
         //lineRenderer.endColor = Color.cyan;
 
@@ -474,7 +509,8 @@ public class NCT : MonoBehaviour
 
         for (int y = minY; y <= maxY; y++)
         {
-            _nodeGrid[start.x, y] = node as Node;
+            _nodeGrid[start.x, y] = node as LongNode;
+            print($"롱 노드 생성 y값 : {start.x} ~ {y}");
         }
 
         //노드 위치 및 키음 초기화
@@ -497,5 +533,27 @@ public class NCT : MonoBehaviour
         {
             _previewLowNode.SetActive(false);
         }
+    }
+
+    public void Temp()
+    {
+        if (_nodeGrid == null)
+        {
+            Debug.LogWarning("NodeGrid에 암것도 없음");
+            return;
+        }
+        print("=== 노드 정보 출력 시작 ===");
+        for (int x = 0; x < _column; x++)
+        {
+            for (int y = 0; y < heightGrid.Count; y++)
+            {
+                if (_nodeGrid[x, y] != null)
+                {
+                    string nodeType = _nodeGrid[x, y] is LongNode ? "롱노드" : "일반노드";
+                    Debug.Log($"위치 [{x}, {y}]: {nodeType}");
+                }
+            }
+        }
+        print("=== 노드 정보 출력 끝 ===");
     }
 }

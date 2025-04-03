@@ -364,7 +364,6 @@ public class NodeContainer : MonoBehaviour
 
         _currentBeatMapData.songData = new SongData
         {
-            songName = _audioSourceManager.AudioSource.clip.name,
             songLength = _audioSourceManager.AudioSource.clip.length,
             phase2 = EditorDataManager.Instance.CurBeatMap?.songData?.phase2 ?? defaultPhase2,
             phase3 = EditorDataManager.Instance.CurBeatMap?.songData?.phase3 ?? defaultPhase3,

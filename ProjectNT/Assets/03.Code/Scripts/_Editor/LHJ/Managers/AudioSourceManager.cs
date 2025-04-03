@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Slider audioSlider;
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private TMP_InputField phase2Input;
+    [SerializeField] private TMP_InputField phase3Input;
 
     //get,set 둘다 필요 -> 노래의 시간을 조절할 수 있어야하기 때문 (0~1의 값)
     public float audioSourceValue;
@@ -25,6 +28,8 @@ public class AudioSourceManager : MonoBehaviour
     private float _audioDuration;
     public AudioSource AudioSource => _audioSource;
     public float AudioDuration => _audioDuration;
+    public int phase2;
+    public int phase3;
 
     private bool _isPlaying;
     //public Action<bool> callback;
@@ -39,6 +44,8 @@ public class AudioSourceManager : MonoBehaviour
         _gridManager = FindObjectOfType<GridManager>();
         //_audioSource = GetComponent<AudioSource>();
         //_audioMixer = GetComponent<AudioMixer>();
+        phase2Input.onEndEdit.AddListener(SavePhase2);
+        phase3Input.onEndEdit.AddListener(SavePhase3);
     }
 
     private IEnumerator Start()
@@ -67,6 +74,12 @@ public class AudioSourceManager : MonoBehaviour
         //_waveform.DrawWaveform(_audioSource);
         //_audioVisualizable.InitWaveform();
         //volumeSlider.onValueChanged.AddListener(HandleVolume);
+    }
+
+    public void InitializeFromSongData(SongData songData)
+    {
+        phase2Input.text = (songData?.phase2 ?? 0).ToString();
+        phase3Input.text = (songData?.phase3 ?? 0).ToString();
     }
 
     private double gridTimeStep;
@@ -137,5 +150,20 @@ public class AudioSourceManager : MonoBehaviour
         //-80f면 사실상 무음이라고 한다
         float dB = (volume > 0) ? Mathf.Log10(volume) * 20 : -80f;
         audioMixer.SetFloat("BGM", dB);
+    }
+
+    private void SavePhase2(string value)
+    {
+        if (int.TryParse(value, out int parsedValue))
+        {
+            phase2 = parsedValue;
+        }    
+    }
+    private void SavePhase3(string value)
+    {
+        if (int.TryParse(value, out int parsedValue))
+        {
+            phase3 = parsedValue;
+        }
     }
 }
