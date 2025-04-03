@@ -46,8 +46,23 @@ public class LongNodeState : INodeState
     //롱노트는 오른쪽 클릭일때 하단노드 상태로 돌아감
     public void OnRightClick(Vector2Int position)
     {
-        _nct.ChangeState(new LowNodeState(_nct));
-        _nct.HideLongNodePreview();
+        if (_isPlacing == false)
+        {
+            if (_nct._nodeGrid[position.x, position.y] is LongNode)
+            {
+                _nct.RemoveLongNode(position);
+            }
+            else
+            {
+                _nct.ChangeState(new LowNodeState(_nct));
+                _nct.HideLongNodePreview();
+            }
+        }
+        else
+        {
+            _isPlacing = false;
+            _nct.HideLongNodePreview();
+        }
     }
 
     public void UpdatePreview(Vector2Int position)
