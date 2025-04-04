@@ -53,16 +53,16 @@ public class EditorDataManager : Singleton<EditorDataManager>
         get { return currentModeDiff; }
         set
         {
-
+            currentModeDiff = value;
             // TODO 저장관련 메서드 새로 전달받아야함.
             if (beatMapManager != null)
-                CurBeatMap = beatMapManager.SaveBeatMapData();
-            currentModeDiff = value;
-            // CurBeatMap = beatMapDic[CurModeDiff];
-            // beatMapLoadAction?.Invoke(CurBeatMap);
+            {
+                CurBeatMap = beatMapDic[CurModeDiff];
+                beatMapLoadAction?.Invoke(CurBeatMap);
+                phaseDataAction?.Invoke();
+            }
             // beatMapCache = CurBeatMap;
 
-            // phaseDataAction?.Invoke();
         }
     }
     public BeatMapData CurBeatMap
@@ -159,12 +159,11 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             Directory.CreateDirectory(folderPath);
         }
-        foreach (Enums.ModeDiff modi in Enum.GetValues(typeof(Enums.ModeDiff)))
-        {
-            jsonData = JsonUtility.ToJson(beatMapDic[modi], true);
-            filePath = Path.Combine(folderPath, modi.ToString());
-            File.WriteAllText(filePath, jsonData);
-        }
+        Debug.LogError($"{currentModeDiff}난이도 세이브중");
+        jsonData = JsonUtility.ToJson(CurBeatMap, true);
+        filePath = Path.Combine(folderPath, currentModeDiff.ToString());
+        File.WriteAllText(filePath, jsonData);
+
     }
     public void SetBgm()
     {
@@ -201,6 +200,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public void SaveBeatMap()
     {
         Debug.Log("세이브 진입");
+        CurBeatMap = beatMapManager.SaveBeatMapData();
         SaveDataLocal();
     }
 }
