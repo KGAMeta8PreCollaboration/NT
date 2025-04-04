@@ -56,6 +56,7 @@ public class PopUp : MonoBehaviour
             case Enums.Details.MAKEPROJECTCOMPLETE:
             case Enums.Details.CHANGEPROJECTINFOCOMPLETE:
             case Enums.Details.FILEDETECTIONFAIL:
+            case Enums.Details.NONBEATNUM:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 break;

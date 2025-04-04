@@ -6,7 +6,7 @@ public abstract class Node : MonoBehaviour
 {
     protected Vector2Int _index;
     protected EditorNoteType _nodeType;
-    protected string _keySound;
+    public string _keySound;
 
     public virtual void InitializeNode(Vector2Int index)
     {

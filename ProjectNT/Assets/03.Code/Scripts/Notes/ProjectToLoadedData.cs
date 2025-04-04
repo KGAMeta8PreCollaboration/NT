@@ -67,9 +67,9 @@ public partial class ProjectToLoadedData
 
 	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
 
-	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
+	public void GetBgmAudioClip(string projectPath, Action<AudioClip> returnCallback)
 	{
-		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
+		projectPath = Path.Combine(projectPath, "bgmSaveFile");
 		if (!File.Exists(projectPath)) return;
 		AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
 		bgmAudioClip = clip;
