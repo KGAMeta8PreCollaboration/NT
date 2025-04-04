@@ -10,7 +10,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
 	public List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
 	public List<AudioClip> audioClips = new List<AudioClip>();
 	public AudioClip bgmAudioClip;
-	
+
 	public List<LoadedNoteData> BeatMapDataToLoadedNoteData(BeatMapData beatMapData)
 	{
 		GridSetting gridSetting = beatMapData.gridSetting;
@@ -108,7 +108,7 @@ public partial class ProjectToLoadedData
 		AudioClip clip = null;
 		UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV);
 		yield return request.SendWebRequest();
-		
+
 		if (request.result != UnityWebRequest.Result.Success)
 		{
 			Debug.LogError($"BGM Error loading audio clip: {request.error}, {path}");

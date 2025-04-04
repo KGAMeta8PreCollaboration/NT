@@ -147,6 +147,11 @@ public class Waveform : MonoBehaviour
 
     private void SetPlayBarPos()
     {
+        if (_audioSource == null || _audioSource.clip == null)
+        {
+            print($"오디오 문제");
+            return;
+        }
         //progress = 현재 노래 시간 / 전체 노래 시간
         float progress = _audioSource.time / _audioSource.clip.length;
         //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");

@@ -20,6 +20,7 @@ public class Project : MonoBehaviour
     private byte[] tempThumbnailData;
     private string tempBgm;
     private string tempBpm;
+    private string tempBeatNum;
     private string tempKeySoundPath;
     public Toggle Toggle
     {
@@ -57,6 +58,7 @@ public class Project : MonoBehaviour
         tempThumbnailData = projectData.thumbnailData;
         tempBgm = projectData.bgmPath;
         tempBpm = projectData.bpm.ToString();
+        tempBeatNum = projectData.beatNum.ToString();
         tempKeySoundPath = projectData.m_KeysoundPath;
     }
 
@@ -68,6 +70,7 @@ public class Project : MonoBehaviour
             loader.SetProjectTMP = "";
             loader.SetArtistTMP = "";
             loader.SetBpm = "";
+            loader.SetBeatNum = "";
             loader.SetBgmTMP = "";
             loader.SetThumbnailTMP = "";
             loader.SetKeySoundTMP = "";
@@ -92,6 +95,7 @@ public class Project : MonoBehaviour
                 loader.SetProjectTMP = projectData.projectName;
                 loader.SetArtistTMP = projectData.artistName;
                 loader.SetBpm = projectData.bpm.ToString();
+                loader.SetBeatNum = projectData.beatNum.ToString();
                 loader.SetBgmTMP = projectData.bgmPath;
                 loader.SetThumbnailTMP = projectData.thumbnailName;
                 loader.SetKeySoundTMP = projectData.m_KeysoundPath;
@@ -115,15 +119,19 @@ public class Project : MonoBehaviour
     public void SetArtist(string text)
     {
         if (this != loader.currentProject) return;
-        // projectData.artistName = text;
         tempArtist = text;
     }
     public void SetBPM(string text)
     {
         if (this != loader.currentProject) return;
         if (string.IsNullOrEmpty(text)) return;
-        // projectData.bpm = int.Parse(text);
         tempBpm = text;
+    }
+    public void SetBeatNum(string text)
+    {
+        if (this != loader.currentProject) return;
+        if (string.IsNullOrEmpty(text)) return;
+        tempBeatNum = text;
     }
     public void SetThumbnail(string text)
     {
@@ -150,6 +158,7 @@ public class Project : MonoBehaviour
         projectData.projectName = tempName;
         projectData.artistName = tempArtist;
         projectData.bpm = int.Parse(tempBpm);
+        projectData.beatNum = int.Parse(tempBeatNum);
         projectData.thumbnailName = tempThumbnail;
         projectData.thumbnailData = tempThumbnailData;
         projectData.m_KeysoundPath = tempKeySoundPath;

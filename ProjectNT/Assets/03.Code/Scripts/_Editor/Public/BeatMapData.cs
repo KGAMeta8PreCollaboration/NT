@@ -31,7 +31,6 @@ public class UpperNodeData
 [System.Serializable]
 public class SongData
 {
-    public string songName;
     public float songLength;
     public int phase2;
     public int phase3;

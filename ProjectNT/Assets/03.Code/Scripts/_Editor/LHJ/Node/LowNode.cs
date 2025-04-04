@@ -10,6 +10,9 @@ public class LowNode : Node
         _nodeType = EditorNoteType.ShortNote;
     }
 
+
+    //이 아래 두개는 안씀
+    //============================================================
     //저장할때 사용
     public override NodeData GetNodeData()
     {
