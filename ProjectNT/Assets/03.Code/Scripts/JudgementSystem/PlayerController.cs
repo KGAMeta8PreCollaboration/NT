@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private ScoreUI _scoreUI;
     private HapticDelegate hapticDelegate;
 
+    private Coroutine _collisionStayCoroutine = null;
+
     private void Awake()
     {
         _controller = GetComponentInParent<ActionBasedController>();
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 woofer.Hit();
+                if (_collisionStayCoroutine == null) _collisionStayCoroutine = StartCoroutine(OnCollisionStayCoroutine(woofer));
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
                 //logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
@@ -99,14 +102,26 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void OnCollisionStay(Collision collision)
-    {
 
-        if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
+    private IEnumerator OnCollisionStayCoroutine(Woofer woofer)
+    {
+        while (true)
         {
+            logText.text = "우퍼에 닿는 중";
             woofer.Hold(hapticDelegate);
+            yield return null;
         }
     }
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+
+    //    if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
+    //    {
+    //        logText.text = "우퍼에 닿는 중";
+    //        woofer.Hold(hapticDelegate);
+    //    }
+    //}
 
     private void OnCollisionExit(Collision collision)
     {
@@ -114,6 +129,11 @@ public class PlayerController : MonoBehaviour
         {
             logText.text = "우퍼에서 뗏음";
             woofer.ReleaseLongNote();
+            if (_collisionStayCoroutine != null)
+            {
+                StopCoroutine(_collisionStayCoroutine);
+                _collisionStayCoroutine = null;
+            }
         }
     }
 

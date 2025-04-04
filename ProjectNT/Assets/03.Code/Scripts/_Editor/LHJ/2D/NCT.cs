@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
@@ -69,7 +68,7 @@ public class NCT : MonoBehaviour
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
-        currentIndex = GetGridPositionFromMouse(); 
+        currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
             _currentState.OnLeftClick(currentIndex);
@@ -134,11 +133,11 @@ public class NCT : MonoBehaviour
         print("=====================================\n" +
             $"_spriteRenderer.size.y  : {_spriteRenderer.size.y}\n" +
             $"songDuration : {songDuration}\n" +
-            $"heightPerSecond : {heightPerSecond}\n" + 
-            $"secondsPerBeat : {secondsPerBPM}\n"+
+            $"heightPerSecond : {heightPerSecond}\n" +
+            $"secondsPerBeat : {secondsPerBPM}\n" +
             $"beatHeight : {bpmHeight}\n");
 
-        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i ++)
+        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i++)
         {
             float yPos = i * bpmHeight;
             GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, yPos, 0), Quaternion.identity);
@@ -245,7 +244,7 @@ public class NCT : MonoBehaviour
             print($"하단 노드 생성됨");
         }
 
-        if (currentIndex.x < 0 ||  currentIndex.y < 0 || currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
+        if (currentIndex.x < 0 || currentIndex.y < 0 || currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
         {
             if (_previewLowNode != null)
             {
@@ -388,7 +387,7 @@ public class NCT : MonoBehaviour
             print($"롱 노드 생성됨");
         }
 
-        if (start.x < 0 ||  start.y < 0 || start.x >= _column || start.y >= heightGrid.Count)
+        if (start.x < 0 || start.y < 0 || start.x >= _column || start.y >= heightGrid.Count)
         {
             return;
         }
