@@ -74,6 +74,7 @@ public class ConnectLineRenderer : MonoBehaviour
     {
         //start = _origin;
         startRenderer.position = _target.position;
+
         startPoint = _origin;
 
         leftLR.Release();
