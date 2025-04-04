@@ -86,7 +86,8 @@ public class NoteGenerator : MonoBehaviour
                     noteData.endTime += _startDspTime + _noteLeadTime;
 
                 // print("노트 생성기 비동기 생성 시작 3");
-                _noteManager.CreateNoteFromData(noteData);
+                if (noteData.noteType != NoteType.Top)
+                    _noteManager.CreateNoteFromData(noteData);
                 _loadedNotes.RemoveAt(0);
             }
             else
