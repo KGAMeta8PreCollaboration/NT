@@ -25,7 +25,7 @@ public class EditorLoadScene : MonoBehaviour
         op.allowSceneActivation = false;
         while (!op.isDone)
         {
-            if (op.progress >= 0.9f)
+            if (op.progress >= 0.9f && EditorDataManager.Instance.isLoadCompelete)
             {
                 op.allowSceneActivation = true;
                 yield break;

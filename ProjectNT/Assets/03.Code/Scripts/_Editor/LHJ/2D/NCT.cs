@@ -43,7 +43,7 @@ public class NCT : MonoBehaviour
     private List<GameObject> widthGrid = new List<GameObject>();
 
     private Node[,] _nodeGrid;
-    public Node[,] NodeGrid {  get { return _nodeGrid; } }
+    public Node[,] NodeGrid { get { return _nodeGrid; } }
 
     private GameObject _previewLowNode;
     private GameObject _previewLongNode;
@@ -63,7 +63,6 @@ public class NCT : MonoBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-
         _currentState = new LowNodeState(this);
         UpdateStateText();
     }
@@ -76,7 +75,7 @@ public class NCT : MonoBehaviour
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
-        currentIndex = GetGridPositionFromMouse(); 
+        currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
             _currentState.OnLeftClick(currentIndex);
@@ -144,9 +143,8 @@ public class NCT : MonoBehaviour
             return;
         }
 
-
-    isLoaded = false;
-    _bpm = bpm;
+        isLoaded = false;
+        _bpm = bpm;
         _column = column;
         _beatNum = beatNum;
         print($"bpm : {_bpm}, column : {_column}, beatNum : {_beatNum}");
@@ -180,11 +178,11 @@ public class NCT : MonoBehaviour
         print("=====================================\n" +
             $"_spriteRenderer.size.y  : {_spriteRenderer.size.y}\n" +
             $"songDuration : {songDuration}\n" +
-            $"heightPerSecond : {heightPerSecond}\n" + 
-            $"secondsPerBeat : {secondsPerBPM}\n"+
+            $"heightPerSecond : {heightPerSecond}\n" +
+            $"secondsPerBeat : {secondsPerBPM}\n" +
             $"beatHeight : {bpmHeight}\n");
 
-        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i ++)
+        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i++)
         {
             float yPos = i * bpmHeight;
             GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, yPos, 0), Quaternion.identity);
@@ -251,7 +249,7 @@ public class NCT : MonoBehaviour
         callback?.Invoke(cellHeight);
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
 
-       RowGridNum = heightGrid.Count;
+        RowGridNum = heightGrid.Count;
         isLoaded = true;
         print($"한칸의 넓이 : {cellHeight}");
     }
@@ -264,17 +262,16 @@ public class NCT : MonoBehaviour
 
         if (tempPlane.Raycast(ray, out distance) == false)
         {
-            print($"플레인 밖이다 : {index}");
+            // print($"플레인 밖이다 : {index}");
             return index;
         }
 
         Vector3 worldPoint = ray.GetPoint(distance);
         if (_spriteRenderer.bounds.Contains(worldPoint) == false)
         {
-            print($"플레인 밖이다 : {index}");
+            // print($"플레인 밖이다 : {index}");
             return index;
         }
-
 
         int column = (int)(worldPoint.x / (_spriteRenderer.size.x / _column));
         //열
@@ -291,10 +288,10 @@ public class NCT : MonoBehaviour
             _previewLowNode.transform.SetParent(nodeParent, true);
             _previewLowNode.transform.localScale = previewLowNodePrefab.transform.localScale;
             _previewLowNode.SetActive(false);
-            print($"하단 노드 생성됨");
+            // print($"하단 노드 생성됨");
         }
 
-        if (currentIndex.x < 0 ||  currentIndex.y < 0 || currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
+        if (currentIndex.x < 0 || currentIndex.y < 0 || currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
         {
             if (_previewLowNode != null)
             {
@@ -333,13 +330,13 @@ public class NCT : MonoBehaviour
         if (currentIndex.x < 0 || currentIndex.y < 0 ||
         currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
         {
-            Debug.LogWarning("노드 생성 위치가 범위를 벗어났습니다.");
+            // Debug.LogWarning("노드 생성 위치가 범위를 벗어났습니다.");
             return;
         }
 
         if (_nodeGrid[currentIndex.x, currentIndex.y] != null)
         {
-            Debug.LogWarning("이미 노드가 존재합니다.");
+            // Debug.LogWarning("이미 노드가 존재합니다.");
             return;
         }
 
@@ -350,7 +347,7 @@ public class NCT : MonoBehaviour
         {
             node.transform.SetParent(nodeParent, true);
             node.transform.localScale = lowNodePrefab.transform.localScale;
-            print("노드 생성 완료");
+            // print("노드 생성 완료");
 
             float columnSize = _spriteRenderer.size.x / _column;
             float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌
@@ -452,7 +449,7 @@ public class NCT : MonoBehaviour
             print($"롱 노드 생성됨");
         }
 
-        if (start.x < 0 ||  start.y < 0 || start.x >= _column || start.y >= heightGrid.Count)
+        if (start.x < 0 || start.y < 0 || start.x >= _column || start.y >= heightGrid.Count)
         {
             return;
         }

@@ -55,7 +55,7 @@ public class Project : MonoBehaviour
         tempArtist = projectData.artistName;
         tempThumbnail = projectData.thumbnailName;
         tempThumbnailData = projectData.thumbnailData;
-        tempBgm = projectData.bgmName;
+        tempBgm = projectData.bgmPath;
         tempBpm = projectData.bpm.ToString();
         tempKeySoundPath = projectData.m_KeysoundPath;
     }
@@ -92,11 +92,11 @@ public class Project : MonoBehaviour
                 loader.SetProjectTMP = projectData.projectName;
                 loader.SetArtistTMP = projectData.artistName;
                 loader.SetBpm = projectData.bpm.ToString();
-                loader.SetBgmTMP = projectData.bgmName;
+                loader.SetBgmTMP = projectData.bgmPath;
                 loader.SetThumbnailTMP = projectData.thumbnailName;
                 loader.SetKeySoundTMP = projectData.m_KeysoundPath;
                 string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
-                sprite = loader.MakeSprite(path);
+                sprite = loader.ByteToSprite(projectData.thumbnailData);
                 loader.SetThumbnail = sprite;
                 loader.EditBtn = true;
             }
@@ -152,7 +152,6 @@ public class Project : MonoBehaviour
         projectData.bpm = int.Parse(tempBpm);
         projectData.thumbnailName = tempThumbnail;
         projectData.thumbnailData = tempThumbnailData;
-        projectData.bgmName = tempBgm;
         projectData.m_KeysoundPath = tempKeySoundPath;
     }
 }
