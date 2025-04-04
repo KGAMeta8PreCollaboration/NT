@@ -1,24 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : Singleton<AudioManager>
 {
 	public List<AudioClip> audioClips = new List<AudioClip>();
 	private int currentClipIndex = 0;
 	public double startDspTime { get; private set; }
-	public AudioSource bgmAudioSource;
+	[SerializeField] private AudioSource _bgmAudioSource;
 	private AudioPool _audioPool;
 	private List<AudioSource> _audioSources = new List<AudioSource>();
 	private NoteGenerator[] noteGenerators;
 
 	protected override void Awake()
 	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
 		base.Awake();
 		foreach (AudioClip item in audioClips)
 			item.LoadAudioData();
 		_audioPool = GetComponent<AudioPool>();
 		StartCoroutine(CheckAudioPlayTime());
+	}
+	
+	
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		_bgmAudioSource?.Stop();
 	}
 
 	private void Start()
@@ -63,13 +71,16 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		print("오디오 매니저 StartBGM 1");
 		startDspTime = AudioSettings.dspTime + delayTime;
-		bgmAudioSource.Stop();
+		print("오디오 매니저 StartBGM 2");
+		_bgmAudioSource.Stop();
+		print("오디오 매니저 StartBGM 3");
 		// bgmAudioSource.Play((ulong)delayTime);
-		bgmAudioSource.PlayScheduled(startDspTime);
-		print($"BGM Sample rate : {bgmAudioSource.clip.frequency}");
+		_bgmAudioSource.PlayScheduled(startDspTime);
+		print("오디오 매니저 StartBGM 4");
+		print($"BGM Sample rate : {_bgmAudioSource.clip.frequency}");
 		foreach (NoteGenerator generator in GameManager.Instance.noteGenerators)
 		{
-			print("오디오 매니저 StartBGM 2");
+			print("오디오 매니저 StartBGM 5");
 			generator.NoteGenerateStart(startDspTime);
 		}
 	}
@@ -90,6 +101,7 @@ public class AudioManager : Singleton<AudioManager>
 	
 	public void SetBackgroundMusic(AudioClip clip)
 	{
-		bgmAudioSource.clip = clip;
+		print("오디오매니저 SetBackgroundMusic");
+		_bgmAudioSource.clip = clip;
 	}
 }

@@ -35,7 +35,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     public Dictionary<Enums.ModeDiff, BeatMapData> SetBeatMapData(ProjectData projectData, string path)
     {
         string beatMapPath = Path.Combine(path, projectData.projectName, "BeatMapData");
-        print("경로 : " + beatMapPath);
+        // print("경로 : " + beatMapPath);
         return LoadBeatMapData(beatMapPath);
     }
 
