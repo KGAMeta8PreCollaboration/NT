@@ -85,6 +85,11 @@ public class AudioSourceManager : MonoBehaviour
     private double gridTimeStep;
     private void Update()
     {
+        if (_beatMapManager.isLoaded == false)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             print($"스페이스바 들어옴");
