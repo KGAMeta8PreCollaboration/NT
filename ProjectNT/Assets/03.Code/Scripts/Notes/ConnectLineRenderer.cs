@@ -73,9 +73,7 @@ public class ConnectLineRenderer : MonoBehaviour
     public void Release()
     {
         //start = _origin;
-        Vector3 y = new Vector3(_target.position.x, _origin.position.y, _target.position.z);
-        //startRenderer.position = _target.position;
-        startRenderer.position = y;
+        startRenderer.position = _target.position;
 
         startPoint = _origin;
 
