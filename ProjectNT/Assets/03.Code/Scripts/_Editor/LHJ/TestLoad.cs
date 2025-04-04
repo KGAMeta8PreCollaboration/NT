@@ -33,7 +33,7 @@ public class TestLoad : MonoBehaviour
         {
             BPM = 128,
             Column = 4,
-            BeatNum = 4  // 0이 아닌 값으로 설정 (예: 4박자)
+            BeatNum = 8  // 0이 아닌 값으로 설정 (예: 4박자)
         };
         data.nodes = new List<NodeData>();
         data.upperNodes = new List<UpperNodeData>();
