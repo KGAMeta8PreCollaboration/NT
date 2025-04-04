@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TilteSound : MonoBehaviour
+public class TitleSound : MonoBehaviour
 {
     [Header("게임 음악 샘플 소스")]
     public AudioSource gameMusicAudioSource;

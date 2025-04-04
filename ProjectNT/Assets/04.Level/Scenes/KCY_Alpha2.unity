@@ -10101,6 +10101,28 @@ Transform:
   m_Father: {fileID: 1579355571}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &87575373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 826054382251639273, guid: d32b474d233496c4d974c19b591322a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1674338900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &87575374
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87575373}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5aa8146342f8922438e6dfd3f3f72f44, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5aa8146342f8922438e6dfd3f3f72f44, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &88794078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195705,7 +195727,7 @@ PrefabInstance:
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: loadedNotes.Array.data[0].noteType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 826054383126390451, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}

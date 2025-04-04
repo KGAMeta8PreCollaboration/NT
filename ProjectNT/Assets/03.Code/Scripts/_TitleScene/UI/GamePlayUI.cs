@@ -66,24 +66,24 @@ public class GamePlayUI : BaseTitleUI
 
     public override void AddEventListeners()//켜질때 버튼 등록
     {
-        print("AddEventListeners 1");
+        // print("AddEventListeners 1");
         base.AddEventListeners();
         ResetMusicSet();//0번 음악 세팅, 동시에 게임 미리듣기 음악 재생
         SetDifficulty(easy, 1);//난이도 토글 1로 세팅
-        print("AddEventListeners 2");
+        // print("AddEventListeners 2");
 
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
         //musicChangeSelect.musicReplayButton.onClick.AddListener(MusicSoundReplay);
-        print("AddEventListeners 3");
+        // print("AddEventListeners 3");
 
         easy.onValueChanged.AddListener((value) => OnDifficultyChanged(easy, 1));
         normal.onValueChanged.AddListener((value) => OnDifficultyChanged(normal, 2));
         hard.onValueChanged.AddListener((value) => OnDifficultyChanged(hard, 3));
         superHade.onValueChanged.AddListener((value) => OnDifficultyChanged(superHade, 4));
         //randomDifficulty.onClick.AddListener(SelectRandomDifficulty);
-        print("AddEventListeners 4");
+        // print("AddEventListeners 4");
     }
 
     public override void RemoveEventListeners()//꺼질때 버튼 해제
@@ -117,8 +117,8 @@ public class GamePlayUI : BaseTitleUI
         }
         else
         {
-            Debug.Log($"{TestStartGameData.Instance.musicName}");
-            Debug.Log($"{TestStartGameData.Instance.difficulty}");
+            // Debug.Log($"{TestStartGameData.Instance.musicName}");
+            // Debug.Log($"{TestStartGameData.Instance.difficulty}");
             Difficulty difficulty = GetCurrentDifficulty();
             BeatMapData beatMapData = new BeatMapData();
 
@@ -183,7 +183,7 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
-        SetDifficulty(easy, 1);
+        //SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -191,7 +191,7 @@ public class GamePlayUI : BaseTitleUI
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
-        SetDifficulty(easy, 1);
+        //SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }

@@ -6,7 +6,7 @@ public class TitleManager : MonoBehaviour
 { 
     private BlurEffectManager blurEffectManager;
     [SerializeField]
-    private TilteSound tilteSound;
+    private TitleSound tilteSound;
     private bool isComplete = false;//페이드아웃 효과 끝났는지 확인
     private bool isUIActive = false;//UI가 활성화 상태인지 확인
     public bool isMultiPlaye = false;//멀티플레이 상태인지 확인
@@ -27,7 +27,7 @@ public class TitleManager : MonoBehaviour
     private void FadeOutEnd() 
     {
         isComplete = true;
-        Debug.Log("페이드 아웃 완료");
+        // Debug.Log("페이드 아웃 완료");
     }
 
     public void SetUIActive(bool active)//UI켜짐/UI꺼짐

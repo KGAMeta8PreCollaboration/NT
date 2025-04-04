@@ -10,17 +10,17 @@ public class AudioPool : MonoBehaviour
 
     private Transform poolParent;
 
-    void Start()
-    {
-        poolParent = new GameObject("AudioSourcePool").transform;
-        poolParent.SetParent(transform);
-        for (int i = 0; i < poolSize; i++)
-        {
-            GameObject audioObj = Instantiate(audioSourcePrefab, poolParent, false);
-            audioObj.SetActive(false);
-            audioSourcePool.Enqueue(audioObj.GetComponent<AudioSource>());
-        }
-    }
+	void Start()
+	{
+		poolParent = new GameObject("AudioSourcePool").transform;
+		poolParent.SetParent(transform);
+		for (int i = 0; i < poolSize; i++)
+		{
+			GameObject audioObj = Instantiate(audioSourcePrefab, poolParent, false); 
+			audioObj.SetActive(false);
+			audioSourcePool.Enqueue(audioObj.GetComponent<AudioSource>());
+		}
+	}
 
     // 오디오 소스를 풀에서 가져오는 함수
     public AudioSource GetAudioSource()
