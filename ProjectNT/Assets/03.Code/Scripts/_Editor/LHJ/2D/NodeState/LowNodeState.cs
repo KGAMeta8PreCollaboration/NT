@@ -24,7 +24,7 @@ public class LowNodeState : INodeState
 
     public void OnRightClick(Vector2Int position)
     {
-        _nct.RemoveLowNode(position);
+        _nct.RemoveNode(position);
     }
 
     public void UpdatePreview(Vector2Int position)

@@ -69,7 +69,7 @@ public class GameManager : Singleton<GameManager>
     {
         _projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         _projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
-        _projectToLoadedData.GetBgmAudioClip(projectPath, beatMapData.songData.songName, AudioManager.Instance.SetBackgroundMusic);
+        _projectToLoadedData.GetBgmAudioClip(projectPath, AudioManager.Instance.SetBackgroundMusic);
         SceneManager.LoadScene(gameSceneName);
         loadedNoteDatas = _projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
     }

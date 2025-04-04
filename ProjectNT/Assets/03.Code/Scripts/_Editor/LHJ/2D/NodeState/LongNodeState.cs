@@ -48,9 +48,9 @@ public class LongNodeState : INodeState
     {
         if (_isPlacing == false)
         {
-            if (_nct._nodeGrid[position.x, position.y] is LongNode)
+            if (_nct.NodeGrid[position.x, position.y] != null)
             {
-                _nct.RemoveLongNode(position);
+                _nct.RemoveNode(position);
             }
             else
             {
