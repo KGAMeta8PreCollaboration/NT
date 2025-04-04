@@ -42,7 +42,7 @@ public class AudioSourceManager : MonoBehaviour
         _audioVisualizable = FindObjectOfType<AudioVisualizable>();
         _waveform = FindObjectOfType<Waveform>();
         _gridManager = FindObjectOfType<GridManager>();
-        //_audioSource = GetComponent<AudioSource>();
+        // _audioSource = GetComponent<AudioSource>();
         //_audioMixer = GetComponent<AudioMixer>();
         phase2Input.onEndEdit.AddListener(SavePhase2);
         phase3Input.onEndEdit.AddListener(SavePhase3);
@@ -85,13 +85,18 @@ public class AudioSourceManager : MonoBehaviour
     private double gridTimeStep;
     private void Update()
     {
+        if (_beatMapManager.isLoaded == false)
+        {
+            Debug.Log("return");
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             print($"스페이스바 들어옴");
             _isPlaying = !_isPlaying;
             HandlePushSpace(_isPlaying);
         }
-
 
         //-0.1 ~ 0.1사이값이 나옴
         float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -156,7 +161,7 @@ public class AudioSourceManager : MonoBehaviour
         if (int.TryParse(value, out int parsedValue))
         {
             phase2 = parsedValue;
-        }    
+        }
     }
     private void SavePhase3(string value)
     {

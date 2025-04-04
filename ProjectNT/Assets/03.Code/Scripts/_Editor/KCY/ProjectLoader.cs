@@ -35,7 +35,6 @@ public class ProjectLoader : MonoBehaviour
     #endregion
 
     private Action delAction;
-    private string bgmTempPath;
     public Project currentProject;
     public ToggleGroup projects_Group;
     public List<Project> addedProjects = new List<Project>();

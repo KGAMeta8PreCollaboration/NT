@@ -77,13 +77,13 @@ public class GridManager : MonoBehaviour
         bpm = gridSetting.BPM;
         //bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
         column = 4;
-        beatNum = 4;
+        beatNum = (gridSetting.BeatNum != 0) ? gridSetting.BeatNum : 0;
         //CreateGrid();
         //gridText.text = $"BPM : ({bpm})";
         CreateNodeContainer(_audioSourceManager.AudioSource);
     }
 
-    public Action<float, int, int> InitBeatMap; 
+    public Action<float, int, int> InitBeatMap;
     public void CreateNodeContainer(AudioSource audioSource)
     {
         InitBeatMap?.Invoke(bpm, column, beatNum);
@@ -115,13 +115,13 @@ public class GridManager : MonoBehaviour
         //float duration = _audioSourceManager.AudioDuration;
         //float height = duration * heightScale;
         //targetObject.transform.localScale = new Vector3(widthScale / 10f, 1, height / 10f);
-        
+
     }
 
     private void CreateGridTexture()
     {
         float duration = _audioSourceManager.AudioDuration;
-        
+
         //높이는 올림으로 관리
         int height = Mathf.CeilToInt(duration * texturePerSecond);
 

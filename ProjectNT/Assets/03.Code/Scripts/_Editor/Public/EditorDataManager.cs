@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun.UtilityScripts;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -26,8 +27,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
     private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
     new Dictionary<Enums.ModeDiff, BeatMapData>();
     private BeatMapManager beatMapManager;
-    private TestLoad testLoad;
-
     private string savefolderName = "BeatMapData";
     private string curKeySoundName;
     private string bgmDestPath;
@@ -41,6 +40,8 @@ public class EditorDataManager : Singleton<EditorDataManager>
     public Action saveTrackingAction;
     public Action phaseDataAction;
 
+    public bool isLoadCompelete = false;
+
     //TODO 복사할 때를 위한 캐싱...? 아직 확정아님
 
     public ProjectData ProjectData
@@ -53,14 +54,14 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
 
             // TODO 저장관련 메서드 새로 전달받아야함.
-            // if (beatMapManager != null)
-            //     CurBeatMap = beatMapManager.SaveBeatMapData();
+            if (beatMapManager != null)
+                CurBeatMap = beatMapManager.SaveBeatMapData();
             currentModeDiff = value;
-            CurBeatMap = beatMapDic[CurModeDiff];
-            beatMapLoadAction?.Invoke(CurBeatMap);
-            beatMapCache = CurBeatMap;
+            // CurBeatMap = beatMapDic[CurModeDiff];
+            // beatMapLoadAction?.Invoke(CurBeatMap);
+            // beatMapCache = CurBeatMap;
 
-            phaseDataAction?.Invoke();
+            // phaseDataAction?.Invoke();
         }
     }
     public BeatMapData CurBeatMap
@@ -96,20 +97,19 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
-                testLoad = FindObjectOfType<TestLoad>();
-                //testLoad.songName = ProjectData.bgmName;
+                for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
+                {
+                    BeatMapData beatMapData = new BeatMapData();
+                    beatMapDic.Add(Enums.ModeDiff.SOLO_EASY + i, beatMapData);
+                }
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
                 SaveDataLocal();
+
             }
         };
 
-        for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
-        {
-            BeatMapData beatMapData = new BeatMapData();
-            beatMapDic.Add(Enums.ModeDiff.SOLO_EASY + i, beatMapData);
-        }
     }
     public void LoadBeatMapData()
     {
@@ -188,6 +188,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         clip.name = ProjectData.bgmPath;
         bgmClip = clip;
         yield return null;
+        isLoadCompelete = true;
     }
 
     public void SaveBeatMap()

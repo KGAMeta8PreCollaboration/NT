@@ -113,7 +113,7 @@ public class BeatMapManager : MonoBehaviour
             {
                 gridIndex = upperNode.Key,
                 nodeIndexs = new List<int>(upperNode.Value)
-            }; 
+            };
             print($"저장된 상단노드 그리드 인덱스 : {upperNode.Key}, 노드 인덱스 : [{string.Join(", ", upperNode.Value)}]");
             data.upperNodes.Add(upperNodeData);
         }
@@ -130,12 +130,12 @@ public class BeatMapManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));  
+        StartCoroutine(LoadBeatMapDataCoroutine(beatMapData));
     }
 
     private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
     {
-        isLoaded = false; 
+        isLoaded = false;
         if (_audioSourceManager == null || _gridManager == null || _nct == null || _upperNodeTest == null)
         {
             Debug.LogError("필요한 컴포넌트가 없습니다.");
@@ -146,11 +146,10 @@ public class BeatMapManager : MonoBehaviour
         _nct.ClearAllNodes();
         _upperNodeTest._upperNodeDic.Clear();
 
-        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         //print(audioSource);
 
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(/*EditorDataManager.Instance.bgmClip*/audioSource);
+        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         _audioSourceManager.InitializeFromSongData(beatMapData.songData);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 
