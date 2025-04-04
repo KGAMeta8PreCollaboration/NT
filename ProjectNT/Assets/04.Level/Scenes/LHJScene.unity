@@ -7153,6 +7153,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910981831}
   m_CullTransparentMesh: 1
+--- !u!114 &1930878800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2354013932461652653, guid: 4db2389d424f1bc4b92a8e47bd925bd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2354013932995868719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1949253685
 GameObject:
   m_ObjectHideFlags: 0
@@ -8252,7 +8264,7 @@ PrefabInstance:
     - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: beatNum
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
@@ -8334,11 +8346,28 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1243876404120109661, guid: f149094b675b6ac4e927644b6164c8ca,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -1940328408198410637, guid: ec25e42a3e5133641bcca39491b51590,
+        type: 2}
+    - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1151394449}
     - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
+        type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ec25e42a3e5133641bcca39491b51590,
+        type: 2}
     - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: audioSlider
@@ -8354,6 +8383,11 @@ PrefabInstance:
       propertyPath: phase3Input
       value: 
       objectReference: {fileID: 250937716}
+    - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
+        type: 3}
+      propertyPath: volumeSlider
+      value: 
+      objectReference: {fileID: 1930878800}
     - target: {fileID: 1243876404120109663, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: m_IsActive
@@ -8371,6 +8405,10 @@ PrefabInstance:
     - target: {fileID: 586108717, guid: 900864a5b2658b84f91852fb3089dd28, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504372656, guid: 900864a5b2658b84f91852fb3089dd28, type: 3}
+      propertyPath: beatNum
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2233730061751138186, guid: 900864a5b2658b84f91852fb3089dd28,
         type: 3}

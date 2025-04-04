@@ -142,6 +142,7 @@ public class BeatMapManager : MonoBehaviour
             yield break;
         }
 
+        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         //일단 모두 초기화
         _nct.ClearAllNodes();
         _upperNodeTest._upperNodeDic.Clear();
@@ -149,7 +150,7 @@ public class BeatMapManager : MonoBehaviour
         //print(audioSource);
 
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
+        _audioSourceManager.InitializeFromBeatMapManager(audioSource);
         _audioSourceManager.InitializeFromSongData(beatMapData.songData);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 

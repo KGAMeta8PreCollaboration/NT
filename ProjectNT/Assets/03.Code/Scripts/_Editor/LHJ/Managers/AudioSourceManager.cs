@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -14,6 +15,7 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private TMP_InputField phase2Input;
     [SerializeField] private TMP_InputField phase3Input;
+    [SerializeField] private Camera cam;
 
     //get,set 둘다 필요 -> 노래의 시간을 조절할 수 있어야하기 때문 (0~1의 값)
     public float audioSourceValue;
@@ -42,8 +44,19 @@ public class AudioSourceManager : MonoBehaviour
         _audioVisualizable = FindObjectOfType<AudioVisualizable>();
         _waveform = FindObjectOfType<Waveform>();
         _gridManager = FindObjectOfType<GridManager>();
-        // _audioSource = GetComponent<AudioSource>();
-        //_audioMixer = GetComponent<AudioMixer>();
+        //_audioSource = GetComponent<AudioSource>();
+        //audioMixer = GetComponent<AudioMixer>();
+        //if (_audioSource && audioMixer)
+        //{
+        //    // AudioSource의 Output을 AudioMixer의 BGM 그룹으로 설정
+        //    _audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
+
+        //    // 초기 볼륨 설정
+        //    float initialVolume = 0.5f;
+        //    volumeSlider.value = initialVolume;
+        //    float dB = Mathf.Log10(initialVolume) * 20f;
+        //    audioMixer.SetFloat("BGM", dB);
+        //}
         phase2Input.onEndEdit.AddListener(SavePhase2);
         phase3Input.onEndEdit.AddListener(SavePhase3);
     }
@@ -73,7 +86,7 @@ public class AudioSourceManager : MonoBehaviour
         audioSlider.onValueChanged.AddListener(HandleAudioClip);
         //_waveform.DrawWaveform(_audioSource);
         //_audioVisualizable.InitWaveform();
-        //volumeSlider.onValueChanged.AddListener(HandleVolume);
+        volumeSlider.onValueChanged.AddListener(HandleVolume);
     }
 
     public void InitializeFromSongData(SongData songData)
@@ -83,6 +96,7 @@ public class AudioSourceManager : MonoBehaviour
     }
 
     private double gridTimeStep;
+    private bool ctrlKeyDown = false;
     private void Update()
     {
         if (_beatMapManager.isLoaded == false)
@@ -98,24 +112,35 @@ public class AudioSourceManager : MonoBehaviour
             HandlePushSpace(_isPlaying);
         }
 
-        //-0.1 ~ 0.1사이값이 나옴
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (Mathf.Abs(scroll) > 0.001f)
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            double currentTime = _audioSource.time;
-            //float newValue = Mathf.Clamp(scroll, 0f, 1f);
-            gridTimeStep = (_nct.cellHeight / _nct.GetComponent<SpriteRenderer>().size.y) * _audioDuration;
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (Mathf.Abs(scroll) > 0.001f)
+            {
+                cam.transform.position += Vector3.forward * (scroll * 2.0f); // 이동 속도 조절 가능
+            }
+        }
+        else
+        {
+            //-0.1 ~ 0.1사이값이 나옴
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (Mathf.Abs(scroll) > 0.001f)
+            {
+                double currentTime = _audioSource.time;
+                //float newValue = Mathf.Clamp(scroll, 0f, 1f);
+                gridTimeStep = (_nct.cellHeight / _nct.GetComponent<SpriteRenderer>().size.y) * _audioDuration;
 
-            if (scroll > 0)
-            {
-                currentTime += gridTimeStep;
+                if (scroll > 0)
+                {
+                    currentTime += gridTimeStep;
+                }
+                else
+                {
+                    currentTime -= gridTimeStep;
+                }
+                currentTime = Mathf.Clamp((float)currentTime, 0, _audioDuration);
+                _audioSource.time = (float)currentTime;
             }
-            else
-            {
-                currentTime -= gridTimeStep;
-            }
-            currentTime = Mathf.Clamp((float)currentTime, 0, _audioDuration);
-            _audioSource.time = (float)currentTime;
         }
         audioSlider.value = _audioSource.time / _audioDuration;
     }
@@ -152,8 +177,24 @@ public class AudioSourceManager : MonoBehaviour
     private void HandleVolume(float volume)
     {
         //-80f면 사실상 무음이라고 한다
-        float dB = (volume > 0) ? Mathf.Log10(volume) * 20 : -80f;
-        audioMixer.SetFloat("BGM", dB);
+        
+        print($"볼륨 : {volume}");
+        try
+        {
+            if (volume <= 0.0001f)
+            {
+                audioMixer.SetFloat("BGM", -80f);
+            }
+            else
+            {
+                float dB = Mathf.Log10(Mathf.Clamp01(volume)) * 20f;
+                audioMixer.SetFloat("BGM", dB);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"AudioMixer 볼륨 설정 오류: {e.Message}");
+        }
     }
 
     private void SavePhase2(string value)
