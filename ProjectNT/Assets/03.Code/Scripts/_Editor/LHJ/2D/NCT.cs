@@ -310,7 +310,7 @@ public class NCT : MonoBehaviour
         }
 
         _previewLowNode.SetActive(true);
-        print($"현재 좌표 : {currentIndex.x} X {currentIndex.y}");
+        // print($"현재 좌표 : {currentIndex.x} X {currentIndex.y}");
 
         float columnSize = _spriteRenderer.size.x / _column;
         float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌

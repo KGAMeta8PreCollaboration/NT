@@ -21,6 +21,7 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private TMP_InputField projectName_inputfield;
     [SerializeField] private TMP_InputField songArtist_inputfield;
     [SerializeField] private TMP_InputField projectBpm_inputfield;
+    [SerializeField] private TMP_InputField projectBeatNum_inputfield;
     [SerializeField] private TextMeshProUGUI bgmName_tmp;
     [SerializeField] private TextMeshProUGUI thumbnailName_tmp;
     [SerializeField] private TextMeshProUGUI keySound_tmp;
@@ -44,6 +45,7 @@ public class ProjectLoader : MonoBehaviour
     public string SetProjectTMP { set { projectName_inputfield.text = value; } }
     public string SetArtistTMP { set { songArtist_inputfield.text = value; } }
     public string SetBpm { set { projectBpm_inputfield.text = value; } }
+    public string SetBeatNum { set { projectBeatNum_inputfield.text = value; } }
     public string SetBgmTMP { set { bgmName_tmp.text = value; } }
     public string SetThumbnailTMP { set { thumbnailName_tmp.text = value; } }
     public string SetKeySoundTMP { set { keySound_tmp.text = value; } }
@@ -56,6 +58,7 @@ public class ProjectLoader : MonoBehaviour
         projectName_inputfield.onValueChanged.AddListener((word) => projectName_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
         songArtist_inputfield.onValueChanged.AddListener((word) => songArtist_inputfield.text = Regex.Replace(word, @"[^0-9a-zA-Z가-힣]", ""));
         projectBpm_inputfield.onValueChanged.AddListener((word) => projectBpm_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
+        projectBeatNum_inputfield.onValueChanged.AddListener((word) => projectBeatNum_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
     }
 
     private void OnEnable()
@@ -196,32 +199,37 @@ public class ProjectLoader : MonoBehaviour
 
     private void SaveProject()
     {
-        if (projectName_inputfield.text == "")
+        if (string.IsNullOrEmpty(projectName_inputfield.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEPROJECTNAME);
             return;
         }
-        if (songArtist_inputfield.text == "")
+        if (string.IsNullOrEmpty(songArtist_inputfield.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEARTIST);
             return;
         }
-        if (projectBpm_inputfield.text == "")
+        if (string.IsNullOrEmpty(projectBpm_inputfield.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
             return;
         }
-        if (bgmName_tmp.text == "")
+        if (string.IsNullOrEmpty(projectBeatNum_inputfield.text))
+        {
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
+            return;
+        }
+        if (string.IsNullOrEmpty(bgmName_tmp.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBGM);
             return;
         }
-        if (thumbnailName_tmp.text == "")
+        if (string.IsNullOrEmpty(thumbnailName_tmp.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONETHUMBNAIL);
             return;
         }
-        if (keySound_tmp.text == "")
+        if (string.IsNullOrEmpty(keySound_tmp.text))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEKEYSOUNDFOLDER);
             return;
@@ -388,6 +396,7 @@ public class ProjectLoader : MonoBehaviour
         projectName_inputfield.onEndEdit.RemoveAllListeners();
         songArtist_inputfield.onEndEdit.RemoveAllListeners();
         projectBpm_inputfield.onEndEdit.RemoveAllListeners();
+        projectBeatNum_inputfield.onEndEdit.RemoveAllListeners();
 
         projectName_inputfield.text = "";
         songArtist_inputfield.text = "";
@@ -396,6 +405,7 @@ public class ProjectLoader : MonoBehaviour
         projectName_inputfield.onEndEdit.AddListener(currentProject.SetName);
         songArtist_inputfield.onEndEdit.AddListener(currentProject.SetArtist);
         projectBpm_inputfield.onEndEdit.AddListener(currentProject.SetBPM);
+        projectBeatNum_inputfield.onEndEdit.AddListener(currentProject.SetBeatNum);
     }
     private void DataSave(string path)
     {
@@ -484,6 +494,7 @@ public class ProjectLoader : MonoBehaviour
         loadSong_btn.interactable = isTrue;
         loadThumbnail_btn.interactable = isTrue;
         projectBpm_inputfield.interactable = isTrue;
+        projectBeatNum_inputfield.interactable = isTrue;
         loadKeySound_btn.interactable = isTrue;
     }
     private void SetProjectDataNull()
