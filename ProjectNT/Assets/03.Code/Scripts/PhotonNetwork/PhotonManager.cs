@@ -61,7 +61,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = ""; //플레이어 닉네임 초기화
         print("포톤 연결 해제");
         print($"로컬 플레이어: {PhotonNetwork.LocalPlayer.NickName}");
-
+        PhotonNetwork.AutomaticallySyncScene = false;
         disconnectedServer?.Invoke();
     }
 
@@ -101,5 +101,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = "Player2";
             Debug.Log("새로운 Player2 설정됨: " + PhotonNetwork.LocalPlayer.NickName);
         }
+    }
+
+    public void SpawnPlayer(string path, Transform spawnPoint)
+    {
+        if (spawnPoint == null)
+        {
+            Debug.LogError("스폰 위치가 지정되지 않았습니다!");
+            return;
+        }
+
+        print("플레이어 컨트롤러 생성");
+
+        PhotonNetwork.Instantiate(path, spawnPoint.position, spawnPoint.rotation);
     }
 }
