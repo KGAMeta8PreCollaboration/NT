@@ -13,6 +13,8 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Slider audioSlider;
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private TextMeshProUGUI songLengthText;
+    [SerializeField] private TextMeshProUGUI currentSongLengthText;
     [SerializeField] private TMP_InputField phase2Input;
     [SerializeField] private TMP_InputField phase3Input;
     [SerializeField] private Camera cam;
@@ -44,19 +46,14 @@ public class AudioSourceManager : MonoBehaviour
         _audioVisualizable = FindObjectOfType<AudioVisualizable>();
         _waveform = FindObjectOfType<Waveform>();
         _gridManager = FindObjectOfType<GridManager>();
-        //_audioSource = GetComponent<AudioSource>();
-        //audioMixer = GetComponent<AudioMixer>();
-        //if (_audioSource && audioMixer)
-        //{
-        //    // AudioSource의 Output을 AudioMixer의 BGM 그룹으로 설정
-        //    _audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
+        _audioSource = GetComponent<AudioSource>();
 
-        //    // 초기 볼륨 설정
-        //    float initialVolume = 0.5f;
-        //    volumeSlider.value = initialVolume;
-        //    float dB = Mathf.Log10(initialVolume) * 20f;
-        //    audioMixer.SetFloat("BGM", dB);
-        //}
+        // 볼륨 슬라이더 초기화
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = 1f;  // 초기 볼륨 100%
+            HandleVolume(volumeSlider.value);
+        }
         phase2Input.onEndEdit.AddListener(SavePhase2);
         phase3Input.onEndEdit.AddListener(SavePhase3);
     }
@@ -77,8 +74,11 @@ public class AudioSourceManager : MonoBehaviour
         }
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = audioClip;
+        if (volumeSlider != null)
+        {
+            HandleVolume(volumeSlider.value);
+        }
 
-        print(3);
         //올림
         _audioDuration = _audioSource.clip.length;
         _waveform.CreateWaveform(_audioSource);
@@ -87,6 +87,8 @@ public class AudioSourceManager : MonoBehaviour
         //_waveform.DrawWaveform(_audioSource);
         //_audioVisualizable.InitWaveform();
         volumeSlider.onValueChanged.AddListener(HandleVolume);
+
+        SetSongLengthText(songLengthText, _audioDuration);
     }
 
     public void InitializeFromSongData(SongData songData)
@@ -105,6 +107,7 @@ public class AudioSourceManager : MonoBehaviour
             return;
         }
 
+        SetSongLengthText(currentSongLengthText, _audioSource.time);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             print($"스페이스바 들어옴");
@@ -177,23 +180,23 @@ public class AudioSourceManager : MonoBehaviour
     private void HandleVolume(float volume)
     {
         //-80f면 사실상 무음이라고 한다
-        
-        print($"볼륨 : {volume}");
+        if (audioMixer == null) return;
+
         try
         {
-            if (volume <= 0.0001f)
+            // volume 값은 0~1 사이의 값
+            float dB = volume <= 0.0001f ? -80f : Mathf.Log10(volume) * 20f;
+            audioMixer.SetFloat("BGM", dB);
+
+            // AudioSource의 볼륨도 함께 조절(이게 없으면 안됨)
+            if (_audioSource != null)
             {
-                audioMixer.SetFloat("BGM", -80f);
-            }
-            else
-            {
-                float dB = Mathf.Log10(Mathf.Clamp01(volume)) * 20f;
-                audioMixer.SetFloat("BGM", dB);
+                _audioSource.volume = volume;
             }
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"AudioMixer 볼륨 설정 오류: {e.Message}");
+            Debug.LogError($"볼륨 조절 중 오류 발생: {e.Message}");
         }
     }
 
@@ -210,5 +213,13 @@ public class AudioSourceManager : MonoBehaviour
         {
             phase3 = parsedValue;
         }
+    }
+
+    private void SetSongLengthText(TextMeshProUGUI text, float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
+        text.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
     }
 }

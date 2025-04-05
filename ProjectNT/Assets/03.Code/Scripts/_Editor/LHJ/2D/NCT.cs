@@ -389,27 +389,7 @@ public class NCT : MonoBehaviour
             HideLowNodePreview();
         }
     }
-
-    //public void RemoveLowNode(Vector2Int currentIndex)
-    //{
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
-    //    {
-    //        Debug.LogWarning("제거할 노드가 없음");
-    //        return;
-    //    }
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LongNode)
-    //    {
-    //        print("그것은 롱노트여");
-    //    }
-
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LowNode)
-    //    {
-    //        Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
-    //        _nodeGrid[currentIndex.x, currentIndex.y] = null;
-    //        print($"일반 노드 제거 완료 : {currentIndex}");
-    //    }
-    //}
-
+    
     public void RemoveNode(Vector2Int currentIndex)
     {
         if (_nodeGrid[currentIndex.x, currentIndex.y] == null)

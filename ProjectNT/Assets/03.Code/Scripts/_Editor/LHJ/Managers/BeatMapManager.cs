@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Reflection;
+using TMPro;
 
 public class BeatMapManager : MonoBehaviour
 {
