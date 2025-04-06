@@ -74,10 +74,10 @@ public class GridManager : MonoBehaviour
     //불러오기 기능일때만 시작
     public void InitializeFromBeatMapManager(GridSetting gridSetting)
     {
-        bpm = gridSetting.BPM;
-        //bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
+        // bpm = gridSetting.BPM;
+        bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
         column = 4;
-        beatNum = (gridSetting.BeatNum != 0) ? gridSetting.BeatNum : 0;
+        beatNum = EditorDataManager.Instance.ProjectData.beatNum;
         //CreateGrid();
         //gridText.text = $"BPM : ({bpm})";
         CreateNodeContainer(_audioSourceManager.AudioSource);

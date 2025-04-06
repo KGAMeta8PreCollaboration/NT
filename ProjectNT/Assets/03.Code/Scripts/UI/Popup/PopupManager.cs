@@ -66,7 +66,7 @@ public class PopupManager : MonoBehaviour
             popupList.Add(popup);
             popup.Init(this);
             popup.gameObject.SetActive(false);
-            print($"찾은 팝업: {popup.name}");
+            // print($"찾은 팝업: {popup.name}");
         }
     }
 }

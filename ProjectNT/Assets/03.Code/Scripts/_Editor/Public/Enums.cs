@@ -29,6 +29,7 @@ public class Enums
         NONEARTIST,
         NONEBPM,
         NONEBGM,
+        NONBEATNUM,
         NONETHUMBNAIL,
         NONEKEYSOUNDFOLDER,
         SAVEWARNING,

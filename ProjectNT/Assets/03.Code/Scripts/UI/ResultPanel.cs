@@ -15,6 +15,16 @@ public class ResultPanel : Popup
     private TextMeshProUGUI _gradeSubText;
     [SerializeField] private ScoreManager _scoreManager;
 
+    //추가
+    private TextMeshProUGUI _scoreCount;//결과창에 표시될 최종 점수 텍스트
+    private TextMeshProUGUI _maxComboCount;//결과창에 표시될 최고 콤보 수 텍스트
+    [SerializeField] private TextMeshProUGUI _musicNameText;//음악 이름 텍스트
+    [SerializeField] private TextMeshProUGUI _musicArtistText;//음악 아티스트 이름 텍스트
+    [SerializeField] private Image musicImage;//음악 이미지
+    [SerializeField] private Button restartButton;//재시작 버튼
+    [SerializeField] private Button musicSelectButton;//곡 선택 이동 버튼
+    [SerializeField] private GameEndPanel endPanel;//최고점수 갱신시 활성화될 UI
+
     private void Awake()
     {
         _totalNoteCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
@@ -24,6 +34,12 @@ public class ResultPanel : Popup
         _badCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
         _gradeText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
         _gradeSubText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
+
+        //추가
+        _scoreCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
+        _maxComboCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
+        restartButton.onClick.AddListener(Restart);//재시작 버튼
+        musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
     }
 
     private void OnEnable()
@@ -63,8 +79,15 @@ public class ResultPanel : Popup
         }
         else
             _gradeText.text = grade.ToString();
-    }
 
+        //추가
+        _scoreCount.text = _scoreManager.score.ToString();
+        _maxComboCount.text = _scoreManager.maxCombo.ToString();
+        //musicImage.sprite = //음악 이미지
+        //_musicNameText.text = //음악 이름 텍스트
+        //_musicArtistText.text = //음악 아티스트 이름 텍스트
+        //endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, )//음악이름, 난이도 추가
+    }
     public override void Init(PopupManager popupManager)
     {
         base.Init(popupManager);
@@ -74,5 +97,16 @@ public class ResultPanel : Popup
             popupManager.OpenPopup(this);
             DisplayPanel();
         };
+    }
+
+    //추가
+    public void Restart()//재시작으로 이동
+    {
+
+    }
+
+    public void MusicSelect()//곡 선택창으로 이동
+    {
+
     }
 }
