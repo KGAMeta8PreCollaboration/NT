@@ -22,12 +22,11 @@ public class GameManager : Singleton<GameManager>
     [Header("게임 씬 이름")]
     public string gameSceneName = "YKD_GameScene";
 
-    List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
+    private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
     
     private void Start()
     {
-        print("게임매니저 스타트");
         if (skipLobby)
         {
             GameSceneInit();
@@ -35,17 +34,14 @@ public class GameManager : Singleton<GameManager>
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
-        print($"포톤매니저 : {PhotonManager}");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        print("Scene Loaded : " + scene.name);
         if (scene.name == gameSceneName)
         {
-            print("프로토타입 씬");
             GameSceneInit();
-            noteGenerators[0].Init(loadedNoteDatas);
+            noteGenerators[0].Init(_loadedNoteDatas);
         }
         else if (scene.name == "LSH_MultiGame2")
         {
@@ -60,11 +56,10 @@ public class GameManager : Singleton<GameManager>
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        print("게임매니저 SingleGameStart 1");
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
-        loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
+        _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         SceneManager.LoadScene(gameSceneName);
     }
 

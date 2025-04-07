@@ -19,6 +19,15 @@ public partial class ProjectToLoadedData : MonoBehaviour
 			LoadedNoteData loadedNoteData = NodeToNoteData(nodeData, gridSetting);
 			loadedNoteDatas.Add(loadedNoteData);
 		}
+		foreach (UpperNodeData upperNodeData in beatMapData.upperNodes)
+		{
+			foreach (int nodeIndex in upperNodeData.nodeIndexs)
+			{
+				LoadedNoteData loadedNoteData = NodeToNoteData(upperNodeData, gridSetting, nodeIndex + 4);
+				loadedNoteDatas.Add(loadedNoteData);
+			}
+		}
+		
 		return loadedNoteDatas;
 	}
 
@@ -31,6 +40,18 @@ public partial class ProjectToLoadedData : MonoBehaviour
 			endTime = 0,
 			railIndex = nodeData.index.x,
 			noteAudioClipName = nodeData.keySound,
+		};
+	}
+
+	private static LoadedNoteData NodeToNoteData(UpperNodeData nodeData, GridSetting gridSetting, int railIndex)
+	{
+		return new LoadedNoteData
+		{
+			noteType = NoteType.Top,
+			time = 60 * nodeData.gridIndex / (gridSetting.BeatNum * gridSetting.BPM),
+			endTime = 0,
+			railIndex = railIndex,
+			noteAudioClipName = "",
 		};
 	}
 
