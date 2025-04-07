@@ -29,6 +29,7 @@ public class NCT : MonoBehaviour
     public double cellHeight = 0;
 
     private GridManager _gridManager;
+    private Waveform _waveform;
     private AudioSourceManager _audioSourceManager;
     private SpriteRenderer _spriteRenderer;
     private Texture2D _texture;
@@ -60,6 +61,7 @@ public class NCT : MonoBehaviour
     {
         _gridManager = FindObjectOfType<GridManager>();
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
+        _waveform = FindObjectOfType<Waveform>();   
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -163,6 +165,9 @@ public class NCT : MonoBehaviour
         _audioSource = _audioSourceManager.AudioSource;
 
         width = 128;
+        pixelPerSecond = _waveform.maxNum;
+
+        print($"pixelPerSecond : {pixelPerSecond}");
         int height = Mathf.CeilToInt(_audioSource.clip.length) * pixelPerSecond;
         print(_audioSource.clip.length);
         _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
