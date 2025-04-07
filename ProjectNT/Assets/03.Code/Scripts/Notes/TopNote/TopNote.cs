@@ -69,7 +69,6 @@ public class TopNote : Note
 
         AudioManager.Instance.Play(hitSound, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
-        EditorApplication.isPaused = true;
 
         if (judgementType == JudgementType.MISS)
         {

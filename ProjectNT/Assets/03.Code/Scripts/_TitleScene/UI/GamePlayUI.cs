@@ -45,7 +45,7 @@ public class GamePlayUI : BaseTitleUI
     private void OnEnable()
     {
         if (musicChangeSelect != null)
-        { 
+        {
             // musicChangeAndSelect의 gameMusicData를 만들어서줘야할거같은데..
             // TmpCheckDirectory.Instance.musicChangeAndSelect = musicChangeSelect;
             AddEventListeners();
@@ -122,11 +122,10 @@ public class GamePlayUI : BaseTitleUI
             Difficulty difficulty = GetCurrentDifficulty();
             BeatMapData beatMapData = new BeatMapData();
 
-            
             string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
             string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
             TmpCheckDirectory tmpCheckDirectory = FindObjectOfType<TmpCheckDirectory>();
-            Dictionary<Enums.ModeDiff, BeatMapData> beatMapDataDictionary 
+            Dictionary<Enums.ModeDiff, BeatMapData> beatMapDataDictionary
                 = tmpCheckDirectory.beatMapDic[projectName];
 
             beatMapData = difficulty switch
@@ -138,10 +137,10 @@ public class GamePlayUI : BaseTitleUI
                 _ => beatMapData
             };
             // 프로젝트 이름 어디서 받아올까..? 
-            GameManager.Instance.SingleGameStart(difficulty, beatMapData, projectPath);
+            GameManager.Instance.SingleGameStart(difficulty, beatMapData, projectPath, musicChangeSelect.currentMusicNode.Value.musicName);
         }
     }
-    
+
     private Difficulty GetCurrentDifficulty()
     {
         if (easy.isOn)
@@ -153,7 +152,7 @@ public class GamePlayUI : BaseTitleUI
         if (superHade.isOn)
             return Difficulty.SuperHard;
         return Difficulty.Easy;
-        
+
     }
 
     //음악 재시작
