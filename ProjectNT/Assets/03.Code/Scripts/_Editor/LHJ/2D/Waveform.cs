@@ -94,7 +94,11 @@ public class Waveform : MonoBehaviour
         int halfHeight = height / 2;
         float heightScale = (float)height * 0.75f;
         width = Mathf.CeilToInt(_audioSource.clip.length) * 100;
-
+        if (width >= 8192)
+        {
+            width = 8192;
+        }
+        print($"width : {width}");
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         waveform = new float[width];
 
