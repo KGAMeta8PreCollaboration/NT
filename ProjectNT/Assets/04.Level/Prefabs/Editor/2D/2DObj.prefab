@@ -148,7 +148,9 @@ MonoBehaviour:
   pixelPerSecond: 100
   cam: {fileID: 8893676379547710922}
   stateTest: {fileID: 0}
+  RowGridNum: 0
   cellHeight: 0
+  isLoaded: 0
   _makingPreviewNode: 0
 --- !u!1 &8893676379380971636
 GameObject:
@@ -206,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8893676379872159057}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.7, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8893676377935012571}
@@ -289,6 +291,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8893676377935012571}
     m_Modifications:
+    - target: {fileID: 4311138789871167822, guid: b9d3724a46d328b4499b34cf1ef95cfc,
+        type: 3}
+      propertyPath: field of view
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311138789871167822, guid: b9d3724a46d328b4499b34cf1ef95cfc,
+        type: 3}
+      propertyPath: m_FocalLength
+      value: 28.27023
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311138789871167822, guid: b9d3724a46d328b4499b34cf1ef95cfc,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4311138790015812815, guid: b9d3724a46d328b4499b34cf1ef95cfc,
         type: 3}
       propertyPath: m_RootOrder

@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5568b3e7719dfc8429e6103373f5fe72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bpmText: {fileID: 0}
   isLoaded: 0
 --- !u!1 &1243876403299045382
 GameObject:
@@ -89,10 +90,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 0}
   widthScale: 4
-  heightScale: 1
+  heightScale: 100
   texturePerSecond: 2048
   bpm: 128
-  beatNum: 2
+  beatNum: 4
   nodesPerBeat: 1
   column: 4
   gridColor: {r: 0, g: 0, b: 0, a: 1}
@@ -173,8 +174,7 @@ AudioSource:
   m_GameObject: {fileID: 1243876404120109663}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6704232265395456938, guid: dd3a453e427cfe3498b07826f151e292,
-    type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -273,3 +273,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e330156f5df5be4d802e22f5cce7350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 0}
+  audioSlider: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: ec25e42a3e5133641bcca39491b51590, type: 2}
+  songLengthText: {fileID: 0}
+  currentSongLengthText: {fileID: 0}
+  phase2Input: {fileID: 0}
+  phase3Input: {fileID: 0}
+  cam: {fileID: 0}
+  audioSourceValue: 0
+  phase2: 0
+  phase3: 0

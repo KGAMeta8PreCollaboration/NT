@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98754cc70ae12204b9ab99393f47b434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatNum: 8
 --- !u!1 &2233730062055099485
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,10 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975e21577a9ff2542a592996846c212a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelSpeed: 5
+  wheelSpeed: 1
   mouseSensitivity: 2
   mainCamera: {fileID: 0}
-  initCameraPos: {x: 0, y: 16.97809, z: -49.84937}
+  initCameraPos: {x: 0.4, y: 0, z: -3.5}
   minDistance: 5
   maxDistance: 20
   slider: {fileID: 0}

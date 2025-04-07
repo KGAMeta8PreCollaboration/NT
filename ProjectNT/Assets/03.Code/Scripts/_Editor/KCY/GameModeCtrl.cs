@@ -26,7 +26,7 @@ public class GameModeCtrl : MonoBehaviour
     }
     private void Start()
     {
-        EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap);
+        // EditorDataManager.Instance.beatMapLoadAction?.Invoke(EditorDataManager.Instance.CurBeatMap);
         EditorDataManager.Instance.CurModeDiff = 0;
     }
     private void SetMode(bool isTrue)

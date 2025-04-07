@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Reflection;
+using TMPro;
 
 public class BeatMapManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI bpmText;
+
     public bool isLoaded = false;
 
     private AudioSourceManager _audioSourceManager;
@@ -142,12 +145,13 @@ public class BeatMapManager : MonoBehaviour
             yield break;
         }
 
+        //AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         //일단 모두 초기화
         _nct.ClearAllNodes();
         _upperNodeTest._upperNodeDic.Clear();
 
         //print(audioSource);
-
+        print("BeatMapManager LoadBeatMapDataCoroutine");
         //1. 오디오 Source 초기화
         _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         _audioSourceManager.InitializeFromSongData(beatMapData.songData);
@@ -171,6 +175,8 @@ public class BeatMapManager : MonoBehaviour
             Debug.Log($"로드된 상단 노드 수: {beatMapData.upperNodes.Count}");
         }
 
+        // 5. 기타 정보 초기화
+        bpmText.text = $"BPM : ({EditorDataManager.Instance.CurBeatMap.gridSetting.BPM.ToString()})";
         isLoaded = true;
     }
 }
