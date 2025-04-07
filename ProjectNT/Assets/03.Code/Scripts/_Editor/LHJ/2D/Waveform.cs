@@ -89,12 +89,18 @@ public class Waveform : MonoBehaviour
         //}
     }
 
+    public int maxNum;
     private Texture2D GetWaveform()
     {
         int halfHeight = height / 2;
         float heightScale = (float)height * 0.75f;
         width = Mathf.CeilToInt(_audioSource.clip.length) * 100;
-
+        if (width >= 8192)
+        {
+            maxNum = 8192 / Mathf.CeilToInt(_audioSource.clip.length);
+            width = maxNum * Mathf.CeilToInt(_audioSource.clip.length);
+        }
+        print($"width : {width}");
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         waveform = new float[width];
 

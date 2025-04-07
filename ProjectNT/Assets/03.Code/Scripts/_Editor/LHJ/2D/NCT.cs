@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
@@ -28,6 +29,7 @@ public class NCT : MonoBehaviour
     public double cellHeight = 0;
 
     private GridManager _gridManager;
+    private Waveform _waveform;
     private AudioSourceManager _audioSourceManager;
     private SpriteRenderer _spriteRenderer;
     private Texture2D _texture;
@@ -59,6 +61,7 @@ public class NCT : MonoBehaviour
     {
         _gridManager = FindObjectOfType<GridManager>();
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
+        _waveform = FindObjectOfType<Waveform>();   
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -69,15 +72,22 @@ public class NCT : MonoBehaviour
     private void Start()
     {
         _gridManager.InitBeatMap += CreateNodeContainer;
+        Debug.Log("NCT START");
     }
 
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
+        {
             _currentState.OnLeftClick(currentIndex);
+        }
         if (Input.GetMouseButtonDown(1))
             _currentState.OnRightClick(currentIndex);
         if (Input.GetMouseButtonDown(2))
@@ -136,12 +146,16 @@ public class NCT : MonoBehaviour
     public bool isLoaded = false;
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
+        // if (EventSystem.current.IsPointerOverGameObject())
+        // {
+        //     return;
+        // }
         if (bpm == 0)
         {
             Debug.LogWarning("BPM이 0입니다.");
             return;
         }
-
+        print("NCT생성시작");
         isLoaded = false;
         _bpm = bpm;
         _column = column;
@@ -151,6 +165,9 @@ public class NCT : MonoBehaviour
         _audioSource = _audioSourceManager.AudioSource;
 
         width = 128;
+        pixelPerSecond = _waveform.maxNum;
+
+        print($"pixelPerSecond : {pixelPerSecond}");
         int height = Mathf.CeilToInt(_audioSource.clip.length) * pixelPerSecond;
         print(_audioSource.clip.length);
         _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
@@ -321,7 +338,11 @@ public class NCT : MonoBehaviour
         Vector3 worldPos = new Vector3(xPos, yPos, 0);
 
         _previewLowNode.transform.position = worldPos;
-        //_previewLowNode.transform.localScale = previewLowNodePrefab.transform.localScale;
+        _previewLowNode.transform.localScale = new Vector3(
+            previewLowNodePrefab.transform.localScale.x,
+            rowSize * 0.5f,
+            previewLowNodePrefab.transform.localScale.z);
+
     }
 
     public void CreateLowNode(Vector2Int currentIndex)
@@ -357,9 +378,14 @@ public class NCT : MonoBehaviour
             // 중앙 정렬을 위해 offset 적용
             Vector3 worldPos = new Vector3(xPos, yPos, 0);
 
+            //float yScale = lowNodePrefab.transform.localScale.y;
             node.transform.position = worldPos;
-            node.transform.localScale = lowNodePrefab.transform.localScale;
+            node.transform.localScale = new Vector3(
+                lowNodePrefab.transform.localScale.x,
+                rowSize * 0.5f,
+                lowNodePrefab.transform.localScale.z);
 
+            print($"현재 columnSize : {rowSize}");
             //노드 위치 및 키음 초기화
             node.InitializeNode(currentIndex);
 
@@ -368,26 +394,6 @@ public class NCT : MonoBehaviour
             HideLowNodePreview();
         }
     }
-
-    //public void RemoveLowNode(Vector2Int currentIndex)
-    //{
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] == null)
-    //    {
-    //        Debug.LogWarning("제거할 노드가 없음");
-    //        return;
-    //    }
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LongNode)
-    //    {
-    //        print("그것은 롱노트여");
-    //    }
-
-    //    if (_nodeGrid[currentIndex.x, currentIndex.y] is LowNode)
-    //    {
-    //        Destroy(_nodeGrid[currentIndex.x, currentIndex.y].gameObject);
-    //        _nodeGrid[currentIndex.x, currentIndex.y] = null;
-    //        print($"일반 노드 제거 완료 : {currentIndex}");
-    //    }
-    //}
 
     public void RemoveNode(Vector2Int currentIndex)
     {

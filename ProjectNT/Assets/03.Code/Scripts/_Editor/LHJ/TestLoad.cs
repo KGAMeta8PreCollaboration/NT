@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestLoad : MonoBehaviour
 {
+    public int beatNum = 4;
     private BeatMapManager _beatMapManager;
     private BeatMapData data = new BeatMapData();
 
@@ -15,6 +16,7 @@ public class TestLoad : MonoBehaviour
 
     private void Start()
     {
+        print("TestLoad Start!!!!!!");
         AudioClip audioClip = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         if (audioClip == null)
         {
@@ -33,7 +35,7 @@ public class TestLoad : MonoBehaviour
         {
             BPM = 128,
             Column = 4,
-            BeatNum = 8  // 0이 아닌 값으로 설정 (예: 4박자)
+            BeatNum = beatNum  // 0이 아닌 값으로 설정 (예: 4박자)
         };
         data.nodes = new List<NodeData>();
         data.upperNodes = new List<UpperNodeData>();

@@ -78,6 +78,7 @@ public class GridManager : MonoBehaviour
         bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
         column = 4;
         beatNum = EditorDataManager.Instance.ProjectData.beatNum;
+        print($"bpm : {bpm}, beatNum : {beatNum}");
         //CreateGrid();
         //gridText.text = $"BPM : ({bpm})";
         CreateNodeContainer(_audioSourceManager.AudioSource);

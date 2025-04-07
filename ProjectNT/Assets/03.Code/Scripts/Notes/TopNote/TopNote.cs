@@ -24,6 +24,7 @@ public class TopNote : Note
     {
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
+        isIndicatorOn = false;
     }
     private void OnDisable()
     {
@@ -41,6 +42,7 @@ public class TopNote : Note
 
         if (_targetDspTime - AudioSettings.dspTime <= 1)
         {
+            print("인디캐이터 플레이");
             particleSystem.Play();
             isIndicatorOn = true;
         }
@@ -59,9 +61,33 @@ public class TopNote : Note
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
     }
-    private void Hit(InputAction.CallbackContext ctn)
+    public void Hit(InputAction.CallbackContext ctn)
     {
         if (!canInter || !xRSimInter.isHovered) return;
+        isHit = true;
+        this.judgementType = JudgementType.PERFECT;
+        OnHit?.Invoke(this);
+        OnHit = null;
+
+        AudioManager.Instance.Play(hitSound, transform);
+        PoolManager.Instance.HitEffect(transform.position, false);
+
+        if (judgementType == JudgementType.MISS)
+        {
+            _scoreManager.ResetCombo();
+        }
+        else
+        {
+            _scoreManager.IncreaseCombo();
+        }
+
+        _scoreManager.AddScore(judgementType);
+        _scoreManager.ShowJudgementType(judgementType);
+        _scoreManager.AddJudgeCount(judgementType);
+        Destroy();
+    }
+    public void AutoHit(InputAction.CallbackContext ctn)
+    {
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);

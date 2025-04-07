@@ -110,6 +110,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             if (SceneManager.GetActiveScene().name == "SongEditorScene")
             {
+                print("SceneManager 로드");
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
