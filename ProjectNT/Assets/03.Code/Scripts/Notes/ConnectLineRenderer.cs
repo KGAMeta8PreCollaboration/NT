@@ -32,7 +32,7 @@ public class ConnectLineRenderer : MonoBehaviour
         leftLR = TransformUtil.FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "LeftOutLineRenderer");
         rightLR = TransformUtil.FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "RightOutLineRenderer");
 
-        _startRendererOriginPos = new Vector3(0, 0.1f, 0);
+        _startRendererOriginPos = new Vector3(0, 0, 0);
         print($"Init 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
         Vector3 railDirection = (startNote.position - target.position).normalized;
 
