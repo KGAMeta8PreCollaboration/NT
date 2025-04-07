@@ -37,7 +37,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		{
 			noteType = nodeData.nodeType == EditorNoteType.LongNote ? NoteType.Long : NoteType.Short,
 			time = 60 * nodeData.index.y / (gridSetting.BeatNum * gridSetting.BPM),
-			endTime = 0,
+			endTime = nodeData.nodeType == EditorNoteType.LongNote ? 60 * nodeData.endIndex.y / (gridSetting.BeatNum * gridSetting.BPM) : 0,
 			railIndex = nodeData.index.x,
 			noteAudioClipName = nodeData.keySound,
 		};
