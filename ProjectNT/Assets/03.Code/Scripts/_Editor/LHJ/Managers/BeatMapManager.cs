@@ -145,15 +145,15 @@ public class BeatMapManager : MonoBehaviour
             yield break;
         }
 
-        AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
+        //AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         //일단 모두 초기화
         _nct.ClearAllNodes();
         _upperNodeTest._upperNodeDic.Clear();
 
         //print(audioSource);
-
+        print("BeatMapManager LoadBeatMapDataCoroutine");
         //1. 오디오 Source 초기화
-        _audioSourceManager.InitializeFromBeatMapManager(audioSource);
+        _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         _audioSourceManager.InitializeFromSongData(beatMapData.songData);
         yield return new WaitUntil(() => _audioSourceManager.AudioSource.clip != null);
 
@@ -176,7 +176,7 @@ public class BeatMapManager : MonoBehaviour
         }
 
         // 5. 기타 정보 초기화
-        bpmText.text = $"BPM : ({beatMapData.gridSetting.BPM.ToString()})";
+        bpmText.text = $"BPM : ({EditorDataManager.Instance.CurBeatMap.gridSetting.BPM.ToString()})";
         isLoaded = true;
     }
 }

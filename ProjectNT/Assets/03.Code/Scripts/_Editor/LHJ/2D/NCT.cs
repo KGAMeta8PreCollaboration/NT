@@ -70,6 +70,7 @@ public class NCT : MonoBehaviour
     private void Start()
     {
         _gridManager.InitBeatMap += CreateNodeContainer;
+        Debug.Log("NCT START");
     }
 
     Vector2Int currentIndex = new Vector2Int();
@@ -143,16 +144,16 @@ public class NCT : MonoBehaviour
     public bool isLoaded = false;
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        // if (EventSystem.current.IsPointerOverGameObject())
+        // {
+        //     return;
+        // }
         if (bpm == 0)
         {
             Debug.LogWarning("BPM이 0입니다.");
             return;
         }
-
+        print("NCT생성시작");
         isLoaded = false;
         _bpm = bpm;
         _column = column;
@@ -376,7 +377,7 @@ public class NCT : MonoBehaviour
             node.transform.position = worldPos;
             node.transform.localScale = new Vector3(
                 lowNodePrefab.transform.localScale.x,
-                rowSize * 0.5f, 
+                rowSize * 0.5f,
                 lowNodePrefab.transform.localScale.z);
 
             print($"현재 columnSize : {rowSize}");
@@ -388,7 +389,7 @@ public class NCT : MonoBehaviour
             HideLowNodePreview();
         }
     }
-    
+
     public void RemoveNode(Vector2Int currentIndex)
     {
         if (_nodeGrid[currentIndex.x, currentIndex.y] == null)

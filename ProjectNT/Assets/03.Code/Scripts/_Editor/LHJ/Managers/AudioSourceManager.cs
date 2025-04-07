@@ -101,11 +101,11 @@ public class AudioSourceManager : MonoBehaviour
     private bool ctrlKeyDown = false;
     private void Update()
     {
-        if (_beatMapManager.isLoaded == false)
-        {
-            Debug.Log("return");
-            return;
-        }
+        // if (_beatMapManager.isLoaded == false)
+        // {
+        //     Debug.Log("return");
+        //     return;
+        // }
 
         SetSongLengthText(currentSongLengthText, _audioSource.time);
         if (Input.GetKeyDown(KeyCode.Space))

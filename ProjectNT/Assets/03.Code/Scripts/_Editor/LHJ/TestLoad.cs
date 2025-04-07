@@ -16,6 +16,7 @@ public class TestLoad : MonoBehaviour
 
     private void Start()
     {
+        print("TestLoad Start!!!!!!");
         AudioClip audioClip = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         if (audioClip == null)
         {

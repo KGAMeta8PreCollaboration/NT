@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5636,12 +5636,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522948520}
   m_CullTransparentMesh: 1
---- !u!1 &1528181258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8893676379872159057, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
-    type: 3}
-  m_PrefabInstance: {fileID: 8893676378413193051}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1568202878
 GameObject:
   m_ObjectHideFlags: 0
@@ -7625,6 +7619,7 @@ MonoBehaviour:
   projectName_inputfield: {fileID: 0}
   songArtist_inputfield: {fileID: 0}
   projectBpm_inputfield: {fileID: 0}
+  projectBeatNum_inputfield: {fileID: 0}
   bgmName_tmp: {fileID: 0}
   thumbnailName_tmp: {fileID: 0}
   keySound_tmp: {fileID: 0}
@@ -8540,39 +8535,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 354175692, guid: f149094b675b6ac4e927644b6164c8ca, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 354175694, guid: f149094b675b6ac4e927644b6164c8ca, type: 3}
       propertyPath: bpmText
       value: 
       objectReference: {fileID: 1760799414}
     - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
-      propertyPath: bpm
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: beatNum
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: heightScale
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1243876403299045380, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
       propertyPath: targetObject
       value: 
       objectReference: {fileID: 1908468235}
-    - target: {fileID: 1243876403299045382, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1243876404019697092, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: m_RootOrder
@@ -8633,32 +8604,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
-    - target: {fileID: 1243876404019697093, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1243876404120109661, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 1151394449}
-    - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: audioMixer
-      value: 
-      objectReference: {fileID: 24100000, guid: ec25e42a3e5133641bcca39491b51590,
-        type: 2}
     - target: {fileID: 1243876404120109662, guid: f149094b675b6ac4e927644b6164c8ca,
         type: 3}
       propertyPath: audioSlider
@@ -8689,11 +8639,6 @@ PrefabInstance:
       propertyPath: currentSongLengthText
       value: 
       objectReference: {fileID: 1568202880}
-    - target: {fileID: 1243876404120109663, guid: f149094b675b6ac4e927644b6164c8ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f149094b675b6ac4e927644b6164c8ca, type: 3}
 --- !u!1001 &2233730062823999120
@@ -8703,43 +8648,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 586108717, guid: 900864a5b2658b84f91852fb3089dd28, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1504372656, guid: 900864a5b2658b84f91852fb3089dd28, type: 3}
-      propertyPath: beatNum
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730061751138186, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730061751138187, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: widthScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730061751138187, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: heightScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730061751138187, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: targetObject
-      value: 
-      objectReference: {fileID: 1528181258}
     - target: {fileID: 2233730062055099485, guid: 900864a5b2658b84f91852fb3089dd28,
         type: 3}
       propertyPath: m_Name
       value: Handlers
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730062055099485, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2233730062055099486, guid: 900864a5b2658b84f91852fb3089dd28,
         type: 3}
@@ -8796,11 +8708,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2233730062531705845, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2233730062531705846, guid: 900864a5b2658b84f91852fb3089dd28,
         type: 3}
       propertyPath: slider
@@ -8811,41 +8718,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1151394449}
-    - target: {fileID: 2233730062531705846, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: wheelSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730062531705846, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: initCameraPos.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730062531705846, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: initCameraPos.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730062531705846, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: initCameraPos.z
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730063088819928, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2233730063088819929, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: slider
-      value: 
-      objectReference: {fileID: 2354013932995868721}
-    - target: {fileID: 2233730063088819929, guid: 900864a5b2658b84f91852fb3089dd28,
-        type: 3}
-      propertyPath: timeText
-      value: 
-      objectReference: {fileID: 4740060}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 900864a5b2658b84f91852fb3089dd28, type: 3}
 --- !u!1001 &2354013932995868719
@@ -11774,25 +11646,5 @@ PrefabInstance:
       propertyPath: stateTest
       value: 
       objectReference: {fileID: 1079502709}
-    - target: {fileID: 8893676379547710922, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
-        type: 3}
-      propertyPath: field of view
-      value: 46
-      objectReference: {fileID: 0}
-    - target: {fileID: 8893676379547710922, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
-        type: 3}
-      propertyPath: m_FocalLength
-      value: 28.27023
-      objectReference: {fileID: 0}
-    - target: {fileID: 8893676379547710922, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
-        type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8893676379872159063, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b, type: 3}
