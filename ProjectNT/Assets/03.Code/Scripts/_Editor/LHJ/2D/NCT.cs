@@ -134,10 +134,10 @@ public class NCT : MonoBehaviour
             {
                 CreateLowNode(nodeData.index);
             }
-            else if (nodeData.nodeType == EditorNoteType.LongNote && nodeData.endIndex.HasValue)
+            else if (nodeData.nodeType == EditorNoteType.LongNote)
             {
-                _longNodePosition[nodeData.index] = nodeData.endIndex.Value;
-                CreateLongNode(nodeData.index, nodeData.endIndex.Value);
+                _longNodePosition[nodeData.index] = nodeData.endIndex;
+                CreateLongNode(nodeData.index, nodeData.endIndex);
             }
         }
     }
