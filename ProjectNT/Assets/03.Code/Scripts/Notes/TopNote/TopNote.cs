@@ -24,6 +24,7 @@ public class TopNote : Note
     {
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
+        isIndicatorOn = false;
     }
     private void OnDisable()
     {
@@ -41,6 +42,7 @@ public class TopNote : Note
 
         if (_targetDspTime - AudioSettings.dspTime <= 1)
         {
+            print("인디캐이터 플레이");
             particleSystem.Play();
             isIndicatorOn = true;
         }
