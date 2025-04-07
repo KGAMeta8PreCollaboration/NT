@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Photon.Pun.UtilityScripts;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -19,6 +17,20 @@ public struct ProjectData
     public string m_Path;
     public string m_KeysoundPath;
     public byte[] thumbnailData;
+
+    public void Print()
+    {
+        Debug.Log("========ProjectData========");
+        Debug.Log($"ProjectName : {projectName}");
+        Debug.Log($"ArtistName : {artistName}");
+        Debug.Log($"ThumbnailName : {thumbnailName}");
+        Debug.Log($"BGMPath : {bgmPath}");
+        Debug.Log($"BPM : {bpm}");
+        Debug.Log($"BeatNum : {beatNum}");
+        Debug.Log($"ProjectPath : {m_Path}");
+        Debug.Log($"KeySoundPath : {m_KeysoundPath}");
+        Debug.Log("==========================");
+    }
 }
 
 public class EditorDataManager : Singleton<EditorDataManager>

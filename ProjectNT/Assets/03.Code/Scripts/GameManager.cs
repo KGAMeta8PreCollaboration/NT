@@ -24,8 +24,10 @@ public class GameManager : Singleton<GameManager>
 
     List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
+    
     private void Start()
     {
+        print("게임매니저 스타트");
         if (skipLobby)
         {
             GameSceneInit();
@@ -33,6 +35,7 @@ public class GameManager : Singleton<GameManager>
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
+        print($"포톤매니저 : {PhotonManager}");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -55,8 +58,9 @@ public class GameManager : Singleton<GameManager>
     }
     private ProjectToLoadedData _projectToLoadedData;
 
-    public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath, string musicName)
+    public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
+        print("게임매니저 SingleGameStart 1");
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);

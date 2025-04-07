@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,11 @@ public class BaseTitleUI : MonoBehaviour
     public virtual void Awake()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        titleManager = FindObjectOfType<TitleManager>();
     }
 
     public virtual void AddEventListeners()

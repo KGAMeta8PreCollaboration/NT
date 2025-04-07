@@ -24,6 +24,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     {
         string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
+        Debug.Log("프로젝트 리스트 갯수 : " + projectList.Length);
         if (projectList.Length == 0)
             return;
         SetProjectPanel(projectList);
@@ -43,11 +44,22 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     {
         List<TitleMusicData> titleMusicData = 
             projectList.Select(ProjectDataToTitleMusicData).ToList();
-
+        for (int i = 0; i < projectList.Length; i++)
+        {
+            projectList[i].Print();
+        }
+        
         foreach (MusicChangeAndSelect t in musicChangeAndSelects)
+        {
+            print($"tmpCheckDirectory : SetProjectPanel");
             t.Init(titleMusicData);
+        }
     }
 
+    private string bgmPath = "bgmSaveFile";
+    private string keySoundPath = "KeySounds";
+    private string beatMapPath = "BeatMapData";
+    
     private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
     {
         TitleMusicData data = new TitleMusicData();

@@ -44,10 +44,13 @@ public partial class ProjectToLoadedData
 	// Projects/{ProjectName}/KeySounds
 	public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
 	{
+		print("프로젝트 겟 오디오클립 1");
 		projectPath = Path.Combine(projectPath, "KeySounds");
 		if (!Directory.Exists(projectPath)) return;
+		print("프로젝트 겟 오디오클립 2");
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
+		print("프로젝트 겟 오디오클립 3");
 		foreach (string item in strings)
 		{
 			try
@@ -62,18 +65,26 @@ public partial class ProjectToLoadedData
 				throw;
 			}
 		}
+		print("프로젝트 겟 오디오클립 4");
+
 		returnCallback?.Invoke(audioClips);
+		print("프로젝트 겟 오디오클립 5");
 	}
 
 	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
 
 	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
 	{
-		projectPath = Path.Combine(projectPath, "bgmSaveFile", bgmName);
+		Debug.Log("프로젝트 BGM 로드 1");
+		projectPath = Path.Combine(projectPath, "bgmSaveFile", "MainTheme.wav");
+		Debug.Log($"bgm 경로 : {projectPath}");
 		if (!File.Exists(projectPath)) return;
 		AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
+		Debug.Log("프로젝트 BGM 로드 2");
 		bgmAudioClip = clip;
+		Debug.Log("프로젝트 BGM 로드 3");
 		returnCallback?.Invoke(clip);
+		Debug.Log("프로젝트 BGM 로드 SetBGM 실행함");
 		// StartCoroutine(BGMWebRequest(projectPath, returnCallback));
 	}
 

@@ -11,30 +11,20 @@ public class MusicChangeAndSelect : MonoBehaviour
     [SerializeField]
     private TitleSound tilteSound;
 
-    [Header("음악 미리보기 파일")]
-    public List<TitleMusicData> titleMusicDatas;
-
     public Image musicImage;
     public TextMeshProUGUI musicNameText;
     public TextMeshProUGUI musicArtistText;
 
     public Button changeLeftButton;
     public Button changeRightButton;
-    //public Button musicReplayButton;
-
     private LinkedList<TitleMusicData> musicList;
     public LinkedListNode<TitleMusicData> currentMusicNode { get; private set; }
     public TitleMusicData CurMusicData { get { return currentMusicNode.Value; } }
 
-    private void Awake()
-    {
-        // musicList = new LinkedList<TitleMusicData>(gameMusicData.titleMusicDatas);
-        // currentMusicNode = musicList.First;
-    }
-
     public void Init(List<TitleMusicData> titleMusicData)
     {
         musicList = new LinkedList<TitleMusicData>(titleMusicData);
+        tilteSound = FindObjectOfType<TitleSound>();
         currentMusicNode = musicList.First;
         SetInternalData(currentMusicNode.Value);
     }
@@ -54,7 +44,7 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        // Debug.Log($"{data.musicName}");
+        Debug.Log($"{data.musicName}");
         musicImage.sprite = data.musicAlbumArtSprit;
         musicNameText.text = data.musicName;
         // musicArtistText.text = data.musicArtist;
@@ -65,6 +55,14 @@ public class MusicChangeAndSelect : MonoBehaviour
     {
         // Debug.Log("Music Replay 노래 처음부터 시작");
         tilteSound.PlayGameSound(currentMusicNode.Value.musicClip);
+    }
+
+    private void PrintCurrentMusicInfo()
+    {
+        print(currentMusicNode.Value.musicName);
+        print(currentMusicNode.Value.musicArtist);
+        print(currentMusicNode.Value.musicClip);
+        
     }
 
     public void ChangeMusic(string direction, Action action = null)
@@ -79,6 +77,7 @@ public class MusicChangeAndSelect : MonoBehaviour
         };
         SetInternalData(currentMusicNode.Value);
         action?.Invoke();
+        // PrintCurrentMusicInfo();
     }
 
 }
