@@ -11,13 +11,11 @@ public class PoolManager : Singleton<PoolManager>
     [SerializeField] private TopNote topNotePrefab;
     [SerializeField] private TopNoteProjectile topNoteProjPrefab;
     [SerializeField] private HitEffect hitEffectPrefab;
-    [SerializeField] private TopNoteIndicater topNoteIndicaterPrefab;
     public ObjectPool<Note> shortNotePool;
     public ObjectPool<Note> longNotePool;
     public ObjectPool<Note> topNotePool;
     public ObjectPool<TopNoteProjectile> topNoteProjPool;
     public ObjectPool<HitEffect> hitEffectPool;
-    public ObjectPool<TopNoteIndicater> topNoteIndicaterPool;
 
     protected override void Awake()
     {
@@ -40,8 +38,6 @@ public class PoolManager : Singleton<PoolManager>
         hitEffectPool = new ObjectPool<HitEffect>
         (hitEffectPrefab, 40, objectPools);
 
-        topNoteIndicaterPool = new ObjectPool<TopNoteIndicater>
-        (topNoteIndicaterPrefab, 30, objectPools);
     }
 
     public Note PopNote(Note note)
