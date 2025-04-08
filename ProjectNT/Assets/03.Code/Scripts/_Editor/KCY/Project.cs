@@ -34,6 +34,12 @@ public class Project : MonoBehaviour
     }
     public Sprite Sprite => sprite;
     public ProjectData projectData = new ProjectData();
+
+    public string TempName
+    {
+        get { return tempName; }
+    }
+
     private void Awake()
     {
         loader = GetComponentInParent<ProjectLoader>();
@@ -99,7 +105,6 @@ public class Project : MonoBehaviour
                 loader.SetBgmTMP = projectData.bgmPath;
                 loader.SetThumbnailTMP = projectData.thumbnailName;
                 loader.SetKeySoundTMP = projectData.m_KeysoundPath;
-                string path = Path.Combine(projectData.m_Path, projectData.thumbnailName);
                 sprite = loader.ByteToSprite(projectData.thumbnailData);
                 loader.SetThumbnail = sprite;
                 loader.EditBtn = true;
