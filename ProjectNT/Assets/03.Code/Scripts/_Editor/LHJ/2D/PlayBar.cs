@@ -7,7 +7,7 @@ public class PlayBar : MonoBehaviour
 {
     const float epsilon = 0.01f;
 
-    private UpperNodeTest _upperNodeTest;
+    private UpperNodeHandler _upperNodeTest;
     private NCT _nct;
     private float _yPos;
 
@@ -16,7 +16,7 @@ public class PlayBar : MonoBehaviour
     private void Awake()
     {
         _nct = FindObjectOfType<NCT>();
-        _upperNodeTest = FindObjectOfType<UpperNodeTest>();
+        _upperNodeTest = FindObjectOfType<UpperNodeHandler>();
         _cellHeight = 0;
         _nct.callback += CellHeight;
     }

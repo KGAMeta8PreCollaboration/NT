@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpperNodeTest : MonoBehaviour
+public class UpperNodeHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Color normalColor;
@@ -123,6 +123,19 @@ public class UpperNodeTest : MonoBehaviour
         foreach (var nodeData in nodeDatas)
         {
             _upperNodeDic[nodeData.gridIndex] = new List<int>(nodeData.nodeIndexs);
+
+            for (int i = 0; i < nodeData.nodeIndexs.Count; i++)
+            {
+                int nodeIndex = nodeData.nodeIndexs[i];
+                string keySound = nodeData.keySounds[i];
+
+                // upperNodes 리스트에서 해당 인덱스의 노드를 찾아 keySound 설정
+                var node = upperNodes.FirstOrDefault(n => n.Index == nodeIndex);
+                if (node != null)
+                {
+                    node._keySound = keySound;
+                }
+            }
         }
 
         // 첫 번째 그리드 인덱스로 초기화
@@ -132,5 +145,16 @@ public class UpperNodeTest : MonoBehaviour
         }
 
         UpdateAllNodes();
+    }
+
+    public string GetNodeKeySoundByIndex(int nodeIndex)
+    {
+        // upperNodes 리스트에서 해당 인덱스의 노드를 찾음
+        var node = upperNodes.FirstOrDefault(n => n.Index == nodeIndex);
+        if (node != null)
+        {
+            return node._keySound;
+        }
+        return "";
     }
 }
