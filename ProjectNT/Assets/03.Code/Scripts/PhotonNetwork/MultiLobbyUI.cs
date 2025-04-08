@@ -75,7 +75,7 @@ public class MultiLobbyUI : MonoBehaviour
         _countStartGameCoroutine = StartCoroutine(CountStartGameCoroutine(countStartGame));
         yield return _countStartGameCoroutine;
 
-        if (_startGameCoroutine != null) // 취소되지 않았는지 확인
+        if (_startGameCoroutine != null && PhotonNetwork.MasterClient.IsLocal && PhotonNetwork.PlayerList.Length == 2) // 취소되지 않았는지 확인
         {
             //PhotonNetwork.LoadLevel("LSH_MultiGame");
             GameManager.Instance.MultiGameStart();
