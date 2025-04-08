@@ -5,15 +5,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MultiGameController : MonoBehaviourPunCallbacks
+public class MultiGameController : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPointPlayers;
 
+    private void Awake()
+    {
+        _photonView = GetComponent<PhotonView>();
+    }
+
     private void Start()
     {
+        _totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
         Transform playerTransform = GetPlayerSpawnPoint();
         GameManager.Instance.PhotonManager.SpawnPlayer("Multi/GamePlayer", playerTransform);
         GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
+
+        NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     private void OnDestroy()
@@ -30,4 +39,34 @@ public class MultiGameController : MonoBehaviourPunCallbacks
     {
         return _spawnPointPlayers[PhotonNetwork.LocalPlayer.NickName == "Player1" ? 0 : 1];
     }
+
+    //===============================================================
+    private PhotonView _photonView;
+    private HashSet<int> _readyPlayers = new HashSet<int>();
+    private int _totalPlayers;
+
+    public void NotifyPlayerReady(int actorNumber)
+    {
+        if (!_readyPlayers.Contains(actorNumber))
+        {
+            _readyPlayers.Add(actorNumber);
+            Debug.Log($"플레이어 {actorNumber} 준비 완료! ({_readyPlayers.Count}/{_totalPlayers})");
+
+            if (_readyPlayers.Count == _totalPlayers)
+            {
+                _photonView.RPC("StartGameForAll", RpcTarget.All);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void StartGameForAll()
+    {
+        Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");
+
+        StopCoroutine(GameManager.Instance.GameSceneInitCo());
+        // 실제 게임 시작
+        StartCoroutine(GameManager.Instance.GameSceneInitCo());
+    }
+    //===============================================================
 }

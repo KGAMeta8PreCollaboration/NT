@@ -63,7 +63,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(gameSceneName);
     }
 
-    private IEnumerator GameSceneInitCo()
+    public IEnumerator GameSceneInitCo()
     {
         yield return new WaitForSeconds(5f);
 
@@ -85,8 +85,8 @@ public class GameManager : Singleton<GameManager>
         noteManagers = FindObjectsOfType<NoteManager>();
         noteGenerators = FindObjectsOfType<NoteGenerator>();
 
-        StopCoroutine(GameSceneInitCo());
-        StartCoroutine(GameSceneInitCo());
+        //StopCoroutine(GameSceneInitCo());
+        //StartCoroutine(GameSceneInitCo());
     }
 
     // TODO: 프로토타입 임시
