@@ -31,9 +31,13 @@ public class UpperNode : MonoBehaviour
 
     public void SetUpperNodeIndex(int index)
     {
-        _keySound = EditorDataManager.Instance.CurKeySoundName;
         text.text = (index + 1).ToString();
         _index = index;
+    }
+
+    public void SetKeySound(string keySound)
+    {
+        _keySound = keySound;
     }
 
     public void UpdateState(List<int> activeIndexs)

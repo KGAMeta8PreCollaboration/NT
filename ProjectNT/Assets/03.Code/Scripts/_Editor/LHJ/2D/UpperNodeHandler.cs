@@ -61,6 +61,12 @@ public class UpperNodeHandler : MonoBehaviour
         {
             if (!_upperToggles.Contains(index))
                 _upperToggles.Add(index);
+            // 토글이 켜질 때 현재 선택된 키 사운드를 해당 노드에 저장
+            var node = upperNodes.FirstOrDefault(n => n.Index == index);
+            if (node != null)
+            {
+                node.SetKeySound(EditorDataManager.Instance.CurKeySoundName);
+            }
         }
         else
         {
