@@ -27,7 +27,7 @@ public class MultiLobbyController : MonoBehaviour
 
     public void OnJoinedRoom()
     {
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(false);
+        _lobbyPlayer.PlayerCameraAndAudioListenerActive(false);
         Transform playerTransform = GetPlayerSpawnPoint();
         GameManager.Instance.PhotonManager.SpawnPlayer("Multi/LobbyPlayer", playerTransform);
         photonView.RPC("UpdateMultiLobbyUI", RpcTarget.All);
@@ -36,7 +36,7 @@ public class MultiLobbyController : MonoBehaviour
     public void OnDisconnectedServer()
     {
         _multiLobbyUI.ResetConnectImage();
-        _lobbyPlayer.GetComponent<VRPlayer>().PlayerCameraAndAudioListenerActive(true);
+        _lobbyPlayer.PlayerCameraAndAudioListenerActive(true);
     }
 
     public void OnLeftRoomPlayer(Player player)

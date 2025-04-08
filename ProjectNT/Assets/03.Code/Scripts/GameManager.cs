@@ -24,7 +24,7 @@ public class GameManager : Singleton<GameManager>
 
     private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
-    
+
     private void Start()
     {
         if (skipLobby)
@@ -43,13 +43,13 @@ public class GameManager : Singleton<GameManager>
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
         }
-        else if (scene.name == "LSH_MultiGame2")
+        else if (scene.name == "MultiGame")
         {
             print("멀티 게임 씬");
             OnGoToLobby += () => PhotonManager.LeaveRoom();
             GameSceneInit();
-            noteGenerators[0].Init();
-            noteGenerators[1].Init();
+            noteGenerators[0].Init(noteGenerators[0].loadedNotes);
+            noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
     private ProjectToLoadedData _projectToLoadedData;
@@ -73,13 +73,11 @@ public class GameManager : Singleton<GameManager>
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
         PhotonNetwork.LoadLevel("MultiGame");
-        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
         PhotonNetwork.LoadLevel("MultiGame");
-        //OnGoToLobby += () => _gamePhotonManager.LeaveRoom();
     }
 
     private void GameSceneInit()
@@ -103,7 +101,7 @@ public class GameManager : Singleton<GameManager>
     {
         OnGoToLobby?.Invoke();
         OnGoToLobby = null;
-        SceneManager.LoadScene("Prototype_Lobby");
+        //SceneManager.LoadScene("LobbyScene");
     }
 
     public void GameEnd()

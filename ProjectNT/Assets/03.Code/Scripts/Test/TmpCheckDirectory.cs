@@ -19,7 +19,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     /// 
     public Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDic
         = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
-    
+
     private void Start()
     {
         string path = Path.Combine(Application.persistentDataPath, "Projects");
@@ -42,13 +42,14 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
 
     public void SetProjectPanel(ProjectData[] projectList)
     {
-        List<TitleMusicData> titleMusicData = 
+        musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>(true);
+        List<TitleMusicData> titleMusicData =
             projectList.Select(ProjectDataToTitleMusicData).ToList();
         for (int i = 0; i < projectList.Length; i++)
         {
             projectList[i].Print();
         }
-        
+
         foreach (MusicChangeAndSelect t in musicChangeAndSelects)
         {
             print($"tmpCheckDirectory : SetProjectPanel");
@@ -59,7 +60,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     private string bgmPath = "bgmSaveFile";
     private string keySoundPath = "KeySounds";
     private string beatMapPath = "BeatMapData";
-    
+
     private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
     {
         TitleMusicData data = new TitleMusicData();
@@ -95,7 +96,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         BeatMapData loadedData = JsonUtility.FromJson<BeatMapData>(json);
         return loadedData;
     }
-    
+
     public Dictionary<Enums.ModeDiff, BeatMapData> LoadBeatMapData(string path)
     {
         if (!File.Exists(path))
@@ -105,7 +106,7 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         string jsonData = File.ReadAllText(path);
         return DictionaryJsonUtility.FromJson<Enums.ModeDiff, BeatMapData>(jsonData);
     }
-    
+
     private Sprite ByteToSprite(byte[] bytes, string filePath = null)
     {
         Texture2D texture = new Texture2D(100, 100);

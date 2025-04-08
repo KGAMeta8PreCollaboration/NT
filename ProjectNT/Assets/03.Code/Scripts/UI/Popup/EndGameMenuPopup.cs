@@ -13,7 +13,7 @@ public class EndGameMenuPopup : Popup
         base.Init(popupManager);
         _restartButton?.onClick.AddListener(RestartButtonClick);
 
-        GameManager.Instance.OnGameEnd += ()=>_popupManager.OpenPopup(this);
+        GameManager.Instance.OnGameEnd += () => _popupManager.OpenPopup(this);
     }
 
     public override void CloseButtonClick()
