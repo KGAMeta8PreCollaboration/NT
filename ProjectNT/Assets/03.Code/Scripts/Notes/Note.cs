@@ -29,6 +29,7 @@ public abstract class Note : MonoBehaviour
 
     public virtual void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos = null)
     {
+        isHit = false;
         _isTargetReached = false;
         this.target = target;
         this.hitSound = noteSpawnData.hitSound;

@@ -22,8 +22,9 @@ public class GameManager : Singleton<GameManager>
     [Header("게임 씬 이름")]
     public string gameSceneName = "YKD_GameScene";
 
-    List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
+    private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
+    
     private void Start()
     {
         if (skipLobby)
@@ -37,12 +38,10 @@ public class GameManager : Singleton<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        print("Scene Loaded : " + scene.name);
         if (scene.name == gameSceneName)
         {
-            print("프로토타입 씬");
             GameSceneInit();
-            noteGenerators[0].Init(loadedNoteDatas);
+            noteGenerators[0].Init(_loadedNoteDatas);
         }
         else if (scene.name == "LSH_MultiGame2")
         {
@@ -55,12 +54,12 @@ public class GameManager : Singleton<GameManager>
     }
     private ProjectToLoadedData _projectToLoadedData;
 
-    public void SingleGameStart(Difficulty difficulty, BeatMapData beatMapData, string projectPath, string musicName)
+    public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
-        loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
+        _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         SceneManager.LoadScene(gameSceneName);
     }
 

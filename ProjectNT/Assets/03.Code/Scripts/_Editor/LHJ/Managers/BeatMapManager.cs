@@ -85,6 +85,7 @@ public class BeatMapManager : MonoBehaviour
                     if (new Vector2Int(x, y) != longNode.StartIndex) continue;
 
                     // 롱노드 데이터 저장
+                    
                     NodeData nodeData = new NodeData
                     {
                         index = longNode.StartIndex,

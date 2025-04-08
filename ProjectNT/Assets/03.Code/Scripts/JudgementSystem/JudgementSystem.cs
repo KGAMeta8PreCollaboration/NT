@@ -23,15 +23,15 @@ public class JudgementSystem : MonoBehaviour
         double timeDiff = Math.Abs(musicTime - noteTime);
 
         JudgementType noteType;
-        if (timeDiff < 0.08f)
+        if (timeDiff < 0.08d)
         {
             noteType = JudgementType.PERFECT;
         }
-        else if (timeDiff < 0.13f)
+        else if (timeDiff < 0.13d)
         {
             noteType = JudgementType.Cool;
         }
-        else if (timeDiff < 0.2f)
+        else if (timeDiff < 0.2d)
         {
             noteType = JudgementType.Good;
         }

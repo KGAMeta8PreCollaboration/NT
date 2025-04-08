@@ -68,11 +68,15 @@ public class Woofer : MonoBehaviour
                 LongNote longNote = notes[0] as LongNote;
                 if (!longNote.isEnd)
                     longNote.Hold(transform);
-                hapticDelegate?.Invoke(0.6f, 0.15f);
-                if (AudioSettings.dspTime >= longNote.endTargetDspTime)
+                else
                 {
                     ReleaseLongNote();
                 }
+                hapticDelegate?.Invoke(0.6f, 0.15f);
+                //if (AudioSettings.dspTime >= longNote.endTargetDspTime)
+                //{
+                //    ReleaseLongNote();
+                //}
             }
         }
     }

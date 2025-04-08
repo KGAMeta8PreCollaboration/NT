@@ -60,6 +60,10 @@ public class InteractableObject : MonoBehaviour
             onCkilcAction += UIOpen;
         }
     }
+    private void Start()
+    {
+        titleManager = FindObjectOfType<TitleManager>();
+    }
 
     private void OnOutLine(HoverEnterEventArgs args)
     {
