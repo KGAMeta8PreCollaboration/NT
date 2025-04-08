@@ -22,6 +22,7 @@ public class MultiGameController : MonoBehaviour
         GameManager.Instance.PhotonManager.SpawnPlayer("Multi/GamePlayer", playerTransform);
         GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
 
+        StartCoroutine(EnoughReadyPlayers());
         NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
@@ -49,13 +50,30 @@ public class MultiGameController : MonoBehaviour
     {
         if (!_readyPlayers.Contains(actorNumber))
         {
+            _photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.AllBuffered, actorNumber);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_PlayerReady(int actorNumber)
+    {
+        if (!_readyPlayers.Contains(actorNumber))
+        {
             _readyPlayers.Add(actorNumber);
             Debug.Log($"플레이어 {actorNumber} 준비 완료! ({_readyPlayers.Count}/{_totalPlayers})");
+        }
+    }
 
+    private IEnumerator EnoughReadyPlayers()
+    {
+        while (true)
+        {
             if (_readyPlayers.Count == _totalPlayers)
             {
                 _photonView.RPC("StartGameForAll", RpcTarget.All);
+                break;
             }
+            yield return null;
         }
     }
 
