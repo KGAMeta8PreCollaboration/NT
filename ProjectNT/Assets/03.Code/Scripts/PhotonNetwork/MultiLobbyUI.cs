@@ -40,7 +40,7 @@ public class MultiLobbyUI : MonoBehaviour
     private void StartButtonClick()
     {
         print($"플레이어 수: {PhotonNetwork.PlayerList.Length}");
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (PhotonNetwork.PlayerList.Length == 2)
         {
             //_startGameCoroutine = StartCoroutine(StartGameCoroutine());
             ////PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", CancelStartGame);
@@ -75,7 +75,7 @@ public class MultiLobbyUI : MonoBehaviour
         _countStartGameCoroutine = StartCoroutine(CountStartGameCoroutine(countStartGame));
         yield return _countStartGameCoroutine;
 
-        if (_startGameCoroutine != null) // 취소되지 않았는지 확인
+        if (_startGameCoroutine != null && PhotonNetwork.MasterClient.IsLocal && PhotonNetwork.PlayerList.Length == 2) // 취소되지 않았는지 확인
         {
             //PhotonNetwork.LoadLevel("LSH_MultiGame");
             GameManager.Instance.MultiGameStart();

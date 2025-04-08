@@ -34,15 +34,19 @@ public class PlayerController : MonoBehaviour
     }
     private void OnEnable()
     {
-        _controller.activateAction.action.performed += (x) => triggerEffect.Play(true);
+        _controller.activateAction.action.performed += ParclePlay;
         _controller.activateAction.action.performed += OnTopNoteHit;
         hapticDelegate += _controller.SendHapticImpulse;
     }
     private void OnDisable()
     {
-        _controller.activateAction.action.performed -= (x) => triggerEffect.Play(true);
+        _controller.activateAction.action.performed -= ParclePlay;
         _controller.activateAction.action.performed -= OnTopNoteHit;
         hapticDelegate -= _controller.SendHapticImpulse;
+    }
+    private void ParclePlay(InputAction.CallbackContext cnt)
+    {
+        triggerEffect.Play(true);
     }
     private void Start()
     {
