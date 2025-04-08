@@ -26,6 +26,7 @@ public class UpperNodeData
 {
     public int gridIndex;
     public List<int> nodeIndexs;
+    public List<string> keySounds;
 }
 
 [System.Serializable]

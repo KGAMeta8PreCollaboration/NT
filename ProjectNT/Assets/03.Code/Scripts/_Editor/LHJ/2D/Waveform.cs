@@ -100,6 +100,11 @@ public class Waveform : MonoBehaviour
             maxNum = 8192 / Mathf.CeilToInt(_audioSource.clip.length);
             width = maxNum * Mathf.CeilToInt(_audioSource.clip.length);
         }
+        else
+        {
+            maxNum = 100;
+        }
+        print($"Mathf.CeilToInt(_audioSource.clip.length) : {Mathf.CeilToInt(_audioSource.clip.length)}");
         print($"width : {width}");
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         waveform = new float[width];

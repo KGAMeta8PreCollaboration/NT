@@ -15,6 +15,7 @@ public class UpperNode : MonoBehaviour
     private bool _isOn;
     private Toggle _toggle;
     private Image _image;
+    public string _keySound;
 
     public int Index {  get { return _index; } }
 
@@ -24,12 +25,19 @@ public class UpperNode : MonoBehaviour
         _toggle.group = null;
         _toggle.isOn = false;
         _image = GetComponent<Image>();
+        string temp = (_keySound == "") ? "키음 없음" : $"키음 : {_keySound}";
+        print($"temp : {temp}");
     }
 
     public void SetUpperNodeIndex(int index)
     {
         text.text = (index + 1).ToString();
         _index = index;
+    }
+
+    public void SetKeySound(string keySound)
+    {
+        _keySound = keySound;
     }
 
     public void UpdateState(List<int> activeIndexs)

@@ -31,6 +31,7 @@ public struct ProjectData
         Debug.Log($"KeySoundPath : {m_KeysoundPath}");
         Debug.Log("==========================");
     }
+
 }
 
 public class EditorDataManager : Singleton<EditorDataManager>
@@ -73,8 +74,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 beatMapLoadAction?.Invoke(CurBeatMap);
                 phaseDataAction?.Invoke();
             }
-            // beatMapCache = CurBeatMap;
-
         }
     }
     public BeatMapData CurBeatMap
@@ -96,7 +95,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
             isSaved = value;
             if (isSaved == false)
             {
-                // TODO *인보크
                 saveTrackingAction?.Invoke();
             }
         }
