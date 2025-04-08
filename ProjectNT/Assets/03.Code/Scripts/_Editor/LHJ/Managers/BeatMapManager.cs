@@ -187,7 +187,7 @@ public class BeatMapManager : MonoBehaviour
         }
 
         // 5. 기타 정보 초기화
-        bpmText.text = $"BPM : ({EditorDataManager.Instance.CurBeatMap.gridSetting.BPM.ToString()})";
+        bpmText.text = $"BPM : ({EditorDataManager.Instance.ProjectData.bpm.ToString()})";
         isLoaded = true;
     }
 }
