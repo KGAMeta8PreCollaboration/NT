@@ -123,4 +123,10 @@ public class ResultPanel : Popup
     {
 
     }
+
+    public override void CloseButtonClick()
+    {
+        base.CloseButtonClick();
+        GameManager.Instance.GoToLobby();
+    }
 }

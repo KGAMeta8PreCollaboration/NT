@@ -24,22 +24,25 @@ public class MusicChangeAndSelect : MonoBehaviour
     public void Init(List<TitleMusicData> titleMusicData)
     {
         musicList = new LinkedList<TitleMusicData>(titleMusicData);
-        tilteSound = FindObjectOfType<TitleSound>();
+        tilteSound = FindObjectOfType<TitleSound>(true);
         currentMusicNode = musicList.First;
         SetInternalData(currentMusicNode.Value);
     }
 
     private void OnEnable()
     {
-        if (tilteSound.backgroundAudioSource != null)
+        if (tilteSound?.backgroundAudioSource != null)
             tilteSound.SetBackgroundSound(false);
     }
 
     private void OnDisable()
     {
-        tilteSound.StopGameSound();
-        if (tilteSound.backgroundAudioSource != null)
-            tilteSound.SetBackgroundSound(true);
+        if (tilteSound)
+        {
+            tilteSound.StopGameSound();
+            if (tilteSound.backgroundAudioSource != null)
+                tilteSound.SetBackgroundSound(true);
+        }
     }
 
     private void SetInternalData(TitleMusicData data)
@@ -62,7 +65,7 @@ public class MusicChangeAndSelect : MonoBehaviour
         print(currentMusicNode.Value.musicName);
         print(currentMusicNode.Value.musicArtist);
         print(currentMusicNode.Value.musicClip);
-        
+
     }
 
     public void ChangeMusic(string direction, Action action = null)

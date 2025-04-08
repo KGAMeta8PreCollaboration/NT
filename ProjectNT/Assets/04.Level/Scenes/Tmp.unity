@@ -41963,6 +41963,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3035126465051326048, guid: b136948dcee057241863f7565a699980,
         type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 343403114}
+    - target: {fileID: 3035126465051326048, guid: b136948dcee057241863f7565a699980,
+        type: 3}
       propertyPath: _scoreManager
       value: 
       objectReference: {fileID: 1674338902}
@@ -42018,6 +42023,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b136948dcee057241863f7565a699980, type: 3}
+--- !u!114 &343403114 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+    type: 3}
+  m_PrefabInstance: {fileID: 343403113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &344091875
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MultiGameController : MonoBehaviourPunCallbacks
 {
@@ -12,6 +13,17 @@ public class MultiGameController : MonoBehaviourPunCallbacks
     {
         Transform playerTransform = GetPlayerSpawnPoint();
         GameManager.Instance.PhotonManager.SpawnPlayer("Multi/GamePlayer", playerTransform);
+        GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.PhotonManager.disconnectedServer -= GotoLobbyScene;
+    }
+
+    public void GotoLobbyScene()
+    {
+        SceneManager.LoadScene("LobbyScene");
     }
 
     private Transform GetPlayerSpawnPoint()

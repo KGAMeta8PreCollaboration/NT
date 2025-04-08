@@ -38,6 +38,7 @@ public class InteractableObject : MonoBehaviour
 
     private void Awake()
     {
+        titleManager = FindObjectOfType<TitleManager>();
         outline = GetComponent<Outline>();
         simpleInteractable = GetComponent<XRSimpleInteractable>();
         uiNameText.SetActive(false);
@@ -62,7 +63,7 @@ public class InteractableObject : MonoBehaviour
     }
     private void Start()
     {
-        titleManager = FindObjectOfType<TitleManager>();
+        //titleManager = FindObjectOfType<TitleManager>();
     }
 
     private void OnOutLine(HoverEnterEventArgs args)
@@ -131,6 +132,8 @@ public class InteractableObject : MonoBehaviour
         titleManager.SetUIActive(true);//현재 ui가 켜져있음
         ui.SetActive(true);
         //이 아래에 멀티로 이동하는거
-        PhotonNetwork.ConnectUsingSettings(); // Photon 서버 연결
+
+        PhotonNetwork.ConnectUsingSettings();
+
     }
 }
