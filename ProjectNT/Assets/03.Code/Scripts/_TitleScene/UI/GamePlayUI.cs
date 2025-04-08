@@ -117,28 +117,31 @@ public class GamePlayUI : BaseTitleUI
         }
         else
         {
-            // Debug.Log($"{TestStartGameData.Instance.musicName}");
-            // Debug.Log($"{TestStartGameData.Instance.difficulty}");
-            Difficulty difficulty = GetCurrentDifficulty();
-            BeatMapData beatMapData = new BeatMapData();
-
             string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
             string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
-            TmpCheckDirectory tmpCheckDirectory = FindObjectOfType<TmpCheckDirectory>();
-            Dictionary<Enums.ModeDiff, BeatMapData> beatMapDataDictionary
-                = tmpCheckDirectory.beatMapDic[projectName];
 
-            beatMapData = difficulty switch
-            {
-                Difficulty.Easy => beatMapDataDictionary[Enums.ModeDiff.SOLO_EASY],
-                Difficulty.Normal => beatMapDataDictionary[Enums.ModeDiff.SOLO_NORMAL],
-                Difficulty.Hard => beatMapDataDictionary[Enums.ModeDiff.SOLO_HARD],
-                Difficulty.SuperHard => beatMapDataDictionary[Enums.ModeDiff.SOLO_EXTREAM],
-                _ => beatMapData
-            };
-            // 프로젝트 이름 어디서 받아올까..? 
-            GameManager.Instance.SingleGameStart(difficulty, beatMapData, projectPath, musicChangeSelect.currentMusicNode.Value.musicName);
+            BeatMapData beatMapData = GetBeatMapData(projectPath, GetCurrentDifficulty());
+            GameManager.Instance.SingleGameStart(beatMapData, projectPath, musicChangeSelect.currentMusicNode.Value.musicName);
         }
+    }
+    
+    private BeatMapData GetBeatMapData(string projectPath, Difficulty difficulty)
+    {
+        Enums.ModeDiff modeDiff = difficulty switch
+        {
+            Difficulty.Easy => Enums.ModeDiff.SOLO_EASY,
+            Difficulty.Normal => Enums.ModeDiff.SOLO_NORMAL,
+            Difficulty.Hard => Enums.ModeDiff.SOLO_HARD,
+            Difficulty.SuperHard => Enums.ModeDiff.SOLO_EXTREAM,
+            _ => Enums.ModeDiff.SOLO_EASY
+        };
+        string difficultyPath = Path.Combine(projectPath,"BeatMapData", modeDiff.ToString());
+        if (!File.Exists(difficultyPath))
+        {
+            Debug.LogError("BeatMapData not found at path: " + difficultyPath);
+            return null;
+        }
+        return JsonUtility.FromJson<BeatMapData>(File.ReadAllText(difficultyPath));
     }
 
     private Difficulty GetCurrentDifficulty()
@@ -152,7 +155,6 @@ public class GamePlayUI : BaseTitleUI
         if (superHade.isOn)
             return Difficulty.SuperHard;
         return Difficulty.Easy;
-
     }
 
     //음악 재시작
@@ -225,15 +227,4 @@ public class GamePlayUI : BaseTitleUI
         }
         isSettingDifficulty = false;
     }
-
-    //private void SelectRandomDifficulty()
-    //{
-    //    if (isSettingDifficulty) return;
-    //    isSettingDifficulty = true;
-    //    //랜덤으로 난이도 설정
-    //    Toggle[] difficulties = new Toggle[] { easy, normal, hard, superHade };
-    //    int randomIndex = UnityEngine.Random.Range(0, difficulties.Length);
-    //    SetDifficulty(difficulties[randomIndex], randomIndex + 1);
-    //    isSettingDifficulty = false;
-    //}
 }

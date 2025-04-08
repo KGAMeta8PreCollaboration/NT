@@ -22,18 +22,21 @@ public class LongNote : Note
 
         double currentTime = AudioSettings.dspTime;
 
-        // milestone 도달했는데 홀드하지 않았다면 BAD 처리
-        if (currentMilestoneIndex < milestones.Length && currentTime >= milestones[currentMilestoneIndex])
+        if (currentMilestoneIndex < milestones.Length)
         {
-            if (!isHolding)
+            double milestoneTime = milestones[currentMilestoneIndex];
+
+            if (currentTime >= milestoneTime && !isHolding)
             {
                 HandleMissedMilestone();
             }
         }
     }
 
+
     private void HandleMissedMilestone()
     {
+        if (currentMilestoneIndex >= milestones.Length) return;
         Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
 
         // BAD 판정 적용
@@ -130,8 +133,9 @@ public class LongNote : Note
         if (currentMilestoneIndex >= milestones.Length || AudioSettings.dspTime >= endTargetDspTime)
         {
             Destroy();
+            return;
         }
-
+        if (!isHolding) return;
         _connectLineRenderer.Hold();
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])

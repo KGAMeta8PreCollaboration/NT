@@ -1,0 +1,3891 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7975077948852845430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077948852845428}
+  - component: {fileID: 7975077948852845431}
+  - component: {fileID: 7975077948852845429}
+  - component: {fileID: 1109838858673375289}
+  - component: {fileID: 7975077948852845433}
+  - component: {fileID: 7975077948852845432}
+  m_Layer: 0
+  m_Name: NoteManager (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077948852845428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_LocalRotation: {x: 0, y: 0, z: 0.018324912, w: 0.9998321}
+  m_LocalPosition: {x: 3.714453, y: 2.1665819, z: 0.070302784}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_Children:
+  - {fileID: 7975077949746812238}
+  - {fileID: 7975077950412938742}
+  - {fileID: 7975077950387518422}
+  - {fileID: 7975077950502861233}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.1}
+--- !u!114 &7975077948852845431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62066fcb969ce664a8a525d3ed7e6c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteRails:
+  - {fileID: 7975077949746812239}
+  - {fileID: 7975077950412938743}
+  - {fileID: 7975077950387518423}
+  - {fileID: 7975077950502861246}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shortNotePrefab: {fileID: 6078158495955630708, guid: 169514ff9e26a364cbffdd39c4aca713,
+    type: 3}
+  longNotePrefab: {fileID: 5151792519201553965, guid: 9a907ed76eae2bd4683572dc7c7c56db,
+    type: 3}
+  topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
+  _scoreManager: {fileID: 7975077948852845429}
+--- !u!114 &7975077948852845429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 654f1f21287a58a4c9fbce48f64eb00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1109838858673375289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f78ff75fc4fe74a97161a8d515e34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadedNotes:
+  - noteType: 0
+    time: 0
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-1
+  - noteType: 0
+    time: 0.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-2
+  - noteType: 0
+    time: 2.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-3
+  - noteType: 0
+    time: 2.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-4
+  - noteType: 0
+    time: 3.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-5
+  - noteType: 0
+    time: 4
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-6
+  - noteType: 0
+    time: 4.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-7
+  - noteType: 0
+    time: 5.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-8
+  - noteType: 0
+    time: 5.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-9
+  - noteType: 0
+    time: 6.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-10
+  - noteType: 0
+    time: 6.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-11
+  - noteType: 0
+    time: 7.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-12
+  - noteType: 0
+    time: 7.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-13
+  - noteType: 0
+    time: 8.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-14
+  - noteType: 0
+    time: 9.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-15
+  - noteType: 0
+    time: 10
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-16
+  - noteType: 0
+    time: 10.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-17
+  - noteType: 0
+    time: 11.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-18
+  - noteType: 0
+    time: 12
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-19
+  - noteType: 0
+    time: 12.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-20
+  - noteType: 0
+    time: 13.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-21
+  - noteType: 0
+    time: 13.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-22
+  - noteType: 0
+    time: 14.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-23
+  - noteType: 0
+    time: 14.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-24
+  - noteType: 0
+    time: 15.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-25
+  - noteType: 0
+    time: 15.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-26
+  - noteType: 0
+    time: 16.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-27
+  - noteType: 0
+    time: 17.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-28
+  - noteType: 0
+    time: 17.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-29
+  - noteType: 0
+    time: 18.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-1
+  - noteType: 0
+    time: 19
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-2
+  - noteType: 0
+    time: 19.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-3
+  - noteType: 0
+    time: 19.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-4
+  - noteType: 0
+    time: 20.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-5
+  - noteType: 0
+    time: 20.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-6
+  - noteType: 0
+    time: 20.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-7
+  - noteType: 0
+    time: 21.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-8
+  - noteType: 0
+    time: 21.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-9
+  - noteType: 0
+    time: 22.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-10
+  - noteType: 0
+    time: 22.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-11
+  - noteType: 0
+    time: 22.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-12
+  - noteType: 0
+    time: 23.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-13
+  - noteType: 0
+    time: 23.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-14
+  - noteType: 0
+    time: 24
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-15
+  - noteType: 0
+    time: 24.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-16
+  - noteType: 0
+    time: 24.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-17
+  - noteType: 0
+    time: 25
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-18
+  - noteType: 0
+    time: 25.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-19
+  - noteType: 0
+    time: 25.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-20
+  - noteType: 0
+    time: 26.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-21
+  - noteType: 0
+    time: 26.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-22
+  - noteType: 0
+    time: 27.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-23
+  - noteType: 0
+    time: 27.14
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-24
+  - noteType: 0
+    time: 27.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-25
+  - noteType: 0
+    time: 28.14
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-26
+  - noteType: 0
+    time: 28.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-27
+  - noteType: 0
+    time: 29
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-28
+  - noteType: 0
+    time: 29.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-29
+  - noteType: 0
+    time: 29.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-30
+  - noteType: 0
+    time: 30
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-31
+  - noteType: 0
+    time: 30.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-32
+  - noteType: 0
+    time: 30.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-33
+  - noteType: 0
+    time: 31.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-34
+  - noteType: 0
+    time: 31.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-35
+  - noteType: 0
+    time: 31.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 2-36
+  - noteType: 0
+    time: 32.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-37
+  - noteType: 0
+    time: 32.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-38
+  - noteType: 0
+    time: 33.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-39
+  - noteType: 0
+    time: 33.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-40
+  - noteType: 0
+    time: 34
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-41
+  - noteType: 0
+    time: 34.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 2-42
+  - noteType: 0
+    time: 34.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-43
+  - noteType: 0
+    time: 35
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-44
+  - noteType: 0
+    time: 35.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-45
+  - noteType: 0
+    time: 35.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-46
+  - noteType: 0
+    time: 36.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 2-47
+  - noteType: 0
+    time: 36.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 2-48
+  - noteType: 0
+    time: 36.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-1
+  - noteType: 0
+    time: 37.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-2
+  - noteType: 0
+    time: 37.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-3
+  - noteType: 0
+    time: 38.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-4
+  - noteType: 0
+    time: 39.14
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-5
+  - noteType: 0
+    time: 39.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-5
+  - noteType: 0
+    time: 39.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-6
+  - noteType: 0
+    time: 39.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-6
+  - noteType: 0
+    time: 40
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-7
+  - noteType: 0
+    time: 40
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-7
+  - noteType: 0
+    time: 40.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-8
+  - noteType: 0
+    time: 40.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-8
+  - noteType: 0
+    time: 41.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-9
+  - noteType: 0
+    time: 42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-10
+  - noteType: 0
+    time: 42.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-11
+  - noteType: 0
+    time: 43.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-12
+  - noteType: 0
+    time: 43.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-13
+  - noteType: 0
+    time: 43.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-13
+  - noteType: 0
+    time: 44.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-14
+  - noteType: 0
+    time: 44.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-14
+  - noteType: 0
+    time: 44.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-15
+  - noteType: 0
+    time: 44.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-15
+  - noteType: 0
+    time: 45.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-16
+  - noteType: 0
+    time: 45.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-16
+  - noteType: 0
+    time: 45.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-17
+  - noteType: 0
+    time: 46.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-18
+  - noteType: 0
+    time: 46.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-19
+  - noteType: 0
+    time: 47.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-20
+  - noteType: 0
+    time: 48.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-21
+  - noteType: 0
+    time: 48.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-21
+  - noteType: 0
+    time: 48.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-22
+  - noteType: 0
+    time: 48.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-22
+  - noteType: 0
+    time: 49.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-23
+  - noteType: 0
+    time: 49.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-23
+  - noteType: 0
+    time: 49.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-24
+  - noteType: 0
+    time: 49.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-24
+  - noteType: 0
+    time: 50.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-25
+  - noteType: 0
+    time: 51.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-26
+  - noteType: 0
+    time: 51.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 3-27
+  - noteType: 0
+    time: 52.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 3-28
+  - noteType: 0
+    time: 52.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-29
+  - noteType: 0
+    time: 52.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-29
+  - noteType: 0
+    time: 53.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-30
+  - noteType: 0
+    time: 53.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-30
+  - noteType: 0
+    time: 53.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-31
+  - noteType: 0
+    time: 53.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-31
+  - noteType: 0
+    time: 54.25
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 3-32
+  - noteType: 0
+    time: 54.25
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 3-32
+  - noteType: 0
+    time: 54.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 55.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 56
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 56.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 57.14
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 57.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 58.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 58.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 59.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 59.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 60
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 60.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 60.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 61.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 61.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 61.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 62.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 62.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 62.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 63.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 64
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 64
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 64.57
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 65.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 65.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 65.71
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 66.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 66.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 66.85
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 67.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 67.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 68
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 68.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 68.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 69.14
+    endTime: 0
+    railIndex: 4
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 69.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 69.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 70.28
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 70.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 70.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 71.42
+    endTime: 0
+    railIndex: 4
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 72
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 4-1
+  - noteType: 0
+    time: 72
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 4-1
+  - noteType: 2
+    time: 72.57
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 4-2
+  - noteType: 0
+    time: 73.45
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-1
+  - noteType: 1
+    time: 73.76
+    endTime: 75.42
+    railIndex: 3
+    noteAudioClipName: 5-2
+  - noteType: 0
+    time: 75.73
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-3
+  - noteType: 0
+    time: 76.31
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-4
+  - noteType: 1
+    time: 77.08
+    endTime: 78.57
+    railIndex: 2
+    noteAudioClipName: 5-5
+  - noteType: 0
+    time: 78.94
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-6
+  - noteType: 0
+    time: 79.44
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-7
+  - noteType: 0
+    time: 80.1
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-8
+  - noteType: 0
+    time: 80.63
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-9
+  - noteType: 0
+    time: 81.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-10
+  - noteType: 1
+    time: 82.28
+    endTime: 83.28
+    railIndex: 1
+    noteAudioClipName: 5-11
+  - noteType: 1
+    time: 83.42
+    endTime: 84.42
+    railIndex: 2
+    noteAudioClipName: 5-12
+  - noteType: 1
+    time: 84.57
+    endTime: 85
+    railIndex: 3
+    noteAudioClipName: 5-13
+  - noteType: 1
+    time: 85.17
+    endTime: 85.71
+    railIndex: 2
+    noteAudioClipName: 5-14
+  - noteType: 0
+    time: 85.98
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-15
+  - noteType: 1
+    time: 86.29
+    endTime: 87
+    railIndex: 1
+    noteAudioClipName: 5-16
+  - noteType: 0
+    time: 87.21
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-17
+  - noteType: 1
+    time: 87.55
+    endTime: 88.28
+    railIndex: 1
+    noteAudioClipName: 5-18
+  - noteType: 0
+    time: 88.34
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-19
+  - noteType: 1
+    time: 88.67
+    endTime: 88.85
+    railIndex: 2
+    noteAudioClipName: 5-20
+  - noteType: 0
+    time: 89.04
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-21
+  - noteType: 1
+    time: 89.63
+    endTime: 91.42
+    railIndex: 3
+    noteAudioClipName: 5-22
+  - noteType: 0
+    time: 91.73
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-23
+  - noteType: 1
+    time: 92.04
+    endTime: 93.85
+    railIndex: 3
+    noteAudioClipName: 5-24
+  - noteType: 0
+    time: 94.01
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-25
+  - noteType: 0
+    time: 94.16
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-26
+  - noteType: 0
+    time: 94.31
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-27
+  - noteType: 0
+    time: 94.44
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-28
+  - noteType: 0
+    time: 94.59
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-29
+  - noteType: 0
+    time: 94.75
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-30
+  - noteType: 0
+    time: 95.07
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-31
+  - noteType: 1
+    time: 95.36
+    endTime: 97
+    railIndex: 2
+    noteAudioClipName: 5-32
+  - noteType: 0
+    time: 97.2
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-33
+  - noteType: 0
+    time: 97.46
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-34
+  - noteType: 0
+    time: 97.89
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-35
+  - noteType: 0
+    time: 98.2
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-36
+  - noteType: 0
+    time: 98.38
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-37
+  - noteType: 0
+    time: 98.75
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-38
+  - noteType: 0
+    time: 98.9
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-39
+  - noteType: 0
+    time: 99.19
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-40
+  - noteType: 0
+    time: 99.72
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-41
+  - noteType: 0
+    time: 100.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-42
+  - noteType: 0
+    time: 100.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-43
+  - noteType: 0
+    time: 100.86
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-44
+  - noteType: 1
+    time: 101.01
+    endTime: 101.57
+    railIndex: 2
+    noteAudioClipName: 5-45
+  - noteType: 0
+    time: 101.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-46
+  - noteType: 0
+    time: 101.88
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-47
+  - noteType: 0
+    time: 102.03
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-48
+  - noteType: 1
+    time: 102.17
+    endTime: 102.71
+    railIndex: 3
+    noteAudioClipName: 5-49
+  - noteType: 0
+    time: 102.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-50
+  - noteType: 0
+    time: 102.99
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-51
+  - noteType: 0
+    time: 103.13
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-52
+  - noteType: 0
+    time: 103.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-53
+  - noteType: 1
+    time: 103.42
+    endTime: 104.14
+    railIndex: 1
+    noteAudioClipName: 5-54
+  - noteType: 0
+    time: 104.26
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-55
+  - noteType: 1
+    time: 104.57
+    endTime: 105.42
+    railIndex: 0
+    noteAudioClipName: 5-56
+  - noteType: 0
+    time: 105.5
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 5-57
+  - noteType: 1
+    time: 105.83
+    endTime: 106.57
+    railIndex: 1
+    noteAudioClipName: 5-58
+  - noteType: 0
+    time: 106.62
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-59
+  - noteType: 0
+    time: 106.97
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-60
+  - noteType: 0
+    time: 107.32
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 5-61
+  - noteType: 0
+    time: 107.51
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 5-62
+  - noteType: 0
+    time: 107.74
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 5-63
+  - noteType: 1
+    time: 107.92
+    endTime: 109.42
+    railIndex: 3
+    noteAudioClipName: 5-64
+  - noteType: 2
+    time: 109.71
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-1
+  - noteType: 2
+    time: 110.28
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-2
+  - noteType: 2
+    time: 110.85
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-3
+  - noteType: 2
+    time: 111.42
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-4
+  - noteType: 2
+    time: 112
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-5
+  - noteType: 2
+    time: 112.57
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-6
+  - noteType: 2
+    time: 113.14
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-7
+  - noteType: 2
+    time: 113.71
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-8
+  - noteType: 2
+    time: 114.28
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-9
+  - noteType: 2
+    time: 114.28
+    endTime: 0
+    railIndex: 7
+    noteAudioClipName: 6-9
+  - noteType: 2
+    time: 114.85
+    endTime: 0
+    railIndex: 10
+    noteAudioClipName: 6-10
+  - noteType: 2
+    time: 114.85
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-10
+  - noteType: 2
+    time: 115.42
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-11
+  - noteType: 2
+    time: 115.42
+    endTime: 0
+    railIndex: 7
+    noteAudioClipName: 6-11
+  - noteType: 2
+    time: 116
+    endTime: 0
+    railIndex: 10
+    noteAudioClipName: 6-12
+  - noteType: 2
+    time: 116
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-12
+  - noteType: 2
+    time: 116.57
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-13
+  - noteType: 2
+    time: 116.57
+    endTime: 0
+    railIndex: 7
+    noteAudioClipName: 6-13
+  - noteType: 2
+    time: 117.14
+    endTime: 0
+    railIndex: 10
+    noteAudioClipName: 6-14
+  - noteType: 2
+    time: 117.14
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-14
+  - noteType: 2
+    time: 117.71
+    endTime: 0
+    railIndex: 6
+    noteAudioClipName: 6-15
+  - noteType: 2
+    time: 117.71
+    endTime: 0
+    railIndex: 7
+    noteAudioClipName: 6-15
+  - noteType: 2
+    time: 118.28
+    endTime: 0
+    railIndex: 10
+    noteAudioClipName: 6-16
+  - noteType: 2
+    time: 118.28
+    endTime: 0
+    railIndex: 11
+    noteAudioClipName: 6-16
+  - noteType: 0
+    time: 118.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 7-1
+  - noteType: 0
+    time: 119.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 7-2
+  - noteType: 0
+    time: 120
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 7-3
+  - noteType: 0
+    time: 120.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 7-4
+  - noteType: 0
+    time: 121.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-5
+  - noteType: 0
+    time: 121.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-6
+  - noteType: 0
+    time: 121.98
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-7
+  - noteType: 0
+    time: 122.58
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-8
+  - noteType: 0
+    time: 123.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 7-9
+  - noteType: 0
+    time: 123.5
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 7-10
+  - noteType: 0
+    time: 124.29
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 7-11
+  - noteType: 0
+    time: 124.64
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 7-12
+  - noteType: 0
+    time: 125.43
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 7-13
+  - noteType: 0
+    time: 125.72
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-14
+  - noteType: 0
+    time: 126.15
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-15
+  - noteType: 0
+    time: 126.58
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-16
+  - noteType: 0
+    time: 127.15
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 7-17
+  - noteType: 0
+    time: 127.72
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 7-18
+  - noteType: 0
+    time: 128.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-1
+  - noteType: 0
+    time: 128.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-2
+  - noteType: 0
+    time: 128.85
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-3
+  - noteType: 0
+    time: 129.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-4
+  - noteType: 0
+    time: 129.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-5
+  - noteType: 0
+    time: 129.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 8-6
+  - noteType: 0
+    time: 130
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-7
+  - noteType: 0
+    time: 130.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-8
+  - noteType: 0
+    time: 130.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-9
+  - noteType: 0
+    time: 130.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-10
+  - noteType: 0
+    time: 131.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-11
+  - noteType: 0
+    time: 131.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-12
+  - noteType: 0
+    time: 132.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-13
+  - noteType: 0
+    time: 133.14
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-14
+  - noteType: 0
+    time: 133.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-15
+  - noteType: 0
+    time: 133.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-16
+  - noteType: 0
+    time: 134
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-17
+  - noteType: 0
+    time: 134.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-18
+  - noteType: 0
+    time: 134.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-19
+  - noteType: 0
+    time: 134.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-20
+  - noteType: 0
+    time: 135.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-21
+  - noteType: 0
+    time: 135.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-22
+  - noteType: 0
+    time: 135.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-23
+  - noteType: 0
+    time: 136
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-24
+  - noteType: 0
+    time: 136.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 8-25
+  - noteType: 0
+    time: 136.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-26
+  - noteType: 0
+    time: 136.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-27
+  - noteType: 0
+    time: 137.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-28
+  - noteType: 0
+    time: 137.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-29
+  - noteType: 0
+    time: 138
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-30
+  - noteType: 0
+    time: 138.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-31
+  - noteType: 0
+    time: 138.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-32
+  - noteType: 0
+    time: 138.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 8-33
+  - noteType: 0
+    time: 139.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-34
+  - noteType: 0
+    time: 139.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8.35
+  - noteType: 0
+    time: 139.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-36
+  - noteType: 0
+    time: 140
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-37
+  - noteType: 0
+    time: 140.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-38
+  - noteType: 0
+    time: 140.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-39
+  - noteType: 0
+    time: 142
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-40
+  - noteType: 0
+    time: 142.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-41
+  - noteType: 0
+    time: 142.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-42
+  - noteType: 0
+    time: 142.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-43
+  - noteType: 0
+    time: 143.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-44
+  - noteType: 0
+    time: 143.28
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-45
+  - noteType: 0
+    time: 143.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-46
+  - noteType: 0
+    time: 144
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-47
+  - noteType: 0
+    time: 144.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-48
+  - noteType: 0
+    time: 144.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 8-49
+  - noteType: 0
+    time: 144.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-50
+  - noteType: 0
+    time: 145.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-51
+  - noteType: 0
+    time: 145.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 8-52
+  - noteType: 0
+    time: 145.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 8-53
+  - noteType: 0
+    time: 146
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 8-54
+  - noteType: 1
+    time: 146.28
+    endTime: 146.57
+    railIndex: 1
+    noteAudioClipName: 9-1
+  - noteType: 1
+    time: 146.28
+    endTime: 146.57
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 146.71
+    endTime: 147
+    railIndex: 1
+    noteAudioClipName: 9-2
+  - noteType: 1
+    time: 146.71
+    endTime: 147
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 147.14
+    endTime: 147.57
+    railIndex: 0
+    noteAudioClipName: 9-3
+  - noteType: 1
+    time: 147.14
+    endTime: 147.57
+    railIndex: 2
+    noteAudioClipName: 
+  - noteType: 0
+    time: 147.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-4
+  - noteType: 0
+    time: 148
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 9-5
+  - noteType: 1
+    time: 148.57
+    endTime: 148.85
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 148.57
+    endTime: 148.85
+    railIndex: 3
+    noteAudioClipName: 9-6
+  - noteType: 1
+    time: 149
+    endTime: 149.28
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 149
+    endTime: 149.28
+    railIndex: 3
+    noteAudioClipName: 9-7
+  - noteType: 0
+    time: 149.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 9-8
+  - noteType: 0
+    time: 149.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 
+  - noteType: 1
+    time: 149.71
+    endTime: 150.14
+    railIndex: 1
+    noteAudioClipName: 9-9
+  - noteType: 1
+    time: 149.71
+    endTime: 150.14
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 150.28
+    endTime: 150.71
+    railIndex: 2
+    noteAudioClipName: 9-10
+  - noteType: 1
+    time: 150.28
+    endTime: 150.71
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 150.85
+    endTime: 151.14
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 150.85
+    endTime: 151.14
+    railIndex: 3
+    noteAudioClipName: 9-11
+  - noteType: 1
+    time: 151.28
+    endTime: 151.57
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 151.28
+    endTime: 151.57
+    railIndex: 3
+    noteAudioClipName: 9-12
+  - noteType: 1
+    time: 151.71
+    endTime: 152.14
+    railIndex: 0
+    noteAudioClipName: 
+  - noteType: 1
+    time: 151.71
+    endTime: 152.14
+    railIndex: 2
+    noteAudioClipName: 9-13
+  - noteType: 0
+    time: 152.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-14
+  - noteType: 0
+    time: 152.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 9-15
+  - noteType: 1
+    time: 153.14
+    endTime: 153.42
+    railIndex: 0
+    noteAudioClipName: 
+  - noteType: 1
+    time: 153.14
+    endTime: 153.42
+    railIndex: 1
+    noteAudioClipName: 9-16
+  - noteType: 1
+    time: 153.57
+    endTime: 153.85
+    railIndex: 0
+    noteAudioClipName: 
+  - noteType: 1
+    time: 153.57
+    endTime: 153.85
+    railIndex: 1
+    noteAudioClipName: 9-17
+  - noteType: 0
+    time: 154
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-18
+  - noteType: 0
+    time: 154
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 
+  - noteType: 1
+    time: 154.28
+    endTime: 154.71
+    railIndex: 2
+    noteAudioClipName: 9-19
+  - noteType: 1
+    time: 154.28
+    endTime: 154.71
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 154.85
+    endTime: 155.28
+    railIndex: 0
+    noteAudioClipName: 
+  - noteType: 1
+    time: 154.85
+    endTime: 155.28
+    railIndex: 3
+    noteAudioClipName: 9-20
+  - noteType: 1
+    time: 155.42
+    endTime: 155.71
+    railIndex: 1
+    noteAudioClipName: 9-21
+  - noteType: 1
+    time: 155.42
+    endTime: 155.71
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 155.85
+    endTime: 156.14
+    railIndex: 1
+    noteAudioClipName: 9-22
+  - noteType: 1
+    time: 155.85
+    endTime: 156.14
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 156.28
+    endTime: 156.71
+    railIndex: 0
+    noteAudioClipName: 9-23
+  - noteType: 1
+    time: 156.28
+    endTime: 156.71
+    railIndex: 2
+    noteAudioClipName: 
+  - noteType: 0
+    time: 156.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-24
+  - noteType: 0
+    time: 157.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 9-25
+  - noteType: 1
+    time: 157.71
+    endTime: 158
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 157.71
+    endTime: 158
+    railIndex: 3
+    noteAudioClipName: 9-26
+  - noteType: 1
+    time: 158.14
+    endTime: 158.42
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 158.14
+    endTime: 158.42
+    railIndex: 3
+    noteAudioClipName: 9-27
+  - noteType: 0
+    time: 158.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-28
+  - noteType: 0
+    time: 158.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 
+  - noteType: 1
+    time: 158.85
+    endTime: 159.28
+    railIndex: 0
+    noteAudioClipName: 9-29
+  - noteType: 1
+    time: 158.85
+    endTime: 159.28
+    railIndex: 2
+    noteAudioClipName: 
+  - noteType: 1
+    time: 159.42
+    endTime: 159.85
+    railIndex: 1
+    noteAudioClipName: 
+  - noteType: 1
+    time: 159.42
+    endTime: 159.85
+    railIndex: 3
+    noteAudioClipName: 9-30
+  - noteType: 1
+    time: 160
+    endTime: 160.42
+    railIndex: 0
+    noteAudioClipName: 9-31
+  - noteType: 1
+    time: 160.42
+    endTime: 160.85
+    railIndex: 2
+    noteAudioClipName: 9-32
+  - noteType: 1
+    time: 160.85
+    endTime: 161.71
+    railIndex: 0
+    noteAudioClipName: 9-33
+  - noteType: 0
+    time: 161.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-34
+  - noteType: 0
+    time: 162.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 9-35
+  - noteType: 0
+    time: 162.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 9-36
+  - noteType: 0
+    time: 163.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 9-37
+  - noteType: 0
+    time: 163.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 9-38
+  - noteType: 0
+    time: 164
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 9-39
+  - noteType: 2
+    time: 165.71
+    endTime: 0
+    railIndex: 8
+    noteAudioClipName: 10-1L
+  - noteType: 2
+    time: 165.71
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 10-1H
+  - noteType: 2
+    time: 166.28
+    endTime: 0
+    railIndex: 4
+    noteAudioClipName: 10-2L
+  - noteType: 2
+    time: 166.28
+    endTime: 0
+    railIndex: 5
+    noteAudioClipName: 10-2H
+  - noteType: 2
+    time: 166.85
+    endTime: 0
+    railIndex: 8
+    noteAudioClipName: 10-3L
+  - noteType: 2
+    time: 166.85
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 10-3H
+  - noteType: 2
+    time: 168.57
+    endTime: 0
+    railIndex: 8
+    noteAudioClipName: 10-4L
+  - noteType: 2
+    time: 168.57
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 10-4H
+  - noteType: 2
+    time: 170.85
+    endTime: 0
+    railIndex: 4
+    noteAudioClipName: 10-5L
+  - noteType: 2
+    time: 170.85
+    endTime: 0
+    railIndex: 5
+    noteAudioClipName: 10-5H
+  - noteType: 0
+    time: 172
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 10-6L
+  - noteType: 0
+    time: 172
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-6H
+  - noteType: 0
+    time: 172.57
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-7L
+  - noteType: 0
+    time: 172.57
+    endTime: 2
+    railIndex: 2
+    noteAudioClipName: 10-7H
+  - noteType: 0
+    time: 173.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-8L
+  - noteType: 0
+    time: 173.14
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 10-8H
+  - noteType: 2
+    time: 174.85
+    endTime: 0
+    railIndex: 8
+    noteAudioClipName: 10-9L
+  - noteType: 2
+    time: 174.85
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 10-9H
+  - noteType: 2
+    time: 175.42
+    endTime: 0
+    railIndex: 4
+    noteAudioClipName: 10-10L
+  - noteType: 2
+    time: 175.42
+    endTime: 0
+    railIndex: 5
+    noteAudioClipName: 10-10H
+  - noteType: 2
+    time: 176
+    endTime: 0
+    railIndex: 8
+    noteAudioClipName: 10-11L
+  - noteType: 2
+    time: 176
+    endTime: 0
+    railIndex: 9
+    noteAudioClipName: 10-11H
+  - noteType: 0
+    time: 177.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-12L
+  - noteType: 0
+    time: 177.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-12H
+  - noteType: 0
+    time: 177.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-13L
+  - noteType: 0
+    time: 177.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 10-13H
+  - noteType: 0
+    time: 178.28
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-14L
+  - noteType: 0
+    time: 178.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-14H
+  - noteType: 0
+    time: 179.71
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 10-15L
+  - noteType: 0
+    time: 179.71
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-15H
+  - noteType: 0
+    time: 180.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 10-16L
+  - noteType: 0
+    time: 180.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-16H
+  - noteType: 0
+    time: 180.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 10-17L
+  - noteType: 0
+    time: 180.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 10-17H
+  - noteType: 0
+    time: 181.42
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 10-18L
+  - noteType: 0
+    time: 181.42
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 10-18H
+  - noteType: 1
+    time: 182.85
+    endTime: 183.71
+    railIndex: 1
+    noteAudioClipName: 1-1
+  - noteType: 0
+    time: 183.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-2
+  - noteType: 0
+    time: 185.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-3
+  - noteType: 0
+    time: 185.71
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-4
+  - noteType: 0
+    time: 186
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-5
+  - noteType: 0
+    time: 186.85
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-6
+  - noteType: 0
+    time: 187.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-7
+  - noteType: 0
+    time: 188
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-8
+  - noteType: 0
+    time: 188.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-9
+  - noteType: 0
+    time: 189.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-10
+  - noteType: 0
+    time: 189.42
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-11
+  - noteType: 0
+    time: 190.28
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-12
+  - noteType: 0
+    time: 190.57
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-13
+  - noteType: 1
+    time: 191.14
+    endTime: 192
+    railIndex: 0
+    noteAudioClipName: 1-14
+  - noteType: 0
+    time: 192
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-15
+  - noteType: 0
+    time: 192.85
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-16
+  - noteType: 0
+    time: 193.71
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-17
+  - noteType: 1
+    time: 194.28
+    endTime: 196
+    railIndex: 0
+    noteAudioClipName: 1-18
+  - noteType: 0
+    time: 194.85
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-19
+  - noteType: 0
+    time: 195.14
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-20
+  - noteType: 0
+    time: 196
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-21
+  - noteType: 1
+    time: 196.57
+    endTime: 198.57
+    railIndex: 0
+    noteAudioClipName: 1-22
+  - noteType: 0
+    time: 197.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-23
+  - noteType: 0
+    time: 197.42
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-24
+  - noteType: 0
+    time: 198.28
+    endTime: 0
+    railIndex: 3
+    noteAudioClipName: 1-25
+  - noteType: 0
+    time: 198.57
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-26
+  - noteType: 0
+    time: 199.14
+    endTime: 0
+    railIndex: 1
+    noteAudioClipName: 1-27
+  - noteType: 0
+    time: 200
+    endTime: 0
+    railIndex: 2
+    noteAudioClipName: 1-28
+  - noteType: 0
+    time: 200.57
+    endTime: 0
+    railIndex: 0
+    noteAudioClipName: 1-29
+--- !u!114 &7975077948852845433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343dcb7cc0ab8ae4f84c8276b2d0effb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _woofers:
+  - {fileID: 5429463968163050796}
+  - {fileID: 1667957148671173242}
+  - {fileID: 2747537751454437839}
+  - {fileID: 7532244747969515429}
+  isHolding: 
+--- !u!114 &7975077948852845432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077948852845430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 345daa196b27ff24097b3be9c30e01c0,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af391851-29fe-49af-bc56-24b7bdbfccbb
+    m_ActionName: Create/Create[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7975077948852845433}
+        m_TargetAssemblyTypeName: TmpCreateNotes, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d91726f-90ed-4a33-899e-edb70440188d
+    m_ActionName: Create/Hit[/Keyboard/a,/Keyboard/s,/Keyboard/d,/Keyboard/f]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Create
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!1 &7975077949023034789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949023034786}
+  m_Layer: 0
+  m_Name: EndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949023034786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949023034789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6920161, y: 0.00000081562234, z: 0.000000049670536}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950502861233}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949045493159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949045493156}
+  m_Layer: 0
+  m_Name: EndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949045493156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949045493159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6920161, y: 0.00000081562234, z: 0.000000049670536}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950387518422}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949271303250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949271303251}
+  m_Layer: 0
+  m_Name: EndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949271303251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949271303250}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.692, y: 0.0000008156223, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077949746812238}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949370833092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949370833093}
+  m_Layer: 0
+  m_Name: StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949370833093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949370833092}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.559994, y: 0.00000042002887, z: 0.0000007947285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950502861233}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949376949386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949376949387}
+  m_Layer: 0
+  m_Name: EndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949376949387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949376949386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6920166, y: 0.0000008156223, z: 0.000000049670536}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950412938742}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949423727606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949423727607}
+  - component: {fileID: 7975077949423727602}
+  - component: {fileID: 7975077949423727605}
+  - component: {fileID: 7975077949423727604}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949423727607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949423727606}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.08}
+  m_Children: []
+  m_Father: {fileID: 7975077949746812238}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7975077949423727602
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949423727606}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7975077949423727605
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949423727606}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7975077949423727604
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949423727606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &7975077949451795698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949451795699}
+  m_Layer: 0
+  m_Name: StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949451795699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949451795698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.559994, y: 0.00000042002887, z: 0.0000007947285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950387518422}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949746812225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949746812238}
+  - component: {fileID: 7975077949746812239}
+  m_Layer: 0
+  m_Name: NoteRail1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949746812238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949746812225}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7975077950354056975}
+  - {fileID: 7975077949423727607}
+  - {fileID: 7975077950565982892}
+  - {fileID: 7975077949271303251}
+  - {fileID: 3529479080183927565}
+  m_Father: {fileID: 7975077948852845428}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077949746812239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949746812225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28e5f4045795e64e8f62cc5cd45c99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woofer: {fileID: 0}
+  noteSpawner: {fileID: 7975077950354056974}
+--- !u!1 &7975077949824802104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949824802105}
+  m_Layer: 0
+  m_Name: StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949824802105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949824802104}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.56, y: 0.0000004200289, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950412938742}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077949947341136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077949947341137}
+  - component: {fileID: 7975077949947341148}
+  - component: {fileID: 7975077949947341151}
+  - component: {fileID: 7975077949947341150}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077949947341137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949947341136}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.08}
+  m_Children: []
+  m_Father: {fileID: 7975077950387518422}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7975077949947341148
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949947341136}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7975077949947341151
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949947341136}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7975077949947341150
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077949947341136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &7975077950309880136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950309880137}
+  - component: {fileID: 7975077950309880182}
+  m_Layer: 0
+  m_Name: NoteSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950309880137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950309880136}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950412938742}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950309880182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950309880136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82aa1622bbc008c44b3c889100292ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 7975077949824802105}
+  target: {fileID: 7975077949376949387}
+--- !u!1 &7975077950354056961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950354056975}
+  - component: {fileID: 7975077950354056974}
+  m_Layer: 0
+  m_Name: NoteSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950354056975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950354056961}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077949746812238}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950354056974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950354056961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82aa1622bbc008c44b3c889100292ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 7975077950565982892}
+  target: {fileID: 7975077949271303251}
+--- !u!1 &7975077950387518249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950387518422}
+  - component: {fileID: 7975077950387518423}
+  m_Layer: 0
+  m_Name: NoteRail3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950387518422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950387518249}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7975077950566719041}
+  - {fileID: 7975077949947341137}
+  - {fileID: 7975077949451795699}
+  - {fileID: 7975077949045493156}
+  - {fileID: 6738327561405200366}
+  m_Father: {fileID: 7975077948852845428}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950387518423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950387518249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28e5f4045795e64e8f62cc5cd45c99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woofer: {fileID: 0}
+  noteSpawner: {fileID: 7975077950566719054}
+--- !u!1 &7975077950412938697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950412938742}
+  - component: {fileID: 7975077950412938743}
+  m_Layer: 0
+  m_Name: NoteRail2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950412938742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950412938697}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7975077950309880137}
+  - {fileID: 7975077950534989572}
+  - {fileID: 7975077949824802105}
+  - {fileID: 7975077949376949387}
+  - {fileID: 7820403999742575707}
+  m_Father: {fileID: 7975077948852845428}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950412938743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950412938697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28e5f4045795e64e8f62cc5cd45c99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woofer: {fileID: 0}
+  noteSpawner: {fileID: 7975077950309880182}
+--- !u!1 &7975077950502861232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950502861233}
+  - component: {fileID: 7975077950502861246}
+  m_Layer: 0
+  m_Name: NoteRail4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950502861233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950502861232}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7975077950853734298}
+  - {fileID: 7975077950820209552}
+  - {fileID: 7975077949370833093}
+  - {fileID: 7975077949023034786}
+  - {fileID: 1379656748187216260}
+  m_Father: {fileID: 7975077948852845428}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950502861246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950502861232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28e5f4045795e64e8f62cc5cd45c99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woofer: {fileID: 0}
+  noteSpawner: {fileID: 7975077950853734299}
+--- !u!1 &7975077950534989575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950534989572}
+  - component: {fileID: 7975077950534989571}
+  - component: {fileID: 7975077950534989570}
+  - component: {fileID: 7975077950534989573}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950534989572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950534989575}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.08}
+  m_Children: []
+  m_Father: {fileID: 7975077950412938742}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7975077950534989571
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950534989575}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7975077950534989570
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950534989575}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7975077950534989573
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950534989575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &7975077950565982895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950565982892}
+  m_Layer: 0
+  m_Name: StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950565982892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950565982895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.559994, y: 0.00000042002887, z: 0.0000007947285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077949746812238}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7975077950566719040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950566719041}
+  - component: {fileID: 7975077950566719054}
+  m_Layer: 0
+  m_Name: NoteSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950566719041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950566719040}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950387518422}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950566719054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950566719040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82aa1622bbc008c44b3c889100292ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 7975077949451795699}
+  target: {fileID: 7975077949045493156}
+--- !u!1 &7975077950820209555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950820209552}
+  - component: {fileID: 7975077950820209567}
+  - component: {fileID: 7975077950820209566}
+  - component: {fileID: 7975077950820209553}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950820209552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950820209555}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.08}
+  m_Children: []
+  m_Father: {fileID: 7975077950502861233}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7975077950820209567
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950820209555}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7975077950820209566
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950820209555}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7975077950820209553
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950820209555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &7975077950853734301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7975077950853734298}
+  - component: {fileID: 7975077950853734299}
+  m_Layer: 0
+  m_Name: NoteSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7975077950853734298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950853734301}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7975077950502861233}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7975077950853734299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975077950853734301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82aa1622bbc008c44b3c889100292ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 7975077949370833093}
+  target: {fileID: 7975077949023034786}
+--- !u!1001 &1667957149829894298
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7975077950412938742}
+    m_Modifications:
+    - target: {fileID: 1261531873, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 229029915914867826, guid: fb52f82a4c9319f49be42ef5a12303b3,
+        type: 2}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311203096, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: NoteScanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+--- !u!114 &1667957148671173242 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1261531872, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 1667957149829894298}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc28abe97042e61469e2e7fc40ef93c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &7820403999742575707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 1667957149829894298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2747537752644625199
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7975077950387518422}
+    m_Modifications:
+    - target: {fileID: 1261531873, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 229029915914867826, guid: fb52f82a4c9319f49be42ef5a12303b3,
+        type: 2}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311203096, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: NoteScanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+--- !u!4 &6738327561405200366 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 2747537752644625199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2747537751454437839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1261531872, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 2747537752644625199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc28abe97042e61469e2e7fc40ef93c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &5429463967172216780
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7975077949746812238}
+    m_Modifications:
+    - target: {fileID: 1261531873, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 229029915914867826, guid: fb52f82a4c9319f49be42ef5a12303b3,
+        type: 2}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311203096, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: NoteScanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+--- !u!114 &5429463968163050796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1261531872, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 5429463967172216780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc28abe97042e61469e2e7fc40ef93c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3529479080183927565 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 5429463967172216780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7532244747083529541
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7975077950502861233}
+    m_Modifications:
+    - target: {fileID: 1261531873, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 229029915914867826, guid: fb52f82a4c9319f49be42ef5a12303b3,
+        type: 2}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1261531874, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311203096, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+      propertyPath: m_TagString
+      value: NoteScanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_Name
+      value: Woofer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190784, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d30fd8d71346314ab3257d19e883428, type: 3}
+--- !u!4 &1379656748187216260 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8908804166078190785, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 7532244747083529541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7532244747969515429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1261531872, guid: 0d30fd8d71346314ab3257d19e883428,
+    type: 3}
+  m_PrefabInstance: {fileID: 7532244747083529541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc28abe97042e61469e2e7fc40ef93c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

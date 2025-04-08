@@ -13,14 +13,14 @@ public class BeatMapManager : MonoBehaviour
 
     private AudioSourceManager _audioSourceManager;
     private GridManager _gridManager;
-    private UpperNodeTest _upperNodeTest;
+    private UpperNodeHandler _upperNodeHandler;
     private NCT _nct;
 
     private void Awake()
     {
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
         _gridManager = FindObjectOfType<GridManager>();
-        _upperNodeTest = FindObjectOfType<UpperNodeTest>();
+        _upperNodeHandler = FindObjectOfType<UpperNodeHandler>();
         _nct = FindObjectOfType<NCT>();
         isLoaded = false;
     }
@@ -85,6 +85,7 @@ public class BeatMapManager : MonoBehaviour
                     if (new Vector2Int(x, y) != longNode.StartIndex) continue;
 
                     // 롱노드 데이터 저장
+                    
                     NodeData nodeData = new NodeData
                     {
                         index = longNode.StartIndex,
@@ -110,12 +111,22 @@ public class BeatMapManager : MonoBehaviour
             }
         }
         data.upperNodes = new List<UpperNodeData>();
-        foreach (var upperNode in _upperNodeTest._upperNodeDic)
+        foreach (var upperNode in _upperNodeHandler._upperNodeDic)
         {
+            List<string> keySounds = new List<string>(); 
+
+            //인덱스에 맞게 키음 가져오기
+            foreach (int nodeIndex in upperNode.Value)
+            {
+                string keySound = _upperNodeHandler.GetNodeKeySoundByIndex(nodeIndex);
+                keySounds.Add(keySound);
+            }
+
             UpperNodeData upperNodeData = new UpperNodeData
             {
                 gridIndex = upperNode.Key,
-                nodeIndexs = new List<int>(upperNode.Value)
+                nodeIndexs = new List<int>(upperNode.Value),
+                keySounds = keySounds
             };
             print($"저장된 상단노드 그리드 인덱스 : {upperNode.Key}, 노드 인덱스 : [{string.Join(", ", upperNode.Value)}]");
             data.upperNodes.Add(upperNodeData);
@@ -139,7 +150,7 @@ public class BeatMapManager : MonoBehaviour
     private IEnumerator LoadBeatMapDataCoroutine(BeatMapData beatMapData)
     {
         isLoaded = false;
-        if (_audioSourceManager == null || _gridManager == null || _nct == null || _upperNodeTest == null)
+        if (_audioSourceManager == null || _gridManager == null || _nct == null || _upperNodeHandler == null)
         {
             Debug.LogError("필요한 컴포넌트가 없습니다.");
             yield break;
@@ -148,7 +159,7 @@ public class BeatMapManager : MonoBehaviour
         //AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
         //일단 모두 초기화
         _nct.ClearAllNodes();
-        _upperNodeTest._upperNodeDic.Clear();
+        _upperNodeHandler._upperNodeDic.Clear();
 
         //print(audioSource);
         print("BeatMapManager LoadBeatMapDataCoroutine");
@@ -171,12 +182,12 @@ public class BeatMapManager : MonoBehaviour
         // 4. 상단 노드 초기화
         if (beatMapData.upperNodes != null && beatMapData.upperNodes.Count > 0)
         {
-            _upperNodeTest.InitializeWithNodeData(beatMapData.upperNodes);
+            _upperNodeHandler.InitializeWithNodeData(beatMapData.upperNodes);
             Debug.Log($"로드된 상단 노드 수: {beatMapData.upperNodes.Count}");
         }
 
         // 5. 기타 정보 초기화
-        bpmText.text = $"BPM : ({EditorDataManager.Instance.CurBeatMap.gridSetting.BPM.ToString()})";
+        bpmText.text = $"BPM : ({EditorDataManager.Instance.ProjectData.bpm.ToString()})";
         isLoaded = true;
     }
 }

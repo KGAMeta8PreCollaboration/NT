@@ -15,7 +15,7 @@ public class BeatMapData
 public class NodeData
 {
     public Vector2Int index;
-    public Vector2Int? endIndex;
+    public Vector2Int endIndex;
     public EditorNoteType nodeType;
     public string keySound;
 }
@@ -26,6 +26,7 @@ public class UpperNodeData
 {
     public int gridIndex;
     public List<int> nodeIndexs;
+    public List<string> keySounds;
 }
 
 [System.Serializable]

@@ -61,9 +61,33 @@ public class TopNote : Note
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
     }
-    private void Hit(InputAction.CallbackContext ctn)
+    public void Hit(InputAction.CallbackContext ctn)
     {
         if (!canInter || !xRSimInter.isHovered) return;
+        isHit = true;
+        this.judgementType = JudgementType.PERFECT;
+        OnHit?.Invoke(this);
+        OnHit = null;
+
+        AudioManager.Instance.Play(hitSound, transform);
+        PoolManager.Instance.HitEffect(transform.position, false);
+
+        if (judgementType == JudgementType.MISS)
+        {
+            _scoreManager.ResetCombo();
+        }
+        else
+        {
+            _scoreManager.IncreaseCombo();
+        }
+
+        _scoreManager.AddScore(judgementType);
+        _scoreManager.ShowJudgementType(judgementType);
+        _scoreManager.AddJudgeCount(judgementType);
+        Destroy();
+    }
+    public void AutoHit(InputAction.CallbackContext ctn)
+    {
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);

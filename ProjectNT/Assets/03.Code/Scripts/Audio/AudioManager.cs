@@ -77,7 +77,7 @@ public class AudioManager : Singleton<AudioManager>
 		// bgmAudioSource.Play((ulong)delayTime);
 		_bgmAudioSource.PlayScheduled(startDspTime);
 		print("오디오 매니저 StartBGM 4");
-		print($"BGM Sample rate : {_bgmAudioSource.clip.frequency}");
+		print($"BGM Sample rate : {_bgmAudioSource.clip}");
 		foreach (NoteGenerator generator in GameManager.Instance.noteGenerators)
 		{
 			print("오디오 매니저 StartBGM 5");
