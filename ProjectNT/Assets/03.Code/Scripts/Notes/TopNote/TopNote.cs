@@ -25,6 +25,7 @@ public class TopNote : Note
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
         isIndicatorOn = false;
+        gameObject.tag = "Untagged";
     }
     private void OnDisable()
     {
@@ -118,6 +119,7 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = true;
+            gameObject.tag = "TopNote";
         }
         if (other.CompareTag("Woofer"))
         {
@@ -130,6 +132,7 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = false;
+            gameObject.tag = "Untagged";
         }
     }
 
