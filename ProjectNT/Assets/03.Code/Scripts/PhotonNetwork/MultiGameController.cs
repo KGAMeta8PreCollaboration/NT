@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MultiGameController : MonoBehaviour
 {
-    [SerializeField] private Transform[] _spawnPointPlayers;
+    public PlayerModule[] playerModules;
 
     private void Awake()
     {
@@ -16,14 +16,9 @@ public class MultiGameController : MonoBehaviour
 
     private void Start()
     {
-        _totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        Transform playerTransform = GetPlayerSpawnPoint();
-        GameManager.Instance.PhotonManager.SpawnPlayer("Multi/GamePlayer", playerTransform);
         GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
 
         StartCoroutine(EnoughReadyPlayers());
-        NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
     private void OnDestroy()
@@ -31,14 +26,20 @@ public class MultiGameController : MonoBehaviour
         GameManager.Instance.PhotonManager.disconnectedServer -= GotoLobbyScene;
     }
 
+    public void SetPlayerModuleData(List<LoadedNoteData> player1SongData, List<LoadedNoteData> player2SongData)
+    {
+        foreach (PlayerModule playerModule in playerModules)
+        {
+            playerModule.SetPlayerModuleData(PhotonNetwork.LocalPlayer.NickName == "Player1" ? player1SongData : player2SongData);
+        }
+
+        _totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+
     public void GotoLobbyScene()
     {
         SceneManager.LoadScene("LobbyScene");
-    }
-
-    private Transform GetPlayerSpawnPoint()
-    {
-        return _spawnPointPlayers[PhotonNetwork.LocalPlayer.NickName == "Player1" ? 0 : 1];
     }
 
     //===============================================================
@@ -70,7 +71,7 @@ public class MultiGameController : MonoBehaviour
         {
             if (_readyPlayers.Count == _totalPlayers)
             {
-                _photonView.RPC("StartGameForAll", RpcTarget.All);
+                _photonView.RPC(nameof(StartGameForAll), RpcTarget.All);
                 break;
             }
             yield return null;
