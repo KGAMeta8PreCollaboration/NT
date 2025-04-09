@@ -7,34 +7,31 @@ using UnityEngine.SceneManagement;
 
 public class MultiGameController : MonoBehaviour
 {
-    public PlayerModule[] playerModules;
+    private PlayerModuleManager _playerModuleManager;
+    private PlayerReadyManager _playerReadyManager;
 
     private void Awake()
     {
-        _photonView = GetComponent<PhotonView>();
-    }
-
-    private void Start()
-    {
-        GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
-
-        StartCoroutine(EnoughReadyPlayers());
+        Init();
     }
 
     private void OnDestroy()
     {
         GameManager.Instance.PhotonManager.disconnectedServer -= GotoLobbyScene;
+        _playerReadyManager.AllPlayersReady -= StartGameForAll;
     }
 
-    public void SetPlayerModuleData(List<LoadedNoteData> player1SongData, List<LoadedNoteData> player2SongData)
+    public void SetupAndReady(List<LoadedNoteData> player1Data, List<LoadedNoteData> player2Data)
     {
-        foreach (PlayerModule playerModule in playerModules)
-        {
-            playerModule.SetPlayerModuleData(PhotonNetwork.LocalPlayer.NickName == "Player1" ? player1SongData : player2SongData);
-        }
+        _playerModuleManager.SetPlayerModuleData(player1Data, player2Data);
+        _playerReadyManager.NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
+    }
 
-        _totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
+    private void StartGameForAll()
+    {
+        Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");
+        StopCoroutine(GameManager.Instance.GameSceneInitCo());
+        StartCoroutine(GameManager.Instance.GameSceneInitCo());
     }
 
     public void GotoLobbyScene()
@@ -42,50 +39,14 @@ public class MultiGameController : MonoBehaviour
         SceneManager.LoadScene("LobbyScene");
     }
 
-    //===============================================================
-    private PhotonView _photonView;
-    private HashSet<int> _readyPlayers = new HashSet<int>();
-    private int _totalPlayers;
-
-    public void NotifyPlayerReady(int actorNumber)
+    private void Init()
     {
-        if (!_readyPlayers.Contains(actorNumber))
-        {
-            _photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.AllBuffered, actorNumber);
-        }
-    }
+        _playerModuleManager = GetComponentInChildren<PlayerModuleManager>();
+        _playerReadyManager = GetComponentInChildren<PlayerReadyManager>();
 
-    [PunRPC]
-    private void RPC_PlayerReady(int actorNumber)
-    {
-        if (!_readyPlayers.Contains(actorNumber))
-        {
-            _readyPlayers.Add(actorNumber);
-            Debug.Log($"플레이어 {actorNumber} 준비 완료! ({_readyPlayers.Count}/{_totalPlayers})");
-        }
-    }
+        GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
 
-    private IEnumerator EnoughReadyPlayers()
-    {
-        while (true)
-        {
-            if (_readyPlayers.Count == _totalPlayers)
-            {
-                _photonView.RPC(nameof(StartGameForAll), RpcTarget.All);
-                break;
-            }
-            yield return null;
-        }
+        _playerReadyManager.AllPlayersReady += StartGameForAll;
     }
-
-    [PunRPC]
-    private void StartGameForAll()
-    {
-        Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");
-
-        StopCoroutine(GameManager.Instance.GameSceneInitCo());
-        // 실제 게임 시작
-        StartCoroutine(GameManager.Instance.GameSceneInitCo());
-    }
-    //===============================================================
 }
+

@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
             print("멀티 게임 씬");
             OnGoToLobby += () => PhotonManager.LeaveRoom();
             MultiGameController = FindObjectOfType<MultiGameController>();
-            MultiGameController.SetPlayerModuleData(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
             MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
