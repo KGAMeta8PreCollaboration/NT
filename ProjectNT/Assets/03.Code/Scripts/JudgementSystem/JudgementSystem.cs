@@ -39,7 +39,7 @@ public class JudgementSystem : MonoBehaviour
         {
             noteType = JudgementType.MISS;
         }
-        print($"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {noteType.ToString()}");
+        // print($"현재 재생 시간: {musicTime.ToString("f2")}, 노트 재생 시간: {noteTime.ToString("f2")}, timeDiff: {timeDiff.ToString("f2")}, Result: {noteType.ToString()}");
         return noteType;
     }
 }

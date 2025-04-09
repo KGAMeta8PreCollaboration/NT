@@ -64,7 +64,10 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		_audioSources
 			.FindAll(audioSource => !audioSource.isPlaying)
-			.ForEach(audioSource => _audioPool.ReturnAudioSource(audioSource));
+			.ForEach(audioSource => {
+				_audioPool.ReturnAudioSource(audioSource);
+				_audioSources.Remove(audioSource);
+			});
 	}
 
 	public void StartBGM(double delayTime)

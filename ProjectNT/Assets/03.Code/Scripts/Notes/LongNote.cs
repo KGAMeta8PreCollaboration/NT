@@ -37,7 +37,7 @@ public class LongNote : Note
     private void HandleMissedMilestone()
     {
         if (currentMilestoneIndex >= milestones.Length) return;
-        Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
+        // Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
 
         // BAD 판정 적용
         judgementType = JudgementType.MISS;
