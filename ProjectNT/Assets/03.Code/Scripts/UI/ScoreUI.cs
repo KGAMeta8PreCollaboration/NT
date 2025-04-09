@@ -83,7 +83,9 @@ public class ScoreUI : MonoBehaviour
     private TweenCallback Fade()
     {
         if (exitJudgement)
+        {
             _judgementText.DOFade(0f, 0.5f);
+        }
         return null;
     }
 }

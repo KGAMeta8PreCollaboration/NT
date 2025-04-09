@@ -1,108 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using Photon.Pun.Demo.Cockpit.Forms;
 using UnityEngine;
 
 public class LightEffect : MonoBehaviour
 {
-    private float intensity;
-    private float duration;
-    private float defaultIntensity;
-    private float leftHoldingTime;
-    private float rightHoldingTime;
-    public float Intensity
-    {
-        get { return intensity; }
-        set { intensity = value; }
-    }
-    public float Duration
-    {
-        get { return duration; }
-        set { duration = value; }
-    }
+    public float targetIntensity;
+    public float targetDuration;
+    public float defaultIntensity;
+    public float defaultDuration;
+    [SerializeField]
+    private List<LightDotween> leftLights;
+    [SerializeField]
+    private List<LightDotween> rightLights;
 
-    public float DefaultIntensity
+    private void Awake()
     {
-        get { return defaultIntensity; }
-        set { defaultIntensity = value; }
+        Init(leftLights);
+        Init(rightLights);
     }
-
-    public float LeftHoldingTime
+    private void Init(List<LightDotween> lightsList)
     {
-        get { return leftHoldingTime; }
-        private set
+        foreach (LightDotween light in lightsList)
         {
-            leftHoldingTime = value;
-            if (leftHoldingTime > duration)
-            {
-                SetLightsIntensity(leftLights, defaultIntensity);
-            }
+            light.TargetIntensity = targetIntensity;
+            light.Duration = targetDuration;
+            light.DefaultIntensity = defaultIntensity;
+            light.DefaultDuration = defaultDuration;
         }
     }
-    public float RightHoldingTime
+    private void SetLightsIntensity(List<LightDotween> lightsList)
     {
-        get { return RightHoldingTime; }
-        private set
+        foreach (LightDotween light in lightsList)
         {
-            rightHoldingTime = value;
-            if (rightHoldingTime > duration)
-            {
-                SetLightsIntensity(rightLights, defaultIntensity);
-            }
-        }
-    }
-    public List<Light> leftLights;
-    public List<Light> rightLights;
-    private void Start()
-    {
-        SetLightsIntensity(leftLights, defaultIntensity);
-        SetLightsIntensity(rightLights, defaultIntensity);
-        Init();
-    }
-    private void Update()
-    {
-        if (leftHoldingTime < duration)
-        {
-            leftHoldingTime += Time.deltaTime;
-
-            if (leftHoldingTime > duration)
-            {
-                SetLightsIntensity(leftLights, defaultIntensity);
-            }
-
-        }
-        if (rightHoldingTime < duration)
-        {
-            rightHoldingTime += Time.deltaTime;
-
-            if (rightHoldingTime > duration)
-            {
-                SetLightsIntensity(rightLights, defaultIntensity);
-            }
-
-        }
-    }
-    private void Init()
-    {
-        leftHoldingTime = duration;
-        rightHoldingTime = duration;
-    }
-    private void SetLightsIntensity(List<Light> lightsList, float intensity)
-    {
-        foreach (Light light in lightsList)
-        {
-            light.intensity = intensity;
+            light.sequence.Restart();
         }
     }
 
-    public void LeftLightEffectOn()
+    public void LightsEffectOn()
     {
-        LeftHoldingTime = 0;
-        SetLightsIntensity(leftLights, intensity);
-    }
-    public void RightLightEffectOn()
-    {
-        RightHoldingTime = 0;
-        SetLightsIntensity(rightLights, intensity);
+        SetLightsIntensity(leftLights);
+        SetLightsIntensity(rightLights);
     }
 
 }

@@ -85,7 +85,6 @@ public abstract class Note : MonoBehaviour
         OnDestroyed = null;
         // print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3} ,오디오 소스 : {hitSound}");
         // Destroy(gameObject);
-        EffectManager.Instance.EffectInvoke(this, judgementType, _scoreManager.currentCombo);
         PoolManager.Instance.PushNote(this);
     }
 

@@ -17,14 +17,16 @@ public class ShortNote : Note
 
 	public override void Hit(JudgementType noteType)
 	{
-		Destroy();
 		isHit = true;
 		this.judgementType = noteType;
 		OnHit?.Invoke(this);
 		OnHit = null;
 		if (judgementType != JudgementType.MISS)
+		{
 			PoolManager.Instance.HitEffect(transform.position, true);
-
+		}
+		EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
+		Destroy();
 	}
 
 	protected override void PostJudgement()

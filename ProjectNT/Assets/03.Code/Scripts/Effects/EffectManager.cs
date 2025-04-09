@@ -9,10 +9,7 @@ public class EffectManager : Singleton<EffectManager>
 {
     [Header("Spot Light Effect")]
     [SerializeField] private LightEffect lightEffect;
-    public float lightIntensity = 0;
-    public float lightDefaultIntensity = 0;
-    public float lightDuration = 0;
-
+    public Action<Note, int> OnMapEffect;
     protected override void Awake()
     {
         base.Awake();
@@ -28,19 +25,24 @@ public class EffectManager : Singleton<EffectManager>
         //TODO: 작업 완료시 지워야함
         Initialize();
     }
-
+    private void OnDisable()
+    {
+        //TODO 씬전환 시 구독해제로 변경예정
+        OnMapEffect -= EffectInvoke;
+    }
     private void Initialize()
     {
         lightEffect = FindObjectOfType<LightEffect>();
-        LightEffectInit();
+        OnMapEffect += EffectInvoke;
     }
 
-    public void EffectInvoke(Note note, JudgementType judgementType, int combo)
+    public void EffectInvoke(Note note, int combo)
     {
-        if (judgementType == JudgementType.PERFECT)
+
+        Debug.Log(note.judgementType);
+        if (note.judgementType == JudgementType.PERFECT)
         {
-            lightEffect.LeftLightEffectOn();
-            lightEffect.RightLightEffectOn();
+            lightEffect.LightsEffectOn();
         }
         if (combo % 10 == 0)
         {
@@ -49,7 +51,6 @@ public class EffectManager : Singleton<EffectManager>
 
         if (combo % 20 == 0)
         {
-
         }
 
         if (note is TopNote)
@@ -59,10 +60,4 @@ public class EffectManager : Singleton<EffectManager>
 
     }
 
-    private void LightEffectInit()
-    {
-        lightEffect.Intensity = lightIntensity;
-        lightEffect.Duration = lightDuration;
-        lightEffect.DefaultIntensity = lightDefaultIntensity;
-    }
 }

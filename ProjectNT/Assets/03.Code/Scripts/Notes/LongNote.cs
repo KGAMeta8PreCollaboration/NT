@@ -33,7 +33,6 @@ public class LongNote : Note
         }
     }
 
-
     private void HandleMissedMilestone()
     {
         if (currentMilestoneIndex >= milestones.Length) return;
@@ -51,7 +50,6 @@ public class LongNote : Note
 
         currentMilestoneIndex++;
     }
-
 
     private void CalculateMilestones(double duration)
     {
@@ -140,7 +138,7 @@ public class LongNote : Note
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
-
+            EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
             Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;
 
