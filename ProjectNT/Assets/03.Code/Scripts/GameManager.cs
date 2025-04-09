@@ -24,6 +24,9 @@ public class GameManager : Singleton<GameManager>
 
     private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
+    public MultiGameController MultiGameController { get; private set; }
+    private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
+    private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
     private void Start()
     {
@@ -47,9 +50,11 @@ public class GameManager : Singleton<GameManager>
         {
             print("멀티 게임 씬");
             OnGoToLobby += () => PhotonManager.LeaveRoom();
-            GameSceneInit();
-            noteGenerators[0].Init(noteGenerators[0].loadedNotes);
-            noteGenerators[1].Init(noteGenerators[1].loadedNotes);
+            MultiGameController = FindObjectOfType<MultiGameController>();
+            MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            MultiGameSceneInit();
+            //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
+            //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
     private ProjectToLoadedData _projectToLoadedData;
@@ -63,7 +68,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(gameSceneName);
     }
 
-    private IEnumerator GameSceneInitCo()
+    public IEnumerator GameSceneInitCo()
     {
         yield return new WaitForSeconds(5f);
 
@@ -87,6 +92,12 @@ public class GameManager : Singleton<GameManager>
 
         StopCoroutine(GameSceneInitCo());
         StartCoroutine(GameSceneInitCo());
+    }
+
+    private void MultiGameSceneInit()
+    {
+        noteManagers = FindObjectsOfType<NoteManager>();
+        noteGenerators = FindObjectsOfType<NoteGenerator>();
     }
 
     // TODO: 프로토타입 임시
