@@ -76,8 +76,7 @@ public partial class ProjectToLoadedData
 		{
 			try
 			{
-				byte[] wavData = File.ReadAllBytes(item);
-				AudioClip audioClip = WavUtility.WavToAudioClip(wavData, Path.GetFileName(item));
+				AudioClip audioClip = WavUtility.WavToAudioClip(File.ReadAllBytes(item), Path.GetFileName(item));
 				AddAudioClip(audioClip);
 			}
 			catch (ArgumentException e)

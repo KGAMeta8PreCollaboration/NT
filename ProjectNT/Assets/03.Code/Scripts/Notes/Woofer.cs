@@ -40,13 +40,17 @@ public class Woofer : MonoBehaviour
     {
         // if (_audioSource.isPlaying)
         // {
-        // 	// _audioSource.Stop();
-        //       }
+        // 	_audioSource.Stop();
+        // }
         // if (_audioSource.clip != hitSound)
         // 	_audioSource.clip = hitSound;
-
-        // _audioSource.PlayOneShot(hitSound);
+        //
+        // // _audioSource.PlayOneShot(hitSound);
+        // _audioSource.Play();
+        
+        
         AudioManager.Instance.Play(hitSound, transform);
+        // AudioManager.Instance.Play(hitSound.name, transform);
 
         if (notes.Count == 0)
             return;

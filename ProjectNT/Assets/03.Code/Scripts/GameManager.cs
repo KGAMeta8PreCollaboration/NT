@@ -57,13 +57,12 @@ public class GameManager : Singleton<GameManager>
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
-    private ProjectToLoadedData _projectToLoadedData;
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
+        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         SceneManager.LoadScene(gameSceneName);
     }
