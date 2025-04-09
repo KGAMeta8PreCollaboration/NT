@@ -1928,15 +1928,12 @@ MonoBehaviour:
   titleManager: {fileID: 0}
   closeButton: {fileID: 1461755953551173266}
   gameType: 1
-  gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
-    type: 3}
   musicChangeSelect: {fileID: 6561185078817341509}
   gameStartButton: {fileID: 1613422622033656418}
   easy: {fileID: 5411442557171294011}
   normal: {fileID: 2446041491244345773}
   hard: {fileID: 7761434378548142010}
   superHade: {fileID: 8132466249571672214}
-  randomDifficulty: {fileID: 2982124573381327141}
 --- !u!114 &6561185078817341509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,14 +1947,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilteSound: {fileID: 0}
-  gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
-    type: 3}
   musicImage: {fileID: 3314783962154129815}
   musicNameText: {fileID: 4679912891328007946}
-  musicDesc: {fileID: 7754207287908739710}
+  musicArtistText: {fileID: 0}
   changeLeftButton: {fileID: 8824339876375500947}
   changeRightButton: {fileID: 5308206064525710788}
-  musicReplayButton: {fileID: 8511155758831388525}
 --- !u!1 &3337342696615621440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,7 +2812,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4496727573671861003
 MonoBehaviour:
   m_ObjectHideFlags: 0
