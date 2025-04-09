@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ public class EffectManager : Singleton<EffectManager>
 {
     [Header("Spot Light Effect")]
     [SerializeField] private LightEffect lightEffect;
+    [SerializeField] private NeonEffect neonEffect;
     public Action<Note, int> OnMapEffect;
     protected override void Awake()
     {
@@ -46,7 +48,7 @@ public class EffectManager : Singleton<EffectManager>
         }
         if (combo % 10 == 0)
         {
-
+            neonEffect.NeonDotween();
         }
 
         if (combo % 20 == 0)
@@ -59,5 +61,4 @@ public class EffectManager : Singleton<EffectManager>
         }
 
     }
-
 }
