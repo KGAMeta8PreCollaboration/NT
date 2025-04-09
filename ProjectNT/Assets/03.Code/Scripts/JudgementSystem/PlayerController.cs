@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 prevPos = new Vector3();
 
     public GameObject tmpPointPrefab;
+
+    private WooferNetworkSync _wooferNetworkSync;
     //test
     public TextMeshProUGUI logText;
     public TextMeshProUGUI logText2;
@@ -57,6 +59,8 @@ public class PlayerController : MonoBehaviour
         //=============test=============
 
         prevPos = transform.position;
+
+        if (GameManager.Instance.IsMulti) _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
     }
 
     private void Update()
@@ -96,7 +100,8 @@ public class PlayerController : MonoBehaviour
 
             if (isFastEnough && isDownwardHit && isOnTop)
             {
-                woofer.Hit();
+                if (!GameManager.Instance.IsMulti) woofer.Hit();
+                else _wooferNetworkSync.SendHit(woofer);
                 if (_collisionStayCoroutine == null) _collisionStayCoroutine = StartCoroutine(OnCollisionStayCoroutine(woofer));
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
@@ -112,27 +117,19 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             logText.text = "우퍼에 닿는 중";
-            woofer.Hold(hapticDelegate);
+            if (!GameManager.Instance.IsMulti) woofer.Hold(hapticDelegate);
+            else _wooferNetworkSync.SendHold(woofer);
             yield return null;
         }
     }
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-
-    //    if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
-    //    {
-    //        logText.text = "우퍼에 닿는 중";
-    //        woofer.Hold(hapticDelegate);
-    //    }
-    //}
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
         {
             logText.text = "우퍼에서 뗏음";
-            woofer.ReleaseLongNote();
+            if (!GameManager.Instance.IsMulti) woofer.ReleaseLongNote();
+            else _wooferNetworkSync.SendRelease(woofer);
             if (_collisionStayCoroutine != null)
             {
                 StopCoroutine(_collisionStayCoroutine);

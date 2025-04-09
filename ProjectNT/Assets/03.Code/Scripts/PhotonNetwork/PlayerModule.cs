@@ -27,7 +27,8 @@ public class PlayerModule : MonoBehaviour
 
     public void SetPlayerModuleData(List<LoadedNoteData> playerSongData)
     {
-        NoteGenerator.Init(playerSongData);
+        //NoteGenerator.Init(playerSongData);
+        NoteGenerator.Init(NoteGenerator.loadedNotes); //테스트를 위한 임시 메서드
         if (PhotonNetwork.LocalPlayer.NickName == playerKey.ToString())
         {
             owner = PhotonNetwork.LocalPlayer.NickName;

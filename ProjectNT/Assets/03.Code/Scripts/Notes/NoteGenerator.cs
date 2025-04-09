@@ -59,7 +59,7 @@ public class NoteGenerator : MonoBehaviour
     public void Init(List<LoadedNoteData> loadedNotes)
     {
         print("NoteGenerator 시작~~~~~~~~~~");
-        this.loadedNotes = _loadedNotes;
+        this.loadedNotes = loadedNotes;
 
         Init();
     }
