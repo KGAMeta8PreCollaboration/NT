@@ -59,7 +59,7 @@ public class NoteGenerator : MonoBehaviour
     public void Init(List<LoadedNoteData> loadedNotes)
     {
         print("NoteGenerator 시작~~~~~~~~~~");
-        this.loadedNotes = _loadedNotes;
+        this.loadedNotes = loadedNotes;
 
         Init();
     }
@@ -99,6 +99,7 @@ public class NoteGenerator : MonoBehaviour
     private async Task CheckAndGenerateNotesAsync()
     {
         print("노트 생성기 비동기 생성 시작 1");
+        print($"노트 갯수 : {_loadedNotes.Count}");
         while (Application.isPlaying && _loadedNotes.Count > 0)
         {
             double currentTime = AudioSettings.dspTime;

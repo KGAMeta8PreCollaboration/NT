@@ -59,7 +59,8 @@ public class LongNote : Note
         print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
         int combo = Mathf.FloorToInt((float)duration / beatInterval);
         print($"롱노트의 총 콤보 수: {combo}");
-
+        
+        print($"duration : {duration}, beatInterval : {beatInterval}, combo : {combo}");
         divideCount = combo;
 
         milestones = new double[divideCount];

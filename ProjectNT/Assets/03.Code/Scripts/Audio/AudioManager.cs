@@ -17,13 +17,11 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
 		base.Awake();
-		foreach (AudioClip item in audioClips)
-			item.LoadAudioData();
 		_audioPool = GetComponent<AudioPool>();
 		StartCoroutine(CheckAudioPlayTime());
 	}
-	
-	
+
+
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		_bgmAudioSource?.Stop();
@@ -33,12 +31,13 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		noteGenerators = FindObjectsOfType<NoteGenerator>(true);
 	}
-	
+
 	public void Play(AudioClip clip, Transform transform)
 	{
 		if (_audioPool == null)
 			_audioPool = GetComponent<AudioPool>();
 
+		print($"AudioManager Play : {clip.name}");
 		AudioSource audioSource = _audioPool.GetAudioSource();
 		audioSource.transform.position = transform.position;
 		_audioSources.Add(audioSource);
@@ -46,8 +45,14 @@ public class AudioManager : Singleton<AudioManager>
 
 		double playTime = AudioSettings.dspTime + 0.01;
 		// audioSource.Play();
+		Debug.Log($"AudioSource Volume: {audioSource.volume}, Mute: {audioSource.mute}");
 		audioSource.PlayScheduled(playTime);
 		// audioSource.PlayOneShot(clip);
+	}
+
+	public void Play(string clipName, Transform transform)
+	{
+		Play(GetAudioClipAtString(clipName), transform);
 	}
 
 	private IEnumerator CheckAudioPlayTime()
@@ -96,12 +101,18 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		ReturnUnusedAudioSources();
 	}
-	
+
 	public void SetAudioClips(List<AudioClip> clips)
 	{
 		audioClips = clips;
+		foreach (AudioClip item in audioClips)
+		{
+			item.LoadAudioData();
+			AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+			audioSource.clip = item;
+		}
 	}
-	
+
 	public void SetBackgroundMusic(AudioClip clip)
 	{
 		print("오디오매니저 SetBackgroundMusic");
