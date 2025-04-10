@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class LowNode : Node
 {
-    public override void InitializeNode(Vector2Int index)
+    public override void InitializeNode(Vector2Int index, string keySound)
     {
-        base.InitializeNode(index);
+        base.InitializeNode(index, keySound);
         _nodeType = EditorNoteType.ShortNote;
+        print($"키음 : {_keySound}");
     }
 
 
