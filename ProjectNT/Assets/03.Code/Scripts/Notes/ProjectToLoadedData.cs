@@ -21,9 +21,9 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		}
 		foreach (UpperNodeData upperNodeData in beatMapData.upperNodes)
 		{
-			foreach (int nodeIndex in upperNodeData.nodeIndexs)
+			for (int i = 0; i < upperNodeData.nodeIndexs.Count; i++)
 			{
-				LoadedNoteData loadedNoteData = NodeToNoteData(upperNodeData, gridSetting, nodeIndex + 4);
+				LoadedNoteData loadedNoteData = NodeToNoteData(upperNodeData, gridSetting, upperNodeData.nodeIndexs[i] + 4, i);
 				loadedNoteDatas.Add(loadedNoteData);
 			}
 		}
@@ -43,16 +43,16 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		};
 	}
 
-	private static LoadedNoteData NodeToNoteData(UpperNodeData nodeData, GridSetting gridSetting, int railIndex)
+	private static LoadedNoteData NodeToNoteData(UpperNodeData nodeData, GridSetting gridSetting, int railIndex, int nodeIndex)
 	{
-		return new LoadedNoteData
-		{
-			noteType = NoteType.Top,
-			time = 60 * nodeData.gridIndex / (gridSetting.BeatNum * gridSetting.BPM),
-			endTime = 0,
-			railIndex = railIndex,
-			noteAudioClipName = "",
-		};
+		LoadedNoteData loadedNoteData = new LoadedNoteData();
+		print($"생성자 : {railIndex}");
+		loadedNoteData.noteType = NoteType.Top;
+		loadedNoteData.time = 60 * nodeData.gridIndex / (gridSetting.BeatNum * gridSetting.BPM);
+		loadedNoteData.endTime = 0;
+		loadedNoteData.railIndex = railIndex;
+		loadedNoteData.noteAudioClipName = nodeData.keySounds[nodeIndex];
+		return loadedNoteData;
 	}
 
 }
@@ -76,8 +76,7 @@ public partial class ProjectToLoadedData
 		{
 			try
 			{
-				byte[] wavData = File.ReadAllBytes(item);
-				AudioClip audioClip = WavUtility.WavToAudioClip(wavData, Path.GetFileName(item));
+				AudioClip audioClip = WavUtility.WavToAudioClip(File.ReadAllBytes(item), Path.GetFileName(item));
 				AddAudioClip(audioClip);
 			}
 			catch (ArgumentException e)

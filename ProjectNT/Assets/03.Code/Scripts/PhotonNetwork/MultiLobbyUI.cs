@@ -16,12 +16,15 @@ public class MultiLobbyUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _countStartGame;
 
     public int countStartGame;
-
+    [Header("게임을 시작하기위한 플레이어 수")] public int peopleCount;
     private PopupManager _popupManager;
 
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
+    
+    public GamePlayUI gamePlayUI;
+    
     private void Start()
     {
         _popupManager = FindObjectOfType<PopupManager>();
@@ -40,7 +43,7 @@ public class MultiLobbyUI : MonoBehaviour
     private void StartButtonClick()
     {
         print($"플레이어 수: {PhotonNetwork.PlayerList.Length}");
-        if (PhotonNetwork.PlayerList.Length == 2)
+        if (PhotonNetwork.PlayerList.Length == peopleCount)
         {
             //_startGameCoroutine = StartCoroutine(StartGameCoroutine());
             ////PopupManager.Instance.OpenPopup<AlarmPopup>().SetPopup("곧 합주가 시작됩니다.", "취소", CancelStartGame);
@@ -75,7 +78,7 @@ public class MultiLobbyUI : MonoBehaviour
         _countStartGameCoroutine = StartCoroutine(CountStartGameCoroutine(countStartGame));
         yield return _countStartGameCoroutine;
 
-        if (_startGameCoroutine != null && PhotonNetwork.MasterClient.IsLocal && PhotonNetwork.PlayerList.Length == 2) // 취소되지 않았는지 확인
+        if (_startGameCoroutine != null && PhotonNetwork.MasterClient.IsLocal && PhotonNetwork.PlayerList.Length == peopleCount) // 취소되지 않았는지 확인
         {
             //PhotonNetwork.LoadLevel("LSH_MultiGame");
             GameManager.Instance.MultiGameStart();

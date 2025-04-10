@@ -47,7 +47,6 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        Debug.Log($"{data.musicName}");
         musicImage.sprite = data.musicAlbumArtSprit;
         musicNameText.text = data.musicName;
         // musicArtistText.text = data.musicArtist;

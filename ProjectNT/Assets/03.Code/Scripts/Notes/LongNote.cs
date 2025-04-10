@@ -36,7 +36,7 @@ public class LongNote : Note
     private void HandleMissedMilestone()
     {
         if (currentMilestoneIndex >= milestones.Length) return;
-        Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
+        // Debug.Log($"Milestone {currentMilestoneIndex}에서 노트가 홀드되지 않음! Bad 판정");
 
         // BAD 판정 적용
         judgementType = JudgementType.MISS;
@@ -57,7 +57,8 @@ public class LongNote : Note
         print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
         int combo = Mathf.FloorToInt((float)duration / beatInterval);
         print($"롱노트의 총 콤보 수: {combo}");
-
+        
+        print($"duration : {duration}, beatInterval : {beatInterval}, combo : {combo}");
         divideCount = combo;
 
         milestones = new double[divideCount];

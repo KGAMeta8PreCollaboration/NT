@@ -132,12 +132,12 @@ public class NCT : MonoBehaviour
         {
             if (nodeData.nodeType == EditorNoteType.ShortNote)
             {
-                CreateLowNode(nodeData.index);
+                CreateLowNode(nodeData.index, nodeData.keySound);
             }
             else if (nodeData.nodeType == EditorNoteType.LongNote)
             {
                 _longNodePosition[nodeData.index] = nodeData.endIndex;
-                CreateLongNode(nodeData.index, nodeData.endIndex);
+                CreateLongNode(nodeData.index, nodeData.endIndex, nodeData.keySound);
             }
         }
     }
@@ -342,10 +342,9 @@ public class NCT : MonoBehaviour
             previewLowNodePrefab.transform.localScale.x,
             rowSize * 0.5f,
             previewLowNodePrefab.transform.localScale.z);
-
     }
 
-    public void CreateLowNode(Vector2Int currentIndex)
+    public void CreateLowNode(Vector2Int currentIndex, string keySound = null)
     {
         if (currentIndex.x < 0 || currentIndex.y < 0 ||
         currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
@@ -387,7 +386,7 @@ public class NCT : MonoBehaviour
 
             print($"현재 columnSize : {rowSize}");
             //노드 위치 및 키음 초기화
-            node.InitializeNode(currentIndex);
+            node.InitializeNode(currentIndex, keySound);
 
             _nodeGrid[currentIndex.x, currentIndex.y] = node as LowNode;
 
@@ -487,7 +486,7 @@ public class NCT : MonoBehaviour
     }
 
     private Dictionary<Vector2Int, Vector2Int> _longNodePosition = new Dictionary<Vector2Int, Vector2Int>();
-    public void CreateLongNode(Vector2Int start, Vector2Int end)
+    public void CreateLongNode(Vector2Int start, Vector2Int end, string keySound = null)
     {
         if (start.x != end.x || start.y >= end.y)
         {
@@ -540,7 +539,7 @@ public class NCT : MonoBehaviour
         }
 
         //노드 위치 및 키음 초기화
-        node.InitializeLongNode(start, end);
+        node.InitializeLongNode(start, end, keySound);
 
         HideLongNodePreview();
     }

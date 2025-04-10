@@ -8,16 +8,17 @@ public class LongNode : Node
     public Vector2Int StartIndex { get; private set; }
     public Vector2Int EndIndex { get; private set; }
 
-    public void InitializeLongNode(Vector2Int start, Vector2Int end)
+    public void InitializeLongNode(Vector2Int start, Vector2Int end, string keySound)
     {
         _index = start;
         _endIndex = end;
         _nodeType = EditorNoteType.LongNote;
-        _keySound = EditorDataManager.Instance.CurKeySoundName;
+        _keySound = keySound ?? EditorDataManager.Instance.CurKeySoundName;
 
         //프로퍼티 초기화
         StartIndex = start;
         EndIndex = end;
+        print($"롱노드 키 사운드 : {_keySound}");
     }
 
     public override NodeData GetNodeData()

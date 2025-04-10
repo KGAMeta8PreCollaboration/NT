@@ -24,6 +24,9 @@ public class GameManager : Singleton<GameManager>
 
     private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
     public PhotonManager PhotonManager { get; private set; }
+    public MultiGameController MultiGameController { get; private set; }
+    private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
+    private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
     private void Start()
     {
@@ -34,6 +37,12 @@ public class GameManager : Singleton<GameManager>
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -47,23 +56,23 @@ public class GameManager : Singleton<GameManager>
         {
             print("멀티 게임 씬");
             OnGoToLobby += () => PhotonManager.LeaveRoom();
-            GameSceneInit();
-            noteGenerators[0].Init(noteGenerators[0].loadedNotes);
-            noteGenerators[1].Init(noteGenerators[1].loadedNotes);
+            MultiGameController = FindObjectOfType<MultiGameController>();
+            MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            MultiGameSceneInit();
+            //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
+            //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
-    private ProjectToLoadedData _projectToLoadedData;
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
+        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         SceneManager.LoadScene(gameSceneName);
     }
 
-    private IEnumerator GameSceneInitCo()
+    public IEnumerator GameSceneInitCo()
     {
         yield return new WaitForSeconds(5f);
 
@@ -72,11 +81,13 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        PhotonNetwork.LoadLevel("MultiGame");
+        
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
+        // 데이터
+        
         PhotonNetwork.LoadLevel("MultiGame");
     }
 
@@ -87,6 +98,12 @@ public class GameManager : Singleton<GameManager>
 
         StopCoroutine(GameSceneInitCo());
         StartCoroutine(GameSceneInitCo());
+    }
+
+    private void MultiGameSceneInit()
+    {
+        noteManagers = FindObjectsOfType<NoteManager>();
+        noteGenerators = FindObjectsOfType<NoteGenerator>();
     }
 
     // TODO: 프로토타입 임시
