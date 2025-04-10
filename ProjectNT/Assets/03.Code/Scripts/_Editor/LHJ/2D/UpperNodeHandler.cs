@@ -65,7 +65,10 @@ public class UpperNodeHandler : MonoBehaviour
             var node = upperNodes.FirstOrDefault(n => n.Index == index);
             if (node != null)
             {
-                node.SetKeySound(EditorDataManager.Instance.CurKeySoundName);
+                if (string.IsNullOrEmpty(node._keySound))
+                {
+                    node.SetKeySound(EditorDataManager.Instance.CurKeySoundName);
+                }
             }
         }
         else
