@@ -142,7 +142,7 @@ public class UpperNodeHandler : MonoBehaviour
                 var node = upperNodes.FirstOrDefault(n => n.Index == nodeIndex);
                 if (node != null)
                 {
-                    node._keySound = keySound;
+                    node.SetKeySound(keySound);
                 }
             }
         }

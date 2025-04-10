@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Toggle))]
-public class UpperNode : MonoBehaviour
+public class UpperNode : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
@@ -46,5 +47,13 @@ public class UpperNode : MonoBehaviour
         bool isActive = activeIndexs.Contains(_index);
         _toggle.isOn = isActive;
         _image.color = isActive? selectedColor : normalColor;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_keySound != null)
+        {
+            print($"현재 상단 노드 키사운드 : {_keySound}");
+        }
     }
 }
