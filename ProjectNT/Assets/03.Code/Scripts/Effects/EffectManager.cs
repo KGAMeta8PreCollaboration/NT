@@ -48,7 +48,7 @@ public class EffectManager : Singleton<EffectManager>
         }
         if (combo % 10 == 0)
         {
-            neonEffect.NeonDotween();
+            neonEffect.NeonEffectOn();
         }
 
         if (combo % 20 == 0)
