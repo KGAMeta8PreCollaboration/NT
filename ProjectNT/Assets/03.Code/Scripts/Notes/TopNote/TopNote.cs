@@ -51,6 +51,7 @@ public class TopNote : Note
     }
     public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
+        print($"상단 노트 : {noteSpawnData.hitSound}");
         base.Init(target, noteSpawnData);
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
@@ -70,7 +71,7 @@ public class TopNote : Note
         OnHit?.Invoke(this);
         OnHit = null;
         EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
-        AudioManager.Instance.Play(hitSound, transform);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)
@@ -94,7 +95,7 @@ public class TopNote : Note
         OnHit?.Invoke(this);
         OnHit = null;
 
-        AudioManager.Instance.Play(hitSound, transform);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)

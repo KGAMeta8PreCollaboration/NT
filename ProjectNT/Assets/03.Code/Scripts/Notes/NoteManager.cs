@@ -41,8 +41,17 @@ public class NoteManager : MonoBehaviour
 
     public void AssignNotesToSchedulers(double startDspTime)
     {
-        List<LoadedNoteData>[] railNotes = new List<LoadedNoteData>[4]
+        print("AssignNotesToSchedulers LoadedNotes size : " + _noteGenerator.loadedNotes.Count);
+        List<LoadedNoteData>[] railNotes = new List<LoadedNoteData>[12]
         {
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
+            new List<LoadedNoteData>(),
             new List<LoadedNoteData>(),
             new List<LoadedNoteData>(),
             new List<LoadedNoteData>(),
@@ -54,8 +63,14 @@ public class NoteManager : MonoBehaviour
             noteDataCopy.time += startDspTime;
             if (noteData.noteType == NoteType.Long)
                 noteDataCopy.endTime += startDspTime;
-            if (noteData.railIndex >= 0 && noteData.railIndex < railNotes.Length)
+            if (noteData.noteType != NoteType.Top)
                 railNotes[noteData.railIndex].Add(noteDataCopy);
+            else
+            {
+                // print("TopNote railIndex : " + noteData.railIndex + ", size = " + railNotes.Length + ", " + noteData.noteAudioClipName);
+                railNotes[noteData.railIndex].Add(noteDataCopy);
+            }
+
         }
 
         for (int i = 0; i < noteRails.Count; i++)
@@ -65,6 +80,10 @@ public class NoteManager : MonoBehaviour
             if (scheduler != null)
             {
                 scheduler.Init(railNotes[i]);
+            }
+            else
+            {
+                Debug.LogError($"NoteAudioScheduler not found on rail {i}");
             }
         }
     }

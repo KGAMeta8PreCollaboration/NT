@@ -110,19 +110,29 @@ public class GamePlayUI : BaseTitleUI
 
     public void StartGame()
     {
+        print("게임시작 버튼 클릭");
+        
+        print(gameType);
         //curMusicData 로 노래가지고 게임시작 로직
         if (gameType == UIGameType.Muliti)
         {
+            print("멀티 게임플레이 UI");
             //멀티플레이시 노래시작
         }
         else
         {
-            string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
-            string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
-
-            BeatMapData beatMapData = GetBeatMapData(projectPath, GetCurrentDifficulty());
-            GameManager.Instance.SingleGameStart(beatMapData, projectPath, musicChangeSelect.currentMusicNode.Value.musicName);
+            (BeatMapData beatMapData, string projectPath, string musicName) data = GetGameStartData();
+            GameManager.Instance.SingleGameStart(data.beatMapData, data.projectPath, data.musicName);
         }
+    }
+    
+    public (BeatMapData beatMapData, string projectPath, string musicName) GetGameStartData()
+    {
+        string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
+        string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
+        BeatMapData beatMapData = GetBeatMapData(projectPath, GetCurrentDifficulty());
+        string musicName = musicChangeSelect.currentMusicNode.Value.musicName;
+        return (beatMapData, projectPath, musicName);
     }
     
     private BeatMapData GetBeatMapData(string projectPath, Difficulty difficulty)

@@ -44,11 +44,11 @@ public class EffectManager : Singleton<EffectManager>
         Debug.Log(note.judgementType);
         if (note.judgementType == JudgementType.PERFECT)
         {
-            lightEffect.LightsEffectOn();
+            lightEffect?.LightsEffectOn();
         }
         if (combo % 10 == 0)
         {
-            neonEffect.NeonDotween();
+            neonEffect?.NeonDotween();
         }
 
         if (combo % 20 == 0)

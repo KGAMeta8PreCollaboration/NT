@@ -22,6 +22,9 @@ public class MultiLobbyUI : MonoBehaviour
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
+    
+    public GamePlayUI gamePlayUI;
+    
     private void Start()
     {
         _popupManager = FindObjectOfType<PopupManager>();
