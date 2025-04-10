@@ -1769,7 +1769,7 @@ PrefabInstance:
     - target: {fileID: 2557165577027761386, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: Loop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2557165577027761386, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
@@ -44154,6 +44154,7 @@ MonoBehaviour:
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
   peopleCount: 2
+  gamePlayUI: {fileID: 1005297659}
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0

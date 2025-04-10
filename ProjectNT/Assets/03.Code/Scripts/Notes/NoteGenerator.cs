@@ -60,6 +60,21 @@ public class NoteGenerator : MonoBehaviour
     {
         print("NoteGenerator 시작~~~~~~~~~~");
         this.loadedNotes = loadedNotes;
+        // for (int i = 0; i < loadedNotes.Count; i++)
+        // {
+        //     if (loadedNotes[i].noteType == NoteType.Top)
+        //     {
+        //         print($"NOTEINIT Top : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        //     else if (loadedNotes[i].noteType == NoteType.Long)
+        //     {
+        //         print($"NOTEINIT Long : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        //     else
+        //     {
+        //         print($"NOTEINIT Short : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        // }
 
         Init();
     }

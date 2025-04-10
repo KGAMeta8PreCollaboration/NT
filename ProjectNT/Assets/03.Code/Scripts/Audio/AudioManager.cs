@@ -37,7 +37,6 @@ public class AudioManager : Singleton<AudioManager>
 		if (_audioPool == null)
 			_audioPool = GetComponent<AudioPool>();
 
-		print($"AudioManager Play : {clip.name}");
 		AudioSource audioSource = _audioPool.GetAudioSource();
 		audioSource.transform.position = transform.position;
 		_audioSources.Add(audioSource);
@@ -45,7 +44,6 @@ public class AudioManager : Singleton<AudioManager>
 
 		double playTime = AudioSettings.dspTime + 0.01;
 		// audioSource.Play();
-		Debug.Log($"AudioSource Volume: {audioSource.volume}, Mute: {audioSource.mute}");
 		audioSource.PlayScheduled(playTime);
 		// audioSource.PlayOneShot(clip);
 	}
@@ -108,8 +106,6 @@ public class AudioManager : Singleton<AudioManager>
 		foreach (AudioClip item in audioClips)
 		{
 			item.LoadAudioData();
-			AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-			audioSource.clip = item;
 		}
 	}
 

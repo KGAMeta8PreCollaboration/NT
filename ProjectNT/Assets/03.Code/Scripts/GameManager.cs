@@ -39,6 +39,12 @@ public class GameManager : Singleton<GameManager>
         PhotonManager = GetComponentInChildren<PhotonManager>();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == gameSceneName)
@@ -60,7 +66,6 @@ public class GameManager : Singleton<GameManager>
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
@@ -76,11 +81,13 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        PhotonNetwork.LoadLevel("MultiGame");
+        
     }
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
+        // 데이터
+        
         PhotonNetwork.LoadLevel("MultiGame");
     }
 

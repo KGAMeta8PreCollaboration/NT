@@ -32,7 +32,7 @@ public class NoteAudioScheduler : MonoBehaviour
 
 	public void Init(List<LoadedNoteData> sortedNotes)
 	{
-		print("NoteAudioScheduler Init");
+		print("NoteAudioScheduler Init, sortedNotes.size() = " + sortedNotes.Count);
 		_scheduledAudioData.Clear();
 		_scheduledAudioData = LoadedNoteDataToTuple(sortedNotes);
 		print("_scheduledAudioData size : " + _scheduledAudioData.Count);
