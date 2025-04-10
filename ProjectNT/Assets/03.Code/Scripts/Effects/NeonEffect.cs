@@ -4,12 +4,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public class NeonEffect : MonoBehaviour
+public class NeonEffect : MapEffect<Material>
 {
-    private Sequence neonSequence;
-    [SerializeField]
-
-    private List<Material> neonsList;
     public float targetIntensity;
     public float targetDuration;
     public float defaultIntensity;
@@ -23,61 +19,30 @@ public class NeonEffect : MonoBehaviour
     [ColorUsage(false, true)] public Color text_Albedo2_color;
     [ColorUsage(false, true)] public Color text_Albedo3_color;
     [ColorUsage(false, true)] public Color text_Albedo4_color;
-    private void Awake()
-    {
-        Init();
-    }
+
     private void Start()
     {
+        Init(left, ref leftSequence);
+        Init(right, ref rightSequence);
     }
-    public void NeonDotween()
+    protected override void Init(List<Material> list, ref Sequence sequence)
     {
-        neonSequence.Restart();
-    }
-
-    // private void Init()
-    // {
-    //     neonSequence = DOTween.Sequence().SetAutoKill(false).
-    //     Append(neonsList[0].DOColor(signs_Albedo_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[1].DOColor(signs_Albedo1_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[2].DOColor(signs_Albedo2_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[3].DOColor(signs_Albedo3_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[4].DOColor(text_Albedo_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[5].DOColor(text_Albedo1_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[6].DOColor(text_Albedo2_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[7].DOColor(text_Albedo3_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Join(neonsList[8].DOColor(text_Albedo4_color * targetIntensity, "_EmissionColor", targetDuration)).SetEase(Ease.OutQuint).
-    //     Append(neonsList[0].DOColor(signs_Albedo_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[1].DOColor(signs_Albedo1_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[2].DOColor(signs_Albedo2_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[3].DOColor(signs_Albedo3_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[4].DOColor(text_Albedo_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[5].DOColor(text_Albedo1_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[6].DOColor(text_Albedo2_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[7].DOColor(text_Albedo3_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine).
-    //     Join(neonsList[8].DOColor(text_Albedo4_color * defaultIntensity, "_EmissionColor", defaultDuration)).SetEase(Ease.InSine);
-    //     neonSequence.Pause();
-    // }
-
-    private void Init()
-    {
-        neonSequence = DOTween.Sequence().SetAutoKill(false);
+        sequence = DOTween.Sequence().SetAutoKill(false);
 
         // Target Intensity 애니메이션
-        for (int i = 0; i < neonsList.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             Color targetColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
-            neonSequence.Join(neonsList[i].DOColor(targetColor * targetIntensity, "_EmissionColor", targetDuration).SetEase(Ease.OutQuint));
+            sequence.Join(list[i].DOColor(targetColor * targetIntensity, "_EmissionColor", targetDuration).SetEase(Ease.OutQuint));
         }
 
         // Default Intensity 애니메이션
-        for (int i = 0; i < neonsList.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             Color defaultColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
-            neonSequence.Join(neonsList[i].DOColor(defaultColor * defaultIntensity, "_EmissionColor", defaultDuration).SetEase(Ease.InSine));
+            sequence.Join(list[i].DOColor(defaultColor / defaultIntensity, "_EmissionColor", defaultDuration).SetEase(Ease.InSine));
         }
-
-        neonSequence.Pause();
+        sequence.Pause();
     }
 
     private Color GetSignsAlbedoColor(int index)
@@ -103,5 +68,15 @@ public class NeonEffect : MonoBehaviour
             4 => text_Albedo4_color,
             _ => Color.black // 기본값
         };
+    }
+
+    public override void LeftEffectInvoke()
+    {
+        leftSequence.Restart();
+    }
+
+    public override void RightEffectInvoke()
+    {
+        rightSequence.Restart();
     }
 }

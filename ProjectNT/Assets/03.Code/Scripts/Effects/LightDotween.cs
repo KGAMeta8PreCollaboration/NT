@@ -11,7 +11,6 @@ public class LightDotween : MonoBehaviour
     private float duration;
     private float defaultIntensity;
     private float defaultDuration;
-    public Sequence sequence;
     public float TargetIntensity
     {
         get { return targetIntensity; }
@@ -41,11 +40,11 @@ public class LightDotween : MonoBehaviour
         }
 
     }
-    private void Start()
-    {
-        sequence = DOTween.Sequence().SetAutoKill(false).
-        Append(light.DOIntensity(targetIntensity, duration).SetEase(Ease.OutQuint)).
-        Append(light.DOIntensity(defaultIntensity, defaultDuration).SetEase(Ease.OutQuint));
-        sequence.Pause();
-    }
+    // private void Start()
+    // {
+    //     sequence = DOTween.Sequence().SetAutoKill(false).
+    //     Append(light.DOIntensity(targetIntensity, duration).SetEase(Ease.OutQuint)).
+    //     Append(light.DOIntensity(defaultIntensity, defaultDuration).SetEase(Ease.OutQuint));
+    //     sequence.Pause();
+    // }
 }
