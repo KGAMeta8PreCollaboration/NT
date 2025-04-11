@@ -23,13 +23,17 @@ public class GameManager : Singleton<GameManager>
     public string gameSceneName = "YKD_GameScene";
 
     private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
+
+    //멀티 플레이를 위한 변수들
     public PhotonManager PhotonManager { get; private set; }
     public MultiGameController MultiGameController { get; private set; }
+    public bool IsMulti { get; private set; }
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
     
     public float phase2;
     public float phase3;
+
 
     private void Start()
     {
@@ -52,13 +56,19 @@ public class GameManager : Singleton<GameManager>
     {
         if (scene.name == gameSceneName)
         {
+            OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
         }
         else if (scene.name == "MultiGame")
         {
             print("멀티 게임 씬");
-            OnGoToLobby += () => PhotonManager.LeaveRoom();
+            IsMulti = true;
+            OnGoToLobby += () =>
+            {
+                PhotonManager.LeaveRoom();
+                IsMulti = false;
+            };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
             MultiGameSceneInit();
