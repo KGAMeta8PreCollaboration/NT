@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class PlayerModule : MonoBehaviour
     public NoteManager NoteManager { get; private set; }
     public NoteGenerator NoteGenerator { get; private set; }
     public ScoreManager ScoreManager { get; private set; }
+    public Woofer[] woofers { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +25,12 @@ public class PlayerModule : MonoBehaviour
         NoteManager = TransformUtil.FindDeepChildComponent<NoteManager>(transform, "NoteManager");
         NoteGenerator = TransformUtil.FindDeepChildComponent<NoteGenerator>(transform, "NoteManager");
         ScoreManager = TransformUtil.FindDeepChildComponent<ScoreManager>(transform, "NoteManager");
+
+        woofers = new Woofer[4];
+        for (int i = 0; i < 4; i++)
+        {
+            woofers[i] = TransformUtil.FindDeepChildComponent<Woofer>(NoteManager.noteRails[i].transform, "Woofer");
+        }
     }
 
     public void SetPlayerModuleData(List<LoadedNoteData> playerSongData)
