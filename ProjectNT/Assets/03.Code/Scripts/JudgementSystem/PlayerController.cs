@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public float velocityMagnitude;
     public float velocityMagnitudeThreshold;
     public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
-
     [SerializeField] private ParticleSystem triggerEffect;
     private ActionBasedController _controller;
     private XRRayInteractor rayInter;
@@ -32,19 +32,21 @@ public class PlayerController : MonoBehaviour
     {
         _controller = GetComponentInParent<ActionBasedController>();
         rayInter = _controller.GetComponentInChildren<XRRayInteractor>();
-
+        rayInter.GetComponent<XRInteractorLineVisual>().enabled = false;
     }
     private void OnEnable()
     {
         _controller.activateAction.action.performed += ParclePlay;
         _controller.activateAction.action.performed += OnTopNoteHit;
         hapticDelegate += _controller.SendHapticImpulse;
+        GameManager.Instance.OnGameEnd += PlayerGameEndAction;
     }
     private void OnDisable()
     {
         _controller.activateAction.action.performed -= ParclePlay;
         _controller.activateAction.action.performed -= OnTopNoteHit;
         hapticDelegate -= _controller.SendHapticImpulse;
+        GameManager.Instance.OnGameEnd -= PlayerGameEndAction;
     }
     private void ParclePlay(InputAction.CallbackContext cnt)
     {
@@ -140,17 +142,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTopNoteHit(InputAction.CallbackContext cnt)
     {
+
         if (rayInter.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
-            if (hit.collider.CompareTag("TopNote"))
+            if (hit.collider.TryGetComponent(out TopNote topNote))
             {
+                if (false == topNote.canInter)
+                {
+                    return;
+                }
                 TopNoteProjectile proj =
                 PoolManager.Instance.topNoteProjPool.Pop();
                 proj.transform.SetParent(transform, true);
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
                 _controller.SendHapticImpulse(0.8f, 0.15f);
+                topNote.Hit();
             }
         }
+    }
+
+    private void PlayerGameEndAction()
+    {
+        rayInter.GetComponent<XRInteractorLineVisual>().enabled = true;
     }
 }
