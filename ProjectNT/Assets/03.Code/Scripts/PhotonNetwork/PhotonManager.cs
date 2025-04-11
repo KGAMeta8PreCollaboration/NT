@@ -103,16 +103,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SpawnPlayer(string path, Transform spawnPoint)
+    public GameObject SpawnPlayer(string path, Transform spawnPoint)
     {
         if (spawnPoint == null)
         {
             Debug.LogError("스폰 위치가 지정되지 않았습니다!");
-            return;
+            return null;
         }
 
         print("플레이어 컨트롤러 생성");
 
-        PhotonNetwork.Instantiate(path, spawnPoint.position, spawnPoint.rotation);
+        return PhotonNetwork.Instantiate(path, spawnPoint.position, spawnPoint.rotation);
     }
 }

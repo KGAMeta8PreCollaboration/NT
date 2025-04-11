@@ -16,16 +16,43 @@ public class PlayerModuleManager : MonoBehaviour
         }
     }
 
-    public Woofer GetPlayerWoofer(int playerModuleIndex, int wooferIndex)
+    public Woofer GetPlayerWoofer(int wooferIndex, string nickname)
     {
-        if (playerModuleIndex >= 0 && playerModuleIndex < playerModules.Length)
+        PlayerModule module = null;
+
+        foreach (PlayerModule playerModule in playerModules)
         {
-            PlayerModule playerModule = playerModules[playerModuleIndex];
-            if (wooferIndex >= 0 && wooferIndex < playerModule.woofers.Length)
+            if (playerModule.owner.Equals(nickname)) module = playerModule;
+        }
+
+        if (module != null)
+        {
+            return module.woofers[wooferIndex];
+        }
+
+        print("플레이어 Woofer를 찾을 수 없음!");
+        return null;
+    }
+
+    public int GetWooferIndex(Woofer woofer, string nickname)
+    {
+        PlayerModule module = null;
+
+        foreach (PlayerModule playerModule in playerModules)
+        {
+            if (playerModule.owner.Equals(nickname)) module = playerModule;
+        }
+
+        if (module != null)
+        {
+            for (int i = 0; i < module.woofers.Length; i++)
             {
-                return playerModule.woofers[wooferIndex];
+                if (module.woofers[i] == woofer)
+                    return i;
             }
         }
-        return null;
+
+        Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}");
+        return -1;
     }
 }
