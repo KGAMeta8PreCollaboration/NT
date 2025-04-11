@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class LightDotween : MonoBehaviour
+public class CarObject : MonoBehaviour
 {
-
 }

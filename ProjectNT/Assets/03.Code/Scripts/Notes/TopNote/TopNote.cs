@@ -9,11 +9,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TopNote : Note
 {
-    [SerializeField] private InputActionReference leftTrigger;
-    [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
     private XRSimpleInteractable xRSimInter;
-    private bool canInter = false;
+    public bool canInter = false;
     private bool isIndicatorOn;
     private void Awake()
     {
@@ -22,15 +20,13 @@ public class TopNote : Note
 
     private void OnEnable()
     {
-        leftTrigger.action.performed += Hit;
-        rightTrigger.action.performed += Hit;
+        canInter = false;
         isIndicatorOn = false;
         gameObject.tag = "Untagged";
     }
     private void OnDisable()
     {
-        leftTrigger.action.performed -= Hit;
-        rightTrigger.action.performed -= Hit;
+
         particleSystem.Stop();
     }
     protected override void Update()
@@ -43,7 +39,6 @@ public class TopNote : Note
 
         if (_targetDspTime - AudioSettings.dspTime <= 1)
         {
-            print("인디캐이터 플레이");
             particleSystem.Play();
             isIndicatorOn = true;
         }
@@ -63,9 +58,13 @@ public class TopNote : Note
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
     }
-    public void Hit(InputAction.CallbackContext ctn)
+    public void Hit()
     {
-        if (!canInter || !xRSimInter.isHovered) return;
+
+        if (false == canInter || false == xRSimInter.isHovered)
+        {
+            return;
+        }
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);

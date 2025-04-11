@@ -27,7 +27,7 @@ public class EffectManager : Singleton<EffectManager>
 
     public LightEffect lightEffect;
     public NeonEffect neonEffect;
-
+    public CarEffect carEffect;
     protected override void Awake()
     {
         base.Awake();
@@ -61,14 +61,16 @@ public class EffectManager : Singleton<EffectManager>
         {
             Test<LightEffect>();
         }
+        Debug.LogError(combo);
         if (combo % 10 == 0)
         {
             Test<NeonEffect>();
+            Debug.LogError("!!");
         }
 
         if (combo % 20 == 0)
         {
-
+            Test<CarEffect>();
         }
 
         if (note is TopNote)
@@ -90,7 +92,7 @@ public class EffectManager : Singleton<EffectManager>
     {
         SetDelegateNull();
 
-        ConfigureEffectDelegates(playMode, lightEffect, neonEffect);
+        ConfigureEffectDelegates(playMode, lightEffect, neonEffect, carEffect);
 
         UpdateEffectsDictionary();
     }
@@ -99,20 +101,23 @@ public class EffectManager : Singleton<EffectManager>
     {
         lightEffect.effectDelegate = null;
         neonEffect.effectDelegate = null;
+        carEffect.effectDelegate = null;
     }
 
-    private void ConfigureEffectDelegates(Enums.PlayMode playMode, LightEffect light, NeonEffect neon)
+    private void ConfigureEffectDelegates(Enums.PlayMode playMode, LightEffect light, NeonEffect neon, CarEffect car)
     {
         if (playMode == Enums.PlayMode.Host || playMode == Enums.PlayMode.Both)
         {
             light.effectDelegate += light.LeftEffectInvoke;
             neon.effectDelegate += neon.LeftEffectInvoke;
+            car.effectDelegate += car.LeftEffectInvoke;
         }
 
         if (playMode == Enums.PlayMode.Client || playMode == Enums.PlayMode.Both)
         {
             light.effectDelegate += light.RightEffectInvoke;
             neon.effectDelegate += neon.RightEffectInvoke;
+            car.effectDelegate += car.RightEffectInvoke;
         }
 
         if (playMode != Enums.PlayMode.Host &&
@@ -126,6 +131,7 @@ public class EffectManager : Singleton<EffectManager>
     {
         effects.Add(lightEffect.GetType(), lightEffect.effectDelegate);
         effects.Add(neonEffect.GetType(), neonEffect.effectDelegate);
+        effects.Add(carEffect.GetType(), carEffect.effectDelegate);
     }
 }
 

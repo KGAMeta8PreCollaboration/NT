@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 
 public class LightEffect : MapEffect<Light>
@@ -9,6 +10,7 @@ public class LightEffect : MapEffect<Light>
     public float targetDuration;
     public float defaultIntensity;
     public float defaultDuration;
+
 
     private void Start()
     {
