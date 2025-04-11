@@ -107,13 +107,12 @@ public class GameManager : Singleton<GameManager>
 
 
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
-    public void MultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
+    public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _player1LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData1);
         _player2LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData2);
-        PhotonNetwork.LoadLevel("MultiGame");
     }
 
     private void GameSceneInit()
