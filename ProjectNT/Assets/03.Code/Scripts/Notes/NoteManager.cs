@@ -9,7 +9,6 @@ public class NoteManager : MonoBehaviour
     public Note longNotePrefab;
     public Note topNotePrefab;
     [SerializeField] private ScoreManager _scoreManager;
-
     public List<Note> notes { get; private set; } = new List<Note>();
 
 
@@ -87,8 +86,8 @@ public class NoteManager : MonoBehaviour
             }
         }
     }
-    
-    
+
+
     // private void OnNoteHit(Note note)
     // {
     //     if (note.judgementType == JudgementType.Bad)

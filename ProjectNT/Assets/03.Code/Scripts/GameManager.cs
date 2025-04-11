@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
     public bool IsMulti { get; private set; }
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
-    
+
     public float phase2;
     public float phase3;
 
@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
             };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
-            MultiGameSceneInit();
+            //MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
@@ -94,26 +94,25 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        
+
     }
-    
+
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
         // 데이터
-        
+
         PhotonNetwork.LoadLevel("MultiGame");
     }
-    
-    
+
+
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
-    public void MultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
+    public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _player1LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData1);
         _player2LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData2);
-        PhotonNetwork.LoadLevel("MultiGame");
     }
 
     private void GameSceneInit()

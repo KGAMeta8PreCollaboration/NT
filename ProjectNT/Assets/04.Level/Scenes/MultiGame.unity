@@ -28256,7 +28256,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923945}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -64541,6 +64541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1421025061}
   target: {fileID: 1041791056}
+  isHost: 0
 --- !u!1001 &550576439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75820,6 +75821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1091713227}
   target: {fileID: 1241795155}
+  isHost: 0
 --- !u!1 &635132945
 GameObject:
   m_ObjectHideFlags: 0
@@ -76613,7 +76615,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923947}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -79628,6 +79630,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoolManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4190978391266748443, guid: ee89921cadb788048800eb64d14d0851,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee89921cadb788048800eb64d14d0851, type: 3}
 --- !u!1 &664320321
@@ -81232,6 +81239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 679797781}
   - component: {fileID: 679797782}
+  - component: {fileID: 679797783}
   m_Layer: 0
   m_Name: NoteRail1
   m_TagString: Untagged
@@ -81272,6 +81280,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 1210526537}
+  isHost: 0
+--- !u!114 &679797783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679797780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &680499202
 GameObject:
   m_ObjectHideFlags: 0
@@ -81947,7 +81968,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923951}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -112325,7 +112346,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923946}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -118579,6 +118600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972678667}
   - component: {fileID: 972678668}
+  - component: {fileID: 972678669}
   m_Layer: 0
   m_Name: NoteRail4
   m_TagString: Untagged
@@ -118619,6 +118641,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 634519509}
+  isHost: 0
+--- !u!114 &972678669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972678666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &973323034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122568,7 +122603,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923952}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -133393,7 +133428,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923948}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -139865,2292 +139900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f78ff75fc4fe74a97161a8d515e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadedNotes:
-  - noteType: 0
-    time: 0
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-1
-  - noteType: 0
-    time: 0.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-2
-  - noteType: 0
-    time: 2.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-3
-  - noteType: 0
-    time: 2.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-4
-  - noteType: 0
-    time: 3.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-5
-  - noteType: 0
-    time: 4
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-6
-  - noteType: 0
-    time: 4.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-7
-  - noteType: 0
-    time: 5.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-8
-  - noteType: 0
-    time: 5.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-9
-  - noteType: 0
-    time: 6.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-10
-  - noteType: 0
-    time: 6.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-11
-  - noteType: 0
-    time: 7.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-12
-  - noteType: 0
-    time: 7.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-13
-  - noteType: 0
-    time: 8.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-14
-  - noteType: 0
-    time: 9.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-15
-  - noteType: 0
-    time: 10
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-16
-  - noteType: 0
-    time: 10.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-17
-  - noteType: 0
-    time: 11.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-18
-  - noteType: 0
-    time: 12
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-19
-  - noteType: 0
-    time: 12.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-20
-  - noteType: 0
-    time: 13.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-21
-  - noteType: 0
-    time: 13.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-22
-  - noteType: 0
-    time: 14.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-23
-  - noteType: 0
-    time: 14.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-24
-  - noteType: 0
-    time: 15.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-25
-  - noteType: 0
-    time: 15.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-26
-  - noteType: 0
-    time: 16.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-27
-  - noteType: 0
-    time: 17.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-28
-  - noteType: 0
-    time: 17.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-29
-  - noteType: 0
-    time: 18.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-1
-  - noteType: 0
-    time: 19
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-2
-  - noteType: 0
-    time: 19.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-3
-  - noteType: 0
-    time: 19.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-4
-  - noteType: 0
-    time: 20.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-5
-  - noteType: 0
-    time: 20.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-6
-  - noteType: 0
-    time: 20.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-7
-  - noteType: 0
-    time: 21.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-8
-  - noteType: 0
-    time: 21.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-9
-  - noteType: 0
-    time: 22.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-10
-  - noteType: 0
-    time: 22.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-11
-  - noteType: 0
-    time: 22.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-12
-  - noteType: 0
-    time: 23.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-13
-  - noteType: 0
-    time: 23.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-14
-  - noteType: 0
-    time: 24
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-15
-  - noteType: 0
-    time: 24.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-16
-  - noteType: 0
-    time: 24.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-17
-  - noteType: 0
-    time: 25
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-18
-  - noteType: 0
-    time: 25.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-19
-  - noteType: 0
-    time: 25.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-20
-  - noteType: 0
-    time: 26.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-21
-  - noteType: 0
-    time: 26.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-22
-  - noteType: 0
-    time: 27.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-23
-  - noteType: 0
-    time: 27.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-24
-  - noteType: 0
-    time: 27.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-25
-  - noteType: 0
-    time: 28.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-26
-  - noteType: 0
-    time: 28.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-27
-  - noteType: 0
-    time: 29
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-28
-  - noteType: 0
-    time: 29.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-29
-  - noteType: 0
-    time: 29.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-30
-  - noteType: 0
-    time: 30
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-31
-  - noteType: 0
-    time: 30.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-32
-  - noteType: 0
-    time: 30.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-33
-  - noteType: 0
-    time: 31.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-34
-  - noteType: 0
-    time: 31.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-35
-  - noteType: 0
-    time: 31.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-36
-  - noteType: 0
-    time: 32.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-37
-  - noteType: 0
-    time: 32.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-38
-  - noteType: 0
-    time: 33.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-39
-  - noteType: 0
-    time: 33.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-40
-  - noteType: 0
-    time: 34
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-41
-  - noteType: 0
-    time: 34.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-42
-  - noteType: 0
-    time: 34.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-43
-  - noteType: 0
-    time: 35
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-44
-  - noteType: 0
-    time: 35.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-45
-  - noteType: 0
-    time: 35.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-46
-  - noteType: 0
-    time: 36.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-47
-  - noteType: 0
-    time: 36.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-48
-  - noteType: 0
-    time: 36.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-1
-  - noteType: 0
-    time: 37.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-2
-  - noteType: 0
-    time: 37.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-3
-  - noteType: 0
-    time: 38.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-4
-  - noteType: 0
-    time: 39.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-5
-  - noteType: 0
-    time: 39.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-5
-  - noteType: 0
-    time: 39.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-6
-  - noteType: 0
-    time: 39.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-6
-  - noteType: 0
-    time: 40
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-7
-  - noteType: 0
-    time: 40
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-7
-  - noteType: 0
-    time: 40.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-8
-  - noteType: 0
-    time: 40.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-8
-  - noteType: 0
-    time: 41.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-9
-  - noteType: 0
-    time: 42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-10
-  - noteType: 0
-    time: 42.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-11
-  - noteType: 0
-    time: 43.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-12
-  - noteType: 0
-    time: 43.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-13
-  - noteType: 0
-    time: 43.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-13
-  - noteType: 0
-    time: 44.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-14
-  - noteType: 0
-    time: 44.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-14
-  - noteType: 0
-    time: 44.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-15
-  - noteType: 0
-    time: 44.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-15
-  - noteType: 0
-    time: 45.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-16
-  - noteType: 0
-    time: 45.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-16
-  - noteType: 0
-    time: 45.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-17
-  - noteType: 0
-    time: 46.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-18
-  - noteType: 0
-    time: 46.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-19
-  - noteType: 0
-    time: 47.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-20
-  - noteType: 0
-    time: 48.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-21
-  - noteType: 0
-    time: 48.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-21
-  - noteType: 0
-    time: 48.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-22
-  - noteType: 0
-    time: 48.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-22
-  - noteType: 0
-    time: 49.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-23
-  - noteType: 0
-    time: 49.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-23
-  - noteType: 0
-    time: 49.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-24
-  - noteType: 0
-    time: 49.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-24
-  - noteType: 0
-    time: 50.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-25
-  - noteType: 0
-    time: 51.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-26
-  - noteType: 0
-    time: 51.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-27
-  - noteType: 0
-    time: 52.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-28
-  - noteType: 0
-    time: 52.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-29
-  - noteType: 0
-    time: 52.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-29
-  - noteType: 0
-    time: 53.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-30
-  - noteType: 0
-    time: 53.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-30
-  - noteType: 0
-    time: 53.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-31
-  - noteType: 0
-    time: 53.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-31
-  - noteType: 0
-    time: 54.25
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-32
-  - noteType: 0
-    time: 54.25
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-32
-  - noteType: 0
-    time: 54.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 55.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 56
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 56.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 57.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 57.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 58.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 58.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 59.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 59.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 60
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 60.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 60.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 61.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 61.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 61.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 62.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 62.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 62.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 63.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 64
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 64
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 64.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 65.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 65.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 65.71
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 66.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 66.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 66.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 67.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 67.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 68
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 68.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 68.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 69.14
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 69.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 69.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 70.28
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 70.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 70.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 71.42
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 72
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 72
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 72.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 73.45
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-1
-  - noteType: 1
-    time: 73.76
-    endTime: 75.42
-    railIndex: 3
-    noteAudioClipName: 5-2
-  - noteType: 0
-    time: 75.73
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-3
-  - noteType: 0
-    time: 76.31
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-4
-  - noteType: 1
-    time: 77.08
-    endTime: 78.57
-    railIndex: 2
-    noteAudioClipName: 5-5
-  - noteType: 0
-    time: 78.94
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-6
-  - noteType: 0
-    time: 79.44
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-7
-  - noteType: 0
-    time: 80.1
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-8
-  - noteType: 0
-    time: 80.63
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-9
-  - noteType: 0
-    time: 81.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-10
-  - noteType: 1
-    time: 82.28
-    endTime: 83.28
-    railIndex: 1
-    noteAudioClipName: 5-11
-  - noteType: 1
-    time: 83.42
-    endTime: 84.42
-    railIndex: 2
-    noteAudioClipName: 5-12
-  - noteType: 1
-    time: 84.57
-    endTime: 85
-    railIndex: 3
-    noteAudioClipName: 5-13
-  - noteType: 1
-    time: 85.17
-    endTime: 85.71
-    railIndex: 2
-    noteAudioClipName: 5-14
-  - noteType: 0
-    time: 85.98
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-15
-  - noteType: 1
-    time: 86.29
-    endTime: 87
-    railIndex: 1
-    noteAudioClipName: 5-16
-  - noteType: 0
-    time: 87.21
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-17
-  - noteType: 1
-    time: 87.55
-    endTime: 88.28
-    railIndex: 1
-    noteAudioClipName: 5-18
-  - noteType: 0
-    time: 88.34
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-19
-  - noteType: 1
-    time: 88.67
-    endTime: 88.85
-    railIndex: 2
-    noteAudioClipName: 5-20
-  - noteType: 0
-    time: 89.04
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-21
-  - noteType: 1
-    time: 89.63
-    endTime: 91.42
-    railIndex: 3
-    noteAudioClipName: 5-22
-  - noteType: 0
-    time: 91.73
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-23
-  - noteType: 1
-    time: 92.04
-    endTime: 93.85
-    railIndex: 3
-    noteAudioClipName: 5-24
-  - noteType: 0
-    time: 94.01
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-25
-  - noteType: 0
-    time: 94.16
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-26
-  - noteType: 0
-    time: 94.31
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-27
-  - noteType: 0
-    time: 94.44
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-28
-  - noteType: 0
-    time: 94.59
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-29
-  - noteType: 0
-    time: 94.75
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-30
-  - noteType: 0
-    time: 95.07
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-31
-  - noteType: 1
-    time: 95.36
-    endTime: 97
-    railIndex: 2
-    noteAudioClipName: 5-32
-  - noteType: 0
-    time: 97.2
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-33
-  - noteType: 0
-    time: 97.46
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-34
-  - noteType: 0
-    time: 97.89
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-35
-  - noteType: 0
-    time: 98.2
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-36
-  - noteType: 0
-    time: 98.38
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-37
-  - noteType: 0
-    time: 98.75
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-38
-  - noteType: 0
-    time: 98.9
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-39
-  - noteType: 0
-    time: 99.19
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-40
-  - noteType: 0
-    time: 99.72
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-41
-  - noteType: 0
-    time: 100.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-42
-  - noteType: 0
-    time: 100.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-43
-  - noteType: 0
-    time: 100.86
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-44
-  - noteType: 1
-    time: 101.01
-    endTime: 101.57
-    railIndex: 2
-    noteAudioClipName: 5-45
-  - noteType: 0
-    time: 101.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-46
-  - noteType: 0
-    time: 101.88
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-47
-  - noteType: 0
-    time: 102.03
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-48
-  - noteType: 1
-    time: 102.17
-    endTime: 102.71
-    railIndex: 3
-    noteAudioClipName: 5-49
-  - noteType: 0
-    time: 102.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-50
-  - noteType: 0
-    time: 102.99
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-51
-  - noteType: 0
-    time: 103.13
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-52
-  - noteType: 0
-    time: 103.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-53
-  - noteType: 1
-    time: 103.42
-    endTime: 104.14
-    railIndex: 1
-    noteAudioClipName: 5-54
-  - noteType: 0
-    time: 104.26
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-55
-  - noteType: 1
-    time: 104.57
-    endTime: 105.42
-    railIndex: 0
-    noteAudioClipName: 5-56
-  - noteType: 0
-    time: 105.5
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-57
-  - noteType: 1
-    time: 105.83
-    endTime: 106.57
-    railIndex: 1
-    noteAudioClipName: 5-58
-  - noteType: 0
-    time: 106.62
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-59
-  - noteType: 0
-    time: 106.97
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-60
-  - noteType: 0
-    time: 107.32
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-61
-  - noteType: 0
-    time: 107.51
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-62
-  - noteType: 0
-    time: 107.74
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-63
-  - noteType: 1
-    time: 107.92
-    endTime: 109.42
-    railIndex: 3
-    noteAudioClipName: 5-64
-  - noteType: 2
-    time: 109.71
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-1
-  - noteType: 2
-    time: 110.28
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-2
-  - noteType: 2
-    time: 110.85
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-3
-  - noteType: 2
-    time: 111.42
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-4
-  - noteType: 2
-    time: 112
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-5
-  - noteType: 2
-    time: 112.57
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-6
-  - noteType: 2
-    time: 113.14
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-7
-  - noteType: 2
-    time: 113.71
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-8
-  - noteType: 2
-    time: 114.28
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-9
-  - noteType: 2
-    time: 114.28
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-9
-  - noteType: 2
-    time: 114.85
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-10
-  - noteType: 2
-    time: 114.85
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-10
-  - noteType: 2
-    time: 115.42
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-11
-  - noteType: 2
-    time: 115.42
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-11
-  - noteType: 2
-    time: 116
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-12
-  - noteType: 2
-    time: 116
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-12
-  - noteType: 2
-    time: 116.57
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-13
-  - noteType: 2
-    time: 116.57
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-13
-  - noteType: 2
-    time: 117.14
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-14
-  - noteType: 2
-    time: 117.14
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-14
-  - noteType: 2
-    time: 117.71
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-15
-  - noteType: 2
-    time: 117.71
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-15
-  - noteType: 2
-    time: 118.28
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-16
-  - noteType: 2
-    time: 118.28
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-16
-  - noteType: 0
-    time: 118.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-1
-  - noteType: 0
-    time: 119.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-2
-  - noteType: 0
-    time: 120
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-3
-  - noteType: 0
-    time: 120.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-4
-  - noteType: 0
-    time: 121.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-5
-  - noteType: 0
-    time: 121.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-6
-  - noteType: 0
-    time: 121.98
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-7
-  - noteType: 0
-    time: 122.58
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-8
-  - noteType: 0
-    time: 123.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 7-9
-  - noteType: 0
-    time: 123.5
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-10
-  - noteType: 0
-    time: 124.29
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-11
-  - noteType: 0
-    time: 124.64
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-12
-  - noteType: 0
-    time: 125.43
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-13
-  - noteType: 0
-    time: 125.72
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-14
-  - noteType: 0
-    time: 126.15
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-15
-  - noteType: 0
-    time: 126.58
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-16
-  - noteType: 0
-    time: 127.15
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-17
-  - noteType: 0
-    time: 127.72
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 7-18
-  - noteType: 0
-    time: 128.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-1
-  - noteType: 0
-    time: 128.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-2
-  - noteType: 0
-    time: 128.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-3
-  - noteType: 0
-    time: 129.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-4
-  - noteType: 0
-    time: 129.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-5
-  - noteType: 0
-    time: 129.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-6
-  - noteType: 0
-    time: 130
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-7
-  - noteType: 0
-    time: 130.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-8
-  - noteType: 0
-    time: 130.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-9
-  - noteType: 0
-    time: 130.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-10
-  - noteType: 0
-    time: 131.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-11
-  - noteType: 0
-    time: 131.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-12
-  - noteType: 0
-    time: 132.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-13
-  - noteType: 0
-    time: 133.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-14
-  - noteType: 0
-    time: 133.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-15
-  - noteType: 0
-    time: 133.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-16
-  - noteType: 0
-    time: 134
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-17
-  - noteType: 0
-    time: 134.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-18
-  - noteType: 0
-    time: 134.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-19
-  - noteType: 0
-    time: 134.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-20
-  - noteType: 0
-    time: 135.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-21
-  - noteType: 0
-    time: 135.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-22
-  - noteType: 0
-    time: 135.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-23
-  - noteType: 0
-    time: 136
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-24
-  - noteType: 0
-    time: 136.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-25
-  - noteType: 0
-    time: 136.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-26
-  - noteType: 0
-    time: 136.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-27
-  - noteType: 0
-    time: 137.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-28
-  - noteType: 0
-    time: 137.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-29
-  - noteType: 0
-    time: 138
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-30
-  - noteType: 0
-    time: 138.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-31
-  - noteType: 0
-    time: 138.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-32
-  - noteType: 0
-    time: 138.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-33
-  - noteType: 0
-    time: 139.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-34
-  - noteType: 0
-    time: 139.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8.35
-  - noteType: 0
-    time: 139.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-36
-  - noteType: 0
-    time: 140
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-37
-  - noteType: 0
-    time: 140.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-38
-  - noteType: 0
-    time: 140.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-39
-  - noteType: 0
-    time: 142
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-40
-  - noteType: 0
-    time: 142.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-41
-  - noteType: 0
-    time: 142.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-42
-  - noteType: 0
-    time: 142.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-43
-  - noteType: 0
-    time: 143.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-44
-  - noteType: 0
-    time: 143.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-45
-  - noteType: 0
-    time: 143.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-46
-  - noteType: 0
-    time: 144
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-47
-  - noteType: 0
-    time: 144.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-48
-  - noteType: 0
-    time: 144.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-49
-  - noteType: 0
-    time: 144.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-50
-  - noteType: 0
-    time: 145.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-51
-  - noteType: 0
-    time: 145.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-52
-  - noteType: 0
-    time: 145.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-53
-  - noteType: 0
-    time: 146
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-54
-  - noteType: 1
-    time: 146.28
-    endTime: 146.57
-    railIndex: 1
-    noteAudioClipName: 9-1
-  - noteType: 1
-    time: 146.28
-    endTime: 146.57
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 146.71
-    endTime: 147
-    railIndex: 1
-    noteAudioClipName: 9-2
-  - noteType: 1
-    time: 146.71
-    endTime: 147
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 147.14
-    endTime: 147.57
-    railIndex: 0
-    noteAudioClipName: 9-3
-  - noteType: 1
-    time: 147.14
-    endTime: 147.57
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 0
-    time: 147.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-4
-  - noteType: 0
-    time: 148
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-5
-  - noteType: 1
-    time: 148.57
-    endTime: 148.85
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 148.57
-    endTime: 148.85
-    railIndex: 3
-    noteAudioClipName: 9-6
-  - noteType: 1
-    time: 149
-    endTime: 149.28
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 149
-    endTime: 149.28
-    railIndex: 3
-    noteAudioClipName: 9-7
-  - noteType: 0
-    time: 149.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 9-8
-  - noteType: 0
-    time: 149.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 149.71
-    endTime: 150.14
-    railIndex: 1
-    noteAudioClipName: 9-9
-  - noteType: 1
-    time: 149.71
-    endTime: 150.14
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.28
-    endTime: 150.71
-    railIndex: 2
-    noteAudioClipName: 9-10
-  - noteType: 1
-    time: 150.28
-    endTime: 150.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.85
-    endTime: 151.14
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.85
-    endTime: 151.14
-    railIndex: 3
-    noteAudioClipName: 9-11
-  - noteType: 1
-    time: 151.28
-    endTime: 151.57
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 151.28
-    endTime: 151.57
-    railIndex: 3
-    noteAudioClipName: 9-12
-  - noteType: 1
-    time: 151.71
-    endTime: 152.14
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 151.71
-    endTime: 152.14
-    railIndex: 2
-    noteAudioClipName: 9-13
-  - noteType: 0
-    time: 152.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-14
-  - noteType: 0
-    time: 152.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-15
-  - noteType: 1
-    time: 153.14
-    endTime: 153.42
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 153.14
-    endTime: 153.42
-    railIndex: 1
-    noteAudioClipName: 9-16
-  - noteType: 1
-    time: 153.57
-    endTime: 153.85
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 153.57
-    endTime: 153.85
-    railIndex: 1
-    noteAudioClipName: 9-17
-  - noteType: 0
-    time: 154
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-18
-  - noteType: 0
-    time: 154
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.28
-    endTime: 154.71
-    railIndex: 2
-    noteAudioClipName: 9-19
-  - noteType: 1
-    time: 154.28
-    endTime: 154.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.85
-    endTime: 155.28
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.85
-    endTime: 155.28
-    railIndex: 3
-    noteAudioClipName: 9-20
-  - noteType: 1
-    time: 155.42
-    endTime: 155.71
-    railIndex: 1
-    noteAudioClipName: 9-21
-  - noteType: 1
-    time: 155.42
-    endTime: 155.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 155.85
-    endTime: 156.14
-    railIndex: 1
-    noteAudioClipName: 9-22
-  - noteType: 1
-    time: 155.85
-    endTime: 156.14
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 156.28
-    endTime: 156.71
-    railIndex: 0
-    noteAudioClipName: 9-23
-  - noteType: 1
-    time: 156.28
-    endTime: 156.71
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 0
-    time: 156.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-24
-  - noteType: 0
-    time: 157.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-25
-  - noteType: 1
-    time: 157.71
-    endTime: 158
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 157.71
-    endTime: 158
-    railIndex: 3
-    noteAudioClipName: 9-26
-  - noteType: 1
-    time: 158.14
-    endTime: 158.42
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 158.14
-    endTime: 158.42
-    railIndex: 3
-    noteAudioClipName: 9-27
-  - noteType: 0
-    time: 158.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-28
-  - noteType: 0
-    time: 158.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 158.85
-    endTime: 159.28
-    railIndex: 0
-    noteAudioClipName: 9-29
-  - noteType: 1
-    time: 158.85
-    endTime: 159.28
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 159.42
-    endTime: 159.85
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 159.42
-    endTime: 159.85
-    railIndex: 3
-    noteAudioClipName: 9-30
-  - noteType: 1
-    time: 160
-    endTime: 160.42
-    railIndex: 0
-    noteAudioClipName: 9-31
-  - noteType: 1
-    time: 160.42
-    endTime: 160.85
-    railIndex: 2
-    noteAudioClipName: 9-32
-  - noteType: 1
-    time: 160.85
-    endTime: 161.71
-    railIndex: 0
-    noteAudioClipName: 9-33
-  - noteType: 0
-    time: 161.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-34
-  - noteType: 0
-    time: 162.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-35
-  - noteType: 0
-    time: 162.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 9-36
-  - noteType: 0
-    time: 163.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-37
-  - noteType: 0
-    time: 163.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-38
-  - noteType: 0
-    time: 164
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 9-39
-  - noteType: 2
-    time: 165.71
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-1L
-  - noteType: 2
-    time: 165.71
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-1H
-  - noteType: 2
-    time: 166.28
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-2L
-  - noteType: 2
-    time: 166.28
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-2H
-  - noteType: 2
-    time: 166.85
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-3L
-  - noteType: 2
-    time: 166.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-3H
-  - noteType: 2
-    time: 168.57
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-4L
-  - noteType: 2
-    time: 168.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-4H
-  - noteType: 2
-    time: 170.85
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-5L
-  - noteType: 2
-    time: 170.85
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-5H
-  - noteType: 0
-    time: 172
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-6L
-  - noteType: 0
-    time: 172
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-6H
-  - noteType: 0
-    time: 172.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-7L
-  - noteType: 0
-    time: 172.57
-    endTime: 2
-    railIndex: 2
-    noteAudioClipName: 10-7H
-  - noteType: 0
-    time: 173.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-8L
-  - noteType: 0
-    time: 173.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-8H
-  - noteType: 2
-    time: 174.85
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-9L
-  - noteType: 2
-    time: 174.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-9H
-  - noteType: 2
-    time: 175.42
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-10L
-  - noteType: 2
-    time: 175.42
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-10H
-  - noteType: 2
-    time: 176
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-11L
-  - noteType: 2
-    time: 176
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-11H
-  - noteType: 0
-    time: 177.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-12L
-  - noteType: 0
-    time: 177.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-12H
-  - noteType: 0
-    time: 177.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-13L
-  - noteType: 0
-    time: 177.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-13H
-  - noteType: 0
-    time: 178.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-14L
-  - noteType: 0
-    time: 178.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-14H
-  - noteType: 0
-    time: 179.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-15L
-  - noteType: 0
-    time: 179.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-15H
-  - noteType: 0
-    time: 180.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-16L
-  - noteType: 0
-    time: 180.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-16H
-  - noteType: 0
-    time: 180.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-17L
-  - noteType: 0
-    time: 180.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-17H
-  - noteType: 0
-    time: 181.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-18L
-  - noteType: 0
-    time: 181.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-18H
-  - noteType: 1
-    time: 182.85
-    endTime: 183.71
-    railIndex: 1
-    noteAudioClipName: 1-1
-  - noteType: 0
-    time: 183.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-2
-  - noteType: 0
-    time: 185.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-3
-  - noteType: 0
-    time: 185.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-4
-  - noteType: 0
-    time: 186
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-5
-  - noteType: 0
-    time: 186.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-6
-  - noteType: 0
-    time: 187.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-7
-  - noteType: 0
-    time: 188
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-8
-  - noteType: 0
-    time: 188.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-9
-  - noteType: 0
-    time: 189.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-10
-  - noteType: 0
-    time: 189.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-11
-  - noteType: 0
-    time: 190.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-12
-  - noteType: 0
-    time: 190.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-13
-  - noteType: 1
-    time: 191.14
-    endTime: 192
-    railIndex: 0
-    noteAudioClipName: 1-14
-  - noteType: 0
-    time: 192
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-15
-  - noteType: 0
-    time: 192.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-16
-  - noteType: 0
-    time: 193.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-17
-  - noteType: 1
-    time: 194.28
-    endTime: 196
-    railIndex: 0
-    noteAudioClipName: 1-18
-  - noteType: 0
-    time: 194.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-19
-  - noteType: 0
-    time: 195.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-20
-  - noteType: 0
-    time: 196
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-21
-  - noteType: 1
-    time: 196.57
-    endTime: 198.57
-    railIndex: 0
-    noteAudioClipName: 1-22
-  - noteType: 0
-    time: 197.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-23
-  - noteType: 0
-    time: 197.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-24
-  - noteType: 0
-    time: 198.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-25
-  - noteType: 0
-    time: 198.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-26
-  - noteType: 0
-    time: 199.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-27
-  - noteType: 0
-    time: 200
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-28
-  - noteType: 0
-    time: 200.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-29
+  loadedNotes: []
+  isHost: 0
   tempCount: 0
 --- !u!114 &1145819483
 MonoBehaviour:
@@ -142177,12 +139928,13 @@ MonoBehaviour:
   - {fileID: 2019056632}
   - {fileID: 2019056631}
   - {fileID: 2019056630}
-  shortNotePrefab: {fileID: 6078158495955630708, guid: 169514ff9e26a364cbffdd39c4aca713,
+  shortNotePrefab: {fileID: 6441552298659993700, guid: f860cf1dc39d3d74abf49d50a69957c5,
     type: 3}
   longNotePrefab: {fileID: 5151792519201553965, guid: 9a907ed76eae2bd4683572dc7c7c56db,
     type: 3}
   topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
   _scoreManager: {fileID: 1145819479}
+  isHost: 0
 --- !u!4 &1145819484
 Transform:
   m_ObjectHideFlags: 0
@@ -146369,7 +144121,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923950}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -148770,6 +146522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 339773019}
   target: {fileID: 1221720131}
+  isHost: 0
 --- !u!1001 &1211347771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -159856,6 +157609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1168138881}
   target: {fileID: 347549991}
+  isHost: 0
 --- !u!1 &1320811620
 GameObject:
   m_ObjectHideFlags: 0
@@ -175523,6 +173277,150 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178097526374, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177797482789, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178595548818, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178042479768, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177151444657, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177145348812, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178016972004, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454923952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177991764066, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454923943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1454923953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1454923960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454923952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1455442867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200465,6 +198363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662748606}
   - component: {fileID: 1662748607}
+  - component: {fileID: 1662748608}
   m_Layer: 0
   m_Name: NoteRail3
   m_TagString: Untagged
@@ -200505,6 +198404,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 549754944}
+  isHost: 0
+--- !u!114 &1662748608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662748605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1663441231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227981,7 +225893,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1454923943}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1454923949}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247243,7 +245155,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056639}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247255,7 +245167,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056640}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247267,7 +245179,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056641}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247279,7 +245191,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056642}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247291,7 +245203,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056643}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247303,7 +245215,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056644}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247315,7 +245227,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056645}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247327,7 +245239,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2019056646}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 099e6692c58fc4142b543693ec4ce0dc, type: 3}
@@ -247339,6 +245251,150 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2019056629}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178097526374, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177797482789, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178595548818, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056642 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178042479768, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177151444657, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177145348812, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569178016972004, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2019056646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1954569177991764066, guid: 4acb8812dfbc8274eaaa31b1d1292dcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2019056629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2019056647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2019056654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019056646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2021227993
 GameObject:
   m_ObjectHideFlags: 0
@@ -252038,6 +250094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2055509113}
   - component: {fileID: 2055509114}
+  - component: {fileID: 2055509115}
   m_Layer: 0
   m_Name: NoteRail2
   m_TagString: Untagged
@@ -252078,6 +250135,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 1320754746}
+  isHost: 0
+--- !u!114 &2055509115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055509112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2055591555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -263054,2292 +261124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f78ff75fc4fe74a97161a8d515e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadedNotes:
-  - noteType: 0
-    time: 0
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-1
-  - noteType: 0
-    time: 0.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-2
-  - noteType: 0
-    time: 2.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-3
-  - noteType: 0
-    time: 2.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-4
-  - noteType: 0
-    time: 3.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-5
-  - noteType: 0
-    time: 4
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-6
-  - noteType: 0
-    time: 4.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-7
-  - noteType: 0
-    time: 5.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-8
-  - noteType: 0
-    time: 5.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-9
-  - noteType: 0
-    time: 6.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-10
-  - noteType: 0
-    time: 6.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-11
-  - noteType: 0
-    time: 7.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-12
-  - noteType: 0
-    time: 7.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-13
-  - noteType: 0
-    time: 8.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-14
-  - noteType: 0
-    time: 9.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-15
-  - noteType: 0
-    time: 10
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-16
-  - noteType: 0
-    time: 10.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-17
-  - noteType: 0
-    time: 11.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-18
-  - noteType: 0
-    time: 12
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-19
-  - noteType: 0
-    time: 12.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-20
-  - noteType: 0
-    time: 13.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-21
-  - noteType: 0
-    time: 13.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-22
-  - noteType: 0
-    time: 14.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-23
-  - noteType: 0
-    time: 14.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-24
-  - noteType: 0
-    time: 15.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-25
-  - noteType: 0
-    time: 15.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-26
-  - noteType: 0
-    time: 16.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-27
-  - noteType: 0
-    time: 17.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-28
-  - noteType: 0
-    time: 17.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-29
-  - noteType: 0
-    time: 18.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-1
-  - noteType: 0
-    time: 19
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-2
-  - noteType: 0
-    time: 19.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-3
-  - noteType: 0
-    time: 19.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-4
-  - noteType: 0
-    time: 20.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-5
-  - noteType: 0
-    time: 20.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-6
-  - noteType: 0
-    time: 20.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-7
-  - noteType: 0
-    time: 21.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-8
-  - noteType: 0
-    time: 21.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-9
-  - noteType: 0
-    time: 22.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-10
-  - noteType: 0
-    time: 22.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-11
-  - noteType: 0
-    time: 22.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-12
-  - noteType: 0
-    time: 23.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-13
-  - noteType: 0
-    time: 23.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-14
-  - noteType: 0
-    time: 24
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-15
-  - noteType: 0
-    time: 24.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-16
-  - noteType: 0
-    time: 24.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-17
-  - noteType: 0
-    time: 25
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-18
-  - noteType: 0
-    time: 25.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-19
-  - noteType: 0
-    time: 25.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-20
-  - noteType: 0
-    time: 26.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-21
-  - noteType: 0
-    time: 26.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-22
-  - noteType: 0
-    time: 27.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-23
-  - noteType: 0
-    time: 27.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-24
-  - noteType: 0
-    time: 27.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-25
-  - noteType: 0
-    time: 28.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-26
-  - noteType: 0
-    time: 28.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-27
-  - noteType: 0
-    time: 29
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-28
-  - noteType: 0
-    time: 29.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-29
-  - noteType: 0
-    time: 29.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-30
-  - noteType: 0
-    time: 30
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-31
-  - noteType: 0
-    time: 30.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-32
-  - noteType: 0
-    time: 30.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-33
-  - noteType: 0
-    time: 31.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-34
-  - noteType: 0
-    time: 31.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-35
-  - noteType: 0
-    time: 31.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 2-36
-  - noteType: 0
-    time: 32.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-37
-  - noteType: 0
-    time: 32.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-38
-  - noteType: 0
-    time: 33.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-39
-  - noteType: 0
-    time: 33.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-40
-  - noteType: 0
-    time: 34
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-41
-  - noteType: 0
-    time: 34.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 2-42
-  - noteType: 0
-    time: 34.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-43
-  - noteType: 0
-    time: 35
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-44
-  - noteType: 0
-    time: 35.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-45
-  - noteType: 0
-    time: 35.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-46
-  - noteType: 0
-    time: 36.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 2-47
-  - noteType: 0
-    time: 36.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 2-48
-  - noteType: 0
-    time: 36.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-1
-  - noteType: 0
-    time: 37.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-2
-  - noteType: 0
-    time: 37.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-3
-  - noteType: 0
-    time: 38.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-4
-  - noteType: 0
-    time: 39.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-5
-  - noteType: 0
-    time: 39.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-5
-  - noteType: 0
-    time: 39.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-6
-  - noteType: 0
-    time: 39.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-6
-  - noteType: 0
-    time: 40
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-7
-  - noteType: 0
-    time: 40
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-7
-  - noteType: 0
-    time: 40.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-8
-  - noteType: 0
-    time: 40.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-8
-  - noteType: 0
-    time: 41.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-9
-  - noteType: 0
-    time: 42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-10
-  - noteType: 0
-    time: 42.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-11
-  - noteType: 0
-    time: 43.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-12
-  - noteType: 0
-    time: 43.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-13
-  - noteType: 0
-    time: 43.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-13
-  - noteType: 0
-    time: 44.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-14
-  - noteType: 0
-    time: 44.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-14
-  - noteType: 0
-    time: 44.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-15
-  - noteType: 0
-    time: 44.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-15
-  - noteType: 0
-    time: 45.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-16
-  - noteType: 0
-    time: 45.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-16
-  - noteType: 0
-    time: 45.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-17
-  - noteType: 0
-    time: 46.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-18
-  - noteType: 0
-    time: 46.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-19
-  - noteType: 0
-    time: 47.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-20
-  - noteType: 0
-    time: 48.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-21
-  - noteType: 0
-    time: 48.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-21
-  - noteType: 0
-    time: 48.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-22
-  - noteType: 0
-    time: 48.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-22
-  - noteType: 0
-    time: 49.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-23
-  - noteType: 0
-    time: 49.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-23
-  - noteType: 0
-    time: 49.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-24
-  - noteType: 0
-    time: 49.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-24
-  - noteType: 0
-    time: 50.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-25
-  - noteType: 0
-    time: 51.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-26
-  - noteType: 0
-    time: 51.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 3-27
-  - noteType: 0
-    time: 52.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 3-28
-  - noteType: 0
-    time: 52.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-29
-  - noteType: 0
-    time: 52.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-29
-  - noteType: 0
-    time: 53.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-30
-  - noteType: 0
-    time: 53.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-30
-  - noteType: 0
-    time: 53.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-31
-  - noteType: 0
-    time: 53.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-31
-  - noteType: 0
-    time: 54.25
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 3-32
-  - noteType: 0
-    time: 54.25
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 3-32
-  - noteType: 0
-    time: 54.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 55.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 56
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 56.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 57.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 57.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 58.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 58.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 59.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 59.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 60
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 60.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 60.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 61.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 61.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 61.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 62.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 62.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 62.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 63.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 64
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 64
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 64.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 65.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 65.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 65.71
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 66.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 66.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 66.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 67.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 67.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 68
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 68.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 68.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 69.14
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 69.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 69.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 70.28
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 70.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 70.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 71.42
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 72
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 4-1
-  - noteType: 0
-    time: 72
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 4-1
-  - noteType: 2
-    time: 72.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 4-2
-  - noteType: 0
-    time: 73.45
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-1
-  - noteType: 1
-    time: 73.76
-    endTime: 75.42
-    railIndex: 3
-    noteAudioClipName: 5-2
-  - noteType: 0
-    time: 75.73
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-3
-  - noteType: 0
-    time: 76.31
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-4
-  - noteType: 1
-    time: 77.08
-    endTime: 78.57
-    railIndex: 2
-    noteAudioClipName: 5-5
-  - noteType: 0
-    time: 78.94
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-6
-  - noteType: 0
-    time: 79.44
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-7
-  - noteType: 0
-    time: 80.1
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-8
-  - noteType: 0
-    time: 80.63
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-9
-  - noteType: 0
-    time: 81.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-10
-  - noteType: 1
-    time: 82.28
-    endTime: 83.28
-    railIndex: 1
-    noteAudioClipName: 5-11
-  - noteType: 1
-    time: 83.42
-    endTime: 84.42
-    railIndex: 2
-    noteAudioClipName: 5-12
-  - noteType: 1
-    time: 84.57
-    endTime: 85
-    railIndex: 3
-    noteAudioClipName: 5-13
-  - noteType: 1
-    time: 85.17
-    endTime: 85.71
-    railIndex: 2
-    noteAudioClipName: 5-14
-  - noteType: 0
-    time: 85.98
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-15
-  - noteType: 1
-    time: 86.29
-    endTime: 87
-    railIndex: 1
-    noteAudioClipName: 5-16
-  - noteType: 0
-    time: 87.21
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-17
-  - noteType: 1
-    time: 87.55
-    endTime: 88.28
-    railIndex: 1
-    noteAudioClipName: 5-18
-  - noteType: 0
-    time: 88.34
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-19
-  - noteType: 1
-    time: 88.67
-    endTime: 88.85
-    railIndex: 2
-    noteAudioClipName: 5-20
-  - noteType: 0
-    time: 89.04
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-21
-  - noteType: 1
-    time: 89.63
-    endTime: 91.42
-    railIndex: 3
-    noteAudioClipName: 5-22
-  - noteType: 0
-    time: 91.73
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-23
-  - noteType: 1
-    time: 92.04
-    endTime: 93.85
-    railIndex: 3
-    noteAudioClipName: 5-24
-  - noteType: 0
-    time: 94.01
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-25
-  - noteType: 0
-    time: 94.16
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-26
-  - noteType: 0
-    time: 94.31
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-27
-  - noteType: 0
-    time: 94.44
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-28
-  - noteType: 0
-    time: 94.59
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-29
-  - noteType: 0
-    time: 94.75
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-30
-  - noteType: 0
-    time: 95.07
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-31
-  - noteType: 1
-    time: 95.36
-    endTime: 97
-    railIndex: 2
-    noteAudioClipName: 5-32
-  - noteType: 0
-    time: 97.2
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-33
-  - noteType: 0
-    time: 97.46
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-34
-  - noteType: 0
-    time: 97.89
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-35
-  - noteType: 0
-    time: 98.2
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-36
-  - noteType: 0
-    time: 98.38
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-37
-  - noteType: 0
-    time: 98.75
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-38
-  - noteType: 0
-    time: 98.9
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-39
-  - noteType: 0
-    time: 99.19
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-40
-  - noteType: 0
-    time: 99.72
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-41
-  - noteType: 0
-    time: 100.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-42
-  - noteType: 0
-    time: 100.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-43
-  - noteType: 0
-    time: 100.86
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-44
-  - noteType: 1
-    time: 101.01
-    endTime: 101.57
-    railIndex: 2
-    noteAudioClipName: 5-45
-  - noteType: 0
-    time: 101.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-46
-  - noteType: 0
-    time: 101.88
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-47
-  - noteType: 0
-    time: 102.03
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-48
-  - noteType: 1
-    time: 102.17
-    endTime: 102.71
-    railIndex: 3
-    noteAudioClipName: 5-49
-  - noteType: 0
-    time: 102.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-50
-  - noteType: 0
-    time: 102.99
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-51
-  - noteType: 0
-    time: 103.13
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-52
-  - noteType: 0
-    time: 103.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-53
-  - noteType: 1
-    time: 103.42
-    endTime: 104.14
-    railIndex: 1
-    noteAudioClipName: 5-54
-  - noteType: 0
-    time: 104.26
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-55
-  - noteType: 1
-    time: 104.57
-    endTime: 105.42
-    railIndex: 0
-    noteAudioClipName: 5-56
-  - noteType: 0
-    time: 105.5
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 5-57
-  - noteType: 1
-    time: 105.83
-    endTime: 106.57
-    railIndex: 1
-    noteAudioClipName: 5-58
-  - noteType: 0
-    time: 106.62
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-59
-  - noteType: 0
-    time: 106.97
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-60
-  - noteType: 0
-    time: 107.32
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 5-61
-  - noteType: 0
-    time: 107.51
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 5-62
-  - noteType: 0
-    time: 107.74
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 5-63
-  - noteType: 1
-    time: 107.92
-    endTime: 109.42
-    railIndex: 3
-    noteAudioClipName: 5-64
-  - noteType: 2
-    time: 109.71
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-1
-  - noteType: 2
-    time: 110.28
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-2
-  - noteType: 2
-    time: 110.85
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-3
-  - noteType: 2
-    time: 111.42
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-4
-  - noteType: 2
-    time: 112
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-5
-  - noteType: 2
-    time: 112.57
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-6
-  - noteType: 2
-    time: 113.14
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-7
-  - noteType: 2
-    time: 113.71
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-8
-  - noteType: 2
-    time: 114.28
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-9
-  - noteType: 2
-    time: 114.28
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-9
-  - noteType: 2
-    time: 114.85
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-10
-  - noteType: 2
-    time: 114.85
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-10
-  - noteType: 2
-    time: 115.42
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-11
-  - noteType: 2
-    time: 115.42
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-11
-  - noteType: 2
-    time: 116
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-12
-  - noteType: 2
-    time: 116
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-12
-  - noteType: 2
-    time: 116.57
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-13
-  - noteType: 2
-    time: 116.57
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-13
-  - noteType: 2
-    time: 117.14
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-14
-  - noteType: 2
-    time: 117.14
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-14
-  - noteType: 2
-    time: 117.71
-    endTime: 0
-    railIndex: 6
-    noteAudioClipName: 6-15
-  - noteType: 2
-    time: 117.71
-    endTime: 0
-    railIndex: 7
-    noteAudioClipName: 6-15
-  - noteType: 2
-    time: 118.28
-    endTime: 0
-    railIndex: 10
-    noteAudioClipName: 6-16
-  - noteType: 2
-    time: 118.28
-    endTime: 0
-    railIndex: 11
-    noteAudioClipName: 6-16
-  - noteType: 0
-    time: 118.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-1
-  - noteType: 0
-    time: 119.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-2
-  - noteType: 0
-    time: 120
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-3
-  - noteType: 0
-    time: 120.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-4
-  - noteType: 0
-    time: 121.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-5
-  - noteType: 0
-    time: 121.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-6
-  - noteType: 0
-    time: 121.98
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-7
-  - noteType: 0
-    time: 122.58
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-8
-  - noteType: 0
-    time: 123.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 7-9
-  - noteType: 0
-    time: 123.5
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-10
-  - noteType: 0
-    time: 124.29
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 7-11
-  - noteType: 0
-    time: 124.64
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-12
-  - noteType: 0
-    time: 125.43
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 7-13
-  - noteType: 0
-    time: 125.72
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-14
-  - noteType: 0
-    time: 126.15
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-15
-  - noteType: 0
-    time: 126.58
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-16
-  - noteType: 0
-    time: 127.15
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 7-17
-  - noteType: 0
-    time: 127.72
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 7-18
-  - noteType: 0
-    time: 128.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-1
-  - noteType: 0
-    time: 128.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-2
-  - noteType: 0
-    time: 128.85
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-3
-  - noteType: 0
-    time: 129.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-4
-  - noteType: 0
-    time: 129.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-5
-  - noteType: 0
-    time: 129.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-6
-  - noteType: 0
-    time: 130
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-7
-  - noteType: 0
-    time: 130.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-8
-  - noteType: 0
-    time: 130.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-9
-  - noteType: 0
-    time: 130.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-10
-  - noteType: 0
-    time: 131.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-11
-  - noteType: 0
-    time: 131.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-12
-  - noteType: 0
-    time: 132.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-13
-  - noteType: 0
-    time: 133.14
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-14
-  - noteType: 0
-    time: 133.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-15
-  - noteType: 0
-    time: 133.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-16
-  - noteType: 0
-    time: 134
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-17
-  - noteType: 0
-    time: 134.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-18
-  - noteType: 0
-    time: 134.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-19
-  - noteType: 0
-    time: 134.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-20
-  - noteType: 0
-    time: 135.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-21
-  - noteType: 0
-    time: 135.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-22
-  - noteType: 0
-    time: 135.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-23
-  - noteType: 0
-    time: 136
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-24
-  - noteType: 0
-    time: 136.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-25
-  - noteType: 0
-    time: 136.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-26
-  - noteType: 0
-    time: 136.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-27
-  - noteType: 0
-    time: 137.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-28
-  - noteType: 0
-    time: 137.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-29
-  - noteType: 0
-    time: 138
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-30
-  - noteType: 0
-    time: 138.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-31
-  - noteType: 0
-    time: 138.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-32
-  - noteType: 0
-    time: 138.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-33
-  - noteType: 0
-    time: 139.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-34
-  - noteType: 0
-    time: 139.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8.35
-  - noteType: 0
-    time: 139.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-36
-  - noteType: 0
-    time: 140
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-37
-  - noteType: 0
-    time: 140.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-38
-  - noteType: 0
-    time: 140.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-39
-  - noteType: 0
-    time: 142
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-40
-  - noteType: 0
-    time: 142.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-41
-  - noteType: 0
-    time: 142.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-42
-  - noteType: 0
-    time: 142.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-43
-  - noteType: 0
-    time: 143.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-44
-  - noteType: 0
-    time: 143.28
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-45
-  - noteType: 0
-    time: 143.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-46
-  - noteType: 0
-    time: 144
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-47
-  - noteType: 0
-    time: 144.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-48
-  - noteType: 0
-    time: 144.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 8-49
-  - noteType: 0
-    time: 144.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-50
-  - noteType: 0
-    time: 145.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-51
-  - noteType: 0
-    time: 145.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 8-52
-  - noteType: 0
-    time: 145.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 8-53
-  - noteType: 0
-    time: 146
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 8-54
-  - noteType: 1
-    time: 146.28
-    endTime: 146.57
-    railIndex: 1
-    noteAudioClipName: 9-1
-  - noteType: 1
-    time: 146.28
-    endTime: 146.57
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 146.71
-    endTime: 147
-    railIndex: 1
-    noteAudioClipName: 9-2
-  - noteType: 1
-    time: 146.71
-    endTime: 147
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 147.14
-    endTime: 147.57
-    railIndex: 0
-    noteAudioClipName: 9-3
-  - noteType: 1
-    time: 147.14
-    endTime: 147.57
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 0
-    time: 147.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-4
-  - noteType: 0
-    time: 148
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-5
-  - noteType: 1
-    time: 148.57
-    endTime: 148.85
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 148.57
-    endTime: 148.85
-    railIndex: 3
-    noteAudioClipName: 9-6
-  - noteType: 1
-    time: 149
-    endTime: 149.28
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 149
-    endTime: 149.28
-    railIndex: 3
-    noteAudioClipName: 9-7
-  - noteType: 0
-    time: 149.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 9-8
-  - noteType: 0
-    time: 149.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 149.71
-    endTime: 150.14
-    railIndex: 1
-    noteAudioClipName: 9-9
-  - noteType: 1
-    time: 149.71
-    endTime: 150.14
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.28
-    endTime: 150.71
-    railIndex: 2
-    noteAudioClipName: 9-10
-  - noteType: 1
-    time: 150.28
-    endTime: 150.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.85
-    endTime: 151.14
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 150.85
-    endTime: 151.14
-    railIndex: 3
-    noteAudioClipName: 9-11
-  - noteType: 1
-    time: 151.28
-    endTime: 151.57
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 151.28
-    endTime: 151.57
-    railIndex: 3
-    noteAudioClipName: 9-12
-  - noteType: 1
-    time: 151.71
-    endTime: 152.14
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 151.71
-    endTime: 152.14
-    railIndex: 2
-    noteAudioClipName: 9-13
-  - noteType: 0
-    time: 152.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-14
-  - noteType: 0
-    time: 152.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-15
-  - noteType: 1
-    time: 153.14
-    endTime: 153.42
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 153.14
-    endTime: 153.42
-    railIndex: 1
-    noteAudioClipName: 9-16
-  - noteType: 1
-    time: 153.57
-    endTime: 153.85
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 153.57
-    endTime: 153.85
-    railIndex: 1
-    noteAudioClipName: 9-17
-  - noteType: 0
-    time: 154
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-18
-  - noteType: 0
-    time: 154
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.28
-    endTime: 154.71
-    railIndex: 2
-    noteAudioClipName: 9-19
-  - noteType: 1
-    time: 154.28
-    endTime: 154.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.85
-    endTime: 155.28
-    railIndex: 0
-    noteAudioClipName: 
-  - noteType: 1
-    time: 154.85
-    endTime: 155.28
-    railIndex: 3
-    noteAudioClipName: 9-20
-  - noteType: 1
-    time: 155.42
-    endTime: 155.71
-    railIndex: 1
-    noteAudioClipName: 9-21
-  - noteType: 1
-    time: 155.42
-    endTime: 155.71
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 155.85
-    endTime: 156.14
-    railIndex: 1
-    noteAudioClipName: 9-22
-  - noteType: 1
-    time: 155.85
-    endTime: 156.14
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 156.28
-    endTime: 156.71
-    railIndex: 0
-    noteAudioClipName: 9-23
-  - noteType: 1
-    time: 156.28
-    endTime: 156.71
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 0
-    time: 156.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-24
-  - noteType: 0
-    time: 157.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-25
-  - noteType: 1
-    time: 157.71
-    endTime: 158
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 157.71
-    endTime: 158
-    railIndex: 3
-    noteAudioClipName: 9-26
-  - noteType: 1
-    time: 158.14
-    endTime: 158.42
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 158.14
-    endTime: 158.42
-    railIndex: 3
-    noteAudioClipName: 9-27
-  - noteType: 0
-    time: 158.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-28
-  - noteType: 0
-    time: 158.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 
-  - noteType: 1
-    time: 158.85
-    endTime: 159.28
-    railIndex: 0
-    noteAudioClipName: 9-29
-  - noteType: 1
-    time: 158.85
-    endTime: 159.28
-    railIndex: 2
-    noteAudioClipName: 
-  - noteType: 1
-    time: 159.42
-    endTime: 159.85
-    railIndex: 1
-    noteAudioClipName: 
-  - noteType: 1
-    time: 159.42
-    endTime: 159.85
-    railIndex: 3
-    noteAudioClipName: 9-30
-  - noteType: 1
-    time: 160
-    endTime: 160.42
-    railIndex: 0
-    noteAudioClipName: 9-31
-  - noteType: 1
-    time: 160.42
-    endTime: 160.85
-    railIndex: 2
-    noteAudioClipName: 9-32
-  - noteType: 1
-    time: 160.85
-    endTime: 161.71
-    railIndex: 0
-    noteAudioClipName: 9-33
-  - noteType: 0
-    time: 161.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-34
-  - noteType: 0
-    time: 162.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-35
-  - noteType: 0
-    time: 162.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 9-36
-  - noteType: 0
-    time: 163.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 9-37
-  - noteType: 0
-    time: 163.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 9-38
-  - noteType: 0
-    time: 164
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 9-39
-  - noteType: 2
-    time: 165.71
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-1L
-  - noteType: 2
-    time: 165.71
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-1H
-  - noteType: 2
-    time: 166.28
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-2L
-  - noteType: 2
-    time: 166.28
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-2H
-  - noteType: 2
-    time: 166.85
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-3L
-  - noteType: 2
-    time: 166.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-3H
-  - noteType: 2
-    time: 168.57
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-4L
-  - noteType: 2
-    time: 168.57
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-4H
-  - noteType: 2
-    time: 170.85
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-5L
-  - noteType: 2
-    time: 170.85
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-5H
-  - noteType: 0
-    time: 172
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-6L
-  - noteType: 0
-    time: 172
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-6H
-  - noteType: 0
-    time: 172.57
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-7L
-  - noteType: 0
-    time: 172.57
-    endTime: 2
-    railIndex: 2
-    noteAudioClipName: 10-7H
-  - noteType: 0
-    time: 173.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-8L
-  - noteType: 0
-    time: 173.14
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-8H
-  - noteType: 2
-    time: 174.85
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-9L
-  - noteType: 2
-    time: 174.85
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-9H
-  - noteType: 2
-    time: 175.42
-    endTime: 0
-    railIndex: 4
-    noteAudioClipName: 10-10L
-  - noteType: 2
-    time: 175.42
-    endTime: 0
-    railIndex: 5
-    noteAudioClipName: 10-10H
-  - noteType: 2
-    time: 176
-    endTime: 0
-    railIndex: 8
-    noteAudioClipName: 10-11L
-  - noteType: 2
-    time: 176
-    endTime: 0
-    railIndex: 9
-    noteAudioClipName: 10-11H
-  - noteType: 0
-    time: 177.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-12L
-  - noteType: 0
-    time: 177.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-12H
-  - noteType: 0
-    time: 177.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-13L
-  - noteType: 0
-    time: 177.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-13H
-  - noteType: 0
-    time: 178.28
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-14L
-  - noteType: 0
-    time: 178.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-14H
-  - noteType: 0
-    time: 179.71
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-15L
-  - noteType: 0
-    time: 179.71
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-15H
-  - noteType: 0
-    time: 180.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 10-16L
-  - noteType: 0
-    time: 180.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-16H
-  - noteType: 0
-    time: 180.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 10-17L
-  - noteType: 0
-    time: 180.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-17H
-  - noteType: 0
-    time: 181.42
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 10-18L
-  - noteType: 0
-    time: 181.42
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 10-18H
-  - noteType: 1
-    time: 182.85
-    endTime: 183.71
-    railIndex: 1
-    noteAudioClipName: 1-1
-  - noteType: 0
-    time: 183.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-2
-  - noteType: 0
-    time: 185.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-3
-  - noteType: 0
-    time: 185.71
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-4
-  - noteType: 0
-    time: 186
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-5
-  - noteType: 0
-    time: 186.85
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-6
-  - noteType: 0
-    time: 187.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-7
-  - noteType: 0
-    time: 188
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-8
-  - noteType: 0
-    time: 188.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-9
-  - noteType: 0
-    time: 189.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-10
-  - noteType: 0
-    time: 189.42
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-11
-  - noteType: 0
-    time: 190.28
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-12
-  - noteType: 0
-    time: 190.57
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-13
-  - noteType: 1
-    time: 191.14
-    endTime: 192
-    railIndex: 0
-    noteAudioClipName: 1-14
-  - noteType: 0
-    time: 192
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-15
-  - noteType: 0
-    time: 192.85
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-16
-  - noteType: 0
-    time: 193.71
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-17
-  - noteType: 1
-    time: 194.28
-    endTime: 196
-    railIndex: 0
-    noteAudioClipName: 1-18
-  - noteType: 0
-    time: 194.85
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-19
-  - noteType: 0
-    time: 195.14
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-20
-  - noteType: 0
-    time: 196
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-21
-  - noteType: 1
-    time: 196.57
-    endTime: 198.57
-    railIndex: 0
-    noteAudioClipName: 1-22
-  - noteType: 0
-    time: 197.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-23
-  - noteType: 0
-    time: 197.42
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-24
-  - noteType: 0
-    time: 198.28
-    endTime: 0
-    railIndex: 3
-    noteAudioClipName: 1-25
-  - noteType: 0
-    time: 198.57
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-26
-  - noteType: 0
-    time: 199.14
-    endTime: 0
-    railIndex: 1
-    noteAudioClipName: 1-27
-  - noteType: 0
-    time: 200
-    endTime: 0
-    railIndex: 2
-    noteAudioClipName: 1-28
-  - noteType: 0
-    time: 200.57
-    endTime: 0
-    railIndex: 0
-    noteAudioClipName: 1-29
+  loadedNotes: []
+  isHost: 1
   tempCount: 0
 --- !u!1 &908488520430798408
 GameObject:
@@ -270996,12 +266782,13 @@ MonoBehaviour:
   - {fileID: 641055602}
   - {fileID: 923303903}
   - {fileID: 236233461}
-  shortNotePrefab: {fileID: 6078158495955630708, guid: 169514ff9e26a364cbffdd39c4aca713,
+  shortNotePrefab: {fileID: 6441552298659993700, guid: f860cf1dc39d3d74abf49d50a69957c5,
     type: 3}
   longNotePrefab: {fileID: 5151792519201553965, guid: 9a907ed76eae2bd4683572dc7c7c56db,
     type: 3}
   topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
   _scoreManager: {fileID: 7691417804374882219}
+  isHost: 1
 --- !u!4 &7691417804374882218
 Transform:
   m_ObjectHideFlags: 0
@@ -271379,6 +267166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417805893856208}
+  isHost: 1
 --- !u!1 &7691417805420763551
 GameObject:
   m_ObjectHideFlags: 0
@@ -271389,6 +267177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7691417805420763536}
   - component: {fileID: 7691417805420763537}
+  - component: {fileID: 7691417805420763552}
   m_Layer: 0
   m_Name: NoteRail1
   m_TagString: Untagged
@@ -271396,6 +267185,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7691417805420763552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417805420763551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &7691417805486613888
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -271537,6 +267338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417805347230183}
   target: {fileID: 7691417804916154453}
+  isHost: 1
 --- !u!114 &7691417805893856208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271551,6 +267353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417806205922930}
   target: {fileID: 7691417804826765453}
+  isHost: 1
 --- !u!4 &7691417805893856209
 Transform:
   m_ObjectHideFlags: 0
@@ -271596,6 +267399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417806392415045}
+  isHost: 1
 --- !u!1 &7691417806009038190
 GameObject:
   m_ObjectHideFlags: 0
@@ -271606,6 +267410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7691417806009038191}
   - component: {fileID: 7691417806009038176}
+  - component: {fileID: 7691417806009038192}
   m_Layer: 0
   m_Name: NoteRail4
   m_TagString: Untagged
@@ -271632,6 +267437,18 @@ Transform:
   m_Father: {fileID: 7691417804374882218}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7691417806009038192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417806009038190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7691417806061467400
 Transform:
   m_ObjectHideFlags: 0
@@ -271665,6 +267482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417806207308432}
+  isHost: 1
 --- !u!1 &7691417806061467639
 GameObject:
   m_ObjectHideFlags: 0
@@ -271675,6 +267493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7691417806061467400}
   - component: {fileID: 7691417806061467401}
+  - component: {fileID: 7691417806061467640}
   m_Layer: 0
   m_Name: NoteRail3
   m_TagString: Untagged
@@ -271682,6 +267501,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7691417806061467640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417806061467639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7691417806103138583
 GameObject:
   m_ObjectHideFlags: 0
@@ -271692,6 +267523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7691417806103138600}
   - component: {fileID: 7691417806103138601}
+  - component: {fileID: 7691417806103138584}
   m_Layer: 0
   m_Name: NoteRail2
   m_TagString: Untagged
@@ -271699,6 +267531,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7691417806103138584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691417806103138583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02c226a15d1c514289ff80e9436b4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7691417806103138600
 Transform:
   m_ObjectHideFlags: 0
@@ -271732,6 +267576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417805866458536}
+  isHost: 1
 --- !u!1 &7691417806176107481
 GameObject:
   m_ObjectHideFlags: 0
@@ -271872,6 +267717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417805107916845}
   target: {fileID: 7691417804719112570}
+  isHost: 1
 --- !u!1 &7691417806207308446
 GameObject:
   m_ObjectHideFlags: 0
@@ -271948,6 +267794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417804926424091}
   target: {fileID: 7691417804529734012}
+  isHost: 1
 --- !u!23 &7691417806494883648
 MeshRenderer:
   m_ObjectHideFlags: 0
