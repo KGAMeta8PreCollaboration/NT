@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+using Photon;
+using Photon.Pun;
+
 public delegate bool HapticDelegate(float amplitude, float duration);
 public class PlayerController : MonoBehaviour
 {
@@ -103,7 +106,7 @@ public class PlayerController : MonoBehaviour
             if (isFastEnough && isDownwardHit && isOnTop)
             {
                 if (!GameManager.Instance.IsMulti) woofer.Hit();
-                else _wooferNetworkSync.SendHit(woofer);
+                else _wooferNetworkSync.SendHit(woofer, PhotonNetwork.LocalPlayer.NickName);
                 if (_collisionStayCoroutine == null) _collisionStayCoroutine = StartCoroutine(OnCollisionStayCoroutine(woofer));
                 Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
@@ -120,7 +123,7 @@ public class PlayerController : MonoBehaviour
         {
             logText.text = "우퍼에 닿는 중";
             if (!GameManager.Instance.IsMulti) woofer.Hold(hapticDelegate);
-            else _wooferNetworkSync.SendHold(woofer);
+            else _wooferNetworkSync.SendHold(woofer, PhotonNetwork.LocalPlayer.NickName);
             yield return null;
         }
     }
@@ -131,7 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             logText.text = "우퍼에서 뗏음";
             if (!GameManager.Instance.IsMulti) woofer.ReleaseLongNote();
-            else _wooferNetworkSync.SendRelease(woofer);
+            else _wooferNetworkSync.SendRelease(woofer, PhotonNetwork.LocalPlayer.NickName);
             if (_collisionStayCoroutine != null)
             {
                 StopCoroutine(_collisionStayCoroutine);

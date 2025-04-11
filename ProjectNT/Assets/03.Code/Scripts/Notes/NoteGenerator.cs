@@ -46,7 +46,7 @@ public class NoteGenerator : MonoBehaviour
     private NoteManager _noteManager;
     private double _startDspTime;
     private double _noteLeadTime = 3.0;
-    
+
     public double startDspTime { get => _startDspTime + _noteLeadTime; }
 
     public int tempCount = 0;
@@ -78,7 +78,7 @@ public class NoteGenerator : MonoBehaviour
 
         Init();
     }
-    
+
     public void Init()
     {
         loadedNotes.Sort((lh, rh) => lh.time.CompareTo(rh.time));
@@ -98,7 +98,10 @@ public class NoteGenerator : MonoBehaviour
         {
             print("노트 생성기 놑트 생성 시작 2");
             _startDspTime = AudioSettings.dspTime;
+            Debug.LogError(AudioSettings.dspTime);
+            Debug.LogError(_startDspTime);
             _noteLeadTime = startTime - AudioSettings.dspTime;
+            Debug.LogError(_noteLeadTime);
             _noteManager.AssignNotesToSchedulers(_startDspTime + _noteLeadTime);
 
             print($"NoteGenerateStart _noteLeadTime : {_noteLeadTime}");
@@ -119,6 +122,7 @@ public class NoteGenerator : MonoBehaviour
         {
             double currentTime = AudioSettings.dspTime;
             LoadedNoteData noteData = _loadedNotes[0];
+            //DebuggingTestHost("노트제너레이터 밖");
             if (Application.isPlaying && noteData.time <= currentTime - _startDspTime)
             {
                 // print("노트 생성기 비동기 생성 시작 2");

@@ -8861,6 +8861,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628069572}
   m_CullTransparentMesh: 1
+--- !u!1 &633724672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633724674}
+  - component: {fileID: 633724673}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &633724673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633724672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50de15283d2523d488af2a75639065d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shortNotePrefab: {fileID: 6441552298659993700, guid: f860cf1dc39d3d74abf49d50a69957c5,
+    type: 3}
+  longNotePrefab: {fileID: 5151792519201553965, guid: 9a907ed76eae2bd4683572dc7c7c56db,
+    type: 3}
+  topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
+  topNoteProjPrefab: {fileID: 8817781799119417882, guid: 854de8c34fdd4ca4499eb4304f615236,
+    type: 3}
+  hitEffectPrefab: {fileID: 8201433479105707240, guid: aa7b60f42746f13408757f44f4d5049a,
+    type: 3}
+--- !u!4 &633724674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633724672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &637887567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44153,7 +44205,7 @@ MonoBehaviour:
   _multiLobbyController: {fileID: 1773322604}
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
-  peopleCount: 2
+  peopleCount: 1
   gamePlayUI: {fileID: 1005297659}
 --- !u!224 &8153908206073060158
 RectTransform:
