@@ -9,12 +9,29 @@ public class PlayerModuleManager : MonoBehaviour
 
     public void SetPlayerModuleData(List<LoadedNoteData> player1SongData, List<LoadedNoteData> player2SongData)
     {
+        GameManager.Instance.noteManagers = new NoteManager[playerModules.Length];
+        GameManager.Instance.noteGenerators = new NoteGenerator[playerModules.Length];
+
         foreach (PlayerModule playerModule in playerModules)
         {
-            List<LoadedNoteData> songData = PhotonNetwork.LocalPlayer.NickName == "Player1" ? player1SongData : player2SongData;
+            List<LoadedNoteData> songData = null;
+            if (playerModule.playerKey == PlayerKey.Player1)
+            {
+                songData = player1SongData;
+                print($"{playerModule.name}의 노래 데이터: player1SongData 고름");
+            }
+            else if (playerModule.playerKey == PlayerKey.Player2)
+            {
+                songData = player2SongData;
+                print($"{playerModule.name}의 노래 데이터: player2SongData 고름");
+            }
+
             playerModule.SetPlayerModuleData(songData);
         }
+
+        print($"플레이어1,2 의 로드된 노트데이터가 같은지?: {playerModules[0].NoteGenerator.loadedNotes.Equals(playerModules[1].NoteGenerator.loadedNotes)}");
     }
+
 
     public Woofer GetPlayerWoofer(int wooferIndex, string nickname)
     {

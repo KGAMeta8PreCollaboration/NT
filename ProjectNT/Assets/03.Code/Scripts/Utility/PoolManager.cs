@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoolManager : Singleton<PoolManager>
 {
@@ -20,23 +21,30 @@ public class PoolManager : Singleton<PoolManager>
     protected override void Awake()
     {
         base.Awake();
-        objectPools = new GameObject();
-        objectPools.name = "ObjectPools";
+        SceneManager.sceneLoaded += (x, y) =>
+        {
+            if (x.name == "MultiGame")
+            {
+                objectPools = new GameObject();
+                objectPools.name = "ObjectPools";
 
-        shortNotePool = new ObjectPool<Note>
-        (shortNotePrefab, 25, objectPools);
+                shortNotePool = new ObjectPool<Note>
+                (shortNotePrefab, 25, objectPools);
 
-        longNotePool = new ObjectPool<Note>
-        (longNotePrefab, 20, objectPools);
+                longNotePool = new ObjectPool<Note>
+                (longNotePrefab, 20, objectPools);
 
-        topNotePool = new ObjectPool<Note>
-        (topNotePrefab, 30, objectPools);
+                topNotePool = new ObjectPool<Note>
+                (topNotePrefab, 30, objectPools);
 
-        topNoteProjPool = new ObjectPool<TopNoteProjectile>
-        (topNoteProjPrefab, 20, objectPools);
+                topNoteProjPool = new ObjectPool<TopNoteProjectile>
+                (topNoteProjPrefab, 20, objectPools);
 
-        hitEffectPool = new ObjectPool<HitEffect>
-        (hitEffectPrefab, 40, objectPools);
+                hitEffectPool = new ObjectPool<HitEffect>
+                (hitEffectPrefab, 40, objectPools);
+            }
+        };
+
 
     }
 
@@ -116,6 +124,10 @@ public class ObjectPool<T> where T : MonoBehaviour
         T popObj;
         if (this.pool.Count <= 0) AddObjectToPool();
         popObj = pool.Dequeue();
+        if (popObj == null)
+        {
+            popObj = pool.Dequeue();
+        }
         popObj.transform.parent = null;
         popObj.gameObject.SetActive(true);
         return popObj;
