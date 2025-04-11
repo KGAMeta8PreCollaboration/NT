@@ -12153,21 +12153,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2765518378280053817, guid: cfcce108c5799834da6f2944592ddd62,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2765518378280053820, guid: cfcce108c5799834da6f2944592ddd62,
         type: 3}
       propertyPath: m_Name
       value: MultiLobbyController
       objectReference: {fileID: 0}
-    - target: {fileID: 2765518378280053822, guid: cfcce108c5799834da6f2944592ddd62,
-        type: 3}
-      propertyPath: photonView
-      value: 
-      objectReference: {fileID: 911387864}
     - target: {fileID: 2765518378280053822, guid: cfcce108c5799834da6f2944592ddd62,
         type: 3}
       propertyPath: _lobbyPlayer
@@ -12245,18 +12235,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfcce108c5799834da6f2944592ddd62, type: 3}
---- !u!114 &911387864 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2765518378280053817, guid: cfcce108c5799834da6f2944592ddd62,
-    type: 3}
-  m_PrefabInstance: {fileID: 911387863}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &911468496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 495756, guid: 5346baac8dbc6264180258de63c49634,
@@ -22338,18 +22316,6 @@ Transform:
   m_Father: {fileID: 2118042479}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1773322604 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2765518378280053822, guid: cfcce108c5799834da6f2944592ddd62,
-    type: 3}
-  m_PrefabInstance: {fileID: 911387863}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e00eb6e306da2604ca01e0215727fcf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1774826892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 479186, guid: c7ae6e8cfca0bfc4493c3ff2af09ef1c,
@@ -44202,11 +44168,12 @@ MonoBehaviour:
   _connectImagePlayer2: {fileID: 8153908204810884958}
   _quitButton: {fileID: 565084105}
   _startButton: {fileID: 2000421599}
-  _multiLobbyController: {fileID: 1773322604}
+  _prevSongButton: {fileID: 1300756535}
+  _nextSongButton: {fileID: 183712986}
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
-  peopleCount: 1
   gamePlayUI: {fileID: 1005297659}
+  peopleCount: 1
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44238,6 +44205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8153908206073060158}
   - component: {fileID: 8153908206073060153}
+  - component: {fileID: 8153908206073060160}
   m_Layer: 5
   m_Name: MultiLobbyUI
   m_TagString: Untagged
@@ -44245,6 +44213,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8153908206073060160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153908206073060159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!224 &8153908206134124772
 RectTransform:
   m_ObjectHideFlags: 0
