@@ -1,0 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.Analytics;
+
+public class NeonEffect : MapEffect<Material>
+{
+    public float targetIntensity;
+    public float targetDuration;
+    public float defaultIntensity;
+    public float defaultDuration;
+    [ColorUsage(false, true)] public Color signs_Albedo_color;
+    [ColorUsage(false, true)] public Color signs_Albedo1_color;
+    [ColorUsage(false, true)] public Color signs_Albedo2_color;
+    [ColorUsage(false, true)] public Color signs_Albedo3_color;
+    [ColorUsage(false, true)] public Color text_Albedo_color;
+    [ColorUsage(false, true)] public Color text_Albedo1_color;
+    [ColorUsage(false, true)] public Color text_Albedo2_color;
+    [ColorUsage(false, true)] public Color text_Albedo3_color;
+    [ColorUsage(false, true)] public Color text_Albedo4_color;
+
+    private void Start()
+    {
+        Init(left, ref leftSequence);
+        Init(right, ref rightSequence);
+    }
+    protected override void Init(List<Material> list, ref Sequence sequence)
+    {
+        sequence = DOTween.Sequence().SetAutoKill(false);
+
+        // Target Intensity 애니메이션
+        for (int i = 0; i < list.Count; i++)
+        {
+            Color targetColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
+            sequence.Join(list[i].DOColor(targetColor * targetIntensity, "_EmissionColor", targetDuration).SetEase(Ease.OutQuint));
+        }
+
+        // Default Intensity 애니메이션
+        for (int i = 0; i < list.Count; i++)
+        {
+            Color defaultColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
+            sequence.Join(list[i].DOColor(defaultColor / defaultIntensity, "_EmissionColor", defaultDuration).SetEase(Ease.InSine));
+        }
+        sequence.Pause();
+    }
+
+    private Color GetSignsAlbedoColor(int index)
+    {
+        return index switch
+        {
+            0 => signs_Albedo_color,
+            1 => signs_Albedo1_color,
+            2 => signs_Albedo2_color,
+            3 => signs_Albedo3_color,
+            _ => Color.black // 기본값
+        };
+    }
+
+    private Color GetTextAlbedoColor(int index)
+    {
+        return index switch
+        {
+            0 => text_Albedo_color,
+            1 => text_Albedo1_color,
+            2 => text_Albedo2_color,
+            3 => text_Albedo3_color,
+            4 => text_Albedo4_color,
+            _ => Color.black // 기본값
+        };
+    }
+
+    public override void LeftEffectInvoke()
+    {
+        leftSequence.Restart();
+    }
+
+    public override void RightEffectInvoke()
+    {
+        rightSequence.Restart();
+    }
+}

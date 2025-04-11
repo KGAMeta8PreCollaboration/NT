@@ -253,7 +253,7 @@ public class NodeContainer : MonoBehaviour
             nodeObj.transform.position = nodeParent.TransformPoint(new Vector3(gridPoint.x, 0.1f, gridPoint.y));
             node.transform.SetParent(nodeParent, true);
             node.transform.localScale = nodeObj.transform.localScale;
-            node.InitializeNode(new Vector2Int(column, beatIndex));
+            //node.InitializeNode(new Vector2Int(column, beatIndex));
             _nodeGrid[column, beatIndex] = node;
             //node.Initialize(column, beatIndex * (60f / _gridManager.BPM));
         }

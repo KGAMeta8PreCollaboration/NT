@@ -33,7 +33,6 @@ public class LongNote : Note
         }
     }
 
-
     private void HandleMissedMilestone()
     {
         if (currentMilestoneIndex >= milestones.Length) return;
@@ -52,14 +51,14 @@ public class LongNote : Note
         currentMilestoneIndex++;
     }
 
-
     private void CalculateMilestones(double duration)
     {
         float beatInterval = (float)60 / (bpm * 4);
         print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
         int combo = Mathf.FloorToInt((float)duration / beatInterval);
         print($"롱노트의 총 콤보 수: {combo}");
-
+        
+        print($"duration : {duration}, beatInterval : {beatInterval}, combo : {combo}");
         divideCount = combo;
 
         milestones = new double[divideCount];
@@ -140,7 +139,7 @@ public class LongNote : Note
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
-
+            EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
             Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;
 

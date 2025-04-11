@@ -21,13 +21,16 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		}
 		foreach (UpperNodeData upperNodeData in beatMapData.upperNodes)
 		{
-			foreach (int nodeIndex in upperNodeData.nodeIndexs)
+			for (int i = 0; i < upperNodeData.nodeIndexs.Count; i++)
 			{
-				LoadedNoteData loadedNoteData = NodeToNoteData(upperNodeData, gridSetting, nodeIndex + 4);
+				LoadedNoteData loadedNoteData = NodeToNoteData(upperNodeData, gridSetting, upperNodeData.nodeIndexs[i] + 4, i);
 				loadedNoteDatas.Add(loadedNoteData);
 			}
 		}
 		
+		// TODO : 임시로 여기서 phase설정해주는겁니다.
+		GameManager.Instance.phase2 = beatMapData.songData.phase2;
+		GameManager.Instance.phase3 = beatMapData.songData.phase3;
 		return loadedNoteDatas;
 	}
 
@@ -43,16 +46,15 @@ public partial class ProjectToLoadedData : MonoBehaviour
 		};
 	}
 
-	private static LoadedNoteData NodeToNoteData(UpperNodeData nodeData, GridSetting gridSetting, int railIndex)
+	private static LoadedNoteData NodeToNoteData(UpperNodeData nodeData, GridSetting gridSetting, int railIndex, int nodeIndex)
 	{
-		return new LoadedNoteData
-		{
-			noteType = NoteType.Top,
-			time = 60 * nodeData.gridIndex / (gridSetting.BeatNum * gridSetting.BPM),
-			endTime = 0,
-			railIndex = railIndex,
-			noteAudioClipName = "",
-		};
+		LoadedNoteData loadedNoteData = new LoadedNoteData();
+		loadedNoteData.noteType = NoteType.Top;
+		loadedNoteData.time = 60 * nodeData.gridIndex / (gridSetting.BeatNum * gridSetting.BPM);
+		loadedNoteData.endTime = 0;
+		loadedNoteData.railIndex = railIndex;
+		loadedNoteData.noteAudioClipName = nodeData.keySounds[nodeIndex];
+		return loadedNoteData;
 	}
 
 }
@@ -65,19 +67,19 @@ public partial class ProjectToLoadedData
 	// Projects/{ProjectName}/KeySounds
 	public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
 	{
-		print("프로젝트 겟 오디오클립 1");
+		// print("프로젝트 겟 오디오클립 1");
 		projectPath = Path.Combine(projectPath, "KeySounds");
-		if (!Directory.Exists(projectPath)) return;
-		print("프로젝트 겟 오디오클립 2");
+		if (!Directory.Exists(projectPath))
+			return;
+		// print("프로젝트 겟 오디오클립 2");
 		string[] strings = Directory.GetFiles(projectPath);
 		List<AudioClip> res = new List<AudioClip>();
-		print("프로젝트 겟 오디오클립 3");
+		// print("프로젝트 겟 오디오클립 3");
 		foreach (string item in strings)
 		{
 			try
 			{
-				byte[] wavData = File.ReadAllBytes(item);
-				AudioClip audioClip = WavUtility.WavToAudioClip(wavData, Path.GetFileName(item));
+				AudioClip audioClip = WavUtility.WavToAudioClip(File.ReadAllBytes(item), Path.GetFileName(item));
 				AddAudioClip(audioClip);
 			}
 			catch (ArgumentException e)
@@ -86,26 +88,26 @@ public partial class ProjectToLoadedData
 				throw;
 			}
 		}
-		print("프로젝트 겟 오디오클립 4");
+		// print("프로젝트 겟 오디오클립 4");
 
 		returnCallback?.Invoke(audioClips);
-		print("프로젝트 겟 오디오클립 5");
+		// print("프로젝트 겟 오디오클립 5");
 	}
 
 	private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
 
 	public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
 	{
-		Debug.Log("프로젝트 BGM 로드 1");
+		// Debug.Log("프로젝트 BGM 로드 1");
 		projectPath = Path.Combine(projectPath, "bgmSaveFile", "MainTheme.wav");
-		Debug.Log($"bgm 경로 : {projectPath}");
+		// Debug.Log($"bgm 경로 : {projectPath}");
 		if (!File.Exists(projectPath)) return;
 		AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
-		Debug.Log("프로젝트 BGM 로드 2");
+		// Debug.Log("프로젝트 BGM 로드 2");
 		bgmAudioClip = clip;
-		Debug.Log("프로젝트 BGM 로드 3");
+		// Debug.Log("프로젝트 BGM 로드 3");
 		returnCallback?.Invoke(clip);
-		Debug.Log("프로젝트 BGM 로드 SetBGM 실행함");
+		// Debug.Log("프로젝트 BGM 로드 SetBGM 실행함");
 		// StartCoroutine(BGMWebRequest(projectPath, returnCallback));
 	}
 

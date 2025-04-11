@@ -25,6 +25,7 @@ public class TopNote : Note
         leftTrigger.action.performed += Hit;
         rightTrigger.action.performed += Hit;
         isIndicatorOn = false;
+        gameObject.tag = "Untagged";
     }
     private void OnDisable()
     {
@@ -50,6 +51,7 @@ public class TopNote : Note
     }
     public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
+        print($"상단 노트 : {noteSpawnData.hitSound}");
         base.Init(target, noteSpawnData);
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
@@ -68,8 +70,8 @@ public class TopNote : Note
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
         OnHit = null;
-
-        AudioManager.Instance.Play(hitSound, transform);
+        EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)
@@ -93,7 +95,7 @@ public class TopNote : Note
         OnHit?.Invoke(this);
         OnHit = null;
 
-        AudioManager.Instance.Play(hitSound, transform);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)
@@ -118,6 +120,7 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = true;
+            gameObject.tag = "TopNote";
         }
         if (other.CompareTag("Woofer"))
         {
@@ -130,6 +133,7 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = false;
+            gameObject.tag = "Untagged";
         }
     }
 

@@ -22,6 +22,9 @@ public class MultiLobbyUI : MonoBehaviour
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
+    
+    public GamePlayUI gamePlayUI;
+    
     private void Start()
     {
         _popupManager = FindObjectOfType<PopupManager>();
@@ -78,7 +81,8 @@ public class MultiLobbyUI : MonoBehaviour
         if (_startGameCoroutine != null && PhotonNetwork.MasterClient.IsLocal && PhotonNetwork.PlayerList.Length == peopleCount) // 취소되지 않았는지 확인
         {
             //PhotonNetwork.LoadLevel("LSH_MultiGame");
-            GameManager.Instance.MultiGameStart();
+            var data = gamePlayUI.GetMultiGameStartData();
+            GameManager.Instance.MultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
         }
     }
 

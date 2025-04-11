@@ -1756,11 +1756,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2557165577027761384, guid: c76c9b96609123747be2d94d0c4f92a9,
+        type: 3}
+      propertyPath: poolSize
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2557165577027761385, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: _bgmAudioSource
       value: 
       objectReference: {fileID: 112030152}
+    - target: {fileID: 2557165577027761386, guid: c76c9b96609123747be2d94d0c4f92a9,
+        type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2557165577027761386, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: m_audioClip
@@ -1828,8 +1838,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4444866515538181206, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
+      propertyPath: skipLobby
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444866515538181206, guid: c76c9b96609123747be2d94d0c4f92a9,
+        type: 3}
       propertyPath: gameSceneName
-      value: YKD_TmpGameScene
+      value: YKD_GameScene
       objectReference: {fileID: 0}
     - target: {fileID: 4444866515538181207, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
@@ -44138,7 +44153,8 @@ MonoBehaviour:
   _multiLobbyController: {fileID: 1773322604}
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
-  peopleCount: 1
+  peopleCount: 2
+  gamePlayUI: {fileID: 1005297659}
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class NoteAudioScheduler : MonoBehaviour
@@ -7,9 +8,10 @@ public class NoteAudioScheduler : MonoBehaviour
 	private Woofer _woofer;
 	private List<(double time, AudioClip clip)> _scheduledAudioData = new List<(double, AudioClip)>();
 
-	private void Awake()
+	private void Start()
 	{
 		_woofer = GetComponentInChildren<Woofer>();
+		Debug.Log("NoteAudioScheduler Awake");
 	}
 
 	private List<(double time, AudioClip clip)> LoadedNoteDataToTuple(List<LoadedNoteData> sortedNotes)
@@ -28,9 +30,12 @@ public class NoteAudioScheduler : MonoBehaviour
 		return ret;
 	}
 
-	public void Init(List<LoadedNoteData> sortedNotes) {
+	public void Init(List<LoadedNoteData> sortedNotes)
+	{
+		print("NoteAudioScheduler Init, sortedNotes.size() = " + sortedNotes.Count);
 		_scheduledAudioData.Clear();
 		_scheduledAudioData = LoadedNoteDataToTuple(sortedNotes);
+		print("_scheduledAudioData size : " + _scheduledAudioData.Count);
 		if (_scheduledAudioData.Count > 0)
 			_woofer.SetAudioClip(_scheduledAudioData[0].clip);
 	}
@@ -54,6 +59,10 @@ public class NoteAudioScheduler : MonoBehaviour
 		if (normalizedTime >= transitionPoint)
 		{
 			_woofer.SetAudioClip(nextData.clip);
+			// AudioManager.Instance.SetBackgroundMusic(nextData.clip);
+			// AudioManager.Instance.StartBGM(0.1f);
+			
+			// print(nextData.clip.name);
 			_scheduledAudioData.RemoveAt(0);
 		}
 	}

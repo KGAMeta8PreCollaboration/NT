@@ -60,6 +60,21 @@ public class NoteGenerator : MonoBehaviour
     {
         print("NoteGenerator 시작~~~~~~~~~~");
         this.loadedNotes = loadedNotes;
+        // for (int i = 0; i < loadedNotes.Count; i++)
+        // {
+        //     if (loadedNotes[i].noteType == NoteType.Top)
+        //     {
+        //         print($"NOTEINIT Top : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        //     else if (loadedNotes[i].noteType == NoteType.Long)
+        //     {
+        //         print($"NOTEINIT Long : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        //     else
+        //     {
+        //         print($"NOTEINIT Short : {loadedNotes[i].noteAudioClipName}");
+        //     }
+        // }
 
         Init();
     }
@@ -99,6 +114,7 @@ public class NoteGenerator : MonoBehaviour
     private async Task CheckAndGenerateNotesAsync()
     {
         print("노트 생성기 비동기 생성 시작 1");
+        print($"노트 갯수 : {_loadedNotes.Count}");
         while (Application.isPlaying && _loadedNotes.Count > 0)
         {
             double currentTime = AudioSettings.dspTime;

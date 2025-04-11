@@ -34,7 +34,7 @@ public class NoteRail : MonoBehaviour
         note.OnHit += OnNoteHit;
         if (noteList.Count == 1)
         {
-            // woofer.SetAudioClip(note.hitSound);
+            woofer.SetAudioClip(note.hitSound);
         }
     }
 
@@ -50,7 +50,7 @@ public class NoteRail : MonoBehaviour
             var firstNote = noteList.First?.Value;
             if (firstNote != null)
             {
-                // woofer.SetAudioClip(firstNote.hitSound);
+                woofer.SetAudioClip(firstNote.hitSound);
             }
         }
     }

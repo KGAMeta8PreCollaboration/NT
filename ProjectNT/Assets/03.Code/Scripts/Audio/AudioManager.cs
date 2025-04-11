@@ -17,13 +17,11 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
 		base.Awake();
-		foreach (AudioClip item in audioClips)
-			item.LoadAudioData();
 		_audioPool = GetComponent<AudioPool>();
 		StartCoroutine(CheckAudioPlayTime());
 	}
-	
-	
+
+
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		_bgmAudioSource?.Stop();
@@ -33,7 +31,7 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		noteGenerators = FindObjectsOfType<NoteGenerator>(true);
 	}
-	
+
 	public void Play(AudioClip clip, Transform transform)
 	{
 		if (_audioPool == null)
@@ -48,6 +46,11 @@ public class AudioManager : Singleton<AudioManager>
 		// audioSource.Play();
 		audioSource.PlayScheduled(playTime);
 		// audioSource.PlayOneShot(clip);
+	}
+
+	public void Play(string clipName, Transform transform)
+	{
+		Play(GetAudioClipAtString(clipName), transform);
 	}
 
 	private IEnumerator CheckAudioPlayTime()
@@ -96,12 +99,16 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		ReturnUnusedAudioSources();
 	}
-	
+
 	public void SetAudioClips(List<AudioClip> clips)
 	{
 		audioClips = clips;
+		foreach (AudioClip item in audioClips)
+		{
+			item.LoadAudioData();
+		}
 	}
-	
+
 	public void SetBackgroundMusic(AudioClip clip)
 	{
 		print("오디오매니저 SetBackgroundMusic");
