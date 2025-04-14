@@ -31,25 +31,48 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine _collisionStayCoroutine = null;
 
+    private PhotonView _photonView;
+
     private void Awake()
     {
         _controller = GetComponentInParent<ActionBasedController>();
         rayInter = _controller.GetComponentInChildren<XRRayInteractor>();
         rayInter.GetComponent<XRInteractorLineVisual>().enabled = false;
+
+        // 멀티일 때만 PhotonView 찾기
+        if (GameManager.Instance.IsMulti)
+        {
+            _photonView = GetComponentInParent<PhotonView>();
+        }
     }
     private void OnEnable()
     {
-        _controller.activateAction.action.performed += ParclePlay;
-        _controller.activateAction.action.performed += OnTopNoteHit;
-        hapticDelegate += _controller.SendHapticImpulse;
+        if (HandleMode())
+        {
+            _controller.activateAction.action.performed += ParclePlay;
+            _controller.activateAction.action.performed += OnTopNoteHit;
+            hapticDelegate += _controller.SendHapticImpulse;
+        }
+
         GameManager.Instance.OnGameEnd += PlayerGameEndAction;
     }
+
     private void OnDisable()
     {
-        _controller.activateAction.action.performed -= ParclePlay;
-        _controller.activateAction.action.performed -= OnTopNoteHit;
-        hapticDelegate -= _controller.SendHapticImpulse;
+        if (HandleMode())
+        {
+            _controller.activateAction.action.performed -= ParclePlay;
+            _controller.activateAction.action.performed -= OnTopNoteHit;
+            hapticDelegate -= _controller.SendHapticImpulse;
+        }
+
         GameManager.Instance.OnGameEnd -= PlayerGameEndAction;
+    }
+
+    private bool HandleMode()
+    {
+        if (!GameManager.Instance.IsMulti) return true; // 싱글모드
+        return _photonView != null && _photonView.IsMine; // 멀티모드 -> 내 컨트롤러만
     }
     private void ParclePlay(InputAction.CallbackContext cnt)
     {

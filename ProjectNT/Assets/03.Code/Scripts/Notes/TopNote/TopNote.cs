@@ -61,10 +61,10 @@ public class TopNote : Note
     public void Hit()
     {
 
-        if (false == canInter || false == xRSimInter.isHovered)
-        {
-            return;
-        }
+        //if (false == canInter || false == xRSimInter.isHovered)
+        //{
+        //    return;
+        //}
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
