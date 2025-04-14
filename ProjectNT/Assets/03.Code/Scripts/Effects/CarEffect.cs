@@ -32,6 +32,7 @@ public class CarEffect : MapEffect<GameObject>
     private void CarDoTween(Vector3 startPos, Vector3 endPos)
     {
         CarObject obj = PoolManager.Instance.carEffectPool.Pop();
+        obj.CarMaterial = carMaterials[UniRan.Range(0, carMaterials.Count)];
         obj.transform.position = startPos;
         obj.transform.DOMove(endPos, targetDuration).SetEase(Ease.OutQuart);
     }

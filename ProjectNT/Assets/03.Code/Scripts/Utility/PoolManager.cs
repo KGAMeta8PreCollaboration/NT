@@ -20,12 +20,12 @@ public class PoolManager : Singleton<PoolManager>
     public ObjectPool<CarObject> carEffectPool;
 
     [Header("풀에 미리 생성해 둘 오브젝트 갯수")]
-    public int shortNoteSurplusCount = 50;
-    public int longNoteSurplusCount = 50;
-    public int topNoteSurplusCount = 50;
-    public int projectileSurplusCount = 50;
-    public int hitEffectSurplusCount = 50;
-    public int carEffectSurplusCount = 30;
+    public int shortNoteSurplusCount = 40;
+    public int longNoteSurplusCount = 30;
+    public int topNoteSurplusCount = 30;
+    public int projectileSurplusCount = 30;
+    public int hitEffectSurplusCount = 40;
+    public int carEffectSurplusCount = 10;
 
     protected override void Awake()
     {

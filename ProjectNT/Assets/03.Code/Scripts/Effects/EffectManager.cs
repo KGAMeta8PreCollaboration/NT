@@ -59,18 +59,16 @@ public class EffectManager : Singleton<EffectManager>
 
         if (note.judgementType == JudgementType.PERFECT)
         {
-            Test<LightEffect>();
+            GenericEffectOn<LightEffect>();
         }
-        Debug.LogError(combo);
         if (combo % 10 == 0)
         {
-            Test<NeonEffect>();
-            Debug.LogError("!!");
+            GenericEffectOn<NeonEffect>();
         }
 
         if (combo % 20 == 0)
         {
-            Test<CarEffect>();
+            GenericEffectOn<CarEffect>();
         }
 
         if (note is TopNote)
@@ -79,7 +77,7 @@ public class EffectManager : Singleton<EffectManager>
         }
     }
 
-    public void Test<T>()
+    public void GenericEffectOn<T>()
     {
         Type effectType = typeof(T);
         if (effects.TryGetValue(effectType, out var effectDelegate))
