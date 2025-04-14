@@ -183,7 +183,8 @@ public class PlayerController : MonoBehaviour
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
                 _controller.SendHapticImpulse(0.8f, 0.15f);
-                topNote.Hit();
+                if (!GameManager.Instance.IsMulti) topNote.Hit();
+                else _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }

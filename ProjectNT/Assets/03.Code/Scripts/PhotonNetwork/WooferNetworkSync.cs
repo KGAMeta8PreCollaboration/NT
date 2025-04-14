@@ -25,9 +25,10 @@ public class WooferNetworkSync : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void RPC_TopNoteHit()
+    private void RPC_TopNoteHit(int railIndex, string nickname)
     {
-
+        TopNote topNote = GameManager.Instance.MultiGameController.GetPlayerTopNote(railIndex, nickname);
+        topNote.Hit();
     }
 
     // 로컬에서 명령 보낼 때 호출
@@ -51,6 +52,7 @@ public class WooferNetworkSync : MonoBehaviourPun
 
     public void SendTopNoteHit(TopNote topNote, string nickname)
     {
-
+        int railIndex = GameManager.Instance.MultiGameController.GetTopNoteIndex(topNote, nickname);
+        photonView.RPC(nameof(RPC_TopNoteHit), RpcTarget.All, railIndex, nickname);
     }
 }

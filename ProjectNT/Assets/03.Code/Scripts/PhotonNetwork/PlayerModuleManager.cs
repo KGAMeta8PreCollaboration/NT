@@ -72,4 +72,42 @@ public class PlayerModuleManager : MonoBehaviour
         Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}");
         return -1;
     }
+
+    public TopNote GetPlayerTopNote(int index, string nickname)
+    {
+        foreach (PlayerModule module in playerModules)
+        {
+            if (module.playerKey.ToString() == nickname)
+            {
+                LinkedList<Note> noteList = module.TopNoteRails[index].GetNoteList();
+                if (noteList.First != null && noteList.First.Value is TopNote topNote)
+                    return topNote;
+            }
+        }
+
+        Debug.LogWarning($"[MultiGameController] TopNote를 찾을 수 없습니다. 인덱스: {index}, 닉네임: {nickname}");
+        return null;
+    }
+
+    public int GetTopNoteIndex(TopNote topNote, string nickname)
+    {
+        foreach (PlayerModule module in playerModules)
+        {
+            if (module.playerKey.ToString().Equals(nickname))
+            {
+                for (int i = 0; i < module.TopNoteRails.Count; i++)
+                {
+                    LinkedList<Note> noteList = module.TopNoteRails[i].GetNoteList();
+                    foreach (Note note in noteList)
+                    {
+                        if (note == topNote)
+                            return i;
+                    }
+                }
+            }
+        }
+
+        Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
+        return -1;
+    }
 }
