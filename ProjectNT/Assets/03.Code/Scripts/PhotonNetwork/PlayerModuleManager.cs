@@ -39,7 +39,7 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.owner.Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
         }
 
         if (module != null)
@@ -57,7 +57,7 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.owner.Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
         }
 
         if (module != null)
