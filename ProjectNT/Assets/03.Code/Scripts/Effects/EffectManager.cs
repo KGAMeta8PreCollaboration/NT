@@ -65,7 +65,6 @@ public class EffectManager : Singleton<EffectManager>
         {
             GenericEffectOn<NeonEffect>();
         }
-
         if (combo % 20 == 0)
         {
             GenericEffectOn<CarEffect>();

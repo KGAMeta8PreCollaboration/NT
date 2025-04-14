@@ -102,11 +102,11 @@ public class GameSceneMove : MonoBehaviour
                 break;
             }
 
-            movingObject.transform.position = curPos;//오브젝트를 이동
+            movingObject.transform.localPosition = curPos;//오브젝트를 이동
 
             yield return null;
         }
-        movingObject.transform.position = endPos;
+        movingObject.transform.localPosition = endPos;
 
         Debug.Log($"{testNum}번째 이동 종료");
     }
