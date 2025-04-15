@@ -34,7 +34,27 @@ public class GameManager : Singleton<GameManager>
     public float phase2;
     public float phase3;
 
+    private Enums.PlayMode playMode;
+    public Enums.PlayMode PlayMode
+    {
+        get { return playMode; }
+        set
+        {
+            playMode = value;
+            EffectManager.Instance.SetPlayMode(playMode);
+        }
+    }
+    private Enums.Phase phase;
+    public Enums.Phase Phase
+    {
+        get { return phase; }
+        set
+        {
+            phase = value;
 
+        }
+    }
+    IEnumerator phaseEnumerator;
     private void Start()
     {
         if (skipLobby)
@@ -50,6 +70,7 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+        phaseEnumerator = PhaseTracker();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -59,6 +80,7 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
+            PlayMode = Enums.PlayMode.Single;
         }
         else if (scene.name == "MultiGame")
         {
@@ -74,6 +96,15 @@ public class GameManager : Singleton<GameManager>
             //MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
+        }
+    }
+
+    private IEnumerator PhaseTracker()
+    {
+        double dspTime = AudioSettings.dspTime;
+        while (true)
+        {
+
         }
     }
 
@@ -105,7 +136,6 @@ public class GameManager : Singleton<GameManager>
         PhotonNetwork.LoadLevel("MultiGame");
     }
 
-
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
     public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
@@ -135,6 +165,7 @@ public class GameManager : Singleton<GameManager>
     {
         print("게임매니저 게임스타트");
         AudioManager.Instance.StartBGM(delayTime);
+        StartCoroutine(phaseEnumerator);
         FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
     }
 
@@ -150,6 +181,7 @@ public class GameManager : Singleton<GameManager>
         print("Game End");
         OnGameEnd?.Invoke();
         OnGameEnd = null;
+        StopCoroutine(phaseEnumerator);
     }
 
     public bool CheckGameEnd()

@@ -1,41 +1,53 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 [Serializable]
-public class GameSceneMoveAndTime
+public class MapmovePosTime
 {
-    public GameObject startPos;
-    public GameObject endPos;
+    public Transform endPos;
+    public Transform NextPos;
     public float travelTime;
 }
 
 public class GameSceneMove : MonoBehaviour
 {
-    public GameObject movingObject;
+    public Transform movingObject;
     public GameSceneLightController lightController;
 
-    public GameSceneMoveAndTime first;
-    public GameSceneMoveAndTime second;
-    public GameSceneMoveAndTime third;
+    public MapmovePosTime first;
+    public MapmovePosTime second;
+    public MapmovePosTime third;
 
     private int testNum = 0;
     private Action action;
+
+    private Sequence moveSequence;
 
     // private void Start()
     // {
     //     GameSceneMoveAndLightStart();
     // }
-
+    private void Awake()
+    {
+        moveSequence = DOTween.Sequence().SetAutoKill(false);
+    }
+    private void SetSequence(MapmovePosTime posNtime)
+    {
+        moveSequence.Append(movingObject.DOMove(posNtime.endPos.position, posNtime.travelTime)).
+                    Append(movingObject.DOMove(posNtime.NextPos.position, 0.5f));
+    }
     public void GameSceneMoveAndLightStart()//이 함수불러서 이동 바로시작
     {
         //StartCoroutine(TestOnLight());//얜 테스트용입니다
-        StartCoroutine(MoveStart());
+        // StartCoroutine(MoveStart());
         //게임시작과동시에 실행할때 다른것도하는게많아서그런지
         //코루틴이 조금늦게시작함 한 2초정도
         //빛을키고싶을때 lightController.OnLight(); 를 호출하면 됨
         //빛강도, 시간은 인스펙터에서 조정가능
+
     }
 
     private IEnumerator MoveStart()
@@ -63,12 +75,12 @@ public class GameSceneMove : MonoBehaviour
         Debug.Log("종료");
     }
 
-    public IEnumerator MoveToPos(GameSceneMoveAndTime posAndTime)
+    public IEnumerator MoveToPos(MapmovePosTime posAndTime)
     {
         testNum++;
         Debug.Log($"{testNum}번째 이동 시작");
 
-        Vector3 startPos = posAndTime.startPos.transform.position;
+        Vector3 startPos = posAndTime.endPos.transform.position;
         Vector3 endPos = posAndTime.endPos.transform.position;
         float travelTime = posAndTime.travelTime;
 

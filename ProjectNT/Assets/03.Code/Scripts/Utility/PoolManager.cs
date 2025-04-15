@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoolManager : Singleton<PoolManager>
 {
@@ -30,26 +32,32 @@ public class PoolManager : Singleton<PoolManager>
     protected override void Awake()
     {
         base.Awake();
-        objectPools = new GameObject();
-        objectPools.name = "ObjectPools";
+        SceneManager.sceneLoaded += (scene, sceneMode) =>
+        {
+            if (scene.name == GameManager.Instance.gameSceneName)
+            {
+                objectPools = new GameObject();
+                objectPools.name = "ObjectPools";
 
-        shortNotePool = new ObjectPool<Note>
-        (shortNotePrefab, shortNoteSurplusCount, objectPools);
+                shortNotePool = new ObjectPool<Note>
+                (shortNotePrefab, shortNoteSurplusCount, objectPools);
 
-        longNotePool = new ObjectPool<Note>
-        (longNotePrefab, longNoteSurplusCount, objectPools);
+                longNotePool = new ObjectPool<Note>
+                (longNotePrefab, longNoteSurplusCount, objectPools);
 
-        topNotePool = new ObjectPool<Note>
-        (topNotePrefab, topNoteSurplusCount, objectPools);
+                topNotePool = new ObjectPool<Note>
+                (topNotePrefab, topNoteSurplusCount, objectPools);
 
-        topNoteProjPool = new ObjectPool<TopNoteProjectile>
-        (topNoteProjPrefab, projectileSurplusCount, objectPools);
+                topNoteProjPool = new ObjectPool<TopNoteProjectile>
+                (topNoteProjPrefab, projectileSurplusCount, objectPools);
 
-        hitEffectPool = new ObjectPool<HitEffect>
-        (hitEffectPrefab, hitEffectSurplusCount, objectPools);
+                hitEffectPool = new ObjectPool<HitEffect>
+                (hitEffectPrefab, hitEffectSurplusCount, objectPools);
 
-        carEffectPool = new ObjectPool<CarObject>
-        (carPrefab, carEffectSurplusCount, objectPools);
+                carEffectPool = new ObjectPool<CarObject>
+                (carPrefab, carEffectSurplusCount, objectPools);
+            }
+        };
 
     }
 
