@@ -72,4 +72,12 @@ public class UpperNode : MonoBehaviour, IPointerEnterHandler
             print($"현재 상단 노드 키사운드 : {_keySound}");
         }
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_keySound != null)
+        {
+            print($"현재 상단 노드 키사운드 : {_keySound}");
+        }
+    }
 }
