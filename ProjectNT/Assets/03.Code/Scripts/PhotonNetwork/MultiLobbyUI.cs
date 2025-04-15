@@ -70,6 +70,7 @@ public class MultiLobbyUI : MonoBehaviourPun
         if (_startGameCoroutine != null)
         {
             StopCoroutine(_startGameCoroutine);
+            _startGameCoroutine = null;
         }
 
         CountStartGameActive(true);

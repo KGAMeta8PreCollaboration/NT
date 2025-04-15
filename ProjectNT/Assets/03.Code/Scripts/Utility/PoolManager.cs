@@ -32,9 +32,13 @@ public class PoolManager : Singleton<PoolManager>
     protected override void Awake()
     {
         base.Awake();
-        SceneManager.sceneLoaded += (scene, sceneMode) =>
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += (x, y) =>
         {
-            if (scene.name == GameManager.Instance.gameSceneName)
+            if (x.name == "MultiGame" || x.name == "GameScene2")
             {
                 objectPools = new GameObject();
                 objectPools.name = "ObjectPools";
@@ -54,11 +58,11 @@ public class PoolManager : Singleton<PoolManager>
                 hitEffectPool = new ObjectPool<HitEffect>
                 (hitEffectPrefab, hitEffectSurplusCount, objectPools);
 
-                carEffectPool = new ObjectPool<CarObject>
-                (carPrefab, carEffectSurplusCount, objectPools);
+                //carEffectPool = new ObjectPool<CarObject>
+                //(carPrefab, carEffectSurplusCount, objectPools);
+
             }
         };
-
     }
 
     public Note PopNote(Note note)

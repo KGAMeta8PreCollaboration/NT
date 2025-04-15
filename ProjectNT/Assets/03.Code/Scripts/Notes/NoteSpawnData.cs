@@ -28,11 +28,13 @@ public class LongNoteSpawnData : NoteSpawnData
 public class TopNoteSpawnData : NoteSpawnData
 {
     public double targetDspTime;
+    public string myTag;
 
-    public TopNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double targetDspTime, Quaternion rotation)
+    public TopNoteSpawnData(Note notePrefab, AudioClip hitSound, double spawnDspTime, double targetDspTime, Quaternion rotation, string myTag)
         : base(notePrefab, hitSound, spawnDspTime, rotation)
     {
         this.targetDspTime = targetDspTime;
+        this.myTag = myTag;
     }
 }
 
