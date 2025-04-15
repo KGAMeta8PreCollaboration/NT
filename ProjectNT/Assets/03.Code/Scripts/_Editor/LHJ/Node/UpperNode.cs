@@ -18,7 +18,7 @@ public class UpperNode : MonoBehaviour, IPointerEnterHandler
     private Image _image;
     public string _keySound;
 
-    public int Index {  get { return _index; } }
+    public int Index { get { return _index; } }
 
     private void Awake()
     {
@@ -73,11 +73,4 @@ public class UpperNode : MonoBehaviour, IPointerEnterHandler
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (_keySound != null)
-        {
-            print($"현재 상단 노드 키사운드 : {_keySound}");
-        }
-    }
 }

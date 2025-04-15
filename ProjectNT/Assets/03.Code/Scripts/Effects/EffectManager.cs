@@ -131,6 +131,7 @@ public class EffectManager : Singleton<EffectManager>
             light.player1Delegate += light.LeftEffectInvoke;
             neon.player1Delegate += neon.LeftEffectInvoke;
             car.player1Delegate += car.LeftEffectInvoke;
+            Debug.LogError("LEFT맵이펙트 등록");
         }
 
         if (playMode == Enums.PlayMode.Player2 || playMode == Enums.PlayMode.Single)
@@ -138,6 +139,7 @@ public class EffectManager : Singleton<EffectManager>
             light.player2Delegate += light.RightEffectInvoke;
             neon.player2Delegate += neon.RightEffectInvoke;
             car.player2Delegate += car.RightEffectInvoke;
+            Debug.LogError("RIGHT맵이펙트 등록");
         }
 
         if (playMode != Enums.PlayMode.Player1 &&

@@ -137,6 +137,7 @@ public class GameManager : Singleton<GameManager>
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
+        playMode = Enums.PlayMode.Single;
         SceneManager.LoadScene(gameSceneName);
     }
 
