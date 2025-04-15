@@ -12,6 +12,7 @@ public class NoteSpawner : MonoBehaviour
         NoteInit(newNote, noteSpawnData.rotation);
         if (newNote == null)
             return;
+
         newNote.Init(target, noteSpawnData, transform);
         onAddNote?.Invoke(newNote);
         onAddNote = null;

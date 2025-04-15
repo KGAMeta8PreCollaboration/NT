@@ -182,6 +182,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
         string fileName = Path.GetFileName(ProjectData.bgmPath);
         string[] extension = fileName.Split('.');
         bgmDestPath = Path.Combine(bgmSavePath, "MainTheme" + '.' + extension[1]);
+        Debug.LogError(bgmDestPath);
         if (Directory.Exists(bgmSavePath))
         {
             Directory.Delete(bgmSavePath, true);

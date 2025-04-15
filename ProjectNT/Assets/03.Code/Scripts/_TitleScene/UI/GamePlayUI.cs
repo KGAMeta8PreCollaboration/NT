@@ -110,32 +110,72 @@ public class GamePlayUI : BaseTitleUI
 
     public void StartGame()
     {
+        print("게임시작 버튼 클릭");
+        
+        print(gameType);
         //curMusicData 로 노래가지고 게임시작 로직
         if (gameType == UIGameType.Muliti)
         {
+            print("멀티 게임플레이 UI");
             //멀티플레이시 노래시작
         }
         else
         {
-            string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
-            string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
-
-            BeatMapData beatMapData = GetBeatMapData(projectPath, GetCurrentDifficulty());
-            GameManager.Instance.SingleGameStart(beatMapData, projectPath, musicChangeSelect.currentMusicNode.Value.musicName);
+            (BeatMapData beatMapData, string projectPath, string musicName) data = GetGameStartData();
+            GameManager.Instance.SingleGameStart(data.beatMapData, data.projectPath, data.musicName);
         }
     }
     
-    private BeatMapData GetBeatMapData(string projectPath, Difficulty difficulty)
+    public (BeatMapData beatMapData, string projectPath, string musicName) GetGameStartData()
     {
-        Enums.ModeDiff modeDiff = difficulty switch
+        string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
+        string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
+        
+        Enums.ModeDiff modeDiff = GetCurrentDifficulty() switch
         {
             Difficulty.Easy => Enums.ModeDiff.SOLO_EASY,
             Difficulty.Normal => Enums.ModeDiff.SOLO_NORMAL,
             Difficulty.Hard => Enums.ModeDiff.SOLO_HARD,
             Difficulty.SuperHard => Enums.ModeDiff.SOLO_EXTREAM,
-            _ => Enums.ModeDiff.SOLO_EASY
+            _ => Enums.ModeDiff.SOLO_EASY,
         };
-        string difficultyPath = Path.Combine(projectPath,"BeatMapData", modeDiff.ToString());
+        BeatMapData beatMapData = GetBeatMapData(projectPath, modeDiff);
+        string musicName = musicChangeSelect.currentMusicNode.Value.musicName;
+        return (beatMapData, projectPath, musicName);
+    }
+    
+    public (BeatMapData beatMapData1, BeatMapData beatMapData2, string projectPath, string musicName) GetMultiGameStartData()
+    {
+        string projectName = musicChangeSelect.currentMusicNode.Value.projectName;
+        string projectPath = Path.Combine(Application.persistentDataPath, "Projects", projectName);
+        
+        Enums.ModeDiff modeDiff1 = GetCurrentDifficulty() switch
+        {
+            Difficulty.Easy => Enums.ModeDiff.DUO1_EASY,
+            Difficulty.Normal => Enums.ModeDiff.DUO1_NORMAL,
+            Difficulty.Hard => Enums.ModeDiff.DUO1_HARD,
+            Difficulty.SuperHard => Enums.ModeDiff.DUO1_EXTREAM,
+            _ => Enums.ModeDiff.DUO1_EASY,
+        };
+        Enums.ModeDiff modeDiff2 = GetCurrentDifficulty() switch
+        {
+            Difficulty.Easy => Enums.ModeDiff.DUO2_EASY,
+            Difficulty.Normal => Enums.ModeDiff.DUO2_NORMAL,
+            Difficulty.Hard => Enums.ModeDiff.DUO2_HARD,
+            Difficulty.SuperHard => Enums.ModeDiff.DUO2_EXTREAM,
+            _ => Enums.ModeDiff.DUO2_EASY,
+        };
+
+        
+        BeatMapData beatMapData1 = GetBeatMapData(projectPath, modeDiff1);
+        BeatMapData beatMapData2 = GetBeatMapData(projectPath, modeDiff2);
+        string musicName = musicChangeSelect.currentMusicNode.Value.musicName;
+        return (beatMapData1, beatMapData2, projectPath, musicName);
+    }
+    
+    private BeatMapData GetBeatMapData(string projectPath, Enums.ModeDiff mode)
+    {
+        string difficultyPath = Path.Combine(projectPath,"BeatMapData", mode.ToString());
         if (!File.Exists(difficultyPath))
         {
             Debug.LogError("BeatMapData not found at path: " + difficultyPath);

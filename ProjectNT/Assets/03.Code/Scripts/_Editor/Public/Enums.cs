@@ -43,4 +43,11 @@ public class Enums
         FILEDETECTIONFAIL,
         EDITORQUIT
     }
+
+    public enum PlayMode
+    {
+        Host,
+        Client,
+        Both
+    }
 }

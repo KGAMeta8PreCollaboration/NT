@@ -13,6 +13,12 @@ public class LowNodeState : INodeState
 
     public void OnLeftClick(Vector2Int position)
     {
+        if (EditorDataManager.Instance.CurKeySoundName == "")
+        {
+            Debug.LogWarning("키음 없음");
+            return;
+        }
+
         _nct.CreateLowNode(position);
     }
 

@@ -5,20 +5,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MultiGameController : MonoBehaviourPunCallbacks
+public class MultiGameController : MonoBehaviour
 {
-    [SerializeField] private Transform[] _spawnPointPlayers;
+    private PlayerModuleManager _playerModuleManager;
+    private PlayerReadyManager _playerReadyManager;
 
-    private void Start()
+    private void Awake()
     {
-        Transform playerTransform = GetPlayerSpawnPoint();
-        GameManager.Instance.PhotonManager.SpawnPlayer("Multi/GamePlayer", playerTransform);
-        GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
+        Init();
     }
 
     private void OnDestroy()
     {
         GameManager.Instance.PhotonManager.disconnectedServer -= GotoLobbyScene;
+        _playerReadyManager.AllPlayersReady -= StartGameForAll;
+    }
+
+    public void SetupAndReady(List<LoadedNoteData> player1Data, List<LoadedNoteData> player2Data)
+    {
+        _playerModuleManager.SetPlayerModuleData(player1Data, player2Data);
+        _playerReadyManager.NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+
+    public Woofer GetPlayerWoofer(int wooferIndex, string nickname) { return _playerModuleManager.GetPlayerWoofer(wooferIndex, nickname); }
+
+    public int GetWooferIndex(Woofer woofer, string nickname) { return _playerModuleManager.GetWooferIndex(woofer, nickname); }
+
+    public TopNote GetPlayerTopNote(int index, string nickname) { return _playerModuleManager.GetPlayerTopNote(index, nickname); }
+
+    public int GetTopNoteIndex(TopNote topNote, string nickname) { return _playerModuleManager.GetTopNoteIndex(topNote, nickname); }
+
+    private void StartGameForAll()
+    {
+        Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");
+        StopCoroutine(GameManager.Instance.GameSceneInitCo());
+        StartCoroutine(GameManager.Instance.GameSceneInitCo());
     }
 
     public void GotoLobbyScene()
@@ -26,8 +47,14 @@ public class MultiGameController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("LobbyScene");
     }
 
-    private Transform GetPlayerSpawnPoint()
+    private void Init()
     {
-        return _spawnPointPlayers[PhotonNetwork.LocalPlayer.NickName == "Player1" ? 0 : 1];
+        _playerModuleManager = GetComponentInChildren<PlayerModuleManager>();
+        _playerReadyManager = GetComponentInChildren<PlayerReadyManager>();
+
+        GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
+
+        _playerReadyManager.AllPlayersReady += StartGameForAll;
     }
 }
+

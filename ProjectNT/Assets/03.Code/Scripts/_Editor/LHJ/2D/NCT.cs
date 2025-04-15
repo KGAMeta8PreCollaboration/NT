@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
@@ -28,6 +29,8 @@ public class NCT : MonoBehaviour
 
     public double cellHeight = 0;
 
+    public float bpmLineLength = 0;
+
     private GridManager _gridManager;
     private Waveform _waveform;
     private AudioSourceManager _audioSourceManager;
@@ -35,9 +38,9 @@ public class NCT : MonoBehaviour
     private Texture2D _texture;
     private AudioSource _audioSource;
 
-    private float xOffset;
-    private float bpmLineScale;
-    private float beatLineScale;
+    public float xOffset;
+    private float bpmPrefabLineScale;
+    private float beatPrefabLineScale;
     private float columnLineScale;
 
     private List<GameObject> heightGrid = new List<GameObject>();
@@ -56,6 +59,8 @@ public class NCT : MonoBehaviour
     private INodeState _currentState;
 
     private Plane tempPlane = new Plane();
+
+    private bool _isMouseInUI = false;
 
     private void Awake()
     {
@@ -78,10 +83,19 @@ public class NCT : MonoBehaviour
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        //오브젝트 위에서만 상태 변경 가능
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
+
+        if (IsPointerOverUI())
         {
+            HideLowNodePreview();
+            HideLongNodePreview();
             return;
         }
+
         currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
@@ -92,6 +106,7 @@ public class NCT : MonoBehaviour
             _currentState.OnRightClick(currentIndex);
         if (Input.GetMouseButtonDown(2))
             _currentState.OnMiddleClick(currentIndex);
+
         _currentState.UpdatePreview(currentIndex);
     }
 
@@ -132,18 +147,19 @@ public class NCT : MonoBehaviour
         {
             if (nodeData.nodeType == EditorNoteType.ShortNote)
             {
-                CreateLowNode(nodeData.index);
+                CreateLowNode(nodeData.index, nodeData.keySound);
             }
             else if (nodeData.nodeType == EditorNoteType.LongNote)
             {
                 _longNodePosition[nodeData.index] = nodeData.endIndex;
-                CreateLongNode(nodeData.index, nodeData.endIndex);
+                CreateLongNode(nodeData.index, nodeData.endIndex, nodeData.keySound);
             }
         }
     }
 
     public Action<double> callback;
     public bool isLoaded = false;
+    public Action loadComplete;
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
         // if (EventSystem.current.IsPointerOverGameObject())
@@ -176,8 +192,8 @@ public class NCT : MonoBehaviour
         _spriteRenderer.sprite = Sprite.Create(_texture, rect, Vector2.zero);
         print($"그리드 생성");
         xOffset = _spriteRenderer.size.x / 2;
-        bpmLineScale = _spriteRenderer.size.x * 1.2f;
-        beatLineScale = _spriteRenderer.size.x;
+        bpmPrefabLineScale = _spriteRenderer.size.x * 1.2f;
+        beatPrefabLineScale = _spriteRenderer.size.x;
 
         //테스트 용도
         float temp1 = _spriteRenderer.sprite.texture.width;
@@ -187,10 +203,12 @@ public class NCT : MonoBehaviour
 
         //노래의 너비 = 텍스쳐 높이
         float songDuration = _audioSource.clip.length;
-        float heightPerSecond = _spriteRenderer.size.y / songDuration;
+        double heightPerSecond = _spriteRenderer.size.y / songDuration;
+        //double heightPerSecondd = _spriteRenderer.size.y / songDuration;
+        //print($"double일때 값 : {heightPerSecondd}");
         float secondsPerBPM = 60 / bpm;
 
-        float bpmHeight = secondsPerBPM * heightPerSecond;
+        double bpmHeight = secondsPerBPM * heightPerSecond;
         print("=====================================\n" +
             $"_spriteRenderer.size.y  : {_spriteRenderer.size.y}\n" +
             $"songDuration : {songDuration}\n" +
@@ -200,12 +218,14 @@ public class NCT : MonoBehaviour
 
         for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i++)
         {
-            float yPos = i * bpmHeight;
-            GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, yPos, 0), Quaternion.identity);
-            bpmLineObj.transform.localScale = new Vector3(bpmLineScale, bpmLinePrefab.transform.localScale.y);
+            double yPos = i * bpmHeight;
+            GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, (float)yPos, 0), Quaternion.identity);
+            bpmLineObj.transform.localScale = new Vector3(bpmPrefabLineScale, bpmLinePrefab.transform.localScale.y, bpmLinePrefab.transform.localScale.z);
             bpmLineObj.transform.SetParent(transform);
             BPMLine bpmLine = bpmLineObj.GetComponent<BPMLine>();
             bpmLine.SetBPMText(i, secondsPerBPM);
+
+            bpmLineLength = bpmLineObj.transform.localScale.x;
 
             //가로 grid에 BPM 추가
             heightGrid.Add(bpmLineObj);
@@ -213,17 +233,17 @@ public class NCT : MonoBehaviour
 
             if (beatNum != 0)
             {
-                float beatHeight = bpmHeight / beatNum;
+                double beatHeight = bpmHeight / beatNum;
 
                 for (int j = 1; j < beatNum; j++)
                 {
-                    float y = yPos + j * beatHeight;
+                    double y = yPos + j * beatHeight;
                     if (y >= _spriteRenderer.size.y)
                     {
                         break;
                     }
-                    GameObject beatLine = Instantiate(beatLinePrefab, new Vector3(xOffset, y, 0), Quaternion.identity);
-                    beatLine.transform.localScale = new Vector3(beatLineScale, beatLinePrefab.transform.localScale.y);
+                    GameObject beatLine = Instantiate(beatLinePrefab, new Vector3(xOffset, (float)y, 0), Quaternion.identity);
+                    beatLine.transform.localScale = new Vector3(beatPrefabLineScale, beatLinePrefab.transform.localScale.y);
                     beatLine.transform.SetParent(transform);
 
                     //가로 grid에 Beat 추가
@@ -263,6 +283,7 @@ public class NCT : MonoBehaviour
         tempPlane = new Plane(Vector3.forward, transform.position);
 
         callback?.Invoke(cellHeight);
+        loadComplete?.Invoke();
         //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
 
         RowGridNum = heightGrid.Count;
@@ -329,10 +350,10 @@ public class NCT : MonoBehaviour
         // print($"현재 좌표 : {currentIndex.x} X {currentIndex.y}");
 
         float columnSize = _spriteRenderer.size.x / _column;
-        float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌
+        float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌=
 
-        float xPos = columnSize * currentIndex.x + columnSize / 2;  // 왼쪽 끝에서부터 시작
-        float yPos = rowSize * currentIndex.y;     // 아래쪽 끝에서부터 시작
+        float yPos = heightGrid[currentIndex.y].transform.position.y;
+        float xPos = columnSize * currentIndex.x + columnSize / 2;
 
         // 중앙 정렬을 위해 offset 적용
         Vector3 worldPos = new Vector3(xPos, yPos, 0);
@@ -342,10 +363,9 @@ public class NCT : MonoBehaviour
             previewLowNodePrefab.transform.localScale.x,
             rowSize * 0.5f,
             previewLowNodePrefab.transform.localScale.z);
-
     }
 
-    public void CreateLowNode(Vector2Int currentIndex)
+    public void CreateLowNode(Vector2Int currentIndex, string keySound = null)
     {
         if (currentIndex.x < 0 || currentIndex.y < 0 ||
         currentIndex.x >= _column || currentIndex.y >= heightGrid.Count)
@@ -372,8 +392,8 @@ public class NCT : MonoBehaviour
             float columnSize = _spriteRenderer.size.x / _column;
             float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1); //0번째 grid는 포함하면 안되므로 1빼줌
 
-            float xPos = columnSize * currentIndex.x + columnSize / 2;  // 왼쪽 끝에서부터 시작
-            float yPos = rowSize * currentIndex.y;     // 아래쪽 끝에서부터 시작
+            float yPos = heightGrid[currentIndex.y].transform.position.y;
+            float xPos = columnSize * currentIndex.x + columnSize / 2;
 
             // 중앙 정렬을 위해 offset 적용
             Vector3 worldPos = new Vector3(xPos, yPos, 0);
@@ -387,7 +407,7 @@ public class NCT : MonoBehaviour
 
             print($"현재 columnSize : {rowSize}");
             //노드 위치 및 키음 초기화
-            node.InitializeNode(currentIndex);
+            node.InitializeNode(currentIndex, keySound);
 
             _nodeGrid[currentIndex.x, currentIndex.y] = node as LowNode;
 
@@ -476,8 +496,9 @@ public class NCT : MonoBehaviour
         float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
 
         float xPos = columnSize * start.x + columnSize / 2;
-        float startY = rowSize * start.y - (rowSize / 2);
-        float endY = rowSize * end.y + (rowSize / 2);
+
+        float startY = heightGrid[start.y].transform.position.y - ((float)cellHeight / 2);
+        float endY = heightGrid[end.y].transform.position.y + ((float)cellHeight / 2);
 
         lineRenderer.SetPosition(0, new Vector3(xPos, startY, -0.01f));
         lineRenderer.SetPosition(1, new Vector3(xPos, endY, -0.01f));
@@ -487,7 +508,7 @@ public class NCT : MonoBehaviour
     }
 
     private Dictionary<Vector2Int, Vector2Int> _longNodePosition = new Dictionary<Vector2Int, Vector2Int>();
-    public void CreateLongNode(Vector2Int start, Vector2Int end)
+    public void CreateLongNode(Vector2Int start, Vector2Int end, string keySound = null)
     {
         if (start.x != end.x || start.y >= end.y)
         {
@@ -524,8 +545,9 @@ public class NCT : MonoBehaviour
         float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
 
         float xPos = columnSize * start.x + columnSize / 2;
-        float startY = rowSize * start.y - (rowSize / 2);
-        float endY = rowSize * end.y + (rowSize / 2);
+
+        float startY = heightGrid[start.y].transform.position.y - ((float)cellHeight / 2);
+        float endY = heightGrid[end.y].transform.position.y + ((float)cellHeight / 2);
 
         lineRenderer.SetPosition(0, new Vector3(xPos, startY, -0.01f));
         lineRenderer.SetPosition(1, new Vector3(xPos, endY, -0.01f));
@@ -540,7 +562,7 @@ public class NCT : MonoBehaviour
         }
 
         //노드 위치 및 키음 초기화
-        node.InitializeLongNode(start, end);
+        node.InitializeLongNode(start, end, keySound);
 
         HideLongNodePreview();
     }
@@ -603,4 +625,27 @@ public class NCT : MonoBehaviour
 
         _nodeGrid = null;
     }
+
+    private bool IsPointerOverUI()
+    {
+        // UI 레이어 체크
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return true;
+        }
+        return _isMouseInUI;
+    }
+
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    print("마우스가 UI위에 있음");
+    //    _isMouseInUI = true;
+    //    HideLowNodePreview();
+    //    HideLongNodePreview();
+    //}
+
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    _isMouseInUI = false;
+    //}
 }

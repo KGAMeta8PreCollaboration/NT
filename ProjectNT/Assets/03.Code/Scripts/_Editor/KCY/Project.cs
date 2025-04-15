@@ -13,6 +13,8 @@ public class Project : MonoBehaviour
     [SerializeField] private ProjectLoader loader;
     [SerializeField] private Toggle toggle;
     [SerializeField] private TextMeshProUGUI projectName;
+    [SerializeField] private Button delete_btn;
+
     private Sprite sprite;
     private string tempName;
     private string tempArtist;
@@ -43,6 +45,7 @@ public class Project : MonoBehaviour
     private void Awake()
     {
         loader = GetComponentInParent<ProjectLoader>();
+        delete_btn.onClick.AddListener(loader.DeleteUIOpen);
         toggle.group = loader.projects_Group;
 
         toggle.onValueChanged.AddListener(ChangeFocus);
@@ -53,6 +56,7 @@ public class Project : MonoBehaviour
     {
         LoadData();
         toggle.isOn = true;
+
     }
 
     private void LoadData()

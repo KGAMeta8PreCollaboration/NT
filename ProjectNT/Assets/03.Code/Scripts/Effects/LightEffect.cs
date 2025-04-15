@@ -1,48 +1,44 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
-using Photon.Pun.Demo.Cockpit.Forms;
+using Photon.Pun;
 using UnityEngine;
 
-public class LightEffect : MonoBehaviour
+public class LightEffect : MapEffect<Light>
 {
     public float targetIntensity;
     public float targetDuration;
     public float defaultIntensity;
     public float defaultDuration;
-    [SerializeField]
-    private List<LightDotween> leftLights;
-    [SerializeField]
-    private List<LightDotween> rightLights;
 
-    private void Awake()
+
+    private void Start()
     {
-        Init(leftLights);
-        Init(rightLights);
+        Init(left, ref leftSequence);
+        Init(right, ref rightSequence);
     }
-    private void Init(List<LightDotween> lightsList)
+
+    protected override void Init(List<Light> list, ref Sequence sequence)
     {
-        foreach (LightDotween light in lightsList)
+        sequence = DOTween.Sequence().SetAutoKill(false);
+        for (int i = 0; i < list.Count; i++)
         {
-            light.TargetIntensity = targetIntensity;
-            light.Duration = targetDuration;
-            light.DefaultIntensity = defaultIntensity;
-            light.DefaultDuration = defaultDuration;
+            sequence.Join(list[i].DOIntensity(targetIntensity, targetDuration).SetEase(Ease.OutQuint));
         }
-    }
-    private void SetLightsIntensity(List<LightDotween> lightsList)
-    {
-        foreach (LightDotween light in lightsList)
+        for (int i = 0; i < list.Count; i++)
         {
-            light.sequence.Restart();
+            sequence.Join(list[i].DOIntensity(defaultIntensity, defaultDuration).SetEase(Ease.OutQuint));
         }
+        sequence.Pause();
     }
 
-    public void LightsEffectOn()
+    public override void LeftEffectInvoke()
     {
-        SetLightsIntensity(leftLights);
-        SetLightsIntensity(rightLights);
+        leftSequence.Restart();
     }
 
+    public override void RightEffectInvoke()
+    {
+        rightSequence.Restart();
+    }
 }

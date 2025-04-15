@@ -1,7 +1,5 @@
 using System;
-using System.Windows.Forms;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public enum JudgementType
 {

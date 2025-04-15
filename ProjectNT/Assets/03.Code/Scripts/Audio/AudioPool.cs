@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class AudioPool : MonoBehaviour
 {
     public GameObject audioSourcePrefab;
-    public int poolSize = 10;
+    public int poolSize = 20;
 
     private Queue<AudioSource> audioSourcePool = new Queue<AudioSource>();
 

@@ -8,7 +8,6 @@ public class NoteRail : MonoBehaviour
 
     [HideInInspector] public NoteSpawner noteSpawner;
     protected LinkedList<Note> noteList = new LinkedList<Note>();
-
     protected virtual void Awake()
     {
         woofer = GetComponentInChildren<Woofer>();

@@ -36,7 +36,6 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     public Dictionary<Enums.ModeDiff, BeatMapData> SetBeatMapData(ProjectData projectData, string path)
     {
         string beatMapPath = Path.Combine(path, projectData.projectName, "BeatMapData");
-        // print("경로 : " + beatMapPath);
         return LoadBeatMapData(beatMapPath);
     }
 
@@ -45,16 +44,9 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>(true);
         List<TitleMusicData> titleMusicData =
             projectList.Select(ProjectDataToTitleMusicData).ToList();
-        for (int i = 0; i < projectList.Length; i++)
-        {
-            projectList[i].Print();
-        }
 
         foreach (MusicChangeAndSelect t in musicChangeAndSelects)
-        {
-            print($"tmpCheckDirectory : SetProjectPanel");
             t.Init(titleMusicData);
-        }
     }
 
     private string bgmPath = "bgmSaveFile";

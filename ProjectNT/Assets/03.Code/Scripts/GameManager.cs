@@ -23,7 +23,17 @@ public class GameManager : Singleton<GameManager>
     public string gameSceneName = "YKD_GameScene";
 
     private List<LoadedNoteData> _loadedNoteDatas = new List<LoadedNoteData>();
+
+    //멀티 플레이를 위한 변수들
     public PhotonManager PhotonManager { get; private set; }
+    public MultiGameController MultiGameController { get; private set; }
+    public bool IsMulti { get; private set; }
+    private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
+    private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
+
+    public float phase2;
+    public float phase3;
+
 
     private void Start()
     {
@@ -36,34 +46,46 @@ public class GameManager : Singleton<GameManager>
         PhotonManager = GetComponentInChildren<PhotonManager>();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == gameSceneName)
         {
+            OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
         }
         else if (scene.name == "MultiGame")
         {
             print("멀티 게임 씬");
-            OnGoToLobby += () => PhotonManager.LeaveRoom();
-            GameSceneInit();
-            noteGenerators[0].Init(noteGenerators[0].loadedNotes);
-            noteGenerators[1].Init(noteGenerators[1].loadedNotes);
+            IsMulti = true;
+            OnGoToLobby += () =>
+            {
+                PhotonManager.LeaveRoom();
+                IsMulti = false;
+            };
+            MultiGameController = FindObjectOfType<MultiGameController>();
+            MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            //MultiGameSceneInit();
+            //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
+            //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
-    private ProjectToLoadedData _projectToLoadedData;
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
+        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         SceneManager.LoadScene(gameSceneName);
     }
 
-    private IEnumerator GameSceneInitCo()
+    public IEnumerator GameSceneInitCo()
     {
         yield return new WaitForSeconds(5f);
 
@@ -72,12 +94,25 @@ public class GameManager : Singleton<GameManager>
     }
     public void MultiGameStart(Difficulty difficulty, BeatMapData beatMapData)
     {
-        PhotonNetwork.LoadLevel("MultiGame");
+
     }
+
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
+        // 데이터
+
         PhotonNetwork.LoadLevel("MultiGame");
+    }
+
+
+    // TODO : 멀티 데이터 여기서 넘겨줍니다.
+    public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
+    {
+        projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
+        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+        _player1LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData1);
+        _player2LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData2);
     }
 
     private void GameSceneInit()
@@ -87,6 +122,12 @@ public class GameManager : Singleton<GameManager>
 
         StopCoroutine(GameSceneInitCo());
         StartCoroutine(GameSceneInitCo());
+    }
+
+    private void MultiGameSceneInit()
+    {
+        noteManagers = FindObjectsOfType<NoteManager>();
+        noteGenerators = FindObjectsOfType<NoteGenerator>();
     }
 
     // TODO: 프로토타입 임시

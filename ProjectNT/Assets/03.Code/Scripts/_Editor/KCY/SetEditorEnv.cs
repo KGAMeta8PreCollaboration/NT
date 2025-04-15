@@ -15,8 +15,8 @@ public class PATH
     public string EditorPath;
     public string ProjectPath;
     public string CurrentPath;
-    public string EditorDIR_Name = "\\Night Traveler_Editor";
-    public string ProjectDIR_Name = "\\Projects";
+    public string EditorDIR_Name = "Night Traveler_Editor";
+    public string ProjectDIR_Name = "Projects";
 }
 
 public class SetEditorEnv : MonoBehaviour
@@ -92,22 +92,22 @@ public class SetEditorEnv : MonoBehaviour
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
             return;
         }
-        if (!Directory.Exists(PATH.Path + PATH.EditorDIR_Name))
+        if (!Directory.Exists(Path.Combine(PATH.Path, PATH.EditorDIR_Name)))
         {
-            Directory.CreateDirectory(PATH.Path + PATH.EditorDIR_Name);
-            PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
+            Directory.CreateDirectory(Path.Combine(PATH.Path, PATH.EditorDIR_Name));
+            PATH.EditorPath = Path.Combine(PATH.Path, PATH.EditorDIR_Name);
             PATH.CurrentPath = PATH.EditorPath;
             SavePath();
         }
-        else PATH.EditorPath = PATH.Path + PATH.EditorDIR_Name;
-        if (!Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
+        else PATH.EditorPath = Path.Combine(PATH.Path, PATH.EditorDIR_Name);
+        if (!Directory.Exists(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name)))
         {
-            Directory.CreateDirectory(PATH.EditorPath + PATH.ProjectDIR_Name);
-            PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
+            Directory.CreateDirectory(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name));
+            PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
             PATH.CurrentPath = PATH.ProjectPath;
             SavePath();
         }
-        else PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
+        else PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
         if (Directory.Exists(PATH.ProjectPath))
         {
             projectPath = PATH.ProjectPath;
@@ -130,14 +130,14 @@ public class SetEditorEnv : MonoBehaviour
         try
         {
             //에디터 폴더를 직접 선택한 경우
-            if (Directory.Exists(path[0] + PATH.ProjectDIR_Name))
+            if (Directory.Exists(Path.Combine(path[0], PATH.ProjectDIR_Name)))
             {
                 PATH.EditorPath = path[0];
                 //에디터 폴더에 프로젝트 폴더가 존재하는지 확인
-                if (Directory.Exists(PATH.EditorPath + PATH.ProjectDIR_Name))
+                if (Directory.Exists(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name)))
                 {
                     //프로젝트 폴더 경로 재설정
-                    PATH.ProjectPath = PATH.EditorPath + PATH.ProjectDIR_Name;
+                    PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
                 }
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
                 PATH.CurrentPath = PATH.Path;

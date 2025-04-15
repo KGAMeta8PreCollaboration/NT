@@ -9,11 +9,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TopNote : Note
 {
-    [SerializeField] private InputActionReference leftTrigger;
-    [SerializeField] private InputActionReference rightTrigger;
     [SerializeField] private new ParticleSystem particleSystem;
     private XRSimpleInteractable xRSimInter;
-    private bool canInter = false;
+    public bool canInter = false;
     private bool isIndicatorOn;
     private void Awake()
     {
@@ -22,15 +20,13 @@ public class TopNote : Note
 
     private void OnEnable()
     {
-        leftTrigger.action.performed += Hit;
-        rightTrigger.action.performed += Hit;
+        canInter = false;
         isIndicatorOn = false;
         gameObject.tag = "Untagged";
     }
     private void OnDisable()
     {
-        leftTrigger.action.performed -= Hit;
-        rightTrigger.action.performed -= Hit;
+
         particleSystem.Stop();
     }
     protected override void Update()
@@ -43,7 +39,6 @@ public class TopNote : Note
 
         if (_targetDspTime - AudioSettings.dspTime <= 1)
         {
-            print("인디캐이터 플레이");
             particleSystem.Play();
             isIndicatorOn = true;
         }
@@ -51,9 +46,12 @@ public class TopNote : Note
     }
     public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
+        print($"상단 노트 : {noteSpawnData.hitSound}");
         base.Init(target, noteSpawnData);
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
+
+        gameObject.tag = topNoteSpawnData.myTag;
 
         _targetDspTime = topNoteSpawnData.targetDspTime;
 
@@ -62,15 +60,19 @@ public class TopNote : Note
         xRSimInter = GetComponent<XRSimpleInteractable>();
 
     }
-    public void Hit(InputAction.CallbackContext ctn)
+    public void Hit()
     {
-        if (!canInter || !xRSimInter.isHovered) return;
+
+        //if (false == canInter || false == xRSimInter.isHovered)
+        //{
+        //    return;
+        //}
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
         OnHit = null;
         EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
-        AudioManager.Instance.Play(hitSound, transform);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)
@@ -94,7 +96,7 @@ public class TopNote : Note
         OnHit?.Invoke(this);
         OnHit = null;
 
-        AudioManager.Instance.Play(hitSound, transform);
+        AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
         if (judgementType == JudgementType.MISS)
@@ -119,7 +121,6 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = true;
-            gameObject.tag = "TopNote";
         }
         if (other.CompareTag("Woofer"))
         {
@@ -132,7 +133,6 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = false;
-            gameObject.tag = "Untagged";
         }
     }
 

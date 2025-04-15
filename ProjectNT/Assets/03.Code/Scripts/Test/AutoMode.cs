@@ -48,14 +48,14 @@ public class AutoMode : MonoBehaviour
                         topNote?.AutoHit(new UnityEngine.InputSystem.InputAction.CallbackContext());
                     }
 
-                    Debug.Log($"첫 Hit 처리됨 - 시간차: {timeDiff:f2}");
+                    // Debug.Log($"첫 Hit 처리됨 - 시간차: {timeDiff:f2}");
                 }
                 // 롱노트면 홀드 처리
                 else if (isLongNote && note.isHit)
                 {
                     woofers[index].Hold();
 
-                    Debug.Log($"Hold 처리 중 - 현재: {currentTime:f2}");
+                    // Debug.Log($"Hold 처리 중 - 현재: {currentTime:f2}");
                 }
             }
 

@@ -16,16 +16,19 @@ public class BPMLine : MonoBehaviour
 
     public void SetBPMText(float time, float secondsPerBPM)
     {
-        text.text = time.ToString() + "/" + time * secondsPerBPM;
+        string timeText = SetSongLengthText(time * secondsPerBPM);
+        text.text = time.ToString() + "/" + timeText;
         //text.transform.localScale = new Vector3(
         //     originalTextScale.x / transform.localScale.x,
         //     originalTextScale.y / transform.localScale.y,
         //     originalTextScale.z
         //     );
     }
-
-    public void Test(float tmp)
+    private string SetSongLengthText(float time)
     {
-        text.text = tmp.ToString();
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
+        return string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
     }
 }

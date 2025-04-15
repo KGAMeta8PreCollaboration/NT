@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Toggle))]
-public class UpperNode : MonoBehaviour
+public class UpperNode : MonoBehaviour, IPointerEnterHandler
 {
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
-    [SerializeField] private TextMeshProUGUI text;
+    private TextMeshProUGUI _keySoundText;
 
     private int _index;
     private bool _isOn;
@@ -27,11 +28,18 @@ public class UpperNode : MonoBehaviour
         _image = GetComponent<Image>();
         string temp = (_keySound == "") ? "키음 없음" : $"키음 : {_keySound}";
         print($"temp : {temp}");
+
+        _keySoundText = GetComponentInChildren<TextMeshProUGUI>();
     }
+
+    //private void Update()
+    //{
+    //    _keySoundText.text = (_keySound == "") ? "" : _keySound;
+    //}
 
     public void SetUpperNodeIndex(int index)
     {
-        text.text = (index + 1).ToString();
+        //text.text = (index + 1).ToString();
         _index = index;
     }
 
@@ -45,6 +53,23 @@ public class UpperNode : MonoBehaviour
         //활성화 인덱스에 노드의 인덱스가 있다면 true
         bool isActive = activeIndexs.Contains(_index);
         _toggle.isOn = isActive;
-        _image.color = isActive? selectedColor : normalColor;
+        _image.color = isActive ? selectedColor : normalColor;
+
+        if (isActive)
+        {
+            _keySoundText.text = _keySound ?? "";
+        }
+        else
+        {
+            _keySoundText.text = "";
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_keySound != null)
+        {
+            print($"현재 상단 노드 키사운드 : {_keySound}");
+        }
     }
 }
