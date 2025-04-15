@@ -35,6 +35,8 @@ public class MultiGameController : MonoBehaviour
 
     public int GetTopNoteIndex(TopNote topNote, string nickname) { return _playerModuleManager.GetTopNoteIndex(topNote, nickname); }
 
+    public PlayerModule GetPlayerModuleByNick(string nickname) { return _playerModuleManager.GetPlayerModuleByNick(nickname); }
+
     private void StartGameForAll()
     {
         Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");

@@ -22741,24 +22741,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perfectThreshold: 0.04
-  woofers:
-  - {fileID: 5713124181209102834}
-  - {fileID: 1384164925493210788}
-  - {fileID: 2463886386057927953}
-  - {fileID: 7824903381390705531}
-  rails:
-  - {fileID: 7691417805420763537}
-  - {fileID: 7691417806103138601}
-  - {fileID: 7691417806061467401}
-  - {fileID: 7691417806009038176}
-  - {fileID: 1008218914}
-  - {fileID: 685565389}
-  - {fileID: 1175970541}
-  - {fileID: 1881770290}
-  - {fileID: 1093399801}
-  - {fileID: 641055602}
-  - {fileID: 923303903}
-  - {fileID: 236233461}
+  woofers: []
+  rails: []
 --- !u!4 &192960748
 Transform:
   m_ObjectHideFlags: 0
@@ -212541,68 +212525,6 @@ Transform:
   - {fileID: 148402556}
   m_Father: {fileID: 1918957139}
   m_RootOrder: 1790
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1777974163
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1777974165}
-  - component: {fileID: 1777974164}
-  m_Layer: 0
-  m_Name: Automode2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1777974164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777974163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65e484b715f47b84db1cdf5398b62fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  perfectThreshold: 0.04
-  woofers:
-  - {fileID: 496023247}
-  - {fileID: 1467969210}
-  - {fileID: 599801062}
-  - {fileID: 132253160}
-  rails:
-  - {fileID: 679797782}
-  - {fileID: 2055509114}
-  - {fileID: 1662748607}
-  - {fileID: 972678668}
-  - {fileID: 2019056637}
-  - {fileID: 2019056636}
-  - {fileID: 2019056635}
-  - {fileID: 2019056634}
-  - {fileID: 2019056633}
-  - {fileID: 2019056632}
-  - {fileID: 2019056631}
-  - {fileID: 2019056630}
---- !u!4 &1777974165
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777974163}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778314632
 GameObject:
