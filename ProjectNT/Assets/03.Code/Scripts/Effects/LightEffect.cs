@@ -11,7 +11,6 @@ public class LightEffect : MapEffect<Light>
     public float defaultIntensity;
     public float defaultDuration;
 
-
     private void Start()
     {
         Init(left, ref leftSequence);

@@ -25,7 +25,7 @@ public class ScoreManager : MonoBehaviour
     public Action<JudgementType> OnJudgementChanged;
 
     // TODO: 프로토타입 임시 할당. gameManager나 다른 객체가 해야함
-    private GameSceneLightController _gameSceneLightController;
+    // private GameSceneLightController _gameSceneLightController;
 
     private void Awake()
     {
@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        _gameSceneLightController = FindObjectOfType<GameSceneLightController>();
+        // _gameSceneLightController = FindObjectOfType<GameSceneLightController>();
     }
 
     public void AddScore(int index)
@@ -64,8 +64,8 @@ public class ScoreManager : MonoBehaviour
         if (currentCombo > maxCombo)
             maxCombo = currentCombo;
 
-        if (currentCombo != 0 && currentCombo % 10 == 0)
-            _gameSceneLightController?.OnLight();
+        // if (currentCombo != 0 && currentCombo % 10 == 0)
+        // _gameSceneLightController?.OnLight();
 
         OnComboChanged?.Invoke(currentCombo);
     }

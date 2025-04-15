@@ -12,7 +12,10 @@ public class AudioManager : Singleton<AudioManager>
 	private AudioPool _audioPool;
 	private List<AudioSource> _audioSources = new List<AudioSource>();
 	private NoteGenerator[] noteGenerators;
-
+	public float BgmLength
+	{
+		get { return _bgmAudioSource.clip.length; }
+	}
 	protected override void Awake()
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
@@ -20,7 +23,6 @@ public class AudioManager : Singleton<AudioManager>
 		_audioPool = GetComponent<AudioPool>();
 		StartCoroutine(CheckAudioPlayTime());
 	}
-
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
@@ -67,7 +69,8 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		_audioSources
 			.FindAll(audioSource => !audioSource.isPlaying)
-			.ForEach(audioSource => {
+			.ForEach(audioSource =>
+			{
 				_audioPool.ReturnAudioSource(audioSource);
 				_audioSources.Remove(audioSource);
 			});

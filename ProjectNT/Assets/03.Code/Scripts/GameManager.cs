@@ -34,7 +34,26 @@ public class GameManager : Singleton<GameManager>
     public float phase2;
     public float phase3;
 
-
+    private Enums.PlayMode playMode;
+    public Enums.PlayMode PlayMode
+    {
+        get { return playMode; }
+        set
+        {
+            playMode = value;
+            EffectManager.Instance.SetPlayMode(playMode);
+        }
+    }
+    private Enums.Phase phase;
+    public Enums.Phase Phase
+    {
+        get { return phase; }
+        private set
+        {
+            phase = value;
+        }
+    }
+    private IEnumerator phaseEnumerator;
     private void Start()
     {
         if (skipLobby)
@@ -46,10 +65,13 @@ public class GameManager : Singleton<GameManager>
         PhotonManager = GetComponentInChildren<PhotonManager>();
     }
 
+    private GameSceneMove gameSceneMove;
+
     protected override void Awake()
     {
         base.Awake();
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+        phaseEnumerator = PhaseTracker();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -59,6 +81,7 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
+            PlayMode = Enums.PlayMode.Single;
         }
         else if (scene.name == "MultiGame")
         {
@@ -74,6 +97,34 @@ public class GameManager : Singleton<GameManager>
             //MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
+        }
+    }
+
+    private IEnumerator PhaseTracker()
+    {
+        double phase2 = AudioSettings.dspTime + this.phase2;
+        double phase3 = AudioSettings.dspTime + this.phase3;
+        gameSceneMove.mapmovePosTimes[0].travelTime = this.phase2;
+        gameSceneMove.mapmovePosTimes[1].travelTime = this.phase3 - this.phase2;
+        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - this.phase3;
+        double curr = AudioSettings.dspTime;
+        List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
+        {
+            (curr, Enums.Phase.Phase1),
+            (phase2, Enums.Phase.Phase2),
+            (phase3, Enums.Phase.Phase3)
+        };
+        while (tuple.Count != 0)
+        {
+            if (AudioSettings.dspTime > curr)
+            {
+                curr = tuple[1].Item1;
+                Phase = tuple[1].Item2;
+                Debug.LogError(Phase);
+                tuple.RemoveAt(0);
+                gameSceneMove.GameSceneMoveAndLightStart(phase);
+            }
+            yield return null;
         }
     }
 
@@ -105,7 +156,6 @@ public class GameManager : Singleton<GameManager>
         PhotonNetwork.LoadLevel("MultiGame");
     }
 
-
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
     public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
@@ -135,7 +185,8 @@ public class GameManager : Singleton<GameManager>
     {
         print("게임매니저 게임스타트");
         AudioManager.Instance.StartBGM(delayTime);
-        FindObjectOfType<GameSceneMove>()?.GameSceneMoveAndLightStart();
+        gameSceneMove = FindObjectOfType<GameSceneMove>();
+        StartCoroutine(phaseEnumerator);
     }
 
     public void GoToLobby()
@@ -150,6 +201,7 @@ public class GameManager : Singleton<GameManager>
         print("Game End");
         OnGameEnd?.Invoke();
         OnGameEnd = null;
+        StopCoroutine(phaseEnumerator);
     }
 
     public bool CheckGameEnd()

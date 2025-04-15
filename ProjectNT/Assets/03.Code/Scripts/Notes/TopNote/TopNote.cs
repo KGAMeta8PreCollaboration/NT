@@ -22,7 +22,6 @@ public class TopNote : Note
     {
         canInter = false;
         isIndicatorOn = false;
-        gameObject.tag = "Untagged";
     }
     private void OnDisable()
     {
@@ -62,16 +61,12 @@ public class TopNote : Note
     }
     public void Hit()
     {
-
-        //if (false == canInter || false == xRSimInter.isHovered)
-        //{
-        //    return;
-        //}
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
         OnHit = null;
-        EffectManager.Instance.OnMapEffect?.Invoke(this, _scoreManager.currentCombo);
+        EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo);
+        EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
         AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 

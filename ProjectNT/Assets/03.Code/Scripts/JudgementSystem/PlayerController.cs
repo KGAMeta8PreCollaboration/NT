@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
                 TopNoteProjectile proj = PoolManager.Instance.topNoteProjPool.Pop();
                 proj.transform.SetParent(transform, true);
                 proj.gameObject.transform.position = transform.position;
-                proj.Init(transform.position, hit.transform.position);
+                proj.Init(transform.position, topNote.transform.position);
 
                 _controller.SendHapticImpulse(0.8f, 0.15f);
 
@@ -191,7 +191,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
 
     private void PlayerGameEndAction()
     {
