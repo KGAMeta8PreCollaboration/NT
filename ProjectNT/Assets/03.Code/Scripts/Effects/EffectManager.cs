@@ -71,6 +71,7 @@ public class EffectManager : Singleton<EffectManager>
         if (note.judgementType == JudgementType.PERFECT)
         {
             GenericEffectOn<LightEffect>();
+            Debug.LogError("???");
         }
         Debug.LogError(combo);
         if (combo % 10 == 0)

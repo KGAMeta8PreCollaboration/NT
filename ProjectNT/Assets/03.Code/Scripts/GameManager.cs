@@ -101,27 +101,32 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator PhaseTracker()
     {
-        double phase2 = AudioSettings.dspTime + this.phase2;
-        double phase3 = AudioSettings.dspTime + this.phase3;
-        gameSceneMove.mapmovePosTimes[0].travelTime = this.phase2;
-        gameSceneMove.mapmovePosTimes[1].travelTime = this.phase3 - this.phase2;
-        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - this.phase3;
-        double curr = AudioSettings.dspTime;
+        // double phase1Time = AudioSettings.dspTime + phase2;
+        double phase2Time = AudioSettings.dspTime + phase3;
+        double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
+
+        gameSceneMove.mapmovePosTimes[0].travelTime = phase2;
+        gameSceneMove.mapmovePosTimes[1].travelTime = phase3 - phase2;
+        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3;
+        double curr = AudioSettings.dspTime + phase2;
         List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
         {
-            (curr, Enums.Phase.Phase1),
-            (phase2, Enums.Phase.Phase2),
-            (phase3, Enums.Phase.Phase3)
+            (phase2Time, Enums.Phase.Phase2),
+            (phase3Time, Enums.Phase.Phase3)
         };
+
+        Phase = Enums.Phase.Phase1;
+        gameSceneMove.GameSceneMoveAndLightStart(Phase);
+
         while (tuple.Count != 0)
         {
             if (AudioSettings.dspTime > curr)
             {
-                curr = tuple[1].Item1;
-                Phase = tuple[1].Item2;
+                curr = tuple[0].Item1;
+                Phase = tuple[0].Item2;
                 Debug.LogError(Phase);
                 tuple.RemoveAt(0);
-                gameSceneMove.GameSceneMoveAndLightStart(phase);
+                gameSceneMove.GameSceneMoveAndLightStart(Phase);
             }
             yield return null;
         }
