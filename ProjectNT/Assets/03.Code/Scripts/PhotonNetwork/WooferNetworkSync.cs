@@ -36,23 +36,27 @@ public class WooferNetworkSync : MonoBehaviourPun
     {
         int wooferIndex = GameManager.Instance.MultiGameController.GetWooferIndex(woofer, nickname);
         photonView.RPC(nameof(RPC_Hit), RpcTarget.All, wooferIndex, nickname);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     public void SendHold(Woofer woofer, string nickname)
     {
         int wooferIndex = GameManager.Instance.MultiGameController.GetWooferIndex(woofer, nickname);
         photonView.RPC(nameof(RPC_Hold), RpcTarget.All, wooferIndex, nickname);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     public void SendRelease(Woofer woofer, string nickname)
     {
         int wooferIndex = GameManager.Instance.MultiGameController.GetWooferIndex(woofer, nickname);
         photonView.RPC(nameof(RPC_Release), RpcTarget.All, wooferIndex, nickname);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 
     public void SendTopNoteHit(TopNote topNote, string nickname)
     {
         int railIndex = GameManager.Instance.MultiGameController.GetTopNoteIndex(topNote, nickname);
         photonView.RPC(nameof(RPC_TopNoteHit), RpcTarget.All, railIndex, nickname);
+        PhotonNetwork.SendAllOutgoingCommands();
     }
 }
