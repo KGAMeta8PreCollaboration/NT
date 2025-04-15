@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     private XRRayInteractor rayInter;
     private Vector3 prevPos = new Vector3();
 
-    public GameObject tmpPointPrefab;
-
     private WooferNetworkSync _wooferNetworkSync;
     //test
     public TextMeshProUGUI logText;
@@ -132,7 +130,6 @@ public class PlayerController : MonoBehaviour
                 if (!GameManager.Instance.IsMulti) woofer.Hit();
                 else _wooferNetworkSync.SendHit(woofer, PhotonNetwork.LocalPlayer.NickName);
                 if (_collisionStayCoroutine == null) _collisionStayCoroutine = StartCoroutine(OnCollisionStayCoroutine(woofer));
-                Instantiate(tmpPointPrefab, closestPoint, Quaternion.identity);
                 _scoreUI.tempHitCount++;
                 //logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
                 _controller.SendHapticImpulse(0.6f, 0.15f);
