@@ -27,9 +27,13 @@ public class MultiGameController : MonoBehaviour
         _playerReadyManager.NotifyPlayerReady(PhotonNetwork.LocalPlayer.ActorNumber);
     }
 
-    public Woofer GetPlayerWoofer(int wooferIndex, string nickname) {return _playerModuleManager.GetPlayerWoofer(wooferIndex, nickname);}
+    public Woofer GetPlayerWoofer(int wooferIndex, string nickname) { return _playerModuleManager.GetPlayerWoofer(wooferIndex, nickname); }
 
     public int GetWooferIndex(Woofer woofer, string nickname) { return _playerModuleManager.GetWooferIndex(woofer, nickname); }
+
+    public TopNote GetPlayerTopNote(int index, string nickname) { return _playerModuleManager.GetPlayerTopNote(index, nickname); }
+
+    public int GetTopNoteIndex(TopNote topNote, string nickname) { return _playerModuleManager.GetTopNoteIndex(topNote, nickname); }
 
     private void StartGameForAll()
     {

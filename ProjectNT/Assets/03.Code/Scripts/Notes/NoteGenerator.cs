@@ -98,10 +98,7 @@ public class NoteGenerator : MonoBehaviour
         {
             print("노트 생성기 놑트 생성 시작 2");
             _startDspTime = AudioSettings.dspTime;
-            Debug.LogError(AudioSettings.dspTime);
-            Debug.LogError(_startDspTime);
             _noteLeadTime = startTime - AudioSettings.dspTime;
-            Debug.LogError(_noteLeadTime);
             _noteManager.AssignNotesToSchedulers(_startDspTime + _noteLeadTime);
 
             print($"NoteGenerateStart _noteLeadTime : {_noteLeadTime}");

@@ -15245,8 +15245,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!82 &132253163
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57963,8 +57963,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!82 &496023250
 AudioSource:
   m_ObjectHideFlags: 0
@@ -64541,7 +64541,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1421025061}
   target: {fileID: 1041791056}
-  isHost: 0
 --- !u!1001 &550576439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71007,8 +71006,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!82 &599801065
 AudioSource:
   m_ObjectHideFlags: 0
@@ -75821,7 +75820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1091713227}
   target: {fileID: 1241795155}
-  isHost: 0
 --- !u!1 &635132945
 GameObject:
   m_ObjectHideFlags: 0
@@ -81280,7 +81278,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 1210526537}
-  isHost: 0
 --- !u!114 &679797783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87312,6 +87309,21 @@ PrefabInstance:
     - target: {fileID: 3035126464992986124, guid: b136948dcee057241863f7565a699980,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.011921406
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3035126465051326048, guid: b136948dcee057241863f7565a699980,
@@ -118641,7 +118653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 634519509}
-  isHost: 0
 --- !u!114 &972678669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139901,7 +139912,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadedNotes: []
-  isHost: 0
   tempCount: 0
 --- !u!114 &1145819483
 MonoBehaviour:
@@ -139934,7 +139944,6 @@ MonoBehaviour:
     type: 3}
   topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
   _scoreManager: {fileID: 1145819479}
-  isHost: 0
 --- !u!4 &1145819484
 Transform:
   m_ObjectHideFlags: 0
@@ -146522,7 +146531,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 339773019}
   target: {fileID: 1221720131}
-  isHost: 0
 --- !u!1001 &1211347771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157609,7 +157617,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1168138881}
   target: {fileID: 347549991}
-  isHost: 0
 --- !u!1 &1320811620
 GameObject:
   m_ObjectHideFlags: 0
@@ -175332,8 +175339,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!82 &1467969213
 AudioSource:
   m_ObjectHideFlags: 0
@@ -198404,7 +198411,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 549754944}
-  isHost: 0
 --- !u!114 &1662748608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246573,6 +246579,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.011921406
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126465044691355, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035126465051326048, guid: b136948dcee057241863f7565a699980,
         type: 3}
       propertyPath: closeButton
@@ -250135,7 +250156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 1320754746}
-  isHost: 0
 --- !u!114 &2055509115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261125,7 +261145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadedNotes: []
-  isHost: 1
   tempCount: 0
 --- !u!1 &908488520430798408
 GameObject:
@@ -261590,8 +261609,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!114 &1384164926685355098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262774,8 +262793,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!82 &2463886386057927952
 AudioSource:
   m_ObjectHideFlags: 0
@@ -264798,8 +264817,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!1 &5713124181209102832
 GameObject:
   m_ObjectHideFlags: 0
@@ -266788,7 +266807,6 @@ MonoBehaviour:
     type: 3}
   topNotePrefab: {fileID: 812138235, guid: 485ff816246cb494c8d076e26ee7f5c3, type: 3}
   _scoreManager: {fileID: 7691417804374882219}
-  isHost: 1
 --- !u!4 &7691417804374882218
 Transform:
   m_ObjectHideFlags: 0
@@ -267166,7 +267184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417805893856208}
-  isHost: 1
 --- !u!1 &7691417805420763551
 GameObject:
   m_ObjectHideFlags: 0
@@ -267338,7 +267355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417805347230183}
   target: {fileID: 7691417804916154453}
-  isHost: 1
 --- !u!114 &7691417805893856208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267353,7 +267369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417806205922930}
   target: {fileID: 7691417804826765453}
-  isHost: 1
 --- !u!4 &7691417805893856209
 Transform:
   m_ObjectHideFlags: 0
@@ -267399,7 +267414,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417806392415045}
-  isHost: 1
 --- !u!1 &7691417806009038190
 GameObject:
   m_ObjectHideFlags: 0
@@ -267482,7 +267496,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417806207308432}
-  isHost: 1
 --- !u!1 &7691417806061467639
 GameObject:
   m_ObjectHideFlags: 0
@@ -267576,7 +267589,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woofer: {fileID: 0}
   noteSpawner: {fileID: 7691417805866458536}
-  isHost: 1
 --- !u!1 &7691417806176107481
 GameObject:
   m_ObjectHideFlags: 0
@@ -267717,7 +267729,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417805107916845}
   target: {fileID: 7691417804719112570}
-  isHost: 1
 --- !u!1 &7691417806207308446
 GameObject:
   m_ObjectHideFlags: 0
@@ -267794,7 +267805,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7691417804926424091}
   target: {fileID: 7691417804529734012}
-  isHost: 1
 --- !u!23 &7691417806494883648
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -267970,8 +267980,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 56.79309, z: 1.25}
-  m_Center: {x: -0.3, y: -23.196583, z: 0.000000020265762}
+  m_Size: {x: 2, y: 56.79309, z: 1.25}
+  m_Center: {x: 0.1, y: -23.196583, z: 0.000000020265762}
 --- !u!4 &7824903381390705528
 Transform:
   m_ObjectHideFlags: 0

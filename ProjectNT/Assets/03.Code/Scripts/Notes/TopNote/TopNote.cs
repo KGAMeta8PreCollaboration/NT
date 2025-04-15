@@ -51,6 +51,8 @@ public class TopNote : Note
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
 
+        gameObject.tag = topNoteSpawnData.myTag;
+
         _targetDspTime = topNoteSpawnData.targetDspTime;
 
         _scoreManager = FindObjectOfType<ScoreManager>();
@@ -61,10 +63,10 @@ public class TopNote : Note
     public void Hit()
     {
 
-        if (false == canInter || false == xRSimInter.isHovered)
-        {
-            return;
-        }
+        //if (false == canInter || false == xRSimInter.isHovered)
+        //{
+        //    return;
+        //}
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
@@ -119,7 +121,6 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = true;
-            gameObject.tag = "TopNote";
         }
         if (other.CompareTag("Woofer"))
         {
@@ -132,7 +133,6 @@ public class TopNote : Note
         if (other.CompareTag("TopNoteZone"))
         {
             canInter = false;
-            gameObject.tag = "Untagged";
         }
     }
 

@@ -18,6 +18,7 @@ public class PlayerModule : MonoBehaviour
     public NoteGenerator NoteGenerator { get; private set; }
     public ScoreManager ScoreManager { get; private set; }
     public Woofer[] woofers { get; private set; }
+    public List<NoteRail> TopNoteRails { get; private set; }
 
     private void Awake()
     {
@@ -25,6 +26,16 @@ public class PlayerModule : MonoBehaviour
         NoteManager = TransformUtil.FindDeepChildComponent<NoteManager>(transform, "NoteManager");
         NoteGenerator = TransformUtil.FindDeepChildComponent<NoteGenerator>(transform, "NoteManager");
         ScoreManager = TransformUtil.FindDeepChildComponent<ScoreManager>(transform, "NoteManager");
+
+        TopNoteRails = new List<NoteRail>();
+
+        foreach (NoteRail noteRail in NoteManager.noteRails)
+        {
+            if (noteRail is TopNoteRail)
+            {
+                TopNoteRails.Add(noteRail);
+            }
+        }
 
         woofers = new Woofer[4];
         for (int i = 0; i < 4; i++)

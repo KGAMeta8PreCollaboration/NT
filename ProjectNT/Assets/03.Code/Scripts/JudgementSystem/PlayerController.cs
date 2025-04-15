@@ -31,25 +31,49 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine _collisionStayCoroutine = null;
 
+    private PhotonView _photonView;
+
     private void Awake()
     {
         _controller = GetComponentInParent<ActionBasedController>();
         rayInter = _controller.GetComponentInChildren<XRRayInteractor>();
         rayInter.GetComponent<XRInteractorLineVisual>().enabled = false;
+
+        // 멀티일 때만 컴포넌트 찾기
+        if (GameManager.Instance.IsMulti)
+        {
+            _photonView = GetComponentInParent<PhotonView>();
+
+        }
     }
     private void OnEnable()
     {
-        _controller.activateAction.action.performed += ParclePlay;
-        _controller.activateAction.action.performed += OnTopNoteHit;
-        hapticDelegate += _controller.SendHapticImpulse;
+        if (HandleMode())
+        {
+            _controller.activateAction.action.performed += ParclePlay;
+            _controller.activateAction.action.performed += OnTopNoteHit;
+            hapticDelegate += _controller.SendHapticImpulse;
+        }
+
         GameManager.Instance.OnGameEnd += PlayerGameEndAction;
     }
+
     private void OnDisable()
     {
-        _controller.activateAction.action.performed -= ParclePlay;
-        _controller.activateAction.action.performed -= OnTopNoteHit;
-        hapticDelegate -= _controller.SendHapticImpulse;
+        if (HandleMode())
+        {
+            _controller.activateAction.action.performed -= ParclePlay;
+            _controller.activateAction.action.performed -= OnTopNoteHit;
+            hapticDelegate -= _controller.SendHapticImpulse;
+        }
+
         GameManager.Instance.OnGameEnd -= PlayerGameEndAction;
+    }
+
+    private bool HandleMode()
+    {
+        if (!GameManager.Instance.IsMulti) return true; // 싱글모드
+        return _photonView != null && _photonView.IsMine; // 멀티모드 -> 내 컨트롤러만
     }
     private void ParclePlay(InputAction.CallbackContext cnt)
     {
@@ -145,25 +169,32 @@ public class PlayerController : MonoBehaviour
 
     private void OnTopNoteHit(InputAction.CallbackContext cnt)
     {
-
         if (rayInter.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
-            if (hit.collider.TryGetComponent(out TopNote topNote))
+            string myTag;
+            if (GameManager.Instance.IsMulti) myTag = PhotonNetwork.LocalPlayer.NickName;
+            else myTag = "TopNote"; //싱글에서 태그
+
+            if (hit.collider.TryGetComponent(out TopNote topNote) && hit.collider.CompareTag(myTag))
             {
-                if (false == topNote.canInter)
-                {
+                if (!topNote.canInter)
                     return;
-                }
-                TopNoteProjectile proj =
-                PoolManager.Instance.topNoteProjPool.Pop();
+
+                TopNoteProjectile proj = PoolManager.Instance.topNoteProjPool.Pop();
                 proj.transform.SetParent(transform, true);
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
+
                 _controller.SendHapticImpulse(0.8f, 0.15f);
-                topNote.Hit();
+
+                if (!GameManager.Instance.IsMulti)
+                    topNote.Hit();
+                else
+                    _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }
+
 
     private void PlayerGameEndAction()
     {

@@ -1844,7 +1844,7 @@ PrefabInstance:
     - target: {fileID: 4444866515538181206, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: gameSceneName
-      value: YKD_GameScene
+      value: GameScene2
       objectReference: {fileID: 0}
     - target: {fileID: 4444866515538181207, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
@@ -8899,6 +8899,13 @@ MonoBehaviour:
     type: 3}
   hitEffectPrefab: {fileID: 8201433479105707240, guid: aa7b60f42746f13408757f44f4d5049a,
     type: 3}
+  carPrefab: {fileID: 0}
+  shortNoteSurplusCount: 50
+  longNoteSurplusCount: 50
+  topNoteSurplusCount: 50
+  projectileSurplusCount: 50
+  hitEffectSurplusCount: 50
+  carEffectSurplusCount: 30
 --- !u!4 &633724674
 Transform:
   m_ObjectHideFlags: 0
@@ -44173,7 +44180,7 @@ MonoBehaviour:
   _countStartGame: {fileID: 756829312489591091}
   countStartGame: 5
   gamePlayUI: {fileID: 1005297659}
-  peopleCount: 1
+  peopleCount: 2
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0

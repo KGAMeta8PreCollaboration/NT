@@ -17,13 +17,19 @@ public class PlayerModuleManager : MonoBehaviour
             List<LoadedNoteData> songData = null;
             if (playerModule.playerKey == PlayerKey.Player1)
             {
+                playerModule.NoteManager.topNoteTag = PlayerKey.Player1.ToString();
+
                 songData = player1SongData;
                 print($"{playerModule.name}의 노래 데이터: player1SongData 고름");
+                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
             else if (playerModule.playerKey == PlayerKey.Player2)
             {
+                playerModule.NoteManager.topNoteTag = PlayerKey.Player2.ToString();
+
                 songData = player2SongData;
                 print($"{playerModule.name}의 노래 데이터: player2SongData 고름");
+                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
 
             playerModule.SetPlayerModuleData(songData);
@@ -39,7 +45,7 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.owner.Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
         }
 
         if (module != null)
@@ -57,7 +63,7 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.owner.Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
         }
 
         if (module != null)
@@ -70,6 +76,44 @@ public class PlayerModuleManager : MonoBehaviour
         }
 
         Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}");
+        return -1;
+    }
+
+    public TopNote GetPlayerTopNote(int index, string nickname)
+    {
+        foreach (PlayerModule module in playerModules)
+        {
+            if (module.playerKey.ToString() == nickname)
+            {
+                LinkedList<Note> noteList = module.TopNoteRails[index].GetNoteList();
+                if (noteList.First != null && noteList.First.Value is TopNote topNote)
+                    return topNote;
+            }
+        }
+
+        Debug.LogWarning($"[MultiGameController] TopNote를 찾을 수 없습니다. 인덱스: {index}, 닉네임: {nickname}");
+        return null;
+    }
+
+    public int GetTopNoteIndex(TopNote topNote, string nickname)
+    {
+        foreach (PlayerModule module in playerModules)
+        {
+            if (module.playerKey.ToString().Equals(nickname))
+            {
+                for (int i = 0; i < module.TopNoteRails.Count; i++)
+                {
+                    LinkedList<Note> noteList = module.TopNoteRails[i].GetNoteList();
+                    foreach (Note note in noteList)
+                    {
+                        if (note == topNote)
+                            return i;
+                    }
+                }
+            }
+        }
+
+        Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
         return -1;
     }
 }
