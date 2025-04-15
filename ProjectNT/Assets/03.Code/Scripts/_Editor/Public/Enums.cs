@@ -46,8 +46,15 @@ public class Enums
 
     public enum PlayMode
     {
-        Host,
-        Client,
-        Both
+        Player1,
+        Player2,
+        Single,
+        None
+    }
+    public enum Phase
+    {
+        Phase1,
+        Phase2,
+        Phase3
     }
 }
