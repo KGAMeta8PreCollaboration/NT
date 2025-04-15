@@ -7,7 +7,7 @@ using TMPro;
 
 public class BeatMapManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI bpmText;
+    //[SerializeField] private TextMeshProUGUI bpmText;
 
     public bool isLoaded = false;
 
@@ -187,7 +187,7 @@ public class BeatMapManager : MonoBehaviour
         }
 
         // 5. 기타 정보 초기화
-        bpmText.text = $"BPM : ({EditorDataManager.Instance.ProjectData.bpm.ToString()})";
+        //bpmText.text = $"BPM : ({EditorDataManager.Instance.ProjectData.bpm.ToString()})";
         isLoaded = true;
     }
 }

@@ -17,6 +17,12 @@ public class LongNodeState : INodeState
     //_isPlacing
     public void OnLeftClick(Vector2Int position)
     {
+        if (EditorDataManager.Instance.CurKeySoundName == "")
+        {
+            Debug.LogWarning("키음 없음");
+            return;
+        }
+
         if (_isPlacing == false)
         {
             startPos = position;
@@ -46,22 +52,38 @@ public class LongNodeState : INodeState
     //롱노트는 오른쪽 클릭일때 하단노드 상태로 돌아감
     public void OnRightClick(Vector2Int position)
     {
+        //배치 상태가 아닐때
+        if (position == new Vector2Int(-1, -1))
+        {
+            _nct.ChangeState(new LowNodeState(_nct));
+            _nct.HideLongNodePreview();
+            return;
+        }
+
         if (_isPlacing == false)
         {
+            _nct.HideLongNodePreview();
+            //그리드에 노드가 있으면
             if (_nct.NodeGrid[position.x, position.y] != null)
             {
+                //노드 제거
                 _nct.RemoveNode(position);
+                _nct.HideLongNodePreview();
             }
+            //그리드에 노드가 없으면
             else
             {
+                //상태 변경
                 _nct.ChangeState(new LowNodeState(_nct));
                 _nct.HideLongNodePreview();
             }
         }
+        //배치 상태일때
         else
         {
             _isPlacing = false;
             _nct.HideLongNodePreview();
+            return;
         }
     }
 

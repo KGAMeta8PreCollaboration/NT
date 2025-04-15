@@ -9,7 +9,7 @@ public class Waveform : MonoBehaviour
     [SerializeField] private int height = 64;
     [SerializeField] private Color background = Color.black;
     [SerializeField] private Color waveformColor = Color.yellow;
-    [SerializeField] private GameObject playBarPrefab;
+    //[SerializeField] private GameObject playBarPrefab;
     [SerializeField] private Camera cam = null;
 
     private AudioSource _audioSource = null;
@@ -19,7 +19,8 @@ public class Waveform : MonoBehaviour
     private float[] waveform = null;
     private float playBarOffsetX;
     private bool isDragging = false;
-    private bool isLoaded = false;
+
+    public bool isLoaded = false;
 
     private void Awake()
     {
@@ -54,7 +55,7 @@ public class Waveform : MonoBehaviour
             return;
         }
 
-        SetPlayBarPos();
+        //SetPlayBarPos();
         //if (Input.GetMouseButtonDown(0))
         //{
         //    print("마우스 클릭 감지");
@@ -156,17 +157,17 @@ public class Waveform : MonoBehaviour
     //    playBar.transform.position = new Vector3(0, playBarOffsetX);
     //}
 
-    private void SetPlayBarPos()
-    {
-        if (_audioSource == null || _audioSource.clip == null)
-        {
-            print($"오디오 문제");
-            return;
-        }
-        //progress = 현재 노래 시간 / 전체 노래 시간
-        float progress = _audioSource.time / _audioSource.clip.length;
-        //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
-        float yOffset = progress * _spriteRenderer.size.x;
-        playBarPrefab.transform.position = new Vector3(0, playBarOffsetX + yOffset);
-    }
+    //private void SetPlayBarPos()
+    //{
+    //    if (_audioSource == null || _audioSource.clip == null)
+    //    {
+    //        print($"오디오 문제");
+    //        return;
+    //    }
+    //    //progress = 현재 노래 시간 / 전체 노래 시간
+    //    float progress = _audioSource.time / _audioSource.clip.length;
+    //    //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
+    //    float yOffset = progress * _spriteRenderer.size.x;
+    //    playBarPrefab.transform.position = new Vector3(0, playBarOffsetX + yOffset);
+    //}
 }

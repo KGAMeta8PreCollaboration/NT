@@ -36,7 +36,6 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keySound_tmp;
     [SerializeField] private Button addProejct_btn;
     [SerializeField] private Button refreah_btn;
-    [SerializeField] private Button delete_btn;
     [SerializeField] private Button loadSong_btn;
     [SerializeField] private Button loadThumbnail_btn;
     [SerializeField] private Button loadKeySound_btn;
@@ -88,10 +87,8 @@ public class ProjectLoader : MonoBehaviour
     private void Initialize()
     {
         if (projectIO == null) projectIO = GetComponentInParent<ProjectIO>();
-        newProjectPrefab = Resources.Load<GameObject>("_SongEditor/Prefabs/NewProject");
         addProejct_btn.onClick.AddListener(AddNewProject);
         refreah_btn.onClick.AddListener(Refresh);
-        delete_btn.onClick.AddListener(DeleteUIOpen);
         loadSong_btn.onClick.AddListener(LoadSong);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
         loadKeySound_btn.onClick.AddListener(KeySoundPathSet);
@@ -358,7 +355,7 @@ public class ProjectLoader : MonoBehaviour
         }
     }
 
-    private void DeleteUIOpen()
+    public void DeleteUIOpen()
     {
         EditorUIManager.Instance.popUp.PopUpOpen(Detail.DELETEPROJECTCHECK, delAction);
     }

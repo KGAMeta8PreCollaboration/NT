@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
@@ -13,14 +14,16 @@ public class AudioSourceManager : MonoBehaviour
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Slider audioSlider;
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private TextMeshProUGUI songLengthText;
-    [SerializeField] private TextMeshProUGUI currentSongLengthText;
+    //[SerializeField] private TextMeshProUGUI songLengthText;
+    //[SerializeField] private TextMeshProUGUI currentSongLengthText;
     [SerializeField] private TMP_InputField phase2Input;
     [SerializeField] private TMP_InputField phase3Input;
     [SerializeField] private Camera cam;
+    [SerializeField] private Vector3 initCameraPos;
+    [SerializeField] private float camMoveValue;
 
     //get,set 둘다 필요 -> 노래의 시간을 조절할 수 있어야하기 때문 (0~1의 값)
-    public float audioSourceValue;
+    [SerializeField] public float audioSourceValue;
 
     private NCT _nct;
     private BeatMapManager _beatMapManager;
@@ -56,6 +59,7 @@ public class AudioSourceManager : MonoBehaviour
         }
         phase2Input.onEndEdit.AddListener(SavePhase2);
         phase3Input.onEndEdit.AddListener(SavePhase3);
+        cam.transform.position = initCameraPos;
     }
 
     private IEnumerator Start()
@@ -63,6 +67,12 @@ public class AudioSourceManager : MonoBehaviour
         yield return new WaitUntil(() => _beatMapManager.isLoaded == true && AudioSource.clip != null);
     }
 
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    public Action<float> audioCallback;
     //_audioSource 초기화 및 waveform 이미지 생성
     public void InitializeFromBeatMapManager(AudioClip audioClip)
     {
@@ -74,6 +84,9 @@ public class AudioSourceManager : MonoBehaviour
         }
         _audioSource = GetComponent<AudioSource>();
         _audioSource.clip = audioClip;
+
+        audioCallback?.Invoke(_audioSource.clip.length);
+
         if (volumeSlider != null)
         {
             HandleVolume(volumeSlider.value);
@@ -88,7 +101,7 @@ public class AudioSourceManager : MonoBehaviour
         //_audioVisualizable.InitWaveform();
         volumeSlider.onValueChanged.AddListener(HandleVolume);
 
-        SetSongLengthText(songLengthText, _audioDuration);
+        //SetSongLengthText(songLengthText, _audioDuration);
     }
 
     public void InitializeFromSongData(SongData songData)
@@ -107,13 +120,37 @@ public class AudioSourceManager : MonoBehaviour
         //     return;
         // }
 
-        SetSongLengthText(currentSongLengthText, _audioSource.time);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (IsPointerOverUI())
         {
-            print($"스페이스바 들어옴");
-            _isPlaying = !_isPlaying;
-            HandlePushSpace(_isPlaying);
+            return;
         }
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    _isPlaying = !_isPlaying;
+        //    HandlePushSpace(_isPlaying);
+        //}
+
+        ////NodeContainer를 이동시키는 커멘트는 임시로 Shift + wasd
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    if (Input.GetKeyDown(KeyCode.A))
+        //    {
+        //        cam.transform.position += Vector3.left * camMoveValue;
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.S))
+        //    {
+        //        cam.transform.position += Vector3.down * camMoveValue;
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.D))
+        //    {
+        //        cam.transform.position += Vector3.right * camMoveValue;
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.W))
+        //    {
+        //        cam.transform.position += Vector3.up * camMoveValue;
+        //    }
+        //}
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -122,7 +159,16 @@ public class AudioSourceManager : MonoBehaviour
             {
                 cam.transform.position += Vector3.forward * (scroll * 2.0f); // 이동 속도 조절 가능
             }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                cam.transform.position += Vector3.left * camMoveValue;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                cam.transform.position += Vector3.right * camMoveValue;
+            }
         }
+
         else
         {
             //-0.1 ~ 0.1사이값이 나옴
@@ -145,7 +191,6 @@ public class AudioSourceManager : MonoBehaviour
                 _audioSource.time = (float)currentTime;
             }
         }
-        audioSlider.value = _audioSource.time / _audioDuration;
     }
 
     private void HandlePushSpace(bool clickedSpace)
@@ -213,13 +258,5 @@ public class AudioSourceManager : MonoBehaviour
         {
             phase3 = parsedValue;
         }
-    }
-
-    private void SetSongLengthText(TextMeshProUGUI text, float time)
-    {
-        int minutes = Mathf.FloorToInt(time / 60);
-        int seconds = Mathf.FloorToInt(time % 60);
-        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
-        text.text = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
     }
 }

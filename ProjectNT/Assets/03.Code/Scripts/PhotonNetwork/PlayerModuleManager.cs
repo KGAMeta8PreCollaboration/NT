@@ -116,16 +116,4 @@ public class PlayerModuleManager : MonoBehaviour
         Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
         return -1;
     }
-
-    public PlayerModule GetPlayerModuleByNick(string nickname)
-    {
-        foreach (PlayerModule module in playerModules)
-        {
-            if (module.playerKey.ToString() == nickname)
-                return module;
-        }
-
-        Debug.LogError($"플레이어 모듈을 찾을 수 없음: {nickname}");
-        return null;
-    }
 }

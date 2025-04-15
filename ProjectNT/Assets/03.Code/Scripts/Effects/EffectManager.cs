@@ -4,18 +4,26 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public delegate void EffectDelegate();
 public class EffectManager : Singleton<EffectManager>
 {
 
+    private Enums.PlayMode playMode;
+    public Enums.PlayMode PlayMode
+    {
+        get { return playMode; }
+        set
+        {
+            playMode = value;
+            SetPlayMode(playMode);
+        }
+    }
+
     [Header("Spot Light Effect")]
     [SerializeField]
-    public Dictionary<Type, EffectDelegate> leftEffects = new Dictionary<Type, EffectDelegate>();
-    public Dictionary<Type, EffectDelegate> rightEffects = new Dictionary<Type, EffectDelegate>();
-    public Action<Note, int> player1MapEffect;
-    public Action<Note, int> player2MapEffect;
+    public Dictionary<Type, EffectDelegate> effects = new Dictionary<Type, EffectDelegate>();
+    public Action<Note, int> OnMapEffect;
 
     public LightEffect lightEffect;
     public NeonEffect neonEffect;
@@ -24,24 +32,26 @@ public class EffectManager : Singleton<EffectManager>
     {
         base.Awake();
 
-        SceneManager.activeSceneChanged += (x, y) =>
-        {
-            if (SceneManager.GetActiveScene().name == GameManager.Instance.gameSceneName)
-            {
-                Initialize();
-            }
-            if (SceneManager.GetActiveScene().name == "LobbyScene")
-            {
-                player1MapEffect -= EffectInvoke;
-                player2MapEffect -= EffectInvoke;
-            }
-        };
+        //TODO: 작업 완료시 주석해제
+        // SceneManager.activeSceneChanged += (x, y) =>
+        // {
+        //     if (SceneManager.GetActiveScene().name == "GameScene")
+        //     {
+        //         Initialize();
+        //     }
+        // };
+        //TODO: 작업 완료시 지워야함
+        Initialize();
+    }
+    private void OnDisable()
+    {
+        //TODO 씬전환 시 구독해제로 변경예정
+        OnMapEffect -= EffectInvoke;
     }
     private void Initialize()
     {
-        // lightEffect =
-        player1MapEffect += EffectInvoke;
-        player2MapEffect += EffectInvoke;
+        PlayMode = Enums.PlayMode.Both;
+        OnMapEffect += EffectInvoke;
     }
 
     public void EffectInvoke(Note note, int combo)
@@ -49,15 +59,18 @@ public class EffectManager : Singleton<EffectManager>
 
         if (note.judgementType == JudgementType.PERFECT)
         {
-            GenericEffectOn<LightEffect>();
+            Test<LightEffect>();
         }
+        Debug.LogError(combo);
         if (combo % 10 == 0)
         {
-            GenericEffectOn<NeonEffect>();
+            Test<NeonEffect>();
+            Debug.LogError("!!");
         }
+
         if (combo % 20 == 0)
         {
-            GenericEffectOn<CarEffect>();
+            Test<CarEffect>();
         }
 
         if (note is TopNote)
@@ -66,16 +79,12 @@ public class EffectManager : Singleton<EffectManager>
         }
     }
 
-    public void GenericEffectOn<T>()
+    public void Test<T>()
     {
         Type effectType = typeof(T);
-        if (leftEffects.TryGetValue(effectType, out var leftDelegate))
+        if (effects.TryGetValue(effectType, out var effectDelegate))
         {
-            leftDelegate?.Invoke();
-        }
-        if (rightEffects.TryGetValue(effectType, out var rightDelegate))
-        {
-            rightDelegate?.Invoke();
+            effectDelegate?.Invoke();
         }
     }
 
@@ -90,45 +99,39 @@ public class EffectManager : Singleton<EffectManager>
 
     private void SetDelegateNull()
     {
-        lightEffect.player1Delegate = null;
-        neonEffect.player1Delegate = null;
-        carEffect.player1Delegate = null;
-        lightEffect.player2Delegate = null;
-        neonEffect.player2Delegate = null;
-        carEffect.player2Delegate = null;
+        lightEffect.effectDelegate = null;
+        neonEffect.effectDelegate = null;
+        carEffect.effectDelegate = null;
     }
 
     private void ConfigureEffectDelegates(Enums.PlayMode playMode, LightEffect light, NeonEffect neon, CarEffect car)
     {
-        if (playMode == Enums.PlayMode.Player1 || playMode == Enums.PlayMode.Single)
+        if (playMode == Enums.PlayMode.Host || playMode == Enums.PlayMode.Both)
         {
-            light.player1Delegate += light.LeftEffectInvoke;
-            neon.player1Delegate += neon.LeftEffectInvoke;
-            car.player1Delegate += car.LeftEffectInvoke;
+            light.effectDelegate += light.LeftEffectInvoke;
+            neon.effectDelegate += neon.LeftEffectInvoke;
+            car.effectDelegate += car.LeftEffectInvoke;
         }
 
-        if (playMode == Enums.PlayMode.Player2 || playMode == Enums.PlayMode.Single)
+        if (playMode == Enums.PlayMode.Client || playMode == Enums.PlayMode.Both)
         {
-            light.player2Delegate += light.RightEffectInvoke;
-            neon.player2Delegate += neon.RightEffectInvoke;
-            car.player2Delegate += car.RightEffectInvoke;
+            light.effectDelegate += light.RightEffectInvoke;
+            neon.effectDelegate += neon.RightEffectInvoke;
+            car.effectDelegate += car.RightEffectInvoke;
         }
 
-        if (playMode != Enums.PlayMode.Player1 &&
-            playMode != Enums.PlayMode.Player2 &&
-            playMode != Enums.PlayMode.Single)
+        if (playMode != Enums.PlayMode.Host &&
+            playMode != Enums.PlayMode.Client &&
+            playMode != Enums.PlayMode.Both)
         {
             Debug.LogError("PlayMode Error");
         }
     }
     private void UpdateEffectsDictionary()
     {
-        leftEffects.Add(lightEffect.GetType(), lightEffect.player1Delegate);
-        rightEffects.Add(lightEffect.GetType(), lightEffect.player2Delegate);
-        leftEffects.Add(neonEffect.GetType(), neonEffect.player1Delegate);
-        rightEffects.Add(neonEffect.GetType(), neonEffect.player2Delegate);
-        leftEffects.Add(carEffect.GetType(), carEffect.player1Delegate);
-        rightEffects.Add(carEffect.GetType(), carEffect.player2Delegate);
+        effects.Add(lightEffect.GetType(), lightEffect.effectDelegate);
+        effects.Add(neonEffect.GetType(), neonEffect.effectDelegate);
+        effects.Add(carEffect.GetType(), carEffect.effectDelegate);
     }
 }
 

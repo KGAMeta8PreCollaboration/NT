@@ -10,6 +10,12 @@ public class UpperNodeHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
+    //[SerializeField] private RectTransform leftNodeGroup; 
+    //[SerializeField] private RectTransform rightNodeGroup;
+    //[SerializeField] private Camera mainCamera;
+
+    //private PlayBar _playBar;
+
     //public Toggle[] toggles;
     private List<UpperNode> upperNodes = new List<UpperNode>();
 
@@ -22,6 +28,8 @@ public class UpperNodeHandler : MonoBehaviour
         //_upperToggles = new List<int>();
         //toggles = GetComponentsInChildren<Toggle>();
         upperNodes = GetComponentsInChildren<UpperNode>().ToList();
+
+        //_playBar = FindObjectOfType<PlayBar>();
 
         for (int i = 0; i < upperNodes.Count; i++)
         {
@@ -37,43 +45,81 @@ public class UpperNodeHandler : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            foreach (var node in _upperNodeDic)
-            {
-                int[] temp = node.Value.ToArray();
-                print($"grid : {node.Key}, index : {temp}");
-            }
-        }
-    }
+    //private void Start()
+    //{
+    //    Init();
+    //}
 
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        foreach (var node in _upperNodeDic)
+    //        {
+    //            int[] temp = node.Value.ToArray();
+    //            print($"grid : {node.Key}, index : {temp}");
+    //        }
+    //    }
+    //}
+
+    //private void Init()
+    //{
+    //    if (_playBar == null) return;
+
+    //    Vector3 playBarLeft = mainCamera.WorldToScreenPoint(_playBar.transform.position - (_playBar.transform.localScale.x * 0.5f * Vector3.right));
+    //    Vector3 playBarRight = mainCamera.WorldToScreenPoint(_playBar.transform.position + (_playBar.transform.localScale.x * 0.5f * Vector3.right));
+
+    //    // Canvas 좌표로 변환
+    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(
+    //        (RectTransform)transform,
+    //        playBarLeft,
+    //        null,
+    //        out Vector2 leftAnchoredPosition);
+
+    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(
+    //        (RectTransform)transform,
+    //        playBarRight,
+    //        null,
+    //        out Vector2 rightAnchoredPosition);
+
+    //    // 노드 그룹의 위치 업데이트
+    //    if (leftNodeGroup != null)
+    //        leftNodeGroup.anchoredPosition = leftAnchoredPosition;
+
+    //    if (rightNodeGroup != null)
+    //        rightNodeGroup.anchoredPosition = rightAnchoredPosition;
+    //}
+
+    private Dictionary<int, Dictionary<int, string>> _gridKeySoundDic = new Dictionary<int, Dictionary<int, string>>();
     private void OnToggleChanged(bool isOn, int index)
     {
-        if (_currentGridIndex < 0)
+        if (string.IsNullOrEmpty(EditorDataManager.Instance.CurKeySoundName))
         {
+            Debug.LogWarning("키음이 없음");
             return;
+        }
+
+        if (_currentGridIndex < 0)
+            return;
+
+        if (!_gridKeySoundDic.ContainsKey(_currentGridIndex))
+        {
+            _gridKeySoundDic[_currentGridIndex] = new Dictionary<int, string>();
         }
 
         //상단 노드 추가 및 제거
         if (isOn)
         {
             if (!_upperToggles.Contains(index))
-                _upperToggles.Add(index);
-            // 토글이 켜질 때 현재 선택된 키 사운드를 해당 노드에 저장
-            var node = upperNodes.FirstOrDefault(n => n.Index == index);
-            if (node != null)
             {
-                if (string.IsNullOrEmpty(node._keySound))
-                {
-                    node.SetKeySound(EditorDataManager.Instance.CurKeySoundName);
-                }
+                _upperToggles.Add(index);
+                _gridKeySoundDic[_currentGridIndex][index] = EditorDataManager.Instance.CurKeySoundName;
             }
         }
         else
         {
             _upperToggles.Remove(index);
+            _gridKeySoundDic[_currentGridIndex].Remove(index);
         }
 
         // 현재 토글 상태를 Dictionary에 저장
@@ -103,7 +149,18 @@ public class UpperNodeHandler : MonoBehaviour
             _upperToggles.AddRange(toggles);
         }
 
-        // 모든 상단 노드의 상태 업데이트
+        // 현재 그리드의 키음 정보 복원
+        if (_gridKeySoundDic.TryGetValue(grid, out var keySounds))
+        {
+            foreach (var node in upperNodes)
+            {
+                if (keySounds.TryGetValue(node.Index, out string keySound))
+                {
+                    node.SetKeySound(keySound);
+                }
+            }
+        }
+
         UpdateAllNodes();
     }
 
@@ -114,9 +171,15 @@ public class UpperNodeHandler : MonoBehaviour
 
     private void UpdateAllNodes()
     {
-        for (int i = 0; i < upperNodes.Count; i++)
+        foreach (var node in upperNodes)
         {
-            upperNodes[i].UpdateState(_upperToggles);
+            bool isActive = _upperToggles.Contains(node.Index);
+            if (isActive && _gridKeySoundDic.TryGetValue(_currentGridIndex, out var keySounds))
+            {
+                keySounds.TryGetValue(node.Index, out string keySound);
+                node.SetKeySound(keySound ?? "");
+            }
+            node.UpdateState(_upperToggles);
         }
     }
 
@@ -125,6 +188,7 @@ public class UpperNodeHandler : MonoBehaviour
         // 기존 데이터 초기화
         _upperNodeDic.Clear();
         _upperToggles.Clear();
+        _gridKeySoundDic.Clear();
         _currentGridIndex = -1;
 
         if (nodeDatas == null) return;
@@ -133,12 +197,19 @@ public class UpperNodeHandler : MonoBehaviour
         {
             _upperNodeDic[nodeData.gridIndex] = new List<int>(nodeData.nodeIndexs);
 
+            // 각 그리드의 키음 정보 초기화
+            if (!_gridKeySoundDic.ContainsKey(nodeData.gridIndex))
+            {
+                _gridKeySoundDic[nodeData.gridIndex] = new Dictionary<int, string>();
+            }
+
             for (int i = 0; i < nodeData.nodeIndexs.Count; i++)
             {
                 int nodeIndex = nodeData.nodeIndexs[i];
                 string keySound = nodeData.keySounds[i];
+                _gridKeySoundDic[nodeData.gridIndex][nodeIndex] = keySound;
 
-                // upperNodes 리스트에서 해당 인덱스의 노드를 찾아 keySound 설정
+                // 노드에 키음 설정
                 var node = upperNodes.FirstOrDefault(n => n.Index == nodeIndex);
                 if (node != null)
                 {
