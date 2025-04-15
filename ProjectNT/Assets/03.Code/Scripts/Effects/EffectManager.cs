@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public delegate void EffectDelegate();
 public class EffectManager : Singleton<EffectManager>
@@ -32,24 +33,22 @@ public class EffectManager : Singleton<EffectManager>
     {
         base.Awake();
 
-        //TODO: 작업 완료시 주석해제
-        // SceneManager.activeSceneChanged += (x, y) =>
-        // {
-        //     if (SceneManager.GetActiveScene().name == "GameScene")
-        //     {
-        //         Initialize();
-        //     }
-        // };
-        //TODO: 작업 완료시 지워야함
-        Initialize();
-    }
-    private void OnDisable()
-    {
-        //TODO 씬전환 시 구독해제로 변경예정
-        OnMapEffect -= EffectInvoke;
+        SceneManager.activeSceneChanged += (x, y) =>
+        {
+            if (SceneManager.GetActiveScene().name == GameManager.Instance.gameSceneName)
+            {
+                Initialize();
+            }
+            if (SceneManager.GetActiveScene().name == "LobbyScene")
+            {
+                OnMapEffect -= EffectInvoke;
+
+            }
+        };
     }
     private void Initialize()
     {
+        // lightEffect =
         PlayMode = Enums.PlayMode.Both;
         OnMapEffect += EffectInvoke;
     }
