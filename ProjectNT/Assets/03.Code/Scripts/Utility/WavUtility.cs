@@ -1,6 +1,7 @@
 using System;
 
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public static class WavUtility
@@ -35,8 +36,8 @@ public static class WavUtility
         int audioFormat = reader.ReadInt16();       // 1 = PCM, 3 = IEEE float
         int numChannels = reader.ReadInt16();
         int sampleRate = reader.ReadInt32();
-        reader.ReadInt32(); // byte rate
-        reader.ReadInt16(); // block align
+        reader.ReadInt32();
+        reader.ReadInt16();
         int bitsPerSample = reader.ReadInt16();
 
         // 확장된 fmt 청크라면 스킵
@@ -77,6 +78,13 @@ public static class WavUtility
 
         if (audioFormat == 1) // PCM
         {
+            if (bitsPerSample == 8)
+            {
+                for (int i = 0; i < sampleCount; i++)
+                {
+                    ret[i] = (wavData[i] - 128) / 128f;
+                }
+            }
             if (bitsPerSample == 16)
             {
                 for (int i = 0; i < sampleCount; i++)
@@ -84,12 +92,20 @@ public static class WavUtility
                     short sample = BitConverter.ToInt16(wavData, i * 2);
                     ret[i] = sample / 32768f;
                 }
-            }
-            else if (bitsPerSample == 8)
+            }        
+            else if (bitsPerSample == 24)
             {
                 for (int i = 0; i < sampleCount; i++)
                 {
-                    ret[i] = (wavData[i] - 128) / 128f;
+                    int offset = i * 3;
+                    int sample = (wavData[offset + 2] << 16) | (wavData[offset + 1] << 8) | wavData[offset];
+                    // 음수 값 처리
+                    if ((sample & 0x800000) != 0)
+                    {
+                        sample |= unchecked((int)0xFF000000);
+                    }
+                    // 24비트 정규화
+                    ret[i] = sample / 8388608f;
                 }
             }
             else
