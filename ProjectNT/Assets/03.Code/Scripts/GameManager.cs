@@ -34,7 +34,6 @@ public class GameManager : Singleton<GameManager>
     public float phase2;
     public float phase3;
 
-
     private Enums.PlayMode playMode;
     public Enums.PlayMode PlayMode
     {
@@ -72,6 +71,7 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
+        phaseEnumerator = PhaseTracker();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -154,7 +154,6 @@ public class GameManager : Singleton<GameManager>
 
         PhotonNetwork.LoadLevel("MultiGame");
     }
-
 
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
     public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
