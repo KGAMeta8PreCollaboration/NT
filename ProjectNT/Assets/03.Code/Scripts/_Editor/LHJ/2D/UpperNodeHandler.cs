@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ public class UpperNodeHandler : MonoBehaviour
     //[SerializeField] private RectTransform rightNodeGroup;
     //[SerializeField] private Camera mainCamera;
 
+    public Action<int> onUpperNodeAdded;
+    public Action<int> onUpperNodeRemoved;
     //private PlayBar _playBar;
 
     //public Toggle[] toggles;
@@ -90,7 +93,7 @@ public class UpperNodeHandler : MonoBehaviour
     //        rightNodeGroup.anchoredPosition = rightAnchoredPosition;
     //}
 
-    private Dictionary<int, Dictionary<int, string>> _gridKeySoundDic = new Dictionary<int, Dictionary<int, string>>();
+    public Dictionary<int, Dictionary<int, string>> _gridKeySoundDic = new Dictionary<int, Dictionary<int, string>>();
     private void OnToggleChanged(bool isOn, int index)
     {
         if (string.IsNullOrEmpty(EditorDataManager.Instance.CurKeySoundName))
@@ -229,12 +232,19 @@ public class UpperNodeHandler : MonoBehaviour
 
     public string GetNodeKeySoundByIndex(int nodeIndex)
     {
-        // upperNodes 리스트에서 해당 인덱스의 노드를 찾음
-        var node = upperNodes.FirstOrDefault(n => n.Index == nodeIndex);
-        if (node != null)
+        // 현재 그리드의 키음 정보 확인
+        if (_gridKeySoundDic.TryGetValue(_currentGridIndex, out var keySounds))
         {
-            return node._keySound;
+            if (keySounds.TryGetValue(nodeIndex, out string keySound))
+            {
+                return keySound;
+            }
         }
         return "";
+    }
+
+    private void UpdateGridMarkers()
+    {
+
     }
 }

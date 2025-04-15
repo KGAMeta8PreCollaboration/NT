@@ -25,6 +25,10 @@ public class NCT : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI stateTest;
 
+    [SerializeField] private GameObject upperGridMarkPrefab;
+    private Dictionary<int, GameObject> _upperGridMarks = new Dictionary<int, GameObject>();
+    private UpperNodeHandler _upperNodeHandler;
+
     public int RowGridNum;
 
     public double cellHeight = 0;
@@ -66,7 +70,8 @@ public class NCT : MonoBehaviour
     {
         _gridManager = FindObjectOfType<GridManager>();
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
-        _waveform = FindObjectOfType<Waveform>();   
+        _waveform = FindObjectOfType<Waveform>();
+        _upperNodeHandler = FindObjectOfType<UpperNodeHandler>();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -77,6 +82,8 @@ public class NCT : MonoBehaviour
     private void Start()
     {
         _gridManager.InitBeatMap += CreateNodeContainer;
+       // _upperNodeHandler.OnUpperNodeAdded += CreateGridMarker;
+        //_upperNodeHandler.OnUpperNodeRemoved += RemoveGridMarker;
         Debug.Log("NCT START");
     }
 
