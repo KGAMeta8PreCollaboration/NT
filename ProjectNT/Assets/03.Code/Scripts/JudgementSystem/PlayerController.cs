@@ -39,10 +39,11 @@ public class PlayerController : MonoBehaviour
         rayInter = _controller.GetComponentInChildren<XRRayInteractor>();
         rayInter.GetComponent<XRInteractorLineVisual>().enabled = false;
 
-        // 멀티일 때만 PhotonView 찾기
+        // 멀티일 때만 컴포넌트 찾기
         if (GameManager.Instance.IsMulti)
         {
             _photonView = GetComponentInParent<PhotonView>();
+
         }
     }
     private void OnEnable()
@@ -168,26 +169,32 @@ public class PlayerController : MonoBehaviour
 
     private void OnTopNoteHit(InputAction.CallbackContext cnt)
     {
-
         if (rayInter.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
-            if (hit.collider.TryGetComponent(out TopNote topNote))
+            string myTag;
+            if (GameManager.Instance.IsMulti) myTag = PhotonNetwork.LocalPlayer.NickName;
+            else myTag = "TopNote"; //싱글에서 태그
+
+            if (hit.collider.TryGetComponent(out TopNote topNote) && hit.collider.CompareTag(myTag))
             {
-                if (false == topNote.canInter)
-                {
+                if (!topNote.canInter)
                     return;
-                }
-                TopNoteProjectile proj =
-                PoolManager.Instance.topNoteProjPool.Pop();
+
+                TopNoteProjectile proj = PoolManager.Instance.topNoteProjPool.Pop();
                 proj.transform.SetParent(transform, true);
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
+
                 _controller.SendHapticImpulse(0.8f, 0.15f);
-                if (!GameManager.Instance.IsMulti) topNote.Hit();
-                else _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
+
+                if (!GameManager.Instance.IsMulti)
+                    topNote.Hit();
+                else
+                    _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }
+
 
     private void PlayerGameEndAction()
     {

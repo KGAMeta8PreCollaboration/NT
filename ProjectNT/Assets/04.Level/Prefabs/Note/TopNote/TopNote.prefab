@@ -50,11 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitSound: {fileID: 0}
-  leftTrigger: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
-    type: 3}
-  rightTrigger: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
-    type: 3}
   particleSystem: {fileID: 4835093646942938487}
+  canInter: 0
 --- !u!114 &1073266133847819198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5041,7 +5038,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7f3960fb4b53264a81cd6b6ac0e1a52, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10029,7 +10026,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7f3960fb4b53264a81cd6b6ac0e1a52, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14936,7 +14933,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0f04f68279b2ae4eb74da61364f4c0c, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19843,7 +19840,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0f04f68279b2ae4eb74da61364f4c0c, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24835,7 +24832,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7f3960fb4b53264a81cd6b6ac0e1a52, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25057,6 +25054,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9121026171508087687, guid: 230fa7bb1633d60489039f17d9b005dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9121245081954179159, guid: 230fa7bb1633d60489039f17d9b005dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9121271305821721051, guid: 230fa7bb1633d60489039f17d9b005dc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 230fa7bb1633d60489039f17d9b005dc, type: 3}

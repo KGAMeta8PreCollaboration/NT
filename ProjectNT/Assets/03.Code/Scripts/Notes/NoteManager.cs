@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class NoteManager : MonoBehaviour
     [SerializeField] private ScoreManager _scoreManager;
     public List<Note> notes { get; private set; } = new List<Note>();
 
-
+    public string topNoteTag;
     private NoteGenerator _noteGenerator;
 
 
@@ -30,7 +31,8 @@ public class NoteManager : MonoBehaviour
         {
             NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
             NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
-            NoteType.Top => new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.Euler(0, 0, 0)),
+            NoteType.Top => new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.Euler(0, 0, 0),
+            GameManager.Instance.IsMulti == true ? topNoteTag : "TopNote"),
             _ => null
         };
 

@@ -17,13 +17,19 @@ public class PlayerModuleManager : MonoBehaviour
             List<LoadedNoteData> songData = null;
             if (playerModule.playerKey == PlayerKey.Player1)
             {
+                playerModule.NoteManager.topNoteTag = PlayerKey.Player1.ToString();
+
                 songData = player1SongData;
                 print($"{playerModule.name}의 노래 데이터: player1SongData 고름");
+                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
             else if (playerModule.playerKey == PlayerKey.Player2)
             {
+                playerModule.NoteManager.topNoteTag = PlayerKey.Player2.ToString();
+
                 songData = player2SongData;
                 print($"{playerModule.name}의 노래 데이터: player2SongData 고름");
+                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
 
             playerModule.SetPlayerModuleData(songData);
