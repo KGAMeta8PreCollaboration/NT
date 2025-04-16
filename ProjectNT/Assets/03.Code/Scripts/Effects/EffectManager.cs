@@ -9,18 +9,6 @@ using UnityEngine.SceneManagement;
 public delegate void EffectDelegate();
 public class EffectManager : Singleton<EffectManager>
 {
-
-    private Enums.PlayMode playMode;
-    public Enums.PlayMode PlayMode
-    {
-        get { return playMode; }
-        set
-        {
-            playMode = value;
-            SetPlayMode(playMode);
-        }
-    }
-
     public Dictionary<Type, EffectDelegate> leftEffects = new Dictionary<Type, EffectDelegate>();
     public Dictionary<Type, EffectDelegate> rightEffects = new Dictionary<Type, EffectDelegate>();
     public Action<Note, int> player1MapEffect;
@@ -49,6 +37,7 @@ public class EffectManager : Singleton<EffectManager>
     private void Initialize()
     {
         FindEffectObjects();
+        SetPlayMode(GameManager.Instance.PlayMode);
         player1MapEffect += EffectInvoke;
         player2MapEffect += EffectInvoke;
     }
