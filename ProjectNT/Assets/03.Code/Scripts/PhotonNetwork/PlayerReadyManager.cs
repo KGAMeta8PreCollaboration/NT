@@ -20,7 +20,7 @@ public class PlayerReadyManager : MonoBehaviourPun
     {
         if (!_readyPlayers.Contains(actorNumber))
         {
-            photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.AllBuffered, actorNumber);
+            photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.AllBufferedViaServer, actorNumber);
         }
     }
 
