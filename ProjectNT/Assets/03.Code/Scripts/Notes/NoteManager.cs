@@ -104,10 +104,6 @@ public class NoteManager : MonoBehaviour
     private void AddNote(Note note)
     {
         note.SetScoreManager(_scoreManager);
-        if (note.gameObject.name == "TopNote(Clone)")
-        {
-            note.OnHit?.Invoke(note);
-        }
         notes.Add(note);
     }
 

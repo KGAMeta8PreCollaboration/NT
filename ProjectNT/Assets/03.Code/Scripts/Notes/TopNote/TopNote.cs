@@ -18,12 +18,6 @@ public class TopNote : Note
         xRSimInter = GetComponent<XRSimpleInteractable>();
     }
 
-    private void OnEnable()
-    {
-        canInter = false;
-        isIndicatorOn = false;
-        gameObject.tag = "Untagged";
-    }
     private void OnDisable()
     {
 
@@ -48,6 +42,9 @@ public class TopNote : Note
     {
         print($"상단 노트 : {noteSpawnData.hitSound}");
         base.Init(target, noteSpawnData);
+
+        canInter = false;
+        isIndicatorOn = false;
 
         TopNoteSpawnData topNoteSpawnData = noteSpawnData as TopNoteSpawnData;
 
