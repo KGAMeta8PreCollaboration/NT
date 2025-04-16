@@ -1,5 +1,4 @@
 using Game;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,29 +23,6 @@ public class ResultPanel : Popup
     [SerializeField] private Button restartButton;//재시작 버튼
     [SerializeField] private Button musicSelectButton;//곡 선택 이동 버튼
     [SerializeField] private GameEndPanel endPanel;//최고점수 갱신시 활성화될 UI
-
-    private void Awake()
-    {
-        //_totalNoteCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
-        //_perfectCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
-        //_coolCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
-        //_goodCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
-        //_badCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
-        //_gradeText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
-        //_gradeSubText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
-
-        ////추가
-        //_scoreCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
-        //_maxComboCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
-        //restartButton.onClick.AddListener(Restart);//재시작 버튼
-        //musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
-    }
-
-    private void OnEnable()
-    {
-        //DisplayPanel();
-    }
-
 
     public void DisplayPanel()
     {

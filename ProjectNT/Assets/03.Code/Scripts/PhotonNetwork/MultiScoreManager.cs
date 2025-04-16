@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,13 @@ public class MultiScoreManager : MonoBehaviourPun
 {
     private Dictionary<string, PlayerResultContainer> _playerResultDict = new Dictionary<string, PlayerResultContainer>();
 
+    public int ReceivedPlayerCount => _playerResultDict.Count;
+
+    public bool TryGetPlayerResultContainer(string nickname, out PlayerResultContainer resultContainer)
+    {
+        return _playerResultDict.TryGetValue(nickname, out resultContainer);
+    }
+
     //나의 결과를 상대방 씬에 있는 나의 결과창에다가 전달
     public void SendMyResult()
     {
@@ -38,6 +46,7 @@ public class MultiScoreManager : MonoBehaviourPun
         print($"보내는 이의 모듈: {GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName).name}");
         PlayerResultContainer myResult = new PlayerResultContainer(myScoreManager);
 
+        _playerResultDict[PhotonNetwork.LocalPlayer.NickName] = myResult;
         photonView.RPC(nameof(RPC_ReceivePlayerResult), RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName, myResult.score, myResult.maxCombo, myResult.currentCombo, myResult.judgeCount);
     }
 
@@ -48,16 +57,7 @@ public class MultiScoreManager : MonoBehaviourPun
         PlayerResultContainer container = new PlayerResultContainer(score, currentCombo, maxCombo, judgeCounts);
 
         _playerResultDict[nickname] = container;
-
-        UpdateResultUI(nickname, container);
     }
 
-    private void UpdateResultUI(string nickname, PlayerResultContainer result)
-    {
-        // 해당 플레이어의 ResultPanel 찾기
-        ResultPanel resultPanel = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(nickname).GetComponentInChildren<ResultPanel>();
-        print($"받은 이의 모듈: {GameManager.Instance.MultiGameController.GetPlayerModuleByNick(nickname)}");
-        resultPanel.SetResult(result);
-    }
-
+    public PlayerResultContainer GetPlayerResultContainer(string nickname) { return _playerResultDict[nickname]; }
 }
