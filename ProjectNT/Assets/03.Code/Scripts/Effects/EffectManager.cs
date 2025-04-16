@@ -153,26 +153,19 @@ public class EffectManager : Singleton<EffectManager>
 
     private void Phase1End()
     {
-        if (null != lightEffect)
-        {
-            lightEffect.LeftEffectEnd();
-            lightEffect.RightEffectEnd();
-        }
-        if (null != neonEffect)
-        {
-            neonEffect.LeftEffectEnd();
-            neonEffect.RightEffectEnd();
-        }
-        if (null != carEffect)
-        {
-            carEffect.LeftEffectEnd();
-            carEffect.RightEffectEnd();
-            carEffect.MovePhase2Pos();
-        }
+        lightEffect?.LeftEffectEnd();
+        lightEffect?.RightEffectEnd();
+
+        neonEffect?.LeftEffectEnd();
+        neonEffect?.RightEffectEnd();
+
+        carEffect?.LeftEffectEnd();
+        carEffect?.RightEffectEnd();
+        carEffect?.MovePhase2Pos();
     }
     private void Phase2End()
     {
-        carEffect.MovePhase3Pos();
+        carEffect?.MovePhase3Pos();
     }
 
     private void SetActionNull()
