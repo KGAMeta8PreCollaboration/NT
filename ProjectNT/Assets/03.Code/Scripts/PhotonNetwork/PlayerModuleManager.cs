@@ -63,7 +63,11 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname))
+            {
+                module = playerModule;
+                print($"찾은 모듈:{module.name}");
+            }
         }
 
         if (module != null)
@@ -71,7 +75,10 @@ public class PlayerModuleManager : MonoBehaviour
             for (int i = 0; i < module.woofers.Length; i++)
             {
                 if (module.woofers[i] == woofer)
+                {
+                    print($"찾은 우퍼의 인덱스: {i}");
                     return i;
+                }
             }
         }
 
