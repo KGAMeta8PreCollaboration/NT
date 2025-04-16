@@ -18,10 +18,10 @@ public class AutoMode : MonoBehaviour
     {
         _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
 
-        PlayerModule myModule = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName);
+        // PlayerModule myModule = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName);
 
-        woofers = myModule.woofers;
-        rails = myModule.NoteManager.noteRails;
+        // woofers = myModule.woofers;
+        // rails = myModule.NoteManager.noteRails;
 
         noteList = new LinkedList<Note>[rails.Count];
 

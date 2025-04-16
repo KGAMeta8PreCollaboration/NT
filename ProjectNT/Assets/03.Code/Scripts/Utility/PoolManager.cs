@@ -57,8 +57,8 @@ public class PoolManager : Singleton<PoolManager>
                 hitEffectPool = new ObjectPool<HitEffect>
                 (hitEffectPrefab, hitEffectSurplusCount, objectPools);
 
-                //carEffectPool = new ObjectPool<CarObject>
-                //(carPrefab, carEffectSurplusCount, objectPools);
+                carEffectPool = new ObjectPool<CarObject>
+                (carPrefab, carEffectSurplusCount, objectPools);
 
             }
         };
