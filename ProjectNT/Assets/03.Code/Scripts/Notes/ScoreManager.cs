@@ -111,4 +111,28 @@ public class ScoreManager : MonoBehaviour
         else
             return Grade.F;
     }
+
+    public Grade CalculateGrade(PlayerResultContainer result)
+    {
+        float perfect = result.judgeCount[(int)JudgementType.PERFECT];
+        float cool = result.judgeCount[(int)JudgementType.Cool];
+        float good = result.judgeCount[(int)JudgementType.Good];
+        float bad = result.judgeCount[(int)JudgementType.MISS];
+        float total = perfect + cool + good + bad;
+        float grade = (perfect + cool) / total * 100;
+        if (grade >= 95)
+            return Grade.SPlus;
+        if (grade >= 90)
+            return Grade.S;
+        else if (grade >= 80)
+            return Grade.A;
+        else if (grade >= 70)
+            return Grade.B;
+        else if (grade >= 60)
+            return Grade.C;
+        else if (grade >= 50)
+            return Grade.D;
+        else
+            return Grade.F;
+    }
 }
