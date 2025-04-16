@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -31,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
+    public float bpm;
     public float phase2;
     public float phase3;
 

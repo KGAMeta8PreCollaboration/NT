@@ -16,12 +16,8 @@ public class AutoMode : MonoBehaviour
 
     private void Start()
     {
-        _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
-
-        // PlayerModule myModule = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName);
-
-        // woofers = myModule.woofers;
-        // rails = myModule.NoteManager.noteRails;
+        if (!GameManager.Instance.IsMulti) SingleInit();
+        else MultiInit();
 
         noteList = new LinkedList<Note>[rails.Count];
 
@@ -29,6 +25,28 @@ public class AutoMode : MonoBehaviour
         {
             noteList[i] = rails[i].GetNoteList();
             StartCoroutine(AutoModeRail(i, i < 4 ? false : true));
+        }
+    }
+
+    private void MultiInit()
+    {
+        _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
+
+        PlayerModule myModule = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName);
+
+        woofers = myModule.woofers;
+        rails = myModule.NoteManager.noteRails;
+    }
+
+    private void SingleInit()
+    {
+        rails = GameManager.Instance.noteManagers[0].noteRails;
+
+        woofers = new Woofer[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            woofers[i] = TransformUtil.FindDeepChildComponent<Woofer>(rails[i].transform, "Woofer");
         }
     }
 

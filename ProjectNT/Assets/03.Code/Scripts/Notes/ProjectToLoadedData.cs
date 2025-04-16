@@ -33,6 +33,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
         // TODO : 임시로 여기서 phase설정해주는겁니다.
         GameManager.Instance.phase2 = beatMapData.songData.phase2;
         GameManager.Instance.phase3 = beatMapData.songData.phase3;
+        GameManager.Instance.bpm = beatMapData.gridSetting.BPM;
         return loadedNoteDatas;
     }
 
