@@ -70,7 +70,7 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        phaseEnumerator = PhaseTracker();
+        //phaseEnumerator = PhaseTracker();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -115,7 +115,7 @@ public class GameManager : Singleton<GameManager>
         };
 
         Phase = Enums.Phase.Phase1;
-        gameSceneMove.GameSceneMoveAndLightStart(Phase);
+        gameSceneMove?.GameSceneMoveAndLightStart(Phase);
 
         while (tuple.Count != 0)
         {
@@ -125,7 +125,7 @@ public class GameManager : Singleton<GameManager>
                 Phase = tuple[0].Item2;
                 Debug.LogError(Phase);
                 tuple.RemoveAt(0);
-                gameSceneMove.GameSceneMoveAndLightStart(Phase);
+                gameSceneMove?.GameSceneMoveAndLightStart(Phase);
             }
             yield return null;
         }
@@ -189,8 +189,8 @@ public class GameManager : Singleton<GameManager>
     {
         print("게임매니저 게임스타트");
         AudioManager.Instance.StartBGM(delayTime);
-        gameSceneMove = FindObjectOfType<GameSceneMove>();
-        StartCoroutine(phaseEnumerator);
+        //gameSceneMove = FindObjectOfType<GameSceneMove>();
+        //StartCoroutine(phaseEnumerator);
     }
 
     public void GoToLobby()

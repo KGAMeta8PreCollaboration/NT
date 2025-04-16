@@ -91,7 +91,7 @@ public class MultiGameController : MonoBehaviour
 
             ResultPanel resultPanel = GameManager.Instance.MultiGameController
                 .GetPlayerModuleByNick(nickname)
-                .GetComponentInChildren<ResultPanel>();
+                .GetComponentInChildren<ResultPanel>(true);
 
             resultPanel.SetResult(resultContainer);
             popupManager.OpenPopup(resultPanel);
