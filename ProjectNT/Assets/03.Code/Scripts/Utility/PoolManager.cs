@@ -37,7 +37,7 @@ public class PoolManager : Singleton<PoolManager>
     {
         SceneManager.sceneLoaded += (x, y) =>
         {
-            if (x.name == "MultiGame" || x.name == "GameScene2")
+            if (x.name == "MultiGame" || x.name == GameManager.Instance.gameSceneName)
             {
                 objectPools = new GameObject();
                 objectPools.name = "ObjectPools";
