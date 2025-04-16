@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1158,6 +1158,24 @@ PrefabInstance:
       propertyPath: stateTest
       value: 
       objectReference: {fileID: 1241836456}
+    - target: {fileID: 8893676379231042901, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
+        type: 3}
+      propertyPath: upperGridMarkPrefab
+      value: 
+      objectReference: {fileID: 8518062428893962169, guid: 53c2c5dee071e634fa4a6dd7b8d8c877,
+        type: 3}
+    - target: {fileID: 8893676379231042901, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
+        type: 3}
+      propertyPath: upperLeftGridMarkPrefab
+      value: 
+      objectReference: {fileID: 8518062428893962169, guid: a024dea13dc762d42b221d0d74670c55,
+        type: 3}
+    - target: {fileID: 8893676379231042901, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
+        type: 3}
+      propertyPath: upperRightGridMarkPrefab
+      value: 
+      objectReference: {fileID: 8518062428893962169, guid: 53c2c5dee071e634fa4a6dd7b8d8c877,
+        type: 3}
     - target: {fileID: 8893676379547710921, guid: 184053e6e7bf6bb459ba84cfe2d7fa2b,
         type: 3}
       propertyPath: m_LocalPosition.x

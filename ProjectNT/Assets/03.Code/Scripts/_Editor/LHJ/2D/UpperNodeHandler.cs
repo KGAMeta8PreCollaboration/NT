@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class UpperNodeHandler : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class UpperNodeHandler : MonoBehaviour
     //[SerializeField] private RectTransform rightNodeGroup;
     //[SerializeField] private Camera mainCamera;
 
-    public Action<int> onUpperNodeAdded;
-    public Action<int> onUpperNodeRemoved;
+    public Action<int, int> onUpperNodeAdded;
+    public Action<int, int> onUpperNodeRemoved;
     //private PlayBar _playBar;
 
     //public Toggle[] toggles;
@@ -26,11 +27,14 @@ public class UpperNodeHandler : MonoBehaviour
     public Dictionary<int, List<int>> _upperNodeDic = new Dictionary<int, List<int>>();
     private List<int> _upperToggles = new List<int>();
 
+    private NCT _nct;
+
     private void Awake()
     {
         //_upperToggles = new List<int>();
         //toggles = GetComponentsInChildren<Toggle>();
         upperNodes = GetComponentsInChildren<UpperNode>().ToList();
+        _nct = FindObjectOfType<NCT>();
 
         //_playBar = FindObjectOfType<PlayBar>();
 
@@ -110,6 +114,8 @@ public class UpperNodeHandler : MonoBehaviour
             _gridKeySoundDic[_currentGridIndex] = new Dictionary<int, string>();
         }
 
+        bool isLeft = (index >= 0 && index <= 3);
+
         //상단 노드 추가 및 제거
         if (isOn)
         {
@@ -117,12 +123,20 @@ public class UpperNodeHandler : MonoBehaviour
             {
                 _upperToggles.Add(index);
                 _gridKeySoundDic[_currentGridIndex][index] = EditorDataManager.Instance.CurKeySoundName;
+                _nct.CreateUpperGridMark(_currentGridIndex, index);
             }
         }
         else
         {
             _upperToggles.Remove(index);
             _gridKeySoundDic[_currentGridIndex].Remove(index);
+
+            // 해당 방향의 노드가 모두 제거되었는지 확인
+            bool hasNodesInSameSide = _upperToggles.Any(t => (t >= 0 && t <= 3) == isLeft);
+            if (!hasNodesInSameSide)
+            {
+                _nct.RemoveUpperGridMark(_currentGridIndex, index);
+            }
         }
 
         // 현재 토글 상태를 Dictionary에 저장
@@ -141,6 +155,14 @@ public class UpperNodeHandler : MonoBehaviour
     public void GetGridIndex(int grid)
     {
         if (_currentGridIndex == grid || grid < 0) return;
+
+        //if (_currentGridIndex >= 0 && _upperToggles.Count > 0)
+        //{
+        //    foreach (var index in _upperToggles)
+        //    {
+        //        onUpperNodeRemoved?.Invoke(_currentGridIndex, index);
+        //    }
+        //}
 
         _currentGridIndex = grid;
         text.text = grid.ToString();
@@ -204,6 +226,11 @@ public class UpperNodeHandler : MonoBehaviour
             if (!_gridKeySoundDic.ContainsKey(nodeData.gridIndex))
             {
                 _gridKeySoundDic[nodeData.gridIndex] = new Dictionary<int, string>();
+            }
+
+            foreach (int nodeIndex in nodeData.nodeIndexs)
+            {
+                _nct.CreateUpperGridMark(nodeData.gridIndex, nodeIndex);
             }
 
             for (int i = 0; i < nodeData.nodeIndexs.Count; i++)
