@@ -46,8 +46,10 @@ public class AudioSliderHandler : MonoBehaviour
         HandlePushSpace(_isPlaying);
     }
 
+    public Action<bool> onClickSpace;
     private void HandlePushSpace(bool clickedSpace)
     {
+        onClickSpace?.Invoke(clickedSpace);
         if (clickedSpace == true)
         {
             _audioSourceManager.AudioSource.Pause();
