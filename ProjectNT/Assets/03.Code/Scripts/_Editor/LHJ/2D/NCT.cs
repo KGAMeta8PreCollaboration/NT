@@ -642,6 +642,11 @@ public class NCT : MonoBehaviour
         GameObject upperNodeObj = Instantiate(upperGridMarkPrefab);
         upperNodeObj.transform.position = new Vector3(xPos, yPos);
 
+        if (isLeft == true)
+        {
+            upperNodeObj.transform.localScale = new Vector3(-upperGridMarkPrefab.transform.localScale.x, upperGridMarkPrefab.transform.localScale.y);
+        }
+
         _upperGridMarks[grid][isLeft] = upperNodeObj;
 
     }
