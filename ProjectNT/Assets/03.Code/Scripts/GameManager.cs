@@ -105,6 +105,7 @@ public class GameManager : Singleton<GameManager>
         double phase2Time = AudioSettings.dspTime + phase3;
         double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
 
+        
         gameSceneMove.mapmovePosTimes[0].travelTime = phase2;
         gameSceneMove.mapmovePosTimes[1].travelTime = phase3 - phase2;
         gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3;

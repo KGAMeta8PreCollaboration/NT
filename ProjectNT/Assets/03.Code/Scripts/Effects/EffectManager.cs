@@ -134,13 +134,13 @@ public class EffectManager : Singleton<EffectManager>
 
     private void Phase1End()
     {
-        lightEffect.LeftEffectEnd();
-        lightEffect.RightEffectEnd();
-        neonEffect.LeftEffectEnd();
-        neonEffect.RightEffectEnd();
-        carEffect.LeftEffectEnd();
-        carEffect.RightEffectEnd();
-        carEffect.MovePhase2Pos();
+        lightEffect?.LeftEffectEnd();
+        lightEffect?.RightEffectEnd();
+        neonEffect?.LeftEffectEnd();
+        neonEffect?.RightEffectEnd();
+        carEffect?.LeftEffectEnd();
+        carEffect?.RightEffectEnd();
+        carEffect?.MovePhase2Pos();
     }
     private void Phase2End()
     {

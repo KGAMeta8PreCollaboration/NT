@@ -17,20 +17,20 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
     /// </summary>
     /// <param name="프로젝트 이름"></param>
     /// 
-    public Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDic
+    private Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDic
         = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
 
     private void Start()
     {
         string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
+        
         Debug.Log("프로젝트 리스트 갯수 : " + projectList.Length);
         if (projectList.Length == 0)
             return;
-        SetProjectPanel(projectList);
-
         for (int i = 0; i < projectList.Length; i++)
             beatMapDic.Add(projectList[i].projectName, SetBeatMapData(projectList[i], path));
+        SetProjectPanel(projectList);
     }
 
     public Dictionary<Enums.ModeDiff, BeatMapData> SetBeatMapData(ProjectData projectData, string path)
@@ -41,12 +41,55 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
 
     public void SetProjectPanel(ProjectData[] projectList)
     {
+        print("SetProjectPanel 1");
         musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>(true);
-        List<TitleMusicData> titleMusicData =
-            projectList.Select(ProjectDataToTitleMusicData).ToList();
+        string path = Path.Combine(Application.persistentDataPath, "Projects");
+    
+        // 모든 곡 데이터 로드
+        List<TitleMusicData> allMusicData = projectList.Select(ProjectDataToTitleMusicData).ToList();
+    
+        // 싱글/멀티 플레이용 데이터 분리
+        List<TitleMusicData> singleModeData = new List<TitleMusicData>();
+        List<TitleMusicData> multiModeData = new List<TitleMusicData>();
+        
+        
+        foreach (ProjectData project in projectList)
+        {
+            TitleMusicData musicData = ProjectDataToTitleMusicData(project);
+            
+            print("musicData : " + musicData.modeDiff);
+            if (musicData == null) continue;
+            switch (musicData.modeDiff)
+            {
+                case Enums.ModeDiff.SOLO_EASY:
+                case Enums.ModeDiff.SOLO_HARD:
+                case Enums.ModeDiff.SOLO_NORMAL:
+                case Enums.ModeDiff.SOLO_EXTREAM:
+                    singleModeData.Add(musicData);
+                    break;
+                default:
+                    multiModeData.Add(musicData);
+                    break;
+            }
+        }
+        
+        print("singleModeData.size : " + singleModeData.Count + " multiModeData.size : " + multiModeData.Count);
 
-        foreach (MusicChangeAndSelect t in musicChangeAndSelects)
-            t.Init(titleMusicData);
+    
+        // 게임 타입에 맞는 데이터만 전달
+        foreach (MusicChangeAndSelect selector in musicChangeAndSelects)
+        {
+            if (selector.GetComponent<GamePlayUI>().gameType == UIGameType.Single)
+            {
+                if (singleModeData.Count != 0)
+                    selector.Init(singleModeData);
+            }
+            else
+            {
+                if (multiModeData.Count != 0)
+                    selector.Init(multiModeData);
+            }
+        }
     }
 
     private string bgmPath = "bgmSaveFile";
@@ -60,6 +103,18 @@ public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
         data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
         data.musicArtist = projectData.artistName;
         data.projectName = projectData.projectName;
+        string path = Path.Combine(Application.persistentDataPath, "Projects", projectData.projectName, "BeatMapData");
+        if (!Directory.Exists(path))
+        {
+            Debug.LogError("BeatMapData 경로가 존재하지 않습니다.");
+            return null;
+        }
+        string[] files = Directory.GetFiles(path);
+        foreach (string file in files)
+        {
+            Enums.ModeDiff modeDiff = (Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), Path.GetFileName(file));
+            data.modeDiff = modeDiff;
+        }
         return data;
     }
 
