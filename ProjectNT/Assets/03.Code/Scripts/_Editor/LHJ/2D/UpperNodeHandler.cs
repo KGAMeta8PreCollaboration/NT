@@ -128,13 +128,23 @@ public class UpperNodeHandler : MonoBehaviour
         else
         {
             _upperToggles.Remove(index);
-            _gridKeySoundDic[_currentGridIndex].Remove(index);
+            if (_gridKeySoundDic.ContainsKey(_currentGridIndex))
+            {
+                _gridKeySoundDic[_currentGridIndex].Remove(index);
+            }
 
             // 해당 방향의 노드가 모두 제거되었는지 확인
             bool hasNodesInSameSide = _upperToggles.Any(t => (t >= 0 && t <= 3) == isLeft);
             if (!hasNodesInSameSide)
             {
-                _nct.RemoveUpperGridMark(_currentGridIndex, index);
+                try
+                {
+                    _nct.RemoveUpperGridMark(_currentGridIndex, index);
+                }
+                catch (KeyNotFoundException)
+                {
+                    Debug.LogWarning($"Grid {_currentGridIndex} or index {index} not found in NCT dictionary");
+                }
             }
         }
 
