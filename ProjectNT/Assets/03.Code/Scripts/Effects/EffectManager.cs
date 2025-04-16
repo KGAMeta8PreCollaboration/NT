@@ -13,9 +13,18 @@ public class EffectManager : Singleton<EffectManager>
     public Dictionary<Type, EffectDelegate> rightEffects = new Dictionary<Type, EffectDelegate>();
     public Action<Note, int> player1MapEffect;
     public Action<Note, int> player2MapEffect;
+    public Action p1PerfectAct;
+    public Action p2PerfectAct;
+    public Action p1TenComboAct;
+    public Action p2TenComboAct;
+    public Action p1TwentyComboAct;
+    public Action p2TwentyComboAct;
+    public Action p1TopNoteAct;
+    public Action p2TopNoteAct;
     public LightEffect lightEffect;
     public NeonEffect neonEffect;
     public CarEffect carEffect;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,89 +38,92 @@ public class EffectManager : Singleton<EffectManager>
             if (SceneManager.GetActiveScene().name == "LobbyScene")
             {
                 SetEffectObjectNull();
-                player1MapEffect -= EffectInvoke;
-                player2MapEffect -= EffectInvoke;
             }
         };
     }
-    private void Initialize()
-    {
-        FindEffectObjects();
-        SetPlayMode(GameManager.Instance.PlayMode);
-        player1MapEffect += EffectInvoke;
-        player2MapEffect += EffectInvoke;
-    }
 
+    // 로비씬 전환시 명시적 Null
     private void SetEffectObjectNull()
     {
         lightEffect = null;
         neonEffect = null;
         carEffect = null;
+        SetActionNull();
     }
+
+    private void Initialize()
+    {
+        FindEffectObjects();
+        player1MapEffect += EffectInvoke;
+        player2MapEffect += EffectInvoke;
+    }
+
+    // 게임 씬 진입 시 배치된 이펙트오브젝트 찾음
     private void FindEffectObjects()
     {
         lightEffect = FindObjectOfType<LightEffect>();
         neonEffect = FindObjectOfType<NeonEffect>();
         carEffect = FindObjectOfType<CarEffect>();
     }
+
     public void EffectInvoke(Note note, int combo)
     {
 
         if (note.judgementType == JudgementType.PERFECT)
         {
-            GenericEffectOn<LightEffect>();
+            p1PerfectAct?.Invoke();
+            p2PerfectAct?.Invoke();
         }
         if (combo % 10 == 0)
         {
-            GenericEffectOn<NeonEffect>();
+            p1TenComboAct?.Invoke();
+            p2TenComboAct?.Invoke();
         }
 
         if (combo % 20 == 0)
         {
-            // GenericEffectOn<CarEffect>();
+            p1TwentyComboAct?.Invoke();
+            p2TwentyComboAct?.Invoke();
         }
 
         if (note is TopNote)
         {
-
+            p1TopNoteAct?.Invoke();
+            p2TopNoteAct?.Invoke();
         }
     }
 
-    public void GenericEffectOn<T>()
-    {
-        Type effectType = typeof(T);
-        if (leftEffects.TryGetValue(effectType, out var leftDelegate))
-        {
-            leftDelegate?.Invoke();
-        }
-        if (rightEffects.TryGetValue(effectType, out var rightDelegate))
-        {
-            rightDelegate?.Invoke();
-        }
-    }
-
-    public void SetPlayMode(Enums.PlayMode playMode)
-    {
-        SetDelegateNull();
-
-        ConfigureEffectDelegates(playMode, lightEffect, neonEffect, carEffect);
-
-        UpdateEffectsDictionary();
-    }
     public void SetPhaseEffect(Enums.Phase phase)
     {
         switch (phase)
         {
+            // 페이즈 1 구독
             case Enums.Phase.Phase1:
+                SetActionNull();
+
+                if (null == lightEffect) { break; }
+                p1PerfectAct += lightEffect.P1EffectInvoke;
+                p2PerfectAct += lightEffect.P2EffectInvoke;
+
+                if (null == neonEffect) { break; }
+                p1TenComboAct += neonEffect.P1EffectInvoke;
+                p2TenComboAct += neonEffect.P2EffectInvoke;
+
+                if (null == carEffect) { break; }
+                p1TwentyComboAct += carEffect.P1EffectInvoke;
+                p2TwentyComboAct += carEffect.P2EffectInvoke;
+
                 break;
+            // 페이즈 2 구독
             case Enums.Phase.Phase2:
-                //TODO FXXK YOU BUGGGGGGG
-                // lightEffect.LeftEffectEnd();
-                // lightEffect.RightEffectEnd();
-                // carEffect.LeftEffectEnd();
-                // carEffect.RightEffectEnd();
+                SetActionNull();
+                Phase1End();
                 break;
+
+            // 페이즈 3 구독
             case Enums.Phase.Phase3:
+                SetActionNull();
+                Phase2End();
 
                 break;
             default:
@@ -119,48 +131,35 @@ public class EffectManager : Singleton<EffectManager>
                 break;
         }
     }
-    private void SetDelegateNull()
-    {
-        lightEffect.player1Delegate = null;
-        neonEffect.player1Delegate = null;
-        carEffect.player1Delegate = null;
 
-        lightEffect.player2Delegate = null;
-        neonEffect.player2Delegate = null;
-        carEffect.player2Delegate = null;
+    private void Phase1End()
+    {
+        lightEffect.LeftEffectEnd();
+        lightEffect.RightEffectEnd();
+        neonEffect.LeftEffectEnd();
+        neonEffect.RightEffectEnd();
+        carEffect.LeftEffectEnd();
+        carEffect.RightEffectEnd();
+        carEffect.MovePhase2Pos();
+    }
+    private void Phase2End()
+    {
+        carEffect.MovePhase3Pos();
     }
 
-    private void ConfigureEffectDelegates(Enums.PlayMode playMode, LightEffect light, NeonEffect neon, CarEffect car)
+    private void SetActionNull()
     {
-        if (playMode == Enums.PlayMode.Player1 || playMode == Enums.PlayMode.Single)
-        {
-            light.player1Delegate += light.LeftEffectInvoke;
-            neon.player1Delegate += neon.LeftEffectInvoke;
-            car.player1Delegate += car.LeftEffectInvoke;
-        }
+        p1PerfectAct = null;
+        p2PerfectAct = null;
 
-        if (playMode == Enums.PlayMode.Player2 || playMode == Enums.PlayMode.Single)
-        {
-            light.player2Delegate += light.RightEffectInvoke;
-            neon.player2Delegate += neon.RightEffectInvoke;
-            car.player2Delegate += car.RightEffectInvoke;
-        }
+        p1TenComboAct = null;
+        p2TenComboAct = null;
 
-        if (playMode != Enums.PlayMode.Player1 &&
-            playMode != Enums.PlayMode.Player2 &&
-            playMode != Enums.PlayMode.Single)
-        {
-            Debug.LogError("PlayMode Error");
-        }
-    }
-    private void UpdateEffectsDictionary()
-    {
-        leftEffects.Add(lightEffect.GetType(), lightEffect.player1Delegate);
-        rightEffects.Add(lightEffect.GetType(), lightEffect.player2Delegate);
-        leftEffects.Add(neonEffect.GetType(), neonEffect.player1Delegate);
-        rightEffects.Add(neonEffect.GetType(), neonEffect.player2Delegate);
-        leftEffects.Add(carEffect.GetType(), carEffect.player1Delegate);
-        rightEffects.Add(carEffect.GetType(), carEffect.player2Delegate);
+        p1TwentyComboAct = null;
+        p2TwentyComboAct = null;
+
+        p1TopNoteAct = null;
+        p2TopNoteAct = null;
     }
 }
 

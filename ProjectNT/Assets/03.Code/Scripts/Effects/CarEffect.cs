@@ -7,23 +7,20 @@ using UniRan = UnityEngine.Random;
 public class CarEffect : MapEffect<GameObject>
 {
     [SerializeField] private List<Material> carMaterials;
+    [SerializeField] private Transform phase2Pos;
+    [SerializeField] private Transform phase3Pos;
     [SerializeField] private Transform leftStartTrans;
     [SerializeField] private Transform leftEndTrans;
     [SerializeField] private Transform rightStartTrans;
     [SerializeField] private Transform rightEndTrans;
     public float targetDuration;
 
-    private void OnEnable()
-    {
-
-    }
-
-    public override void LeftEffectInvoke()
+    public override void P1EffectInvoke()
     {
         CarDoTween(leftStartTrans.position, leftEndTrans.position);
     }
 
-    public override void RightEffectInvoke()
+    public override void P2EffectInvoke()
     {
         CarDoTween(rightStartTrans.position, rightEndTrans.position);
     }
@@ -39,22 +36,29 @@ public class CarEffect : MapEffect<GameObject>
 
     public override void LeftEffectEnd()
     {
-        player1Delegate -= LeftEffectInvoke;
-        StartCoroutine(CarCoroutine(leftStartTrans.position, leftEndTrans.position));
+        StartCoroutine(CarCoroutine());
     }
 
     public override void RightEffectEnd()
     {
-        player2Delegate -= RightEffectInvoke;
-        StartCoroutine(CarCoroutine(rightStartTrans.position, rightEndTrans.position));
+        StartCoroutine(CarCoroutine());
     }
 
-    private IEnumerator CarCoroutine(Vector3 startPos, Vector3 endPos)
+    private IEnumerator CarCoroutine()
     {
         while (true)
         {
-            CarDoTween(startPos, endPos);
             yield return new WaitForSeconds(5);
+            CarDoTween(leftStartTrans.position, leftEndTrans.position);
+            CarDoTween(rightStartTrans.position, rightEndTrans.position);
         }
+    }
+    public void MovePhase2Pos()
+    {
+        transform.position = phase2Pos.position;
+    }
+    public void MovePhase3Pos()
+    {
+        transform.position = phase3Pos.position;
     }
 }

@@ -10,8 +10,7 @@ public class LightEffect : MapEffect<Light>
     public float targetDuration;
     public float defaultIntensity;
     public float defaultDuration;
-
-    private void Start()
+    private void Awake()
     {
         Init(left, ref leftSequence);
         Init(right, ref rightSequence);
@@ -33,19 +32,19 @@ public class LightEffect : MapEffect<Light>
         sequence.Pause();
     }
 
-    public override void LeftEffectInvoke()
+    public override void P1EffectInvoke()
     {
         leftSequence.Restart();
     }
 
-    public override void RightEffectInvoke()
+    public override void P2EffectInvoke()
     {
         rightSequence.Restart();
     }
 
     public override void LeftEffectEnd()
     {
-        player1Delegate -= LeftEffectInvoke;
+        leftSequence.Kill();
         foreach (Light light in left)
         {
             light.intensity = targetIntensity;
@@ -54,7 +53,7 @@ public class LightEffect : MapEffect<Light>
 
     public override void RightEffectEnd()
     {
-        player2Delegate -= RightEffectInvoke;
+        rightSequence.Kill();
         foreach (Light light in right)
         {
             light.intensity = targetIntensity;

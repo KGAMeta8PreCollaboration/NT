@@ -116,7 +116,7 @@ public class GameManager : Singleton<GameManager>
         };
 
         Phase = Enums.Phase.Phase1;
-        gameSceneMove.GameSceneMoveAndLightStart(Phase);
+        gameSceneMove.MapMoveByPhase(Phase);
 
         while (tuple.Count != 0)
         {
@@ -125,7 +125,7 @@ public class GameManager : Singleton<GameManager>
                 curr = tuple[0].Item1;
                 Phase = tuple[0].Item2;
                 tuple.RemoveAt(0);
-                gameSceneMove.GameSceneMoveAndLightStart(Phase);
+                gameSceneMove.MapMoveByPhase(Phase);
             }
             yield return null;
         }

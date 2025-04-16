@@ -10,7 +10,7 @@ public class GlassEffect : MapEffect<GlassEffect>
         throw new System.NotImplementedException();
     }
 
-    public override void LeftEffectInvoke()
+    public override void P1EffectInvoke()
     {
         throw new System.NotImplementedException();
     }
@@ -20,7 +20,7 @@ public class GlassEffect : MapEffect<GlassEffect>
         throw new System.NotImplementedException();
     }
 
-    public override void RightEffectInvoke()
+    public override void P2EffectInvoke()
     {
         throw new System.NotImplementedException();
     }
