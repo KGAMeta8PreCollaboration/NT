@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class GlassEffect : MapEffect<GlassEffect>
 {
-
-    public override void LeftEffectInvoke()
+    public override void LeftEffectEnd()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void RightEffectInvoke()
+    public override void P1EffectInvoke()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void RightEffectEnd()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void P2EffectInvoke()
     {
         throw new System.NotImplementedException();
     }
