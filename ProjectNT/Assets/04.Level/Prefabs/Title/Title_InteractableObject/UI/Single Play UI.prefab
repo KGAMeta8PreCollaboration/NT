@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SUPER HADE
+  m_text: SUPER HARD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3999,7 +3999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1423892285523851531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6055,7 +6055,6 @@ MonoBehaviour:
   normal: {fileID: 1423892285397128772}
   hard: {fileID: 1423892284346871073}
   superHade: {fileID: 1423892285167600666}
-  randomDifficulty: {fileID: 1423892285031562888}
 --- !u!114 &1423892286111554780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6069,14 +6068,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilteSound: {fileID: 0}
-  gameMusicData: {fileID: 6659092663324698721, guid: 205f5346023927346a59ee5236af71e4,
-    type: 3}
   musicImage: {fileID: 1423892284115113396}
   musicNameText: {fileID: 1423892284551376871}
-  musicDesc: {fileID: 1423892285578976600}
+  musicArtistText: {fileID: 0}
   changeLeftButton: {fileID: 1423892286098274861}
   changeRightButton: {fileID: 1423892286243206767}
-  musicReplayButton: {fileID: 1423892285351814190}
 --- !u!1 &1423892286138435023
 GameObject:
   m_ObjectHideFlags: 0

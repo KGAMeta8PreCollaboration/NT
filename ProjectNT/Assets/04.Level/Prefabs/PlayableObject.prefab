@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1138363792
 RectTransform:
   m_ObjectHideFlags: 0
@@ -617,6 +617,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 25
+--- !u!114 &976545876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035126465326172967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1 &3902564545372132098
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,6 +901,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3035126463451044153, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035126463451208891, guid: b136948dcee057241863f7565a699980,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -937,6 +961,16 @@ PrefabInstance:
     - target: {fileID: 3035126463514556534, guid: b136948dcee057241863f7565a699980,
         type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126463963248831, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_text
+      value: Score
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035126463981265877, guid: b136948dcee057241863f7565a699980,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3035126464058113641, guid: b136948dcee057241863f7565a699980,
@@ -1196,6 +1230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3035126465326172967 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3035126463370937114, guid: b136948dcee057241863f7565a699980,
+    type: 3}
+  m_PrefabInstance: {fileID: 2008778813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3463451558183621376
 PrefabInstance:
   m_ObjectHideFlags: 0

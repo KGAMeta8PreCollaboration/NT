@@ -28,7 +28,8 @@ public class EffectManager : Singleton<EffectManager>
     protected override void Awake()
     {
         base.Awake();
-
+        if (Instance != this)
+            return;
         SceneManager.sceneLoaded += (x, y) =>
         {
             if (SceneManager.GetActiveScene().name == GameManager.Instance.gameSceneName)

@@ -20,12 +20,16 @@ public class AudioManager : Singleton<AudioManager>
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
 		base.Awake();
+		if (Instance != this)
+			return;
 		_audioPool = GetComponent<AudioPool>();
 		StartCoroutine(CheckAudioPlayTime());
 	}
 
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
+		if (Instance != this)
+			return;
 		_bgmAudioSource?.Stop();
 	}
 

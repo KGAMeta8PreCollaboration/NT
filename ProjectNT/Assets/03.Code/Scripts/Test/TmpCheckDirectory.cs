@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TmpCheckDirectory : Singleton<TmpCheckDirectory>
+public class TmpCheckDirectory : MonoBehaviour
 {
     public ProjectData[] projectList;
     public BeatMapData beatMapData;

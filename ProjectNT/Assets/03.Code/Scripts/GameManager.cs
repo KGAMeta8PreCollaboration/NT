@@ -70,9 +70,11 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        if (Instance != this)
+            return;
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
         phaseEnumerator = PhaseTracker();
-    }
+    } 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
