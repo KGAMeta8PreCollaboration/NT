@@ -88,6 +88,47 @@ public class ResultPanel : Popup
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
         endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, "앙아앙", "아아");//음악이름, 난이도 추가
     }
+
+    public void SetResult(PlayerResultContainer result)
+    {
+        int totalNotes = 0;
+        for (int i = 0; i < result.judgeCount.Length; i++)
+        {
+            totalNotes += result.judgeCount[i];
+            switch ((JudgementType)i)
+            {
+                case JudgementType.PERFECT:
+                    _perfectCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.Cool:
+                    _coolCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.Good:
+                    _goodCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.MISS:
+                    _badCount.text = result.judgeCount[i].ToString();
+                    break;
+            }
+        }
+        _totalNoteCount.text = totalNotes.ToString();
+        Grade grade = _scoreManager.CalculateGrade(result);
+        if (grade == Grade.SPlus)
+        {
+            _gradeText.text = "S";
+            _gradeSubText.text = "+";
+        }
+        else
+            _gradeText.text = grade.ToString();
+
+        //추가
+        _scoreCount.text = result.score.ToString();
+        _maxComboCount.text = result.maxCombo.ToString();
+        //musicImage.sprite = //음악 이미지
+        //_musicNameText.text = //음악 이름 텍스트
+        //_musicArtistText.text = //음악 아티스트 이름 텍스트
+    }
+
     public override void Init(PopupManager popupManager)
     {
         base.Init(popupManager);
@@ -106,11 +147,14 @@ public class ResultPanel : Popup
         restartButton.onClick.AddListener(Restart);//재시작 버튼
         musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
 
-        GameManager.Instance.OnGameEnd += () =>
+        if (!GameManager.Instance.IsMulti)
         {
-            popupManager.OpenPopup(this);
-            DisplayPanel();
-        };
+            GameManager.Instance.OnGameEnd += () =>
+            {
+                popupManager.OpenPopup(this);
+                DisplayPanel();
+            };
+        }
     }
 
     //추가

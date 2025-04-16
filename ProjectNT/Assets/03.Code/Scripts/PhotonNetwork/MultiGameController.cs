@@ -9,6 +9,7 @@ public class MultiGameController : MonoBehaviour
 {
     private PlayerModuleManager _playerModuleManager;
     private PlayerReadyManager _playerReadyManager;
+    private MultiScoreManager _multiScoreManager;
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class MultiGameController : MonoBehaviour
     {
         _playerModuleManager = GetComponentInChildren<PlayerModuleManager>();
         _playerReadyManager = GetComponentInChildren<PlayerReadyManager>();
+        _multiScoreManager = GetComponentInChildren<MultiScoreManager>();
 
         GameManager.Instance.PhotonManager.disconnectedServer += GotoLobbyScene;
 
