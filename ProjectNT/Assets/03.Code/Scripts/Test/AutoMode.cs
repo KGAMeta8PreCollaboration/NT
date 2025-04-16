@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,14 +9,23 @@ public class AutoMode : MonoBehaviour
     public double perfectThreshold;
 
     public Woofer[] woofers;
-    public NoteRail[] rails;
+    public List<NoteRail> rails;
     public LinkedList<Note>[] noteList;
+
+    private WooferNetworkSync _wooferNetworkSync;
 
     private void Start()
     {
-        noteList = new LinkedList<Note>[rails.Length];
+        _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
 
-        for (int i = 0; i < rails.Length; i++)
+        PlayerModule myModule = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName);
+
+        woofers = myModule.woofers;
+        rails = myModule.NoteManager.noteRails;
+
+        noteList = new LinkedList<Note>[rails.Count];
+
+        for (int i = 0; i < rails.Count; i++)
         {
             noteList[i] = rails[i].GetNoteList();
             StartCoroutine(AutoModeRail(i, i < 4 ? false : true));
@@ -40,12 +50,16 @@ public class AutoMode : MonoBehaviour
                 {
                     if (!topRail)
                     {
-                        woofers[index].Hit();
+                        if (!GameManager.Instance.IsMulti) woofers[index].Hit();
+                        else _wooferNetworkSync.SendHit(woofers[index], PhotonNetwork.LocalPlayer.NickName);
                     }
                     else
                     {
                         TopNote topNote = note as TopNote;
                         topNote?.AutoHit(new UnityEngine.InputSystem.InputAction.CallbackContext());
+
+                        if (!GameManager.Instance.IsMulti) topNote?.AutoHit(new UnityEngine.InputSystem.InputAction.CallbackContext());
+                        else _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
                     }
 
                     // Debug.Log($"첫 Hit 처리됨 - 시간차: {timeDiff:f2}");
@@ -53,8 +67,8 @@ public class AutoMode : MonoBehaviour
                 // 롱노트면 홀드 처리
                 else if (isLongNote && note.isHit)
                 {
-                    woofers[index].Hold();
-
+                    if (!GameManager.Instance.IsMulti) woofers[index].Hold();
+                    else _wooferNetworkSync.SendHold(woofers[index], PhotonNetwork.LocalPlayer.NickName);
                     // Debug.Log($"Hold 처리 중 - 현재: {currentTime:f2}");
                 }
             }
