@@ -649,13 +649,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9056286346861968478, guid: a07d312cd72bba940923e3a5ff054ace,
         type: 3}
-      propertyPath: left.Array.size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 9056286346861968478, guid: a07d312cd72bba940923e3a5ff054ace,
-        type: 3}
-      propertyPath: right.Array.size
-      value: 15
+      propertyPath: defaultDuration
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9056286346861968478, guid: a07d312cd72bba940923e3a5ff054ace,
         type: 3}
@@ -816,11 +811,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spot_lightEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 9056286346861968479, guid: a07d312cd72bba940923e3a5ff054ace,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a07d312cd72bba940923e3a5ff054ace, type: 3}
@@ -1760,7 +1750,7 @@ PrefabInstance:
     - target: {fileID: 5412794739912874060, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5412794739912874061, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}

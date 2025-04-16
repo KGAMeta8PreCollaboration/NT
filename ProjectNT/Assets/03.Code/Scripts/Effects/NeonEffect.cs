@@ -79,4 +79,14 @@ public class NeonEffect : MapEffect<Material>
     {
         rightSequence.Restart();
     }
+
+    public override void LeftEffectEnd()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void RightEffectEnd()
+    {
+        throw new System.NotImplementedException();
+    }
 }

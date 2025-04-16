@@ -48,19 +48,15 @@ public class GameSceneMove : MonoBehaviour
         {
             case Enums.Phase.Phase1:
                 SetSequence(mapmovePosTimes[0]);
-                Debug.LogError("1");
                 break;
             case Enums.Phase.Phase2:
                 SetSequence(mapmovePosTimes[0]);
-                Debug.LogError("2");
                 break;
             case Enums.Phase.Phase3:
                 SetSequence(mapmovePosTimes[0]);
-                Debug.LogError("3");
                 break;
         }
         mapmovePosTimes.RemoveAt(0);
-        Debug.LogError(mapmovePosTimes.Count);
     }
 }
 

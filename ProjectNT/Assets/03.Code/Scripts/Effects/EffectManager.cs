@@ -60,18 +60,15 @@ public class EffectManager : Singleton<EffectManager>
         if (note.judgementType == JudgementType.PERFECT)
         {
             GenericEffectOn<LightEffect>();
-            Debug.LogError("???");
         }
-        Debug.LogError(combo);
         if (combo % 10 == 0)
         {
             GenericEffectOn<NeonEffect>();
-            Debug.LogError("!!");
         }
 
         if (combo % 20 == 0)
         {
-            GenericEffectOn<CarEffect>();
+            // GenericEffectOn<CarEffect>();
         }
 
         if (note is TopNote)
@@ -101,7 +98,27 @@ public class EffectManager : Singleton<EffectManager>
 
         UpdateEffectsDictionary();
     }
+    public void SetPhaseEffect(Enums.Phase phase)
+    {
+        switch (phase)
+        {
+            case Enums.Phase.Phase1:
+                break;
+            case Enums.Phase.Phase2:
+                //TODO FXXK YOU BUGGGGGGG
+                // lightEffect.LeftEffectEnd();
+                // lightEffect.RightEffectEnd();
+                // carEffect.LeftEffectEnd();
+                // carEffect.RightEffectEnd();
+                break;
+            case Enums.Phase.Phase3:
 
+                break;
+            default:
+                Debug.LogError("PhaseEffect Error");
+                break;
+        }
+    }
     private void SetDelegateNull()
     {
         lightEffect.player1Delegate = null;
@@ -120,7 +137,6 @@ public class EffectManager : Singleton<EffectManager>
             light.player1Delegate += light.LeftEffectInvoke;
             neon.player1Delegate += neon.LeftEffectInvoke;
             car.player1Delegate += car.LeftEffectInvoke;
-            Debug.LogError("LEFT맵이펙트 등록");
         }
 
         if (playMode == Enums.PlayMode.Player2 || playMode == Enums.PlayMode.Single)
@@ -128,7 +144,6 @@ public class EffectManager : Singleton<EffectManager>
             light.player2Delegate += light.RightEffectInvoke;
             neon.player2Delegate += neon.RightEffectInvoke;
             car.player2Delegate += car.RightEffectInvoke;
-            Debug.LogError("RIGHT맵이펙트 등록");
         }
 
         if (playMode != Enums.PlayMode.Player1 &&

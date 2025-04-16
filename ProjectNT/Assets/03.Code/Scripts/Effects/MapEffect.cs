@@ -21,4 +21,6 @@ public abstract class MapEffect<T> : MonoBehaviour where T : UnityEngine.Object
 
     public abstract void LeftEffectInvoke();
     public abstract void RightEffectInvoke();
+    public abstract void LeftEffectEnd();
+    public abstract void RightEffectEnd();
 }

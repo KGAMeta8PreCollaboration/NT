@@ -32,7 +32,29 @@ public class CarEffect : MapEffect<GameObject>
     private void CarDoTween(Vector3 startPos, Vector3 endPos)
     {
         CarObject obj = PoolManager.Instance.carEffectPool.Pop();
+        obj.renderer.material = carMaterials[UniRan.Range(0, carMaterials.Count)];
         obj.transform.position = startPos;
-        obj.transform.DOMove(endPos, targetDuration).SetEase(Ease.OutQuart);
+        obj.transform.DOMove(endPos, targetDuration).SetEase(Ease.OutQuart).onComplete += () => PoolManager.Instance.carEffectPool.Push(obj);
+    }
+
+    public override void LeftEffectEnd()
+    {
+        player1Delegate -= LeftEffectInvoke;
+        StartCoroutine(CarCoroutine(leftStartTrans.position, leftEndTrans.position));
+    }
+
+    public override void RightEffectEnd()
+    {
+        player2Delegate -= RightEffectInvoke;
+        StartCoroutine(CarCoroutine(rightStartTrans.position, rightEndTrans.position));
+    }
+
+    private IEnumerator CarCoroutine(Vector3 startPos, Vector3 endPos)
+    {
+        while (true)
+        {
+            CarDoTween(startPos, endPos);
+            yield return new WaitForSeconds(5);
+        }
     }
 }

@@ -11,7 +11,6 @@ public class LightEffect : MapEffect<Light>
     public float defaultIntensity;
     public float defaultDuration;
 
-
     private void Start()
     {
         Init(left, ref leftSequence);
@@ -23,11 +22,13 @@ public class LightEffect : MapEffect<Light>
         sequence = DOTween.Sequence().SetAutoKill(false);
         for (int i = 0; i < list.Count; i++)
         {
+            list[i].intensity = defaultIntensity;
             sequence.Join(list[i].DOIntensity(targetIntensity, targetDuration).SetEase(Ease.OutQuint));
         }
         for (int i = 0; i < list.Count; i++)
         {
-            sequence.Join(list[i].DOIntensity(defaultIntensity, defaultDuration).SetEase(Ease.OutQuint));
+            list[i].intensity = defaultIntensity;
+            sequence.Insert(targetDuration, list[i].DOIntensity(defaultIntensity, defaultDuration).SetEase(Ease.InQuad));
         }
         sequence.Pause();
     }
@@ -40,5 +41,23 @@ public class LightEffect : MapEffect<Light>
     public override void RightEffectInvoke()
     {
         rightSequence.Restart();
+    }
+
+    public override void LeftEffectEnd()
+    {
+        player1Delegate -= LeftEffectInvoke;
+        foreach (Light light in left)
+        {
+            light.intensity = targetIntensity;
+        }
+    }
+
+    public override void RightEffectEnd()
+    {
+        player2Delegate -= RightEffectInvoke;
+        foreach (Light light in right)
+        {
+            light.intensity = targetIntensity;
+        }
     }
 }

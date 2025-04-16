@@ -50,6 +50,7 @@ public class GameManager : Singleton<GameManager>
         private set
         {
             phase = value;
+            EffectManager.Instance.SetPhaseEffect(phase);
         }
     }
     private IEnumerator phaseEnumerator;
@@ -123,7 +124,6 @@ public class GameManager : Singleton<GameManager>
             {
                 curr = tuple[0].Item1;
                 Phase = tuple[0].Item2;
-                Debug.LogError(Phase);
                 tuple.RemoveAt(0);
                 gameSceneMove.GameSceneMoveAndLightStart(Phase);
             }
