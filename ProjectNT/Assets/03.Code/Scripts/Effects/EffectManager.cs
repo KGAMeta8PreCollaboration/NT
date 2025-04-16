@@ -9,21 +9,23 @@ using UnityEngine.SceneManagement;
 public delegate void EffectDelegate();
 public class EffectManager : Singleton<EffectManager>
 {
-    public Dictionary<Type, EffectDelegate> leftEffects = new Dictionary<Type, EffectDelegate>();
-    public Dictionary<Type, EffectDelegate> rightEffects = new Dictionary<Type, EffectDelegate>();
+
+    private Action p1PerfectAct;
+    private Action p2PerfectAct;
+    private Action p1TenComboAct;
+    private Action p2TenComboAct;
+    private Action p1TwentyComboAct;
+    private Action p2TwentyComboAct;
+    private Action p1TopNoteAct;
+    private Action p2TopNoteAct;
+    private LightEffect lightEffect;
+    private NeonEffect neonEffect;
+    private CarEffect carEffect;
+
     public Action<Note, int> player1MapEffect;
     public Action<Note, int> player2MapEffect;
-    public Action p1PerfectAct;
-    public Action p2PerfectAct;
-    public Action p1TenComboAct;
-    public Action p2TenComboAct;
-    public Action p1TwentyComboAct;
-    public Action p2TwentyComboAct;
-    public Action p1TopNoteAct;
-    public Action p2TopNoteAct;
-    public LightEffect lightEffect;
-    public NeonEffect neonEffect;
-    public CarEffect carEffect;
+
+    public Enums.PlayMode m_playMode;
 
     protected override void Awake()
     {
@@ -37,18 +39,19 @@ public class EffectManager : Singleton<EffectManager>
             }
             if (SceneManager.GetActiveScene().name == "LobbyScene")
             {
-                SetEffectObjectNull();
+                SetNull();
             }
         };
     }
 
     // 로비씬 전환시 명시적 Null
-    private void SetEffectObjectNull()
+    private void SetNull()
     {
         lightEffect = null;
         neonEffect = null;
         carEffect = null;
         SetActionNull();
+        m_playMode = Enums.PlayMode.None;
     }
 
     private void Initialize()
@@ -56,6 +59,7 @@ public class EffectManager : Singleton<EffectManager>
         FindEffectObjects();
         player1MapEffect += EffectInvoke;
         player2MapEffect += EffectInvoke;
+        m_playMode = GameManager.Instance.PlayMode;
     }
 
     // 게임 씬 진입 시 배치된 이펙트오브젝트 찾음
@@ -71,25 +75,40 @@ public class EffectManager : Singleton<EffectManager>
 
         if (note.judgementType == JudgementType.PERFECT)
         {
-            p1PerfectAct?.Invoke();
-            p2PerfectAct?.Invoke();
+            InvokeByPlayMode(p1PerfectAct, p2PerfectAct);
         }
         if (combo % 10 == 0)
         {
-            p1TenComboAct?.Invoke();
-            p2TenComboAct?.Invoke();
+            InvokeByPlayMode(p1TenComboAct, p2TenComboAct);
         }
 
         if (combo % 20 == 0)
         {
-            p1TwentyComboAct?.Invoke();
-            p2TwentyComboAct?.Invoke();
+            InvokeByPlayMode(p1TwentyComboAct, p2TwentyComboAct);
         }
 
         if (note is TopNote)
         {
-            p1TopNoteAct?.Invoke();
-            p2TopNoteAct?.Invoke();
+            InvokeByPlayMode(p1TopNoteAct, p2TopNoteAct);
+        }
+    }
+    private void InvokeByPlayMode(Action p1Act, Action p2Act)
+    {
+        switch (m_playMode)
+        {
+            case Enums.PlayMode.Single:
+                p1Act?.Invoke();
+                p2Act?.Invoke();
+                break;
+            case Enums.PlayMode.Player1:
+                p1Act?.Invoke();
+                break;
+            case Enums.PlayMode.Player2:
+                p2Act?.Invoke();
+                break;
+            default:
+                Debug.LogWarning("Unhandled play mode: " + m_playMode);
+                break;
         }
     }
 
@@ -134,13 +153,22 @@ public class EffectManager : Singleton<EffectManager>
 
     private void Phase1End()
     {
-        lightEffect.LeftEffectEnd();
-        lightEffect.RightEffectEnd();
-        neonEffect.LeftEffectEnd();
-        neonEffect.RightEffectEnd();
-        carEffect.LeftEffectEnd();
-        carEffect.RightEffectEnd();
-        carEffect.MovePhase2Pos();
+        if (null != lightEffect)
+        {
+            lightEffect.LeftEffectEnd();
+            lightEffect.RightEffectEnd();
+        }
+        if (null != neonEffect)
+        {
+            neonEffect.LeftEffectEnd();
+            neonEffect.RightEffectEnd();
+        }
+        if (null != carEffect)
+        {
+            carEffect.LeftEffectEnd();
+            carEffect.RightEffectEnd();
+            carEffect.MovePhase2Pos();
+        }
     }
     private void Phase2End()
     {
