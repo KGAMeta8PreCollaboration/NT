@@ -73,7 +73,6 @@ public class GameManager : Singleton<GameManager>
         if (Instance != this)
             return;
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        phaseEnumerator = PhaseTracker();
     } 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -83,6 +82,8 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
+            phaseEnumerator = PhaseTracker();
+
         }
         else if (scene.name == "MultiGame")
         {
@@ -95,6 +96,7 @@ public class GameManager : Singleton<GameManager>
             };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            phaseEnumerator = PhaseTracker();
             //MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
