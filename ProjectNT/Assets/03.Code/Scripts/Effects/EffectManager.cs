@@ -22,10 +22,8 @@ public class EffectManager : Singleton<EffectManager>
     private NeonEffect neonEffect;
     private CarEffect carEffect;
 
-    public Action<Note, int> player1MapEffect;
-    public Action<Note, int> player2MapEffect;
-
-    public Enums.PlayMode m_playMode;
+    public Action<Note, int, Enums.PlayMode> player1MapEffect;
+    // public Action<Note, int> player2MapEffect;
 
     protected override void Awake()
     {
@@ -34,7 +32,7 @@ public class EffectManager : Singleton<EffectManager>
             return;
         SceneManager.sceneLoaded += (x, y) =>
         {
-            if (SceneManager.GetActiveScene().name == GameManager.Instance.gameSceneName)
+            if (SceneManager.GetActiveScene().name == GameManager.Instance.gameSceneName || SceneManager.GetActiveScene().name == "MultiGame")
             {
                 Initialize();
             }
@@ -52,15 +50,14 @@ public class EffectManager : Singleton<EffectManager>
         neonEffect = null;
         carEffect = null;
         SetActionNull();
-        m_playMode = Enums.PlayMode.None;
     }
 
     private void Initialize()
     {
         FindEffectObjects();
+        // player1MapEffect += EffectInvoke;
+        // player2MapEffect += EffectInvoke;
         player1MapEffect += EffectInvoke;
-        player2MapEffect += EffectInvoke;
-        m_playMode = GameManager.Instance.PlayMode;
     }
 
     // 게임 씬 진입 시 배치된 이펙트오브젝트 찾음
@@ -71,31 +68,31 @@ public class EffectManager : Singleton<EffectManager>
         carEffect = FindObjectOfType<CarEffect>();
     }
 
-    public void EffectInvoke(Note note, int combo)
+    public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
     {
 
         if (note.judgementType == JudgementType.PERFECT)
         {
-            InvokeByPlayMode(p1PerfectAct, p2PerfectAct);
+            InvokeByPlayMode(p1PerfectAct, p2PerfectAct, playMode);
         }
         if (combo % 10 == 0)
         {
-            InvokeByPlayMode(p1TenComboAct, p2TenComboAct);
+            InvokeByPlayMode(p1TenComboAct, p2TenComboAct, playMode);
         }
 
         if (combo % 20 == 0)
         {
-            InvokeByPlayMode(p1TwentyComboAct, p2TwentyComboAct);
+            InvokeByPlayMode(p1TwentyComboAct, p2TwentyComboAct, playMode);
         }
 
         if (note is TopNote)
         {
-            InvokeByPlayMode(p1TopNoteAct, p2TopNoteAct);
+            InvokeByPlayMode(p1TopNoteAct, p2TopNoteAct, playMode);
         }
     }
-    private void InvokeByPlayMode(Action p1Act, Action p2Act)
+    private void InvokeByPlayMode(Action p1Act, Action p2Act, Enums.PlayMode playMode)
     {
-        switch (m_playMode)
+        switch (playMode)
         {
             case Enums.PlayMode.Single:
                 p1Act?.Invoke();
@@ -108,7 +105,7 @@ public class EffectManager : Singleton<EffectManager>
                 p2Act?.Invoke();
                 break;
             default:
-                Debug.LogWarning("Unhandled play mode: " + m_playMode);
+                Debug.LogWarning("Unhandled play mode: " + playMode);
                 break;
         }
     }
