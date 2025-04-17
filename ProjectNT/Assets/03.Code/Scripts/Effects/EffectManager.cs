@@ -146,9 +146,9 @@ public class EffectManager : Singleton<EffectManager>
                 SetActionNull();
                 Phase2End();
                 p1PerfectAct += fireplayHandler.PlayFireplay;
-                p1PerfectAct += fireplayHandler.PlayFireplay;
+                p2PerfectAct += fireplayHandler.PlayFireplay;
                 p1TopNoteAct += meteorHandler.PlayMeteor;
-                p1TopNoteAct += meteorHandler.PlayMeteor;
+                p2TopNoteAct += meteorHandler.PlayMeteor;
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");
