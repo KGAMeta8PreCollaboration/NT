@@ -131,6 +131,11 @@ public class UpperNodeHandler : MonoBehaviour
             if (_gridKeySoundDic.ContainsKey(_currentGridIndex))
             {
                 _gridKeySoundDic[_currentGridIndex].Remove(index);
+
+                if (_gridKeySoundDic[_currentGridIndex].Count == 0)
+                {
+                    _gridKeySoundDic.Remove(_currentGridIndex);
+                }
             }
 
             // 해당 방향의 노드가 모두 제거되었는지 확인
@@ -229,6 +234,10 @@ public class UpperNodeHandler : MonoBehaviour
 
         foreach (var nodeData in nodeDatas)
         {
+            //노드가 비어있으면 해당 그리드 건너뛰기
+            if (nodeData.nodeIndexs == null || nodeData.nodeIndexs.Count == 0)
+                continue;
+
             _upperNodeDic[nodeData.gridIndex] = new List<int>(nodeData.nodeIndexs);
 
             // 각 그리드의 키음 정보 초기화

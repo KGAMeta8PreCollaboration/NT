@@ -107,9 +107,7 @@ public class NCT : MonoBehaviour
         currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
-        {
             _currentState.OnLeftClick(currentIndex);
-        }
         if (Input.GetMouseButtonDown(1))
             _currentState.OnRightClick(currentIndex);
         if (Input.GetMouseButtonDown(2))
