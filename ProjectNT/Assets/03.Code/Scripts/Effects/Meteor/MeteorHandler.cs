@@ -34,4 +34,16 @@ public class MeteorHandler : MonoBehaviour
             }
         }
     }
+
+    //운석 소환 시 이거 쓰면 됨
+    public void PlayMeteor()
+    {
+        foreach (var meteor in meteors)
+        {
+            float randomY = Random.Range(-30f, 30f);
+            Vector3 randStart = startPos.position + Vector3.up * randomY;
+            Vector3 randEnd = endPos.position + Vector3.up * randomY;
+            meteor.Move(randStart, randEnd, duration);
+        }
+    }
 }
