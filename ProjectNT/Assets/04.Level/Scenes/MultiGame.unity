@@ -3363,7 +3363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b7c6fc193145242b6e8426c083d708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 25
 --- !u!114 &434895733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4078,6 +4077,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58e3bf80675534d47873cd8d199aab43, type: 3}
+--- !u!4 &497466644 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5982072543365615566, guid: 58e3bf80675534d47873cd8d199aab43,
+    type: 3}
+  m_PrefabInstance: {fileID: 497466643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &497466645 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5982072543392493871, guid: 58e3bf80675534d47873cd8d199aab43,
+    type: 3}
+  m_PrefabInstance: {fileID: 497466643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506633634
 GameObject:
   m_ObjectHideFlags: 0
@@ -8841,12 +8852,12 @@ PrefabInstance:
         type: 3}
       propertyPath: phase2Pos
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 497466645}
     - target: {fileID: 5412794739912874058, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}
       propertyPath: phase3Pos
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 497466644}
     - target: {fileID: 5412794739912874058, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}
       propertyPath: carMaterials.Array.data[0]
@@ -17493,7 +17504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b7c6fc193145242b6e8426c083d708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 25
 --- !u!114 &2086742971
 MonoBehaviour:
   m_ObjectHideFlags: 0
