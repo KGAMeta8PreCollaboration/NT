@@ -68,8 +68,8 @@ public class TopNote : Note
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
         OnHit = null;
-        EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo);
-        EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
+        EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
+        // EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
         AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 

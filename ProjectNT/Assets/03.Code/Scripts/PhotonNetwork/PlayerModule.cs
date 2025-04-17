@@ -42,6 +42,23 @@ public class PlayerModule : MonoBehaviour
         {
             woofers[i] = TransformUtil.FindDeepChildComponent<Woofer>(NoteManager.noteRails[i].transform, "Woofer");
         }
+
+    }
+
+    private void Start()
+    {
+        switch (playerKey)
+        {
+            case PlayerKey.Player1:
+                NoteManager.playMode = Enums.PlayMode.Player1;
+                break;
+            case PlayerKey.Player2:
+                NoteManager.playMode = Enums.PlayMode.Player2;
+                break;
+            default:
+                Debug.Log("Unknown player key");
+                break;
+        }
     }
 
     public void SetPlayerModuleData(List<LoadedNoteData> playerSongData)
