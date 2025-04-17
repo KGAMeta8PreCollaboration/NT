@@ -14,6 +14,7 @@ public class FireplayPrefab : MonoBehaviour
     private void Awake()
     {
         _vfx = GetComponent<VisualEffect>();
+        print($"불꽃 프리팹 생성됨 이름은 : {gameObject.name}");
     }
 
     public void SetDirection(Vector3 startPos, Vector3 endPos, float spawnRate = 10)
@@ -30,6 +31,7 @@ public class FireplayPrefab : MonoBehaviour
     public void Play()
     {
         _vfx.Play();
+        print($"{gameObject.name}의 프리팹 실행 됨");
         StartCoroutine(HandleExplosion());
     }
 

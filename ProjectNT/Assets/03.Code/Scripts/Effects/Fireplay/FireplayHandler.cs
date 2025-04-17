@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireplayHandler : MonoBehaviour
 {
     [SerializeField] private List<GameObject> fireplayPrefabs;
-    [SerializeField] private float spawnRate = 1f;
+    [SerializeField] private float spawnRate = 10f;
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 endPos;
     
@@ -29,11 +29,22 @@ public class FireplayHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            print($"스페이스바 눌림");
             int randomNum = Random.Range(0, fireplayPrefabs.Count);
 
             currentPrefab = fireplayInstances[randomNum];
             currentPrefab.gameObject.SetActive(true);
             currentPrefab.Play();
         }
+    }
+
+    //불꽃놀이 시 이거 쓰면 됨
+    public void PlayFireplay()
+    {
+        int randomNum = Random.Range(0, fireplayPrefabs.Count);
+
+        currentPrefab = fireplayInstances[randomNum];
+        currentPrefab.gameObject.SetActive(true);
+        currentPrefab.Play();
     }
 }
