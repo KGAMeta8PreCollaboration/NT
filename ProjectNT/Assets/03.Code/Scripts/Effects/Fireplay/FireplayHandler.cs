@@ -9,7 +9,7 @@ public class FireplayHandler : MonoBehaviour
     [SerializeField] private Vector2 scale = new Vector3(5, 6);
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 endPos;
-    
+
     private List<FireplayPrefab> fireplayInstances = new List<FireplayPrefab>();
     private FireplayPrefab currentPrefab;
 
