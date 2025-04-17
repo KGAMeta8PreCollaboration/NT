@@ -61,8 +61,8 @@ public class InGameRankingUI : MonoBehaviour
 
     private IEnumerator LoadData()
     {
-        Debug.Log("인게임 순위표 표시 시작");
-        Debug.Log($"newDataNumber : {newDataNumber}");
+        // Debug.Log("인게임 순위표 표시 시작");
+        // Debug.Log($"newDataNumber : {newDataNumber}");
         RankingBarUIDestroy();//이전 데이터들 지우기
         loadingPanel.SetActive(true);//데이터 넣는동안 로딩패널 활성화
 
@@ -79,13 +79,13 @@ public class InGameRankingUI : MonoBehaviour
             //데이터를 바탕으로 랭킹 UI 생성
             foreach (PlayerLocalSaveData data in rankingDataList)
             {
-                Debug.Log("랭킹 데이터 생성");
+                // Debug.Log("랭킹 데이터 생성");
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
                 rankingBarUIs.Add(rankingBarUI);
                 rankingBarUI.GetComponent<RankingBar>().UISetting(data, rank);
                 if ((rank) == newDataNumber)//새로운 데이터는 색깔 다르게
                 {
-                    Debug.Log("신규 데이터 색 변경");
+                    // Debug.Log("신규 데이터 색 변경");
                     rankingBarUI.GetComponent<RankingBar>().UIColorChane(Color.yellow);
                 }
                 rank++;
@@ -93,7 +93,7 @@ public class InGameRankingUI : MonoBehaviour
         }
         LastUpdateTime(); //UI 업데이트 후 시간 표시
         loadingPanel.SetActive(false);
-        Debug.Log("인게임 순위표 표시 종료");
+        // Debug.Log("인게임 순위표 표시 종료");
     }
 
     //UI프리팹들 지우기

@@ -9,12 +9,11 @@ public class Meteor : MonoBehaviour
     private float _duration;
 
     private float _elaspedTime;
-    private bool _isMoving = false;
     private ParticleSystem _ps;
 
     private void Awake()
     {
-        _ps = GetComponent<ParticleSystem>();   
+        _ps = GetComponent<ParticleSystem>();
     }
 
     public void Move(Vector3 startPos, Vector3 endPos, float duration)
@@ -27,7 +26,6 @@ public class Meteor : MonoBehaviour
 
     private IEnumerator HandleMove()
     {
-        _isMoving = true;
         _ps.Play();
         _elaspedTime = 0;
 
@@ -41,7 +39,6 @@ public class Meteor : MonoBehaviour
             yield return null;
         }
 
-        _isMoving = false;
         _ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         transform.position = _startPos;

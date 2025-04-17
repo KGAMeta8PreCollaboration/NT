@@ -58,12 +58,12 @@ public class LocalSaveManager : MonoBehaviour
         if (!Directory.Exists(directoryPath))//폴더가 없으면
         {
             Directory.CreateDirectory(directoryPath); //폴더 생성
-            Debug.Log("폴더 없음 -> 생성");
+            // Debug.Log("폴더 없음 -> 생성");
         }
 
         if (File.Exists(filePath))//노래 이름의 파일이 존재하는지 확인
         {
-            Debug.Log("폴더 있음");
+            // Debug.Log("폴더 있음");
             string json = "";
 
             yield return StartCoroutine(ReadFileAsync(filePath, result => json = result));//노래 이름의 저장 데이터를 string json에 넣기
@@ -72,17 +72,17 @@ public class LocalSaveManager : MonoBehaviour
             if (dataWrapper != null && dataWrapper.playerDataList != null)
             {
                 datas = dataWrapper.playerDataList;//데이터 리스트를 가져옴
-                Debug.Log("폴더 있음 -> 데이터 리스트 가져옴");
+                // Debug.Log("폴더 있음 -> 데이터 리스트 가져옴");
             }
             else
             {
                 datas = new List<PlayerLocalSaveData>();
-                Debug.Log("폴더 없음 -> 데이터 리스트 새로 생성");
+                // Debug.Log("폴더 없음 -> 데이터 리스트 새로 생성");
             }
         }
         else//저장된 랭킹 데이터 파일이 없으면 새로 생성
         {
-            Debug.Log("폴더 없음 랭킹 데이터 파일 새로 생성");
+            // Debug.Log("폴더 없음 랭킹 데이터 파일 새로 생성");
             datas = new List<PlayerLocalSaveData>();//파일없으므로 빈리스트로 초기화
             PlayerDataListWrapper dataWrapper = new PlayerDataListWrapper(datas);//래핑
             string json = JsonUtility.ToJson(dataWrapper);//json으로 변환

@@ -11,11 +11,11 @@ public class NoteAudioScheduler : MonoBehaviour
 	private void Start()
 	{
 		_woofer = GetComponentInChildren<Woofer>();
-		Debug.Log("NoteAudioScheduler Awake");
+		// Debug.Log("NoteAudioScheduler Awake");
 	}
 
 	private List<(double time, AudioClip clip)> LoadedNoteDataToTuple(List<LoadedNoteData> sortedNotes)
-	{ 
+	{
 		List<(double time, AudioClip clip)> ret = new List<(double, AudioClip)>();
 
 		foreach (LoadedNoteData note in sortedNotes)
@@ -32,17 +32,17 @@ public class NoteAudioScheduler : MonoBehaviour
 
 	public void Init(List<LoadedNoteData> sortedNotes)
 	{
-		print("NoteAudioScheduler Init, sortedNotes.size() = " + sortedNotes.Count);
+		// print("NoteAudioScheduler Init, sortedNotes.size() = " + sortedNotes.Count);
 		_scheduledAudioData.Clear();
 		_scheduledAudioData = LoadedNoteDataToTuple(sortedNotes);
-		print("_scheduledAudioData size : " + _scheduledAudioData.Count);
+		// print("_scheduledAudioData size : " + _scheduledAudioData.Count);
 		if (_scheduledAudioData.Count > 0)
 			_woofer.SetAudioClip(_scheduledAudioData[0].clip);
 	}
-	
+
 	private void Update()
 	{
-		if (_scheduledAudioData.Count == 0) 
+		if (_scheduledAudioData.Count == 0)
 			return;
 
 		double currentTime = AudioSettings.dspTime;
@@ -53,15 +53,15 @@ public class NoteAudioScheduler : MonoBehaviour
 		var nextData = _scheduledAudioData[1];
 
 		double timeDiff = nextData.time - currData.time;
-		double normalizedTime = (currentTime - currData.time) / timeDiff; 
+		double normalizedTime = (currentTime - currData.time) / timeDiff;
 		double transitionPoint = 0.2;
-			
+
 		if (normalizedTime >= transitionPoint)
 		{
 			_woofer.SetAudioClip(nextData.clip);
 			// AudioManager.Instance.SetBackgroundMusic(nextData.clip);
 			// AudioManager.Instance.StartBGM(0.1f);
-			
+
 			// print(nextData.clip.name);
 			_scheduledAudioData.RemoveAt(0);
 		}
