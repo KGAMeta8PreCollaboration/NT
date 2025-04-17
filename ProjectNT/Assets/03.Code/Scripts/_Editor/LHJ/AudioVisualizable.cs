@@ -13,15 +13,11 @@ public class AudioVisualizable : MonoBehaviour
     [SerializeField] private float widthScale = 1f;
     [Header("1초당 표시될 waveform의 높이(클수록 새로로 길어짐)")]
     [SerializeField] private float heightScale = 1f;
-    [Header("1초당 샘플링할 횟수(높을수록 해상도 높아짐)")]
-    [SerializeField] private float samplesPerSecond = 100;
     [SerializeField] private Color backgroundColor = Color.black;
     [SerializeField] private Color waveColor = Color.green;
 
     private AudioSourceManager _audioSourceManager;
     private Texture2D _waveformTexture;
-    //픽셀을 그릴 배열
-    private Color[] _pixels;
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()

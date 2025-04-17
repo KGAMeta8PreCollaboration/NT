@@ -8,7 +8,6 @@ public class SongTimelineController : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI timeText;
-    [SerializeField] private float mouseWheelSpeed = 10f;
 
     private AudioSourceManager _audioSourceManager;
     private BeatMapPlane _beatMapPlane;

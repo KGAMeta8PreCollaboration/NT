@@ -79,7 +79,7 @@ public class AudioSourceManager : MonoBehaviour
         print(2);
         if (audioClip == null)
         {
-            Debug.LogWarning("노래가 없습니다.");
+            // Debug.LogWarning("노래가 없습니다.");
             return;
         }
         _audioSource = GetComponent<AudioSource>();
@@ -111,7 +111,6 @@ public class AudioSourceManager : MonoBehaviour
     }
 
     private double gridTimeStep;
-    private bool ctrlKeyDown = false;
     private void Update()
     {
         // if (_beatMapManager.isLoaded == false)

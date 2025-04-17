@@ -20,7 +20,6 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float bpm = 120;
     [SerializeField] private int beatNum = 4; //박자의 수
     //[SerializeField] private int subdivision = 4; // 박자
-    [SerializeField] private int nodesPerBeat = 1; //비트당 노드 수
     private int row;    // 열(가로줄)
     [SerializeField] private int column = 4; // 행(세로줄)
     [SerializeField] private Color gridColor = Color.black;

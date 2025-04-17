@@ -19,7 +19,7 @@ public class LongNodeState : INodeState
     {
         if (EditorDataManager.Instance.CurKeySoundName == "")
         {
-            Debug.LogWarning("키음 없음");
+            // Debug.LogWarning("키음 없음");
             return;
         }
 

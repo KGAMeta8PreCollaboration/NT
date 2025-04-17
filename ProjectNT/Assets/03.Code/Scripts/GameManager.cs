@@ -192,7 +192,7 @@ public class GameManager : Singleton<GameManager>
     // TODO: 프로토타입 임시
     public void GameStart()
     {
-        print("게임매니저 게임스타트");
+        // print("게임매니저 게임스타트");
         AudioManager.Instance.StartBGM(delayTime);
         gameSceneMove = FindObjectOfType<GameSceneMove>();
         StartCoroutine(phaseEnumerator);
@@ -207,7 +207,7 @@ public class GameManager : Singleton<GameManager>
 
     public void GameEnd()
     {
-        print("Game End");
+        // print("Game End");
         OnGameEnd?.Invoke();
         OnGameEnd = null;
     }
@@ -224,7 +224,7 @@ public class GameManager : Singleton<GameManager>
         {
             if (CheckGameEnd())
             {
-                print("CheckGameEndCoroutine");
+                // print("CheckGameEndCoroutine");
                 GameEnd();
                 yield break;
             }

@@ -43,7 +43,7 @@ public class NoteManager : MonoBehaviour
 
     public void AssignNotesToSchedulers(double startDspTime)
     {
-        print("AssignNotesToSchedulers LoadedNotes size : " + _noteGenerator.loadedNotes.Count);
+        // print("AssignNotesToSchedulers LoadedNotes size : " + _noteGenerator.loadedNotes.Count);
         List<LoadedNoteData>[] railNotes = new List<LoadedNoteData>[12]
         {
             new List<LoadedNoteData>(),
