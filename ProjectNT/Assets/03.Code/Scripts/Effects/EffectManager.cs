@@ -21,6 +21,8 @@ public class EffectManager : Singleton<EffectManager>
     private LightEffect lightEffect;
     private NeonEffect neonEffect;
     private CarEffect carEffect;
+    private MeteorHandler meteorHandler;
+    private FireplayHandler fireplayHandler;
 
     public Action<Note, int, Enums.PlayMode> player1MapEffect;
     // public Action<Note, int> player2MapEffect;
@@ -66,6 +68,8 @@ public class EffectManager : Singleton<EffectManager>
         lightEffect = FindObjectOfType<LightEffect>();
         neonEffect = FindObjectOfType<NeonEffect>();
         carEffect = FindObjectOfType<CarEffect>();
+        meteorHandler = FindObjectOfType<MeteorHandler>();
+        fireplayHandler = FindObjectOfType<FireplayHandler>();
     }
 
     public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
@@ -141,7 +145,10 @@ public class EffectManager : Singleton<EffectManager>
             case Enums.Phase.Phase3:
                 SetActionNull();
                 Phase2End();
-
+                p1PerfectAct += fireplayHandler.PlayFireplay;
+                p2PerfectAct += fireplayHandler.PlayFireplay;
+                p1TopNoteAct += meteorHandler.PlayMeteor;
+                p2TopNoteAct += meteorHandler.PlayMeteor;
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");
