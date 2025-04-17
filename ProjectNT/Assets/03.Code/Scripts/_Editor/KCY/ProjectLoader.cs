@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using SFB;
 using TMPro;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -39,7 +40,7 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private Button loadSong_btn;
     [SerializeField] private Button loadThumbnail_btn;
     [SerializeField] private Button loadKeySound_btn;
-    [SerializeField] private Button edit_btn;
+    [SerializeField] private Button select_btn;
     [SerializeField] private Button save_btn;
     #endregion
 
@@ -58,7 +59,7 @@ public class ProjectLoader : MonoBehaviour
     public string SetThumbnailTMP { set { thumbnailName_tmp.text = value; } }
     public string SetKeySoundTMP { set { keySound_tmp.text = value; } }
     public Sprite SetThumbnail { set { thumbnail_img.sprite = value; } }
-    public bool EditBtn { set { edit_btn.interactable = value; } }
+    public bool EditBtn { set { select_btn.interactable = value; } }
     #endregion
 
     private void Awake()
@@ -92,7 +93,7 @@ public class ProjectLoader : MonoBehaviour
         loadSong_btn.onClick.AddListener(LoadSong);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
         loadKeySound_btn.onClick.AddListener(KeySoundPathSet);
-        edit_btn.onClick.AddListener(EditProject);
+        select_btn.onClick.AddListener(projectIO.EditProjectOpen);
         save_btn.onClick.AddListener(SaveProject);
 
         SetDefault(false);
@@ -102,10 +103,11 @@ public class ProjectLoader : MonoBehaviour
 
     private void EditProject()
     {
-        EditorDataManager.Instance.thumbnail_sprite = thumbnail_img.sprite;
-        EditorDataManager.Instance.ProjectData = currentProject.projectData;
-        EditorDataManager.Instance.SetBgm();
-        EditorLoadScene.SceneLoad("SongEditorScene");
+        // EditorDataManager.Instance.thumbnail_sprite = thumbnail_img.sprite;
+        // EditorDataManager.Instance.ProjectData = currentProject.projectData;
+        // EditorDataManager.Instance.SetBgm();
+        // EditorLoadScene.SceneLoad("SongEditorScene");
+
     }
 
     private void LoadProjects()
@@ -137,7 +139,7 @@ public class ProjectLoader : MonoBehaviour
         }
         addProejct_btn.interactable = true;
         if (addedProjects.Count > 0)
-            edit_btn.interactable = true;
+            select_btn.interactable = true;
     }
     private void AddNewProject()
     {
@@ -152,7 +154,7 @@ public class ProjectLoader : MonoBehaviour
         InputFieldReset();
 
         SetDefault(true);
-        edit_btn.interactable = false;
+        select_btn.interactable = false;
 
         currentProject.Toggle.interactable = false;
         addProejct_btn.interactable = false;
@@ -325,7 +327,7 @@ public class ProjectLoader : MonoBehaviour
 
         }
         addProejct_btn.interactable = true;
-        edit_btn.interactable = true;
+        select_btn.interactable = true;
     }
 
     private bool FindSameProjects()
@@ -457,7 +459,7 @@ public class ProjectLoader : MonoBehaviour
     {
         var interactableElements = new Selectable[]
         {
-        edit_btn, projectName_inputfield, songArtist_inputfield,
+        select_btn, projectName_inputfield, songArtist_inputfield,
         loadSong_btn, loadThumbnail_btn, projectBpm_inputfield,
         projectBeatNum_inputfield, loadKeySound_btn
         };

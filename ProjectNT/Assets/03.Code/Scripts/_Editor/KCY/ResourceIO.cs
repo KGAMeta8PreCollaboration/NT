@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class ResourceIO : MonoBehaviour
 {
+    private const string FloatNumericRegex = @"[^0-9.]";
     [SerializeField] private KeySoundLoader keySoundLoader;
     [SerializeField] private TMP_InputField phase2_inputfield;
     [SerializeField] private TMP_InputField phase3_inputfield;
@@ -23,9 +24,9 @@ public class ResourceIO : MonoBehaviour
     {
         keySoundLoader.LoadKeySound();
 
-        phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
+        phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, FloatNumericRegex, ""));
 
-        phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, @"[^0-9]", ""));
+        phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, FloatNumericRegex, ""));
 
         phase2_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase2 = int.Parse(phase2_inputfield.text));
 
@@ -56,7 +57,6 @@ public class ResourceIO : MonoBehaviour
     {
         EditorDataManager.Instance.phaseDataAction -= GetPhaseData;
     }
-
 
     private void GetPhaseData()
     {

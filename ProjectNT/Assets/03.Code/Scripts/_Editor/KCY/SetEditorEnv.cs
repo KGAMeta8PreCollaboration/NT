@@ -24,6 +24,7 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private RectTransform defaultPath;
     [SerializeField] private RectTransform project;
     [SerializeField] private TextMeshProUGUI path_tmp;
+    [SerializeField] private TextMeshProUGUI path_placeholder;
     [SerializeField] private Button openFolderBTN;
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
@@ -69,6 +70,7 @@ public class SetEditorEnv : MonoBehaviour
         string p = Path.Combine(Application.persistentDataPath, "EditorPath");
         if (Directory.Exists(p)) Directory.Delete(p, true);
         path_tmp.text = "";
+        path_placeholder.gameObject.SetActive(true);
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
     }
@@ -142,6 +144,7 @@ public class SetEditorEnv : MonoBehaviour
                 PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
                 PATH.CurrentPath = PATH.Path;
                 path_tmp.text = PATH.CurrentPath;
+                path_placeholder.gameObject.SetActive(false);
                 SavePath();
             }
             else
@@ -149,6 +152,7 @@ public class SetEditorEnv : MonoBehaviour
                 PATH.Path = path[0];
                 PATH.CurrentPath = PATH.Path;
                 path_tmp.text = PATH.CurrentPath;
+                path_placeholder.gameObject.SetActive(false);
                 SavePath();
             }
         }

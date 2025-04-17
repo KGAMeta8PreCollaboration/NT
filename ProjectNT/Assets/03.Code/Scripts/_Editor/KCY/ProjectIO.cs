@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class ProjectIO : MonoBehaviour
 {
     [SerializeField] private SetEditorEnv editorEnv;
+    [SerializeField] private EditProject editProject;
+    [SerializeField] private ProjectLoader projectLoader;
     [SerializeField] private Button return_BTN;
     public TextMeshProUGUI pathVisual_TMP;
     public string ProjectPath
@@ -31,4 +33,10 @@ public class ProjectIO : MonoBehaviour
         pathVisual_TMP.text = editorEnv.ProjectPath;
     }
     //TODO 프로젝트의 저장정보를 ProjectLoader에게 보내기
+
+    public void EditProjectOpen()
+    {
+        projectLoader.gameObject.SetActive(false);
+        editProject.gameObject.SetActive(true);
+    }
 }
