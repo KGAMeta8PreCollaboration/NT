@@ -106,8 +106,10 @@ public class AudioSourceManager : MonoBehaviour
 
     public void InitializeFromSongData(SongData songData)
     {
-        phase2Input.text = (songData?.phase2 ?? 0).ToString();
-        phase3Input.text = (songData?.phase3 ?? 0).ToString();
+        string song2Text = (songData.phase2 == 0) ? "0" : songData.phase2.ToString();
+        string song3Text = (songData.phase3 == 0) ? "0" : songData.phase3.ToString();
+        phase2Input.text = song2Text;
+        phase3Input.text = song3Text;
     }
 
     private double gridTimeStep;
