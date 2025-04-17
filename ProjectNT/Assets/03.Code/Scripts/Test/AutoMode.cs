@@ -74,7 +74,6 @@ public class AutoMode : MonoBehaviour
                     else
                     {
                         TopNote topNote = note as TopNote;
-                        topNote?.AutoHit(new UnityEngine.InputSystem.InputAction.CallbackContext());
 
                         if (!GameManager.Instance.IsMulti) topNote?.AutoHit(new UnityEngine.InputSystem.InputAction.CallbackContext());
                         else _wooferNetworkSync.SendTopNoteHit(topNote, PhotonNetwork.LocalPlayer.NickName);
