@@ -60,6 +60,7 @@ public class GameManager : Singleton<GameManager>
         {
             GameSceneInit();
             noteGenerators[0].Init();
+            phaseEnumerator = PhaseTracker();
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
