@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -31,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
+    public float bpm;
     public float phase2;
     public float phase3;
 
@@ -41,7 +41,6 @@ public class GameManager : Singleton<GameManager>
         set
         {
             playMode = value;
-            EffectManager.Instance.SetPlayMode(playMode);
         }
     }
     private Enums.Phase phase;
@@ -51,6 +50,7 @@ public class GameManager : Singleton<GameManager>
         private set
         {
             phase = value;
+            EffectManager.Instance.SetPhaseEffect(phase);
         }
     }
     private IEnumerator phaseEnumerator;
@@ -70,9 +70,10 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        if (Instance != this)
+            return;
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-        phaseEnumerator = PhaseTracker();
-    }
+    } 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -81,6 +82,8 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () => SceneManager.LoadScene("LobbyScene");
             GameSceneInit();
             noteGenerators[0].Init(_loadedNoteDatas);
+            phaseEnumerator = PhaseTracker();
+
         }
         else if (scene.name == "MultiGame")
         {
@@ -93,6 +96,7 @@ public class GameManager : Singleton<GameManager>
             };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
+            phaseEnumerator = PhaseTracker();
             //MultiGameSceneInit();
             //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
             //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
@@ -105,6 +109,7 @@ public class GameManager : Singleton<GameManager>
         double phase2Time = AudioSettings.dspTime + phase3;
         double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
 
+        
         gameSceneMove.mapmovePosTimes[0].travelTime = phase2;
         gameSceneMove.mapmovePosTimes[1].travelTime = phase3 - phase2;
         gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3;
@@ -116,7 +121,7 @@ public class GameManager : Singleton<GameManager>
         };
 
         Phase = Enums.Phase.Phase1;
-        gameSceneMove.GameSceneMoveAndLightStart(Phase);
+        gameSceneMove.MapMoveByPhase(Phase);
 
         while (tuple.Count != 0)
         {
@@ -124,9 +129,8 @@ public class GameManager : Singleton<GameManager>
             {
                 curr = tuple[0].Item1;
                 Phase = tuple[0].Item2;
-                Debug.LogError(Phase);
                 tuple.RemoveAt(0);
-                gameSceneMove.GameSceneMoveAndLightStart(Phase);
+                gameSceneMove.MapMoveByPhase(Phase);
             }
             yield return null;
         }
@@ -137,7 +141,7 @@ public class GameManager : Singleton<GameManager>
         projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
         projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
-        playMode = Enums.PlayMode.Single;
+        PlayMode = Enums.PlayMode.Single;
         SceneManager.LoadScene(gameSceneName);
     }
 

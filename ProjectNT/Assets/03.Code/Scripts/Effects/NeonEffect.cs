@@ -20,7 +20,7 @@ public class NeonEffect : MapEffect<Material>
     [ColorUsage(false, true)] public Color text_Albedo3_color;
     [ColorUsage(false, true)] public Color text_Albedo4_color;
 
-    private void Start()
+    private void Awake()
     {
         Init(left, ref leftSequence);
         Init(right, ref rightSequence);
@@ -70,13 +70,34 @@ public class NeonEffect : MapEffect<Material>
         };
     }
 
-    public override void LeftEffectInvoke()
+    public override void P1EffectInvoke()
     {
         leftSequence.Restart();
     }
 
-    public override void RightEffectInvoke()
+    public override void P2EffectInvoke()
     {
         rightSequence.Restart();
+    }
+
+    public override void LeftEffectEnd()
+    {
+        leftSequence.Kill();
+        for (int i = 0; i < left.Count; i++)
+        {
+            Color targetColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
+            left[i].DOColor(targetColor * targetIntensity, "_EmissionColor", targetDuration).SetEase(Ease.OutQuint);
+        }
+
+    }
+
+    public override void RightEffectEnd()
+    {
+        rightSequence.Kill();
+        for (int i = 0; i < right.Count; i++)
+        {
+            Color targetColor = i < 4 ? GetSignsAlbedoColor(i) : GetTextAlbedoColor(i - 4);
+            right[i].DOColor(targetColor * targetIntensity, "_EmissionColor", targetDuration).SetEase(Ease.OutQuint);
+        }
     }
 }

@@ -1,5 +1,4 @@
 using Game;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,29 +23,6 @@ public class ResultPanel : Popup
     [SerializeField] private Button restartButton;//재시작 버튼
     [SerializeField] private Button musicSelectButton;//곡 선택 이동 버튼
     [SerializeField] private GameEndPanel endPanel;//최고점수 갱신시 활성화될 UI
-
-    private void Awake()
-    {
-        //_totalNoteCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "TotalNoteCount");
-        //_perfectCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "PerfectCount");
-        //_coolCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "CoolCount");
-        //_goodCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GoodCount");
-        //_badCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "BadCount");
-        //_gradeText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeText");
-        //_gradeSubText = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "GradeSubText");
-
-        ////추가
-        //_scoreCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "ScoreText");
-        //_maxComboCount = TransformUtil.FindDeepChildComponent<TextMeshProUGUI>(transform, "MaxComboText");
-        //restartButton.onClick.AddListener(Restart);//재시작 버튼
-        //musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
-    }
-
-    private void OnEnable()
-    {
-        //DisplayPanel();
-    }
-
 
     public void DisplayPanel()
     {
@@ -88,6 +64,47 @@ public class ResultPanel : Popup
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
         endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, "앙아앙", "아아");//음악이름, 난이도 추가
     }
+
+    public void SetResult(PlayerResultContainer result)
+    {
+        int totalNotes = 0;
+        for (int i = 0; i < result.judgeCount.Length; i++)
+        {
+            totalNotes += result.judgeCount[i];
+            switch ((JudgementType)i)
+            {
+                case JudgementType.PERFECT:
+                    _perfectCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.Cool:
+                    _coolCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.Good:
+                    _goodCount.text = result.judgeCount[i].ToString();
+                    break;
+                case JudgementType.MISS:
+                    _badCount.text = result.judgeCount[i].ToString();
+                    break;
+            }
+        }
+        _totalNoteCount.text = totalNotes.ToString();
+        Grade grade = _scoreManager.CalculateGrade(result);
+        if (grade == Grade.SPlus)
+        {
+            _gradeText.text = "S";
+            _gradeSubText.text = "+";
+        }
+        else
+            _gradeText.text = grade.ToString();
+
+        //추가
+        _scoreCount.text = result.score.ToString();
+        _maxComboCount.text = result.maxCombo.ToString();
+        //musicImage.sprite = //음악 이미지
+        //_musicNameText.text = //음악 이름 텍스트
+        //_musicArtistText.text = //음악 아티스트 이름 텍스트
+    }
+
     public override void Init(PopupManager popupManager)
     {
         base.Init(popupManager);
@@ -106,11 +123,14 @@ public class ResultPanel : Popup
         restartButton.onClick.AddListener(Restart);//재시작 버튼
         musicSelectButton.onClick.AddListener(MusicSelect);//곡 선택 이동 버튼
 
-        GameManager.Instance.OnGameEnd += () =>
+        if (!GameManager.Instance.IsMulti)
         {
-            popupManager.OpenPopup(this);
-            DisplayPanel();
-        };
+            GameManager.Instance.OnGameEnd += () =>
+            {
+                popupManager.OpenPopup(this);
+                DisplayPanel();
+            };
+        }
     }
 
     //추가

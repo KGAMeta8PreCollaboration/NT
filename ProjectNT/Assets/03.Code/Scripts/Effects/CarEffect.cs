@@ -7,23 +7,20 @@ using UniRan = UnityEngine.Random;
 public class CarEffect : MapEffect<GameObject>
 {
     [SerializeField] private List<Material> carMaterials;
+    [SerializeField] private Transform phase2Pos;
+    [SerializeField] private Transform phase3Pos;
     [SerializeField] private Transform leftStartTrans;
     [SerializeField] private Transform leftEndTrans;
     [SerializeField] private Transform rightStartTrans;
     [SerializeField] private Transform rightEndTrans;
     public float targetDuration;
 
-    private void OnEnable()
-    {
-
-    }
-
-    public override void LeftEffectInvoke()
+    public override void P1EffectInvoke()
     {
         CarDoTween(leftStartTrans.position, leftEndTrans.position);
     }
 
-    public override void RightEffectInvoke()
+    public override void P2EffectInvoke()
     {
         CarDoTween(rightStartTrans.position, rightEndTrans.position);
     }
@@ -32,7 +29,36 @@ public class CarEffect : MapEffect<GameObject>
     private void CarDoTween(Vector3 startPos, Vector3 endPos)
     {
         CarObject obj = PoolManager.Instance.carEffectPool.Pop();
+        obj.renderer.material = carMaterials[UniRan.Range(0, carMaterials.Count)];
         obj.transform.position = startPos;
-        obj.transform.DOMove(endPos, targetDuration).SetEase(Ease.OutQuart);
+        obj.transform.DOMove(endPos, targetDuration).SetEase(Ease.OutQuart).onComplete += () => PoolManager.Instance.carEffectPool.Push(obj);
+    }
+
+    public override void LeftEffectEnd()
+    {
+        StartCoroutine(CarCoroutine());
+    }
+
+    public override void RightEffectEnd()
+    {
+        StartCoroutine(CarCoroutine());
+    }
+
+    private IEnumerator CarCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+            CarDoTween(leftStartTrans.position, leftEndTrans.position);
+            CarDoTween(rightStartTrans.position, rightEndTrans.position);
+        }
+    }
+    public void MovePhase2Pos()
+    {
+        transform.position = phase2Pos.position;
+    }
+    public void MovePhase3Pos()
+    {
+        transform.position = phase3Pos.position;
     }
 }

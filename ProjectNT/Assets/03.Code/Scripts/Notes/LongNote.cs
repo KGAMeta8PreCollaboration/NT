@@ -14,7 +14,7 @@ public class LongNote : Note
     [SerializeField] private ConnectLineRenderer _connectLineRenderer;
 
     //콤보 공식을 위해 사용하는 임시 변수
-    public int bpm;
+    public float bpm;
 
     protected override void Update()
     {
@@ -99,6 +99,8 @@ public class LongNote : Note
         print($"롱노트 지속시간: {duration}초, 현재 시간: {AudioSettings.dspTime.ToString("f2")}");
 
         _targetDspTime = startTargetDspTime;
+
+        bpm = GameManager.Instance.bpm;
 
         CalculateMilestones(duration);
         _connectLineRenderer.Init(GetDistanceStartPosAndEndPos(), target);

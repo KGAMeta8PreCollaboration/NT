@@ -63,7 +63,11 @@ public class PlayerModuleManager : MonoBehaviour
 
         foreach (PlayerModule playerModule in playerModules)
         {
-            if (playerModule.playerKey.ToString().Equals(nickname)) module = playerModule;
+            if (playerModule.playerKey.ToString().Equals(nickname))
+            {
+                module = playerModule;
+                print($"찾은 모듈:{module.name}");
+            }
         }
 
         if (module != null)
@@ -71,7 +75,10 @@ public class PlayerModuleManager : MonoBehaviour
             for (int i = 0; i < module.woofers.Length; i++)
             {
                 if (module.woofers[i] == woofer)
+                {
+                    print($"찾은 우퍼의 인덱스: {i}");
                     return i;
+                }
             }
         }
 
@@ -115,5 +122,19 @@ public class PlayerModuleManager : MonoBehaviour
 
         Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
         return -1;
+    }
+
+    public PlayerModule GetPlayerModuleByNick(string nickname)
+    {
+        foreach (PlayerModule module in playerModules)
+        {
+            if (module.playerKey.ToString() == nickname)
+            {
+                return module;
+            }
+        }
+
+        Debug.LogError($"플레이어 모듈을 찾을 수 없음: {nickname}");
+        return null;
     }
 }

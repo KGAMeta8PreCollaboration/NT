@@ -14,11 +14,10 @@ public abstract class MapEffect<T> : MonoBehaviour where T : UnityEngine.Object
     protected Sequence leftSequence;
     protected Sequence rightSequence;
 
-    public EffectDelegate player1Delegate;
-    public EffectDelegate player2Delegate;
-
     protected abstract void Init(List<T> list, ref Sequence sequence);
 
-    public abstract void LeftEffectInvoke();
-    public abstract void RightEffectInvoke();
+    public abstract void P1EffectInvoke();
+    public abstract void P2EffectInvoke();
+    public abstract void LeftEffectEnd();
+    public abstract void RightEffectEnd();
 }
