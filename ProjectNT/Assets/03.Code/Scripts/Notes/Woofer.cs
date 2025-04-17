@@ -84,7 +84,7 @@ public class Woofer : MonoBehaviour
                 longNote.Release();
             }
             tmp.count++;
-            logText2.text = $"������ Releaseȣ��({tmp.count})";
+            logText2.text = $"롱노트 Release 횟수: ({tmp.count})";
         }
         isHoldingLongNote = false;
     }
