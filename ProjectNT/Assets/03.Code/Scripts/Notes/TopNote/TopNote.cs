@@ -96,6 +96,7 @@ public class TopNote : Note
 
         AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
+        EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
 
         if (judgementType == JudgementType.MISS)
         {

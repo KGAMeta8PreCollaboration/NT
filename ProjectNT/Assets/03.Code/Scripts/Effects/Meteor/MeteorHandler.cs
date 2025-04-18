@@ -27,7 +27,7 @@ public class MeteorHandler : MonoBehaviour
         {
             foreach (var meteor in meteors)
             {
-                float randomY = Random.Range(-30f, 30f);
+                float randomY = Random.Range(-10f, 10f);
                 Vector3 randStart = startPos.position + Vector3.up * randomY;
                 Vector3 randEnd = endPos.position + Vector3.up * randomY;
                 meteor.Move(randStart, randEnd, duration);
@@ -38,6 +38,7 @@ public class MeteorHandler : MonoBehaviour
     //운석 소환 시 이거 쓰면 됨
     public void PlayMeteor()
     {
+        print($"PlayMeteor에 들어옴"); 
         foreach (var meteor in meteors)
         {
             float randomY = Random.Range(-30f, 30f);

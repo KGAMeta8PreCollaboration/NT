@@ -6,7 +6,7 @@ public class FireplayHandler : MonoBehaviour
 {
     [SerializeField] private List<GameObject> fireplayPrefabs;
     [SerializeField] private float spawnRate = 10f;
-    [SerializeField] private Vector2 scale = new Vector3(5, 6);
+    [SerializeField] private float scale = 15;
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 endPos;
 
@@ -17,11 +17,12 @@ public class FireplayHandler : MonoBehaviour
     {
         for (int i = 0; i < fireplayPrefabs.Count; i++)
         {
-            GameObject prefab = Instantiate(fireplayPrefabs[i], transform.position, Quaternion.identity, transform);
+            GameObject prefab = Instantiate(fireplayPrefabs[i], transform);
             //생성 시 비활성화
             prefab.SetActive(false);
+            prefab.transform.localScale = new Vector3(scale, scale, scale);
             FireplayPrefab vfxInstance = prefab.GetComponent<FireplayPrefab>();
-            vfxInstance.SetDirection(startPos, endPos, scale, spawnRate);
+            vfxInstance.SetDirection(startPos, endPos, spawnRate);
             fireplayInstances.Add(vfxInstance);
         }
     }
@@ -44,7 +45,7 @@ public class FireplayHandler : MonoBehaviour
     {
         int randomNum = Random.Range(0, fireplayPrefabs.Count);
 
-        currentPrefab = fireplayInstances[0];
+        currentPrefab = fireplayInstances[randomNum];
         currentPrefab.gameObject.SetActive(true);
         currentPrefab.Play();
     }
