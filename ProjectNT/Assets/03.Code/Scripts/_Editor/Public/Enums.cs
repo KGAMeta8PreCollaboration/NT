@@ -20,6 +20,19 @@ public class Enums
         DUO2_HARD,
         DUO2_EXTREAM
     }
+    public enum GameMode
+    {
+        Solo,
+        Duo1,
+        Duo2
+    }
+    public enum Difficulty
+    {
+        Easy,
+        Normal,
+        Hard,
+        Extreme
+    }
 
     public enum Details
     {
@@ -36,6 +49,7 @@ public class Enums
         FILELOADFAIL,
         PATHSETERROR,
         SAVEFOLDEREXIST,
+        THEMEALREADYEXIST,
         LOADIMGFAIL,
         MAKEPROJECTCOMPLETE,
         CHANGEPROJECTINFOCOMPLETE,

@@ -52,6 +52,7 @@ public class PopUp : MonoBehaviour
             case Enums.Details.FILELOADFAIL:
             case Enums.Details.PATHSETERROR:
             case Enums.Details.SAVEFOLDEREXIST:
+            case Enums.Details.THEMEALREADYEXIST:
             case Enums.Details.LOADIMGFAIL:
             case Enums.Details.MAKEPROJECTCOMPLETE:
             case Enums.Details.CHANGEPROJECTINFOCOMPLETE:

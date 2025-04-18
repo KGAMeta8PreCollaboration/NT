@@ -28,9 +28,9 @@ public class ResourceIO : MonoBehaviour
 
         phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, FloatNumericRegex, ""));
 
-        phase2_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase2 = int.Parse(phase2_inputfield.text));
+        // phase2_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase2 = int.Parse(phase2_inputfield.text));
 
-        phase3_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase3 = int.Parse(phase3_inputfield.text));
+        // phase3_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase3 = int.Parse(phase3_inputfield.text));
 
         songName_tmp.text = EditorDataManager.Instance.ProjectData.projectName;
         thumbnail_img.sprite = EditorDataManager.Instance.thumbnail_sprite;
@@ -60,7 +60,7 @@ public class ResourceIO : MonoBehaviour
 
     private void GetPhaseData()
     {
-        phase2_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase2.ToString();
-        phase3_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase3.ToString();
+        // phase2_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase2.ToString();
+        // phase3_inputfield.text = EditorDataManager.Instance.CurBeatMap.songData.phase3.ToString();
     }
 }

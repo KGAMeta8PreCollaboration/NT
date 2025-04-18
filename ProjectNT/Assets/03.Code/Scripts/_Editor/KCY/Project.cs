@@ -76,20 +76,20 @@ public class Project : MonoBehaviour
     {
         if (isTrue == false)
         {
-            loader.currentProject = null;
+            loader.currProject = null;
             loader.SetProjectTMP = "";
             loader.SetArtistTMP = "";
             loader.SetBpm = "";
             loader.SetBeatNum = "";
-            loader.SetBgmTMP = "";
+            // loader.SetBgmTMP = "";
             loader.SetThumbnailTMP = "";
-            loader.SetKeySoundTMP = "";
+            // loader.SetKeySoundTMP = "";
             loader.SetThumbnail = null;
             toggle.interactable = true;
         }
         else
         {
-            loader.currentProject = this;
+            loader.currProject = this;
             if (string.IsNullOrEmpty(projectData.projectName))
             {
                 loader.InputFieldReset();
@@ -106,9 +106,9 @@ public class Project : MonoBehaviour
                 loader.SetArtistTMP = projectData.artistName;
                 loader.SetBpm = projectData.bpm.ToString();
                 loader.SetBeatNum = projectData.beatNum.ToString();
-                loader.SetBgmTMP = projectData.bgmPath;
+                // loader.SetBgmTMP = projectData.bgmPath;
                 loader.SetThumbnailTMP = projectData.thumbnailName;
-                loader.SetKeySoundTMP = projectData.m_KeysoundPath;
+                // loader.SetKeySoundTMP = projectData.m_KeysoundPath;
                 sprite = loader.ByteToSprite(projectData.thumbnailData);
                 loader.SetThumbnail = sprite;
                 loader.EditBtn = true;
@@ -119,7 +119,7 @@ public class Project : MonoBehaviour
 
     public void SetName(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         // projectData.projectName = text;
         // loader.currentProject.projectName.text = text;
         tempName = text;
@@ -127,39 +127,39 @@ public class Project : MonoBehaviour
 
     public void SetArtist(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempArtist = text;
     }
     public void SetBPM(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         if (string.IsNullOrEmpty(text)) return;
         tempBpm = text;
     }
     public void SetBeatNum(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         if (string.IsNullOrEmpty(text)) return;
         tempBeatNum = text;
     }
     public void SetThumbnail(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempThumbnail = text;
     }
     public void SetThumbnailData(byte[] bytes)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempThumbnailData = bytes;
     }
     public void SetBgm(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempBgm = text;
     }
     public void SetKeySoundPath(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempKeySoundPath = text;
     }
     public void SetProjectData()

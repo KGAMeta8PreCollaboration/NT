@@ -17,20 +17,8 @@ public struct ProjectData
     public string m_Path;
     public string m_KeysoundPath;
     public byte[] thumbnailData;
-
-    public void Print()
-    {
-        Debug.Log("========ProjectData========");
-        Debug.Log($"ProjectName : {projectName}");
-        Debug.Log($"ArtistName : {artistName}");
-        Debug.Log($"ThumbnailName : {thumbnailName}");
-        Debug.Log($"BGMPath : {bgmPath}");
-        Debug.Log($"BPM : {bpm}");
-        Debug.Log($"BeatNum : {beatNum}");
-        Debug.Log($"ProjectPath : {m_Path}");
-        Debug.Log($"KeySoundPath : {m_KeysoundPath}");
-        Debug.Log("==========================");
-    }
+    public Enums.GameMode gameMode;
+    public Enums.Difficulty difficulty;
 
 }
 
@@ -70,7 +58,7 @@ public class EditorDataManager : Singleton<EditorDataManager>
             // TODO 저장관련 메서드 새로 전달받아야함.
             if (beatMapManager != null)
             {
-                CurBeatMap = beatMapDic[CurModeDiff];
+                // CurBeatMap = beatMapDic[CurModeDiff];
                 beatMapLoadAction?.Invoke(CurBeatMap);
                 phaseDataAction?.Invoke();
             }
@@ -123,14 +111,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
             Debug.LogError("현재 프로젝트의 설정된 경로가 없습니다.");
             return;
         }
-        for (int i = 0; i < Enums.MODEDIFF_COUNT; i++)
-        {
-            if (false == beatMapDic.ContainsKey(Enums.ModeDiff.SOLO_EASY + i))
-            {
-                BeatMapData beatMapData = new BeatMapData();
-                beatMapDic.Add(Enums.ModeDiff.SOLO_EASY + i, beatMapData);
-            }
-        }
 
         string folderPath;
         folderPath = Path.Combine(currentProjectData.m_Path, savefolderName);
@@ -149,8 +129,8 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 Debug.Log($"filename {fileName}");
                 Debug.Log($"FilePath {filePath}");
 
-                beatMapDic[(Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), fileName)] =
-                JsonUtility.FromJson<BeatMapData>(jsonData);
+                // beatMapDic[(Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), fileName)] =
+                // JsonUtility.FromJson<BeatMapData>(jsonData);
             }
         }
     }
@@ -170,49 +150,16 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             Directory.CreateDirectory(folderPath);
         }
-        Debug.LogError($"{currentModeDiff}난이도 세이브중");
-        jsonData = JsonUtility.ToJson(CurBeatMap, true);
-        filePath = Path.Combine(folderPath, currentModeDiff.ToString());
-        File.WriteAllText(filePath, jsonData);
-
-    }
-    public void SetBgm()
-    {
-        string bgmSavePath = Path.Combine(ProjectData.m_Path, "bgmSaveFile");
-        string fileName = Path.GetFileName(ProjectData.bgmPath);
-        string[] extension = fileName.Split('.');
-        bgmDestPath = Path.Combine(bgmSavePath, "MainTheme" + '.' + extension[1]);
-        Debug.LogError(bgmDestPath);
-        if (Directory.Exists(bgmSavePath))
-        {
-            Directory.Delete(bgmSavePath, true);
-        }
-        Directory.CreateDirectory(bgmSavePath);
-        File.Copy(ProjectData.bgmPath, bgmDestPath);
-        StartCoroutine(InstantiateBGM());
-    }
-
-    private IEnumerator InstantiateBGM()
-    {
-        AudioClip clip;
-
-        UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(bgmDestPath, AudioType.WAV);
-        yield return request.SendWebRequest();
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError($"Error loading audio clip : {request.error}");
-        }
-        clip = DownloadHandlerAudioClip.GetContent(request);
-        clip.name = ProjectData.bgmPath;
-        bgmClip = clip;
-        yield return null;
-        isLoadCompelete = true;
+        // Debug.LogError($"{currentModeDiff}난이도 세이브중");
+        // jsonData = JsonUtility.ToJson(CurBeatMap, true);
+        // filePath = Path.Combine(folderPath, currentModeDiff.ToString());
+        // File.WriteAllText(filePath, jsonData);
     }
 
     public void SaveBeatMap()
     {
         Debug.Log("세이브 진입");
-        CurBeatMap = beatMapManager.SaveBeatMapData();
+        // CurBeatMap = beatMapManager.SaveBeatMapData();
         SaveDataLocal();
     }
 }
