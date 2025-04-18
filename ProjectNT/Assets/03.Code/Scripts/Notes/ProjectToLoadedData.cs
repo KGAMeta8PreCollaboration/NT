@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 public partial class ProjectToLoadedData : MonoBehaviour
 {
     //public List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
-    public List<AudioClip> audioClips = new List<AudioClip>();
+    private List<AudioClip> _audioClips = new List<AudioClip>();
     public AudioClip bgmAudioClip;
 
     public List<LoadedNoteData> BeatMapDataToLoadedNoteData(BeatMapData beatMapData)
@@ -31,8 +31,8 @@ public partial class ProjectToLoadedData : MonoBehaviour
         }
 
         // TODO : 임시로 여기서 phase설정해주는겁니다.
-        GameManager.Instance.phase2 = beatMapData.songData.phase2;
-        GameManager.Instance.phase3 = beatMapData.songData.phase3;
+        GameManager.Instance.phase2ChangeTime = beatMapData.songData.phase2;
+        GameManager.Instance.phase3ChangeTime = beatMapData.songData.phase3;
         GameManager.Instance.bpm = beatMapData.gridSetting.BPM;
         return loadedNoteDatas;
     }
@@ -71,6 +71,7 @@ public partial class ProjectToLoadedData
     public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
     {
         // print("프로젝트 겟 오디오클립 1");
+        _audioClips.Clear();
         projectPath = Path.Combine(projectPath, "KeySounds");
         if (!Directory.Exists(projectPath))
             return;
@@ -93,11 +94,11 @@ public partial class ProjectToLoadedData
         }
         // print("프로젝트 겟 오디오클립 4");
 
-        returnCallback?.Invoke(audioClips);
+        returnCallback?.Invoke(_audioClips);
         // print("프로젝트 겟 오디오클립 5");
     }
 
-    private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
+    private void AddAudioClip(AudioClip clip) => _audioClips.Add(clip);
 
     public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
     {
@@ -118,7 +119,7 @@ public partial class ProjectToLoadedData
     {
         while (_currentLoadClipCount < cnt)
             yield return null;
-        callback?.Invoke(audioClips);
+        callback?.Invoke(_audioClips);
     }
 
     private IEnumerator AudioWebRequest(string path, Action<AudioClip> callback)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -31,8 +32,8 @@ public class GameManager : Singleton<GameManager>
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
     public float bpm;
-    public float phase2;
-    public float phase3;
+    public float phase2ChangeTime;
+    public float phase3ChangeTime;
 
     private Enums.PlayMode playMode;
     public Enums.PlayMode PlayMode
@@ -107,14 +108,14 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator PhaseTracker()
     {
         // double phase1Time = AudioSettings.dspTime + phase2;
-        double phase2Time = AudioSettings.dspTime + phase3;
+        double phase2Time = AudioSettings.dspTime + phase3ChangeTime;
         double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
 
 
-        gameSceneMove.mapmovePosTimes[0].travelTime = phase2;
-        gameSceneMove.mapmovePosTimes[1].travelTime = phase3 - phase2;
-        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3;
-        double curr = AudioSettings.dspTime + phase2;
+        gameSceneMove.mapmovePosTimes[0].travelTime = phase2ChangeTime;
+        gameSceneMove.mapmovePosTimes[1].travelTime = phase3ChangeTime - phase2ChangeTime;
+        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3ChangeTime;
+        double curr = AudioSettings.dspTime + phase2ChangeTime;
         List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
         {
             (phase2Time, Enums.Phase.Phase2),
