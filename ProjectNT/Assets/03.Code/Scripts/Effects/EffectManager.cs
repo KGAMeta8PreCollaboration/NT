@@ -145,10 +145,17 @@ public class EffectManager : Singleton<EffectManager>
             case Enums.Phase.Phase3:
                 SetActionNull();
                 Phase2End();
-                p1PerfectAct += fireplayHandler.PlayFireplay;
-                p2PerfectAct += fireplayHandler.PlayFireplay;
-                p1TopNoteAct += meteorHandler.PlayMeteor;
-                p2TopNoteAct += meteorHandler.PlayMeteor;
+
+                if (fireplayHandler)
+                {
+                    p1PerfectAct += fireplayHandler.PlayFireplay;
+                    p2PerfectAct += fireplayHandler.PlayFireplay;
+                }
+                if (meteorHandler)
+                {
+                    p1TopNoteAct += meteorHandler.PlayMeteor;
+                    p2TopNoteAct += meteorHandler.PlayMeteor;
+                }
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");

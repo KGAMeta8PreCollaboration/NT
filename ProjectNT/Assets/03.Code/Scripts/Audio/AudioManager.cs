@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : Singleton<AudioManager>
 {
-	public List<AudioClip> audioClips = new List<AudioClip>();
+	private List<AudioClip> _audioClips = new List<AudioClip>();
 	public double startDspTime { get; private set; }
 	[SerializeField] private AudioSource _bgmAudioSource;
 	private AudioPool _audioPool;
@@ -93,7 +93,7 @@ public class AudioManager : Singleton<AudioManager>
 
 	public AudioClip GetAudioClipAtString(string clipName)
 	{
-		return audioClips.Find(clip => clip.name == clipName);
+		return _audioClips.Find(clip => clip.name == clipName);
 	}
 	private void Update()
 	{
@@ -102,8 +102,8 @@ public class AudioManager : Singleton<AudioManager>
 
 	public void SetAudioClips(List<AudioClip> clips)
 	{
-		audioClips = clips;
-		foreach (AudioClip item in audioClips)
+		_audioClips = clips;
+		foreach (AudioClip item in _audioClips)
 		{
 			item.LoadAudioData();
 		}
