@@ -12,6 +12,15 @@ public class FireplayPrefab : MonoBehaviour
     private Vector3 _endPos;
     private Vector2 _scale;
 
+    private Vector3[] randColors = { new Vector3(11, 111, 111), new Vector3(111, 11, 111), new Vector3(111, 111, 11) };
+    //private Vector3[] randColors = { new Vector3(1f, 0.2f, 0.2f),    // 빨강
+    //new Vector3(0.2f, 1f, 0.2f),    // 초록
+    //new Vector3(0.2f, 0.2f, 1f),    // 파랑
+    //new Vector3(1f, 1f, 0.2f),      // 노랑
+    //new Vector3(1f, 0.2f, 1f),      // 보라
+    //new Vector3(0.2f, 1f, 1f)
+    //        };// 청록
+
     private void Awake()
     {
         _vfx = GetComponent<VisualEffect>();
@@ -32,6 +41,9 @@ public class FireplayPrefab : MonoBehaviour
     //켜진다는 것은 터진다는 것...
     public void Play()
     {
+        int rand = Random.Range(0, randColors.Length);
+        Vector3 randColor = randColors[rand];
+        _vfx.SetVector3("Color", randColor); 
         _vfx.Play();
         print($"{gameObject.name}의 프리팹 실행 됨");
         StartCoroutine(HandleExplosion());
