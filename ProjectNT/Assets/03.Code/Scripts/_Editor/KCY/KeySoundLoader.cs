@@ -12,6 +12,7 @@ public class KeySoundLoader : MonoBehaviour
 {
     [SerializeField] private GameObject keysound_prefab;
     [SerializeField] private ToggleGroup toggleGroup;
+    [SerializeField] private Transform instancingTrans;
 
     private List<string> fileNameList = new List<string>();
     private Toggle firstElem_toggle;
@@ -65,7 +66,7 @@ public class KeySoundLoader : MonoBehaviour
         AudioClip clip;
         foreach (string file in fileNameList)
         {
-            KeySound keySound = Instantiate(keysound_prefab, transform, false).GetComponent<KeySound>();
+            KeySound keySound = Instantiate(keysound_prefab, instancingTrans, false).GetComponent<KeySound>();
             keySound.Toggle.group = toggleGroup;
 
             filePath = Path.Combine(keySoundPath, file);
@@ -92,5 +93,6 @@ public class KeySoundLoader : MonoBehaviour
                 firstElem_toggle.onValueChanged?.Invoke(true);
             }
         }
+        gameObject.SetActive(false);
     }
 }

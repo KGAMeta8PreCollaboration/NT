@@ -52,7 +52,6 @@ public class EditProject : MonoBehaviour
         get { return difficulty; }
         set { difficulty = value; }
     }
-    private Enums.ModeDiff modeDiff;
     public Sprite thumbnailSprite
     {
         get { return thumbnail.sprite; }
@@ -187,11 +186,10 @@ public class EditProject : MonoBehaviour
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.FileLoadFail);
             return;
         }
+        currProject.projectData.modeDiff = (Enums.ModeDiff)((int)gameMode * 4 + (int)difficulty);
         EditorDataManager.Instance.thumbnail_sprite = currProject.Sprite;
         EditorDataManager.Instance.ProjectData = currProject.projectData;
         StartCoroutine(InstantiateBGM(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile", bgmName + ".wav")));
-        // EditorLoadScene.SceneLoad("SongEditorScene");
-        modeDiff = (Enums.ModeDiff)((int)gameMode * 4 + (int)difficulty);
     }
 
     private void LoadProjectInfos()

@@ -35,8 +35,8 @@ public class AudioSourceManager : MonoBehaviour
     private float _audioDuration;
     public AudioSource AudioSource => _audioSource;
     public float AudioDuration => _audioDuration;
-    public int phase2;
-    public int phase3;
+    public float phase2;
+    public float phase3;
 
     private bool _isPlaying;
     //public Action<bool> callback;
@@ -106,7 +106,7 @@ public class AudioSourceManager : MonoBehaviour
 
     public void InitializeFromSongData(SongData songData)
     {
-        string phase2 = (songData.phase2 == 0)? "0" : songData.phase2.ToString();
+        string phase2 = (songData.phase2 == 0) ? "0" : songData.phase2.ToString();
         string phase3 = (songData.phase3 == 0) ? "0" : songData.phase3.ToString();
         phase2Input.text = phase2;
         phase3Input.text = phase3;
@@ -251,14 +251,14 @@ public class AudioSourceManager : MonoBehaviour
 
     private void SavePhase2(string value)
     {
-        if (int.TryParse(value, out int parsedValue))
+        if (float.TryParse(value, out float parsedValue))
         {
             phase2 = parsedValue;
         }
     }
     private void SavePhase3(string value)
     {
-        if (int.TryParse(value, out int parsedValue))
+        if (float.TryParse(value, out float parsedValue))
         {
             phase3 = parsedValue;
         }
