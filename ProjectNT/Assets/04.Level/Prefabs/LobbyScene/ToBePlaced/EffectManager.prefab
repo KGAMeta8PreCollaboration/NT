@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 435272}
   - component: {fileID: 12335272}
+  - component: {fileID: 7671506927538168578}
   m_Layer: 0
-  m_Name: MoonGlow
+  m_Name: EffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,3 +48,15 @@ LensFlare:
     serializedVersion: 2
     m_Bits: 6
   m_Directional: 0
+--- !u!114 &7671506927538168578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920859c8c299fae44a131799fe5ecbc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

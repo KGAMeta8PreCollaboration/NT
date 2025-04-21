@@ -101,9 +101,6 @@ public class GameManager : Singleton<GameManager>
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
             phaseEnumerator = PhaseTracker();
-            //MultiGameSceneInit();
-            //noteGenerators[0].Init(noteGenerators[0].loadedNotes);
-            //noteGenerators[1].Init(noteGenerators[1].loadedNotes);
         }
     }
 
@@ -142,8 +139,9 @@ public class GameManager : Singleton<GameManager>
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
-        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+        print($"게임매니저 싱글게임시작 뮤직이름 : {musicName}");
+        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath));
+        AudioManager.Instance.SetAudioClips(projectToLoadedData.GetAudioClipsToProject(projectPath));
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         PlayMode = Enums.PlayMode.Single;
         SceneManager.LoadScene(gameSceneName);
@@ -172,8 +170,8 @@ public class GameManager : Singleton<GameManager>
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
     public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
-        projectToLoadedData.GetBgmAudioClip(projectPath, musicName, AudioManager.Instance.SetBackgroundMusic);
-        projectToLoadedData.GetAudioClipsToProject(projectPath, AudioManager.Instance.SetAudioClips);
+        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath));
+        AudioManager.Instance.SetAudioClips(projectToLoadedData.GetAudioClipsToProject(projectPath));
         _player1LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData1);
         _player2LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData2);
     }

@@ -49,7 +49,6 @@ public class MusicChangeAndSelect : MonoBehaviour
     {
         musicImage.sprite = data.musicAlbumArtSprit;
         musicNameText.text = data.musicName;
-        // musicArtistText.text = data.musicArtist;
         tilteSound.PlayGameSound(data.musicClip);
     }
 
