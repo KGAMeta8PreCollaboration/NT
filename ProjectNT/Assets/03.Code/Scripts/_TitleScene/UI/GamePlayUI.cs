@@ -123,6 +123,8 @@ public class GamePlayUI : BaseTitleUI
         else
         {
             (BeatMapData beatMapData, string projectPath, string musicName) data = GetGameStartData();
+            GameManager.Instance.difficulty = GetCurrentDifficulty();
+            GameManager.Instance.musicName = data.musicName;
             GameManager.Instance.SingleGameStart(data.beatMapData, data.projectPath, data.musicName);
         }
     }
@@ -237,7 +239,7 @@ public class GamePlayUI : BaseTitleUI
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
-
+    
     private void SetDifficulty(Toggle select, int difficulty)
     {
         //TestStartGameData.Instance.difficulty = difficulty;

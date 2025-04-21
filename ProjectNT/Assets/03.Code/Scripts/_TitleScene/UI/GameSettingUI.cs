@@ -18,7 +18,7 @@ public class GameSettingUI : BaseTitleUI
     public override void Awake()
     {
         base.Awake();
-    }
+    } 
 
     private void OnEnable()
     {

@@ -62,7 +62,13 @@ public class ResultPanel : Popup
         //musicImage.sprite = //음악 이미지
         //_musicNameText.text = //음악 이름 텍스트
         //_musicArtistText.text = //음악 아티스트 이름 텍스트
-        endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, "앙아앙", "아아");//음악이름, 난이도 추가
+        
+        string musicName = GameManager.Instance.musicName;
+        string difficulty = GameManager.Instance.difficulty.ToString();
+        
+        endPanel.Open();
+        endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, musicName, difficulty);//음악이름, 난이도 추가
+        StartCoroutine(endPanel.NewHighScoreCheck());
     }
 
     public void SetResult(PlayerResultContainer result)
