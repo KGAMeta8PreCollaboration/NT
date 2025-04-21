@@ -14,11 +14,12 @@ public class NoteManager : MonoBehaviour
 
     public string topNoteTag;
     private NoteGenerator _noteGenerator;
-
+    public Enums.PlayMode playMode;
 
     private void Awake()
     {
         _noteGenerator = GetComponent<NoteGenerator>();
+        playMode = Enums.PlayMode.Single;
     }
 
     public void CreateNoteFromData(LoadedNoteData noteData)
@@ -29,10 +30,10 @@ public class NoteManager : MonoBehaviour
 
         noteSpawnData = noteData.noteType switch
         {
-            NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity),
-            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0)),
+            NoteType.Short => new ShortNoteSpawnData(shortNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.identity, playMode),
+            NoteType.Long => new LongNoteSpawnData(longNotePrefab, hitSound, spawnDspTime, noteData.time, noteData.endTime, Quaternion.Euler(0, 0, 0), playMode),
             NoteType.Top => new TopNoteSpawnData(topNotePrefab, hitSound, spawnDspTime, noteData.time, Quaternion.Euler(0, 0, 0),
-            GameManager.Instance.IsMulti == true ? topNoteTag : "TopNote"),
+            GameManager.Instance.IsMulti == true ? topNoteTag : "TopNote", playMode),
             _ => null
         };
 
@@ -42,7 +43,7 @@ public class NoteManager : MonoBehaviour
 
     public void AssignNotesToSchedulers(double startDspTime)
     {
-        print("AssignNotesToSchedulers LoadedNotes size : " + _noteGenerator.loadedNotes.Count);
+        // print("AssignNotesToSchedulers LoadedNotes size : " + _noteGenerator.loadedNotes.Count);
         List<LoadedNoteData>[] railNotes = new List<LoadedNoteData>[12]
         {
             new List<LoadedNoteData>(),
@@ -88,7 +89,6 @@ public class NoteManager : MonoBehaviour
             }
         }
     }
-
 
     // private void OnNoteHit(Note note)
     // {

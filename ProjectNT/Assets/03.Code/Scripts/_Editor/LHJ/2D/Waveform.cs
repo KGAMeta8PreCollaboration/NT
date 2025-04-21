@@ -10,15 +10,12 @@ public class Waveform : MonoBehaviour
     [SerializeField] private Color background = Color.black;
     [SerializeField] private Color waveformColor = Color.yellow;
     //[SerializeField] private GameObject playBarPrefab;
-    [SerializeField] private Camera cam = null;
 
     private AudioSource _audioSource = null;
     public SpriteRenderer _spriteRenderer = null;
     private int sampleSize;
     private float[] samples = null;
     private float[] waveform = null;
-    private float playBarOffsetX;
-    private bool isDragging = false;
 
     public bool isLoaded = false;
 

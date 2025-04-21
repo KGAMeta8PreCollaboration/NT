@@ -26,6 +26,7 @@ public abstract class Note : MonoBehaviour
     protected bool _isTargetReached;
     protected ScoreManager _scoreManager;
 
+    protected Enums.PlayMode playMode;
     public virtual void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos = null)
     {
         isHit = false;
@@ -39,6 +40,8 @@ public abstract class Note : MonoBehaviour
         _direction = (target.position - _initialPosition).normalized;
 
         OnHit += (note) => PostJudgement();
+
+        playMode = noteSpawnData.playMode;
     }
 
     protected abstract void PostJudgement();

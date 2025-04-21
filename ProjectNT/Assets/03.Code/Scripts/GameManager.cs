@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -30,9 +31,11 @@ public class GameManager : Singleton<GameManager>
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
+    public string musicName; 
+    public Difficulty difficulty;
     public float bpm;
-    public float phase2;
-    public float phase3;
+    public float phase2ChangeTime;
+    public float phase3ChangeTime;
 
     private Enums.PlayMode playMode;
     public Enums.PlayMode PlayMode
@@ -60,6 +63,7 @@ public class GameManager : Singleton<GameManager>
         {
             GameSceneInit();
             noteGenerators[0].Init();
+            phaseEnumerator = PhaseTracker();
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
@@ -73,7 +77,7 @@ public class GameManager : Singleton<GameManager>
         if (Instance != this)
             return;
         projectToLoadedData = gameObject.AddComponent<ProjectToLoadedData>();
-    } 
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -106,14 +110,14 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator PhaseTracker()
     {
         // double phase1Time = AudioSettings.dspTime + phase2;
-        double phase2Time = AudioSettings.dspTime + phase3;
+        double phase2Time = AudioSettings.dspTime + phase3ChangeTime;
         double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
 
-        
-        gameSceneMove.mapmovePosTimes[0].travelTime = phase2;
-        gameSceneMove.mapmovePosTimes[1].travelTime = phase3 - phase2;
-        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3;
-        double curr = AudioSettings.dspTime + phase2;
+
+        gameSceneMove.mapmovePosTimes[0].travelTime = phase2ChangeTime;
+        gameSceneMove.mapmovePosTimes[1].travelTime = phase3ChangeTime - phase2ChangeTime;
+        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3ChangeTime;
+        double curr = AudioSettings.dspTime + phase2ChangeTime;
         List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
         {
             (phase2Time, Enums.Phase.Phase2),
@@ -192,7 +196,7 @@ public class GameManager : Singleton<GameManager>
     // TODO: 프로토타입 임시
     public void GameStart()
     {
-        print("게임매니저 게임스타트");
+        // print("게임매니저 게임스타트");
         AudioManager.Instance.StartBGM(delayTime);
         gameSceneMove = FindObjectOfType<GameSceneMove>();
         StartCoroutine(phaseEnumerator);
@@ -207,7 +211,7 @@ public class GameManager : Singleton<GameManager>
 
     public void GameEnd()
     {
-        print("Game End");
+        // print("Game End");
         OnGameEnd?.Invoke();
         OnGameEnd = null;
     }
@@ -224,7 +228,7 @@ public class GameManager : Singleton<GameManager>
         {
             if (CheckGameEnd())
             {
-                print("CheckGameEndCoroutine");
+                // print("CheckGameEndCoroutine");
                 GameEnd();
                 yield break;
             }

@@ -53,7 +53,7 @@ public class PlayerModuleManager : MonoBehaviour
             return module.woofers[wooferIndex];
         }
 
-        print("플레이어 Woofer를 찾을 수 없음!");
+        //print("플레이어 Woofer를 찾을 수 없음!");
         return null;
     }
 
@@ -66,7 +66,7 @@ public class PlayerModuleManager : MonoBehaviour
             if (playerModule.playerKey.ToString().Equals(nickname))
             {
                 module = playerModule;
-                print($"찾은 모듈:{module.name}");
+                //print($"찾은 모듈:{module.name}");
             }
         }
 
@@ -76,13 +76,13 @@ public class PlayerModuleManager : MonoBehaviour
             {
                 if (module.woofers[i] == woofer)
                 {
-                    print($"찾은 우퍼의 인덱스: {i}");
+                    //print($"찾은 우퍼의 인덱스: {i}");
                     return i;
                 }
             }
         }
 
-        Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}");
+        //Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}");
         return -1;
     }
 
@@ -98,7 +98,7 @@ public class PlayerModuleManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"[MultiGameController] TopNote를 찾을 수 없습니다. 인덱스: {index}, 닉네임: {nickname}");
+        //Debug.LogWarning($"[MultiGameController] TopNote를 찾을 수 없습니다. 인덱스: {index}, 닉네임: {nickname}");
         return null;
     }
 
@@ -120,7 +120,7 @@ public class PlayerModuleManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
+        //Debug.LogWarning($"[MultiGameController] TopNote 인덱스를 찾을 수 없습니다. 닉네임: {nickname}");
         return -1;
     }
 
@@ -134,7 +134,7 @@ public class PlayerModuleManager : MonoBehaviour
             }
         }
 
-        Debug.LogError($"플레이어 모듈을 찾을 수 없음: {nickname}");
+        //Debug.LogError($"플레이어 모듈을 찾을 수 없음: {nickname}");
         return null;
     }
 }

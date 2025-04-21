@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
                 _scoreUI.tempHitCount++;
                 //logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
                 _controller.SendHapticImpulse(0.6f, 0.15f);
-                print("우퍼와 상호작용 됨");
+                //print("우퍼와 상호작용 됨");
             }
         }
     }

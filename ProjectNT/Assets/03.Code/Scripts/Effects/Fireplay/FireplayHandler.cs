@@ -5,10 +5,11 @@ using UnityEngine;
 public class FireplayHandler : MonoBehaviour
 {
     [SerializeField] private List<GameObject> fireplayPrefabs;
-    [SerializeField] private float spawnRate = 1f;
+    [SerializeField] private float spawnRate = 10f;
+    [SerializeField] private Vector2 scale = new Vector3(5, 6);
     [SerializeField] private Vector3 startPos;
     [SerializeField] private Vector3 endPos;
-    
+
     private List<FireplayPrefab> fireplayInstances = new List<FireplayPrefab>();
     private FireplayPrefab currentPrefab;
 
@@ -20,7 +21,7 @@ public class FireplayHandler : MonoBehaviour
             //생성 시 비활성화
             prefab.SetActive(false);
             FireplayPrefab vfxInstance = prefab.GetComponent<FireplayPrefab>();
-            vfxInstance.SetDirection(startPos, endPos, spawnRate);
+            vfxInstance.SetDirection(startPos, endPos, scale, spawnRate);
             fireplayInstances.Add(vfxInstance);
         }
     }
@@ -29,11 +30,22 @@ public class FireplayHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            print($"스페이스바 눌림");
             int randomNum = Random.Range(0, fireplayPrefabs.Count);
 
             currentPrefab = fireplayInstances[randomNum];
             currentPrefab.gameObject.SetActive(true);
             currentPrefab.Play();
         }
+    }
+
+    //불꽃놀이 시 이거 쓰면 됨
+    public void PlayFireplay()
+    {
+        int randomNum = Random.Range(0, fireplayPrefabs.Count);
+
+        currentPrefab = fireplayInstances[0];
+        currentPrefab.gameObject.SetActive(true);
+        currentPrefab.Play();
     }
 }

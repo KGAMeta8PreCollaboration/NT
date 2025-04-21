@@ -8,14 +8,14 @@ public class LowNodeState : INodeState
 
     public LowNodeState(NCT nct)
     {
-        _nct=nct;
+        _nct = nct;
     }
 
     public void OnLeftClick(Vector2Int position)
     {
         if (EditorDataManager.Instance.CurKeySoundName == "")
         {
-            Debug.LogWarning("키음 없음");
+            // Debug.LogWarning("키음 없음");
             return;
         }
 

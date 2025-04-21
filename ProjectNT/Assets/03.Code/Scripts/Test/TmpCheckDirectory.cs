@@ -24,7 +24,7 @@ public class TmpCheckDirectory : MonoBehaviour
     {
         string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
-        
+
         Debug.Log("프로젝트 리스트 갯수 : " + projectList.Length);
         if (projectList.Length == 0)
             return;
@@ -44,19 +44,18 @@ public class TmpCheckDirectory : MonoBehaviour
         print("SetProjectPanel 1");
         musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>(true);
         string path = Path.Combine(Application.persistentDataPath, "Projects");
-    
+
         // 모든 곡 데이터 로드
         List<TitleMusicData> allMusicData = projectList.Select(ProjectDataToTitleMusicData).ToList();
-    
+
         // 싱글/멀티 플레이용 데이터 분리
         List<TitleMusicData> singleModeData = new List<TitleMusicData>();
         List<TitleMusicData> multiModeData = new List<TitleMusicData>();
-        
-        
+
         foreach (ProjectData project in projectList)
         {
             TitleMusicData musicData = ProjectDataToTitleMusicData(project);
-            
+
             print("musicData : " + musicData.modeDiff);
             if (musicData == null) continue;
             switch (musicData.modeDiff)
@@ -72,10 +71,9 @@ public class TmpCheckDirectory : MonoBehaviour
                     break;
             }
         }
-        
+
         print("singleModeData.size : " + singleModeData.Count + " multiModeData.size : " + multiModeData.Count);
 
-    
         // 게임 타입에 맞는 데이터만 전달
         foreach (MusicChangeAndSelect selector in musicChangeAndSelects)
         {
@@ -91,10 +89,6 @@ public class TmpCheckDirectory : MonoBehaviour
             }
         }
     }
-
-    private string bgmPath = "bgmSaveFile";
-    private string keySoundPath = "KeySounds";
-    private string beatMapPath = "BeatMapData";
 
     private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
     {
