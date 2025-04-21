@@ -22,6 +22,7 @@ public class GameSettingUI : BaseTitleUI
 
     private void OnEnable()
     {
+        RemoveEventListeners();
         AddEventListeners();
     }
 
