@@ -11,7 +11,9 @@ using UnityEngine.UI;
 public class ResourceIO : MonoBehaviour
 {
     private const string FloatNumericRegex = @"[^0-9.]";
-    [SerializeField] private KeySoundLoader keySoundLoader;
+    [SerializeField] private KeySoundLoader phase1KeysoundLoader;
+    [SerializeField] private KeySoundLoader phase2KeysoundLoader;
+    [SerializeField] private KeySoundLoader phase3KeysoundLoader;
     [SerializeField] private TMP_InputField phase2_inputfield;
     [SerializeField] private TMP_InputField phase3_inputfield;
     [SerializeField] private TextMeshProUGUI songName_tmp;
@@ -22,15 +24,13 @@ public class ResourceIO : MonoBehaviour
 
     private void Awake()
     {
-        keySoundLoader.LoadKeySound();
+        phase1KeysoundLoader.LoadKeySound(EditorDataManager.Instance.ProjectData.phase1KeysoundPath, "Phase1");
+        phase2KeysoundLoader.LoadKeySound(EditorDataManager.Instance.ProjectData.phase2KeysoundPath, "Phase2");
+        phase3KeysoundLoader.LoadKeySound(EditorDataManager.Instance.ProjectData.phase3KeysoundPath, "Phase3");
 
         phase2_inputfield.onValueChanged.AddListener((word) => phase2_inputfield.text = Regex.Replace(word, FloatNumericRegex, ""));
 
         phase3_inputfield.onValueChanged.AddListener((word) => phase3_inputfield.text = Regex.Replace(word, FloatNumericRegex, ""));
-
-        // phase2_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase2 = int.Parse(phase2_inputfield.text));
-
-        // phase3_inputfield.onEndEdit.AddListener((x) => EditorDataManager.Instance.CurBeatMap.songData.phase3 = int.Parse(phase3_inputfield.text));
 
         songName_tmp.text = EditorDataManager.Instance.ProjectData.projectName;
         thumbnail_img.sprite = EditorDataManager.Instance.thumbnail_sprite;

@@ -16,7 +16,9 @@ public struct ProjectData
     public int bpm;
     public int beatNum;
     public string m_Path;
-    public string m_KeysoundPath;
+    public string phase1KeysoundPath;
+    public string phase2KeysoundPath;
+    public string phase3KeysoundPath;
     public byte[] thumbnailData;
     public Enums.GameMode gameMode;
     public Enums.Difficulty difficulty;
@@ -26,16 +28,13 @@ public struct ProjectData
 public class EditorDataManager : Singleton<EditorDataManager>
 {
     private ProjectData currentProjectData;
-    private Enums.ModeDiff currentModeDiff;
-    private Dictionary<Enums.ModeDiff, BeatMapData> beatMapDic =
-    new Dictionary<Enums.ModeDiff, BeatMapData>();
     private BeatMapManager beatMapManager;
     private string savefolderName = "BeatMapData";
     private string curKeySoundName;
     private string bgmDestPath;
     private bool isSaved;
 
-    public BeatMapData beatMapCache = new BeatMapData();
+    public BeatMapData beatMap = new BeatMapData();
     public Sprite thumbnail_sprite;
     public AudioClip bgmClip;
 
@@ -49,30 +48,6 @@ public class EditorDataManager : Singleton<EditorDataManager>
 
     public ProjectData ProjectData
     { get { return currentProjectData; } set { currentProjectData = value; } }
-
-    public Enums.ModeDiff CurModeDiff
-    {
-        get { return currentModeDiff; }
-        set
-        {
-            currentModeDiff = value;
-            // TODO 저장관련 메서드 새로 전달받아야함.
-            if (beatMapManager != null)
-            {
-                // CurBeatMap = beatMapDic[CurModeDiff];
-                beatMapLoadAction?.Invoke(CurBeatMap);
-                phaseDataAction?.Invoke();
-            }
-        }
-    }
-    public BeatMapData CurBeatMap
-    {
-        get { return beatMapDic[CurModeDiff]; }
-        set
-        {
-            beatMapDic[CurModeDiff] = value;
-        }
-    }
 
     public string CurKeySoundName
     { get { return curKeySoundName; } set { curKeySoundName = value; } }
@@ -101,6 +76,8 @@ public class EditorDataManager : Singleton<EditorDataManager>
                 LoadBeatMapData();
                 beatMapManager = FindObjectOfType<BeatMapManager>();
                 beatMapLoadAction += beatMapManager.LoadBeatMapData;
+                beatMapLoadAction?.Invoke(beatMap);
+
             }
         };
 
@@ -151,16 +128,12 @@ public class EditorDataManager : Singleton<EditorDataManager>
         {
             Directory.CreateDirectory(folderPath);
         }
-        // Debug.LogError($"{currentModeDiff}난이도 세이브중");
-        // jsonData = JsonUtility.ToJson(CurBeatMap, true);
-        // filePath = Path.Combine(folderPath, currentModeDiff.ToString());
-        // File.WriteAllText(filePath, jsonData);
     }
 
     public void SaveBeatMap()
     {
         Debug.Log("세이브 진입");
-        // CurBeatMap = beatMapManager.SaveBeatMapData();
+        beatMap = beatMapManager.SaveBeatMapData();
         SaveDataLocal();
     }
 

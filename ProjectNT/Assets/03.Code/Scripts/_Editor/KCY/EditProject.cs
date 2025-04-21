@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using Michsky.UI.Heat;
 using SFB;
 using TMPro;
 using Unity.IO.LowLevel.Unsafe;
@@ -52,7 +53,6 @@ public class EditProject : MonoBehaviour
         set { difficulty = value; }
     }
     private Enums.ModeDiff modeDiff;
-    private string bgmDestPath;
     public Sprite thumbnailSprite
     {
         get { return thumbnail.sprite; }
@@ -71,11 +71,14 @@ public class EditProject : MonoBehaviour
     }
     private void Initialize()
     {
-        // loadHightlight_btn.onClick.AddListener()
-        loadSong_btn.onClick.AddListener(LoadSong);
-        phase1Keysound_btn.onClick.AddListener(() => KeySoundPathSet(phase1Keysound_tmp));
-        phase2Keysound_btn.onClick.AddListener(() => KeySoundPathSet(phase2Keysound_tmp));
-        phase3Keysound_btn.onClick.AddListener(() => KeySoundPathSet(phase3Keysound_tmp));
+        loadHightlight_btn.onClick.AddListener(() => LoadSongData(bgmHighlight_tmp, ref currProject.projectData.highlightPath, "하이라이트 음원을 선택해주세요."));
+        loadSong_btn.onClick.AddListener(() => LoadSongData(bgmName_tmp, ref currProject.projectData.bgmPath, "곡을 선택해주세요."));
+        phase1Keysound_btn.onClick.AddListener(() =>
+        KeySoundPathSet(phase1Keysound_tmp, ref currProject.projectData.phase1KeysoundPath));
+        phase2Keysound_btn.onClick.AddListener(() =>
+        KeySoundPathSet(phase2Keysound_tmp, ref currProject.projectData.phase2KeysoundPath));
+        phase3Keysound_btn.onClick.AddListener(() =>
+        KeySoundPathSet(phase3Keysound_tmp, ref currProject.projectData.phase3KeysoundPath));
         edit_btn.onClick.AddListener(LoadSongEditorScene);
         save_btn.onClick.AddListener(SaveProjectInfos);
         for (int i = 0; i < difficultyTogs.Count; i++)
@@ -122,7 +125,7 @@ public class EditProject : MonoBehaviour
         };
         return action;
     }
-    private void LoadHighlight()
+    private void LoadSongData(TextMeshProUGUI tmp, ref string savePath, string panelText = null)
     {
         var extensions = new[]
         {
@@ -130,9 +133,9 @@ public class EditProject : MonoBehaviour
         };
         try
         {
-            string[] path = StandaloneFileBrowser.OpenFilePanel("하이라이트 음원을 선택해주세요.", "", extensions, false);
-            bgmHighlight_tmp.text = Path.GetFileName(path[0]);
-            currProject.projectData.highlightPath = path[0];
+            string[] path = StandaloneFileBrowser.OpenFilePanel(panelText, "", extensions, false);
+            savePath = path[0];
+            tmp.text = Path.GetFileName(savePath);
         }
         catch (Exception e)
         {
@@ -140,25 +143,7 @@ public class EditProject : MonoBehaviour
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.FileLoadFail);
         }
     }
-    private void LoadSong()
-    {
-        var extensions = new[]
-        {
-            new ExtensionFilter("Sound Files", SoundFileExtensions)
-        };
-        try
-        {
-            string[] path = StandaloneFileBrowser.OpenFilePanel("곡을 선택해주세요.", "", extensions, false);
-            bgmName_tmp.text = path[0];
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning(e.Message);
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.FileLoadFail);
-        }
-    }
-
-    private void KeySoundPathSet(TextMeshProUGUI tmp)
+    private void KeySoundPathSet(TextMeshProUGUI tmp, ref string originPath)
     {
         try
         {
@@ -182,6 +167,7 @@ public class EditProject : MonoBehaviour
             }
             string keysoundPath = Path.GetFullPath(path[0]);
             tmp.text = keysoundPath;
+            originPath = keysoundPath;
         }
         catch (Exception e)
         {
@@ -191,11 +177,20 @@ public class EditProject : MonoBehaviour
     }
     private void LoadSongEditorScene()
     {
-        // EditorDataManager.Instance.thumbnail_sprite = thumbnail_img.sprite;
-        // EditorDataManager.Instance.ProjectData = currentProject.projectData;
-        // EditorDataManager.Instance.SetBgm();
+        if (string.IsNullOrEmpty(currProject.projectData.bgmPath) ||
+            string.IsNullOrEmpty(currProject.projectData.highlightPath) ||
+            string.IsNullOrEmpty(currProject.projectData.phase1KeysoundPath) ||
+            string.IsNullOrEmpty(currProject.projectData.phase2KeysoundPath) ||
+            string.IsNullOrEmpty(currProject.projectData.phase3KeysoundPath))
+        {
+            Debug.LogError("모든 정보가 입력되지 않음");
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.FileLoadFail);
+            return;
+        }
+        EditorDataManager.Instance.thumbnail_sprite = currProject.Sprite;
+        EditorDataManager.Instance.ProjectData = currProject.projectData;
+        StartCoroutine(InstantiateBGM(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile", bgmName + ".wav")));
         // EditorLoadScene.SceneLoad("SongEditorScene");
-        string path = currProject.projectData.m_Path;
         modeDiff = (Enums.ModeDiff)((int)gameMode * 4 + (int)difficulty);
     }
 
@@ -205,46 +200,54 @@ public class EditProject : MonoBehaviour
         artistName_tmp.text = currProject.projectData.artistName;
         bpm_tmp.text = currProject.projectData.bpm.ToString();
         beatNum_tmp.text = currProject.projectData.beatNum.ToString();
-        if (true == File.Exists(currProject.projectData.bgmPath))
-        {
-            bgmName_tmp.text = currProject.projectData.bgmPath;
-        }
-    }
-    private void SaveProjectInfos()
-    {
-        EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
-        SaveBgm();
+        FileExistCheck(currProject.projectData.bgmPath, bgmName_tmp);
+        FileExistCheck(currProject.projectData.highlightPath, bgmHighlight_tmp);
+        phase1Keysound_tmp.text = currProject.projectData.phase1KeysoundPath;
+        phase2Keysound_tmp.text = currProject.projectData.phase2KeysoundPath;
+        phase3Keysound_tmp.text = currProject.projectData.phase3KeysoundPath;
     }
 
-    private void SaveBgm()
+    private void SaveProjectInfos()
     {
-        if (string.IsNullOrEmpty(bgmName_tmp.text))
+        if (Directory.Exists(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile")))
+        {
+            Directory.Delete(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile"), true);
+        }
+        SaveSong(bgmName, currProject.projectData.bgmPath, true);
+        SaveSong(highlightName, currProject.projectData.highlightPath, false);
+        EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
+    }
+
+    private void SaveSong(string fileName, string originPath, bool isMainTheme = false)
+    {
+        if (string.IsNullOrEmpty(originPath))
         {
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneBgm);
             return;
         }
         string bgmSavePath = Path.Combine(currProject.projectData.m_Path, "bgmSaveFile");
-        string fileName = Path.GetFileName(bgmName_tmp.text);
-        string[] extension = fileName.Split('.');
-        bgmDestPath = Path.Combine(bgmSavePath, bgmName + '.' + extension[1]);
+        string originName = Path.GetFileName(originPath);
+        string[] extension = originName.Split('.');
+        string bgmDestPath = Path.Combine(bgmSavePath, fileName + '.' + extension[1]);
         Directory.CreateDirectory(bgmSavePath);
         try
         {
-            File.Copy(bgmName_tmp.text, bgmDestPath);
-            currProject.projectData.bgmPath = bgmDestPath;
+            File.Copy(originPath, bgmDestPath);
         }
         catch (Exception err)
         {
             Debug.LogError(err.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.ThemeAlreadyExist);
         }
-        StartCoroutine(InstantiateBGM());
+        // if (true == isMainTheme)
+        // {
+        //     StartCoroutine(InstantiateBGM(bgmDestPath));
+        // }
     }
 
-    private IEnumerator InstantiateBGM()
+    private IEnumerator InstantiateBGM(string bgmDestPath)
     {
         AudioClip clip;
-
         UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(bgmDestPath, AudioType.WAV);
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
@@ -254,6 +257,20 @@ public class EditProject : MonoBehaviour
         clip = DownloadHandlerAudioClip.GetContent(request);
         clip.name = bgmName;
         EditorDataManager.Instance.bgmClip = clip;
+        print(EditorDataManager.Instance.bgmClip.name);
         yield return null;
+        EditorLoadScene.SceneLoad("SongEditorScene");
+    }
+
+    private void FileExistCheck(string path, TextMeshProUGUI tmp)
+    {
+        if (true == File.Exists(path))
+        {
+            tmp.text = Path.GetFileName(path);
+        }
+        else
+        {
+            tmp.text = "";
+        }
     }
 }

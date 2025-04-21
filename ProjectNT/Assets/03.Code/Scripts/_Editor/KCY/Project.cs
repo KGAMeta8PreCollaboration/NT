@@ -113,9 +113,7 @@ public class Project : MonoBehaviour
         tempBgm = projectData.bgmPath;
         tempBpm = projectData.bpm.ToString();
         tempBeatNum = projectData.beatNum.ToString();
-        tempKeySoundPath = projectData.m_KeysoundPath;
     }
-
 
     public void SetName(string text)
     {
@@ -160,6 +158,5 @@ public class Project : MonoBehaviour
         projectData.thumbnailName = tempThumbnail;
         projectData.thumbnailData = tempThumbnailData;
         sprite = loader.ByteToSprite(projectData.thumbnailData);
-        projectData.m_KeysoundPath = tempKeySoundPath;
     }
 }

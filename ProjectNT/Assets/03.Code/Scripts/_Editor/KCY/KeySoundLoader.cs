@@ -17,19 +17,14 @@ public class KeySoundLoader : MonoBehaviour
     private Toggle firstElem_toggle;
     private string keySoundPath;
 
-    private void Start()
+    public void LoadKeySound(string path, string folderName)
     {
-        StartCoroutine(InstantiateKeySound());
-    }
-    public void LoadKeySound()
-    {
-        keySoundPath = Path.Combine(EditorDataManager.Instance.ProjectData.m_Path, "KeySounds");
+        keySoundPath = Path.Combine(EditorDataManager.Instance.ProjectData.m_Path, "KeySounds", folderName);
         if (Directory.Exists(keySoundPath))
         {
             Directory.Delete(keySoundPath, true);
         }
         Directory.CreateDirectory(keySoundPath);
-        string path = EditorDataManager.Instance.ProjectData.m_KeysoundPath;
         string[] files = null;
         try
         {
@@ -58,6 +53,7 @@ public class KeySoundLoader : MonoBehaviour
             destPath = Path.Combine(keySoundPath, fileName);
             File.Copy(file, destPath);
         }
+        StartCoroutine(InstantiateKeySound());
     }
 
     // 1따봉 드립니다 :)
