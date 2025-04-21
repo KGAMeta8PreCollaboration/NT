@@ -31,6 +31,8 @@ public class GameManager : Singleton<GameManager>
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
+    public string musicName; 
+    public Difficulty difficulty;
     public float bpm;
     public float phase2ChangeTime;
     public float phase3ChangeTime;
