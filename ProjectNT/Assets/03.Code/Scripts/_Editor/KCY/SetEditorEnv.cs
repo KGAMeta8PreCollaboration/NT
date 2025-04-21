@@ -79,7 +79,7 @@ public class SetEditorEnv : MonoBehaviour
         EditorUIManager.Instance.popUp.PopUpOpen(Detail.EditorQuit, quitAction);
 #else
         //어플리케이션 종료
-        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EditorQuit, quitAction);
 #endif
     }
 
