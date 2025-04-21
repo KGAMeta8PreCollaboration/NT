@@ -19,6 +19,7 @@ public class EditorPauseButton : MonoBehaviour
         _pauseButton.onClick.AddListener(OnClickPauseButton);
         _paused = true;
         UpdateImage();
+        _audioSliderHandler.onClickSpace += UpdateImage;
     }
 
     private void OnClickPauseButton()
@@ -26,6 +27,21 @@ public class EditorPauseButton : MonoBehaviour
         _paused = !_paused;
         _audioSliderHandler.OnClickPauseButton(_paused);
         UpdateImage();
+    }
+
+    private void UpdateImage(bool pause)
+    {
+        _paused = pause;
+        if (pause)
+        {
+            pauseImage.gameObject.SetActive(true);
+            resumeImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            pauseImage.gameObject.SetActive(false);
+            resumeImage.gameObject.SetActive(true);
+        }
     }
 
     private void UpdateImage()

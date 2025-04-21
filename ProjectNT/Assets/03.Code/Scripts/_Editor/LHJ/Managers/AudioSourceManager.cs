@@ -35,8 +35,8 @@ public class AudioSourceManager : MonoBehaviour
     private float _audioDuration;
     public AudioSource AudioSource => _audioSource;
     public float AudioDuration => _audioDuration;
-    public int phase2;
-    public int phase3;
+    public float phase2;
+    public float phase3;
 
     private bool _isPlaying;
     //public Action<bool> callback;
@@ -106,10 +106,12 @@ public class AudioSourceManager : MonoBehaviour
 
     public void InitializeFromSongData(SongData songData)
     {
-        string song2Text = (songData.phase2 == 0) ? "0" : songData.phase2.ToString();
-        string song3Text = (songData.phase3 == 0) ? "0" : songData.phase3.ToString();
-        phase2Input.text = song2Text;
-        phase3Input.text = song3Text;
+        string phase2 = (songData.phase2 == 0) ? "0" : songData.phase2.ToString();
+        string phase3 = (songData.phase3 == 0) ? "0" : songData.phase3.ToString();
+        phase2Input.text = phase2;
+        phase3Input.text = phase3;
+        SavePhase2(phase2);
+        SavePhase3(phase3);
     }
 
     private double gridTimeStep;
@@ -248,14 +250,14 @@ public class AudioSourceManager : MonoBehaviour
 
     private void SavePhase2(string value)
     {
-        if (int.TryParse(value, out int parsedValue))
+        if (float.TryParse(value, out float parsedValue))
         {
             phase2 = parsedValue;
         }
     }
     private void SavePhase3(string value)
     {
-        if (int.TryParse(value, out int parsedValue))
+        if (float.TryParse(value, out float parsedValue))
         {
             phase3 = parsedValue;
         }
