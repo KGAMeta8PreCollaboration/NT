@@ -45,16 +45,17 @@ public class SetEditorEnv : MonoBehaviour
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
-        back_btn.onClick.AddListener(Back);
-
+        back_btn.onClick.AddListener(GotoSetPath);
     }
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return null;
         LoadPath();
         path_tmp.text = editorPath.defaultPath;
-        if (editorPath.defaultPath != null) CheckPath();
 
+        if (editorPath.defaultPath != null)
+        {
+            CheckPath();
+        }
     }
     private void OnEnable()
     {
@@ -64,7 +65,7 @@ public class SetEditorEnv : MonoBehaviour
         quitAction += () => Application.Quit();
 #endif
     }
-    private void Back()
+    private void GotoSetPath()
     {
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
@@ -75,7 +76,7 @@ public class SetEditorEnv : MonoBehaviour
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EditorQuit, quitAction);
 #else
         //어플리케이션 종료
         EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
@@ -86,10 +87,11 @@ public class SetEditorEnv : MonoBehaviour
     {
         if (false == Directory.Exists(editorPath.projectPath))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
             return;
         }
         projectPath = editorPath.projectPath;
+        path_placeholder.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(false);
         projectIO.gameObject.SetActive(true);
     }
@@ -114,7 +116,6 @@ public class SetEditorEnv : MonoBehaviour
             {
                 if (true == string.IsNullOrEmpty(dir))
                 {
-                    Debug.LogError("!");
                     continue;
                 }
                 // 최상위 폴더가 선택한 경로에 있을 경우
@@ -162,9 +163,11 @@ public class SetEditorEnv : MonoBehaviour
             editorPath.defaultPath = path[0];
             p = Path.Combine(path[0], editorPath.topLevelDir_Name);
             Directory.CreateDirectory(p);
+
             editorPath.topLevelPath = p;
             p = Path.Combine(p, editorPath.projectDir_Name);
             Directory.CreateDirectory(p);
+
             editorPath.projectPath = p;
             SavePath();
             return;
@@ -172,7 +175,7 @@ public class SetEditorEnv : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log(e.Message);
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
         }
     }
 
@@ -188,6 +191,7 @@ public class SetEditorEnv : MonoBehaviour
         File.WriteAllText(savePath, data);
         path_tmp.text = editorPath.defaultPath;
         path_placeholder.gameObject.SetActive(false);
+        Debug.LogError("SAVE");
     }
     private void LoadPath()
     {
@@ -203,7 +207,7 @@ public class SetEditorEnv : MonoBehaviour
         savePath = Path.Combine(editorPath.defaultPath, editorPath.topLevelDir_Name, editorPath.projectDir_Name);
         if (false == Directory.Exists(savePath))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
             editorPath.defaultPath = null;
             editorPath.topLevelPath = null;
             editorPath.projectPath = null;

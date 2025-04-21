@@ -11,6 +11,7 @@ public struct ProjectData
     public string projectName;
     public string artistName;
     public string thumbnailName;
+    public string highlightPath;
     public string bgmPath;
     public int bpm;
     public int beatNum;
@@ -161,5 +162,13 @@ public class EditorDataManager : Singleton<EditorDataManager>
         Debug.Log("세이브 진입");
         // CurBeatMap = beatMapManager.SaveBeatMapData();
         SaveDataLocal();
+    }
+
+    public void ProjectInfoSave(ProjectData saveData)
+    {
+        string combinePath;
+        combinePath = Path.Combine(saveData.m_Path, "ProjectInfos");
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(combinePath, json);
     }
 }

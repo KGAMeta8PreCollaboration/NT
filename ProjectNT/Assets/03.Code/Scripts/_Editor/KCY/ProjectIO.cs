@@ -26,8 +26,7 @@ public class ProjectIO : MonoBehaviour
         {
             Debug.LogError("파일 경로를 읽어올 수 없습니다.");
         }
-        return_BTN.onClick.AddListener(() => editProject.gameObject.SetActive(false));
-        return_BTN.onClick.AddListener(() => projectLoader.gameObject.SetActive(true));
+        return_BTN.onClick.AddListener(GotoProjectLoader);
     }
 
     private void OnEnable()
@@ -43,6 +42,12 @@ public class ProjectIO : MonoBehaviour
         projectLoader.gameObject.SetActive(false);
         editProject.gameObject.SetActive(true);
 
+    }
+
+    private void GotoProjectLoader()
+    {
+        editProject.gameObject.SetActive(false);
+        projectLoader.gameObject.SetActive(true);
     }
 }
 

@@ -32,6 +32,7 @@ public class ProjectLoader : MonoBehaviour
     [SerializeField] private TMP_InputField projectBpm_inputfield;
     [SerializeField] private TMP_InputField projectBeatNum_inputfield;
     [SerializeField] private TextMeshProUGUI thumbnailName_tmp;
+    [SerializeField] private TextMeshProUGUI refreshTime_tmp;
     [SerializeField] private Button addProejct_btn;
     [SerializeField] private Button refreah_btn;
     [SerializeField] private Button loadThumbnail_btn;
@@ -81,14 +82,13 @@ public class ProjectLoader : MonoBehaviour
     {
         if (projectIO == null) projectIO = GetComponentInParent<ProjectIO>();
         addProejct_btn.onClick.AddListener(AddNewProject);
-        refreah_btn.onClick.AddListener(Refresh);
+        refreah_btn.onClick.AddListener(LoadProjects);
         loadThumbnail_btn.onClick.AddListener(LoadThumbnail);
         select_btn.onClick.AddListener(projectIO.EditProjectOpen);
         save_btn.onClick.AddListener(SaveProject);
 
         SetDefault(false);
         addProejct_btn.interactable = true;
-
     }
 
     private void LoadProjects()
@@ -118,9 +118,15 @@ public class ProjectLoader : MonoBehaviour
             addProejct_btn.onClick?.Invoke();
             currProject.projectData = projectData;
         }
+
         addProejct_btn.interactable = true;
+
         if (addedProjects.Count > 0)
+        {
             select_btn.interactable = true;
+        }
+
+        refreshTime_tmp.text = "Last Refreshed " + DateTime.Now.ToString("HH:mm:ss");
     }
     private void AddNewProject()
     {
@@ -159,27 +165,27 @@ public class ProjectLoader : MonoBehaviour
     {
         if (string.IsNullOrEmpty(projectName_inputfield.text))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEPROJECTNAME);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneProjectName);
             return;
         }
         if (string.IsNullOrEmpty(songArtist_inputfield.text))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEARTIST);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneArtist);
             return;
         }
         if (string.IsNullOrEmpty(projectBpm_inputfield.text))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneBpm);
             return;
         }
         if (string.IsNullOrEmpty(projectBeatNum_inputfield.text))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONEBPM);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneBpm);
             return;
         }
         if (string.IsNullOrEmpty(thumbnailName_tmp.text))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NONETHUMBNAIL);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.NoneThumbnail);
             return;
         }
 
@@ -197,12 +203,12 @@ public class ProjectLoader : MonoBehaviour
                     Directory.Move(currProject.projectData.m_Path, path);
                     currProject.projectData.m_Path = path;
                     currProject.SetProjectData();
-                    DataSave(path);
+                    EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
                     currProject.ProjectName.text = currProject.projectData.projectName;
                 }
                 catch
                 {
-                    EditorUIManager.Instance.popUp.PopUpOpen(Detail.SAVEFOLDEREXIST);
+                    EditorUIManager.Instance.popUp.PopUpOpen(Detail.SaveFolderExist);
                 }
             }   //기존 경로와 같다면
             else if (path == currProject.projectData.m_Path)
@@ -221,26 +227,26 @@ public class ProjectLoader : MonoBehaviour
                 //바뀌기 전 기존 썸네일 및 음악 삭제s
                 FindDifferent(path, thumbTemp, bgmTemp);
                 currProject.SetProjectData();
-                DataSave(path);
+                EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
                 currProject.ProjectName.text = currProject.projectData.projectName;
-                EditorUIManager.Instance.popUp.PopUpOpen(Detail.CHANGEPROJECTINFOCOMPLETE);
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.ChangeProjectInfoComplete);
             }
         }
+        // 기존 저장 경로가 없을 시
         else
         {
             bool check = FindSameProjects();
             if (!check)
             {
-                EditorUIManager.Instance.popUp.PopUpOpen(Detail.SAVEFOLDEREXIST);
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.SaveFolderExist);
                 return;
             }
-            //없으면 하나 만들어
             Directory.CreateDirectory(path);
             currProject.projectData.m_Path = path;
             currProject.SetProjectData();
-            DataSave(path);
+            EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
             currProject.ProjectName.text = currProject.projectData.projectName;
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.MAKEPROJECTCOMPLETE);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.MakeProjectComplete);
 
         }
         addProejct_btn.interactable = true;
@@ -276,7 +282,7 @@ public class ProjectLoader : MonoBehaviour
 
     public void DeleteUIOpen()
     {
-        EditorUIManager.Instance.popUp.PopUpOpen(Detail.DELETEPROJECTCHECK, delAction);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.DeleteProjectCheck, delAction);
     }
 
     private void Delete()
@@ -311,18 +317,13 @@ public class ProjectLoader : MonoBehaviour
         }
     }
 
-    private void Refresh()
-    {
-        LoadProjects();
-    }
-
-    private void DataSave(string path)
-    {
-        string combinePath;
-        combinePath = Path.Combine(path, "ProjectInfos");
-        string json = JsonUtility.ToJson(currProject.projectData, true);
-        File.WriteAllText(combinePath, json);
-    }
+    // private void DataSave(string path)
+    // {
+    //     string combinePath;
+    //     combinePath = Path.Combine(path, "ProjectInfos");
+    //     string json = JsonUtility.ToJson(currProject.projectData, true);
+    //     File.WriteAllText(combinePath, json);
+    // }
 
     public Sprite ByteToSprite(byte[] bytes = null, string filePath = null)
     {
@@ -334,7 +335,7 @@ public class ProjectLoader : MonoBehaviour
             }
             catch
             {
-                EditorUIManager.Instance.popUp.PopUpOpen(Detail.LOADIMGFAIL);
+                EditorUIManager.Instance.popUp.PopUpOpen(Detail.LoadImageFail);
                 return null;
             }
         }

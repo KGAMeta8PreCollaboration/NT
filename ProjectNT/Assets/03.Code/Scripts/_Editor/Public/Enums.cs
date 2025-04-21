@@ -36,26 +36,26 @@ public class Enums
 
     public enum Details
     {
-        SAVEPATHCHOICE,
-        FILESAVEFAIL,
-        NONEPROJECTNAME,
-        NONEARTIST,
-        NONEBPM,
-        NONEBGM,
-        NONBEATNUM,
-        NONETHUMBNAIL,
-        NONEKEYSOUNDFOLDER,
-        SAVEWARNING,
-        FILELOADFAIL,
-        PATHSETERROR,
-        SAVEFOLDEREXIST,
-        THEMEALREADYEXIST,
-        LOADIMGFAIL,
-        MAKEPROJECTCOMPLETE,
-        CHANGEPROJECTINFOCOMPLETE,
-        DELETEPROJECTCHECK,
-        FILEDETECTIONFAIL,
-        EDITORQUIT
+        SavePathChoice,
+        FileSaveFail,
+        NoneProjectName,
+        NoneArtist,
+        NoneBpm,
+        NoneBgm,
+        NoneBeatNum,
+        NoneThumbnail,
+        NoneKeySoundFolder,
+        SaveWarning,
+        FileLoadFail,
+        PathSetError,
+        SaveFolderExist,
+        ThemeAlreadyExist,
+        LoadImageFail,
+        MakeProjectComplete,
+        ChangeProjectInfoComplete,
+        DeleteProjectCheck,
+        FileDetectFail,
+        EditorQuit
     }
 
     public enum PlayMode

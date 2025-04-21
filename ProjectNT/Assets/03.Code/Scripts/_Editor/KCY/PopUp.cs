@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PopUp : MonoBehaviour
 {
-
+    [TextArea]
     [SerializeField] private List<string> detailInfos;
     [SerializeField] private TextMeshProUGUI detail_tmp;
     [SerializeField] private GameObject popupObj;
@@ -32,7 +32,7 @@ public class PopUp : MonoBehaviour
 
         for (int i = 0; i < detailInfos.Count; i++)
         {
-            popUpInfo[Enums.Details.SAVEPATHCHOICE + i] = detailInfos[i];
+            popUpInfo[Enums.Details.SavePathChoice + i] = detailInfos[i];
         }
     }
 
@@ -41,34 +41,34 @@ public class PopUp : MonoBehaviour
         popupObj.SetActive(true);
         switch (details)
         {
-            case Enums.Details.SAVEPATHCHOICE:
-            case Enums.Details.FILESAVEFAIL:
-            case Enums.Details.NONEPROJECTNAME:
-            case Enums.Details.NONEARTIST:
-            case Enums.Details.NONEBPM:
-            case Enums.Details.NONEBGM:
-            case Enums.Details.NONETHUMBNAIL:
-            case Enums.Details.NONEKEYSOUNDFOLDER:
-            case Enums.Details.FILELOADFAIL:
-            case Enums.Details.PATHSETERROR:
-            case Enums.Details.SAVEFOLDEREXIST:
-            case Enums.Details.THEMEALREADYEXIST:
-            case Enums.Details.LOADIMGFAIL:
-            case Enums.Details.MAKEPROJECTCOMPLETE:
-            case Enums.Details.CHANGEPROJECTINFOCOMPLETE:
-            case Enums.Details.FILEDETECTIONFAIL:
-            case Enums.Details.NONBEATNUM:
+            case Enums.Details.SavePathChoice:
+            case Enums.Details.FileSaveFail:
+            case Enums.Details.NoneProjectName:
+            case Enums.Details.NoneArtist:
+            case Enums.Details.NoneBpm:
+            case Enums.Details.NoneBgm:
+            case Enums.Details.NoneThumbnail:
+            case Enums.Details.NoneKeySoundFolder:
+            case Enums.Details.FileLoadFail:
+            case Enums.Details.PathSetError:
+            case Enums.Details.SaveFolderExist:
+            case Enums.Details.ThemeAlreadyExist:
+            case Enums.Details.LoadImageFail:
+            case Enums.Details.MakeProjectComplete:
+            case Enums.Details.ChangeProjectInfoComplete:
+            case Enums.Details.FileDetectFail:
+            case Enums.Details.NoneBeatNum:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 break;
-            case Enums.Details.DELETEPROJECTCHECK:
-            case Enums.Details.EDITORQUIT:
+            case Enums.Details.DeleteProjectCheck:
+            case Enums.Details.EditorQuit:
                 detail_tmp.text = popUpInfo[details];
                 CheckBtnOn();
                 CancleBtnOn();
                 temp = action;
                 break;
-            case Enums.Details.SAVEWARNING:
+            case Enums.Details.SaveWarning:
 
                 break;
             default:
