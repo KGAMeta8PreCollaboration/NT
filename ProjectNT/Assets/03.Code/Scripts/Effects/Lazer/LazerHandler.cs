@@ -17,6 +17,15 @@ public class LazerHandler : MonoBehaviour
     private GameObject _M_R_2;
     private GameObject _M_R_3;
 
+    ParticleSystem[] _S_P_2;
+    ParticleSystem[] _S_P_3;
+
+    ParticleSystem[] _M_L_P_2;
+    ParticleSystem[] _M_L_P_3;
+
+    ParticleSystem[] _M_R_P_2;
+    ParticleSystem[] _M_R_P_3;
+
     private void Awake()
     {
         _S_2 = GameObject.Find("Particle L_S");
@@ -38,20 +47,12 @@ public class LazerHandler : MonoBehaviour
         _M_R_3.SetActive(false);
     }
 
-    ParticleSystem[] _S_P_2;
-    ParticleSystem[] _S_P_3;
-
-    ParticleSystem[] _M_L_P_2;
-    ParticleSystem[] _M_L_P_3;
-
-    ParticleSystem[] _M_R_P_2;
-    ParticleSystem[] _M_R_P_3;
-
     private void Start()
     {
         Init();
     }
 
+    //모드에 따라서 킬게 다름
     private void Init()
     {
         _S_P_2 = _S_2.GetComponentsInChildren<ParticleSystem>(true);
@@ -82,20 +83,83 @@ public class LazerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            for(int i = 0; i < _S_P_2.Length; i++)
-            {
-                _S_P_2[i].Play();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    Play_S_P_2();
+        //}
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    Play_S_P_3();
+        //}
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    Play_M_L_P_2();
+        //}
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    Play_M_L_P_3();
+        //}
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    Play_M_R_P_2();
+        //}
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    Play_M_R_P_3();
+        //}
+    }
 
-        if (Input.GetKeyDown(KeyCode.X))
+    //솔로 페이즈2 파티클 실행
+    public void Play_S_P_2()
+    {
+        for (int i = 0; i < _S_P_2.Length; i++)
         {
-            for (int i = 0; i < _S_P_3.Length; i++)
-            {
-                _S_P_3[i].Play();
-            }
+            _S_P_2[i].Play();
+        }
+    }
+
+    //솔로 페이즈3 파티클 실행
+    public void Play_S_P_3()
+    {
+        for (int i = 0; i < _S_P_3.Length; i++)
+        {
+            _S_P_3[i].Play();
+        }
+    }
+
+    //멀티 왼쪽 페이즈2 파티클 실행
+    public void Play_M_L_P_2()
+    {
+        for (int i = 0; i < _M_L_P_2.Length; i++)
+        { 
+            _M_L_P_2[i].Play();
+        }
+    }
+
+    //멀티 왼쪽 페이즈3 파티클 실행
+    public void Play_M_L_P_3()
+    {
+        for (int i = 0; i < _M_L_P_3.Length; i++)
+        {
+            _M_L_P_3[i].Play();
+        }
+    }
+
+    //멀티 오른쪽 페이즈2 파티클 실행
+    public void Play_M_R_P_2()
+    {
+        for (int i = 0; i < _M_R_P_2.Length; i++)
+        {
+            _M_R_P_2[i].Play();
+        }
+    }
+
+    //멀티 오른쪽 페이즈3 파티클 실행
+    public void Play_M_R_P_3()
+    {
+        for (int i = 0; i < _M_R_P_3.Length; i++)
+        {
+            _M_R_P_3[i].Play();
         }
     }
 }

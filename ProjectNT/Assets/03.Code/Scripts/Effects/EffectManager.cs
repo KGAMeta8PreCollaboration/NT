@@ -23,6 +23,7 @@ public class EffectManager : Singleton<EffectManager>
     private CarEffect carEffect;
     private MeteorHandler meteorHandler;
     private FireplayHandler fireplayHandler;
+    private LazerHandler lazerHandler;
 
     public Action<Note, int, Enums.PlayMode> player1MapEffect;
     // public Action<Note, int> player2MapEffect;
@@ -70,6 +71,7 @@ public class EffectManager : Singleton<EffectManager>
         carEffect = FindObjectOfType<CarEffect>();
         meteorHandler = FindObjectOfType<MeteorHandler>();
         fireplayHandler = FindObjectOfType<FireplayHandler>();
+        lazerHandler = FindObjectOfType<LazerHandler>();
     }
 
     public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
@@ -140,6 +142,19 @@ public class EffectManager : Singleton<EffectManager>
             case Enums.Phase.Phase2:
                 SetActionNull();
                 Phase1End();
+
+                //20콤보
+                p1TwentyComboAct += lazerHandler.Play_S_P_2;
+                p1TwentyComboAct += lazerHandler.Play_M_L_P_2;
+                p2TwentyComboAct += lazerHandler.Play_S_P_2;
+                p2TwentyComboAct += lazerHandler.Play_M_R_P_2;
+
+                //상단 노트 클리어
+                p1TopNoteAct += lazerHandler.Play_S_P_3;
+                p1TopNoteAct += lazerHandler.Play_M_L_P_3;
+                p2TopNoteAct += lazerHandler.Play_S_P_3;
+                p2TopNoteAct += lazerHandler.Play_M_R_P_3;
+
                 break;
 
             // 페이즈 3 구독
@@ -148,8 +163,15 @@ public class EffectManager : Singleton<EffectManager>
                 Phase2End();
                 p1PerfectAct += fireplayHandler.PlayFireplay;
                 p2PerfectAct += fireplayHandler.PlayFireplay;
+
+                //상단 노트 클리어
                 p1TopNoteAct += meteorHandler.PlayMeteor;
                 p2TopNoteAct += meteorHandler.PlayMeteor;
+
+                p1TwentyComboAct += lazerHandler.Play_S_P_3;
+                p1TwentyComboAct += lazerHandler.Play_M_L_P_3;
+                p2TwentyComboAct += lazerHandler.Play_S_P_3;
+                p2TwentyComboAct += lazerHandler.Play_M_R_P_3;
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");
@@ -172,6 +194,18 @@ public class EffectManager : Singleton<EffectManager>
     private void Phase2End()
     {
         carEffect?.MovePhase3Pos();
+
+        //20콤보
+        p1TwentyComboAct -= lazerHandler.Play_S_P_2;
+        p1TwentyComboAct -= lazerHandler.Play_M_L_P_2;
+        p2TwentyComboAct -= lazerHandler.Play_S_P_2;
+        p2TwentyComboAct -= lazerHandler.Play_M_R_P_2;
+
+        //상단 노트 클리어
+        p1TopNoteAct -= lazerHandler.Play_S_P_3;
+        p1TopNoteAct -= lazerHandler.Play_M_L_P_3;
+        p2TopNoteAct -= lazerHandler.Play_S_P_3;
+        p2TopNoteAct -= lazerHandler.Play_M_R_P_3;
     }
 
     private void SetActionNull()
