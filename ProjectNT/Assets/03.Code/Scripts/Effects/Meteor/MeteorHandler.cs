@@ -27,7 +27,7 @@ public class MeteorHandler : MonoBehaviour
         {
             foreach (var meteor in meteors)
             {
-                float randomY = Random.Range(-10f, 10f);
+                float randomY = Random.Range(-5f, 5f);
                 Vector3 randStart = startPos.position + Vector3.up * randomY;
                 Vector3 randEnd = endPos.position + Vector3.up * randomY;
                 meteor.Move(randStart, randEnd, duration);
