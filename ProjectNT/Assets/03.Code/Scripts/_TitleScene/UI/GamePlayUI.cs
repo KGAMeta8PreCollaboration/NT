@@ -38,6 +38,9 @@ public class GamePlayUI : BaseTitleUI
     private Toggle curSelectDifficulty = null;
     private bool isSettingDifficulty = false;
 
+    
+    private TitleSound _titleSound;
+
     public override void Awake()
     {
         base.Awake();
@@ -45,8 +48,11 @@ public class GamePlayUI : BaseTitleUI
 
     private void OnEnable()
     {
+        _titleSound = FindObjectOfType<TitleSound>(true);
         if (musicChangeSelect != null)
         {
+            print("게임플레이 UI OnEnable ");
+            _titleSound.PlayGameSound();
             // musicChangeAndSelect의 gameMusicData를 만들어서줘야할거같은데..
             // TmpCheckDirectory.Instance.musicChangeAndSelect = musicChangeSelect;
             AddEventListeners();
@@ -227,7 +233,7 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
-        //SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
+        SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -235,7 +241,7 @@ public class GamePlayUI : BaseTitleUI
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
-        //SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
+        SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
