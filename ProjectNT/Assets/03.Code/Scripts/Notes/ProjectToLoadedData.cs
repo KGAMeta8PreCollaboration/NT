@@ -7,8 +7,7 @@ using UnityEngine.Networking;
 
 public partial class ProjectToLoadedData : MonoBehaviour
 {
-    //public List<LoadedNoteData> loadedNoteDatas = new List<LoadedNoteData>();
-    public List<AudioClip> audioClips = new List<AudioClip>();
+    private List<AudioClip> _audioClips = new List<AudioClip>();
     public AudioClip bgmAudioClip;
 
     public List<LoadedNoteData> BeatMapDataToLoadedNoteData(BeatMapData beatMapData)
@@ -31,8 +30,8 @@ public partial class ProjectToLoadedData : MonoBehaviour
         }
 
         // TODO : 임시로 여기서 phase설정해주는겁니다.
-        GameManager.Instance.phase2 = beatMapData.songData.phase2;
-        GameManager.Instance.phase3 = beatMapData.songData.phase3;
+        GameManager.Instance.phase2ChangeTime = beatMapData.songData.phase2;
+        GameManager.Instance.phase3ChangeTime = beatMapData.songData.phase3;
         GameManager.Instance.bpm = beatMapData.gridSetting.BPM;
         return loadedNoteDatas;
     }
@@ -67,23 +66,19 @@ public partial class ProjectToLoadedData
 {
     private int _currentLoadClipCount = 0;
 
-    // Projects/{ProjectName}/KeySounds
-    public void GetAudioClipsToProject(string projectPath, Action<List<AudioClip>> returnCallback)
+    public List<AudioClip> GetAudioClipsToProject(string projectPath)
     {
-        // print("프로젝트 겟 오디오클립 1");
+        _audioClips.Clear();
         projectPath = Path.Combine(projectPath, "KeySounds");
         if (!Directory.Exists(projectPath))
-            return;
-        // print("프로젝트 겟 오디오클립 2");
-        string[] strings = Directory.GetFiles(projectPath);
-        List<AudioClip> res = new List<AudioClip>();
-        // print("프로젝트 겟 오디오클립 3");
+            return null;
+        string[] strings = Directory.GetFiles(projectPath, "*", SearchOption.AllDirectories);
         foreach (string item in strings)
         {
             try
             {
                 AudioClip audioClip = WavUtility.WavToAudioClip(File.ReadAllBytes(item), Path.GetFileName(item));
-                AddAudioClip(audioClip);
+                _audioClips.Add(audioClip);
             }
             catch (ArgumentException e)
             {
@@ -91,34 +86,23 @@ public partial class ProjectToLoadedData
                 throw;
             }
         }
-        // print("프로젝트 겟 오디오클립 4");
-
-        returnCallback?.Invoke(audioClips);
-        // print("프로젝트 겟 오디오클립 5");
+        return _audioClips;
     }
-
-    private void AddAudioClip(AudioClip clip) => audioClips.Add(clip);
-
-    public void GetBgmAudioClip(string projectPath, string bgmName, Action<AudioClip> returnCallback)
+    
+    public AudioClip GetBgmAudioClip(string projectPath, string musicName = "MainTheme.wav")
     {
-        // Debug.Log("프로젝트 BGM 로드 1");
-        projectPath = Path.Combine(projectPath, "bgmSaveFile", "MainTheme.wav");
-        // Debug.Log($"bgm 경로 : {projectPath}");
-        if (!File.Exists(projectPath)) return;
-        AudioClip clip = WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
-        // Debug.Log("프로젝트 BGM 로드 2");
-        bgmAudioClip = clip;
-        // Debug.Log("프로젝트 BGM 로드 3");
-        returnCallback?.Invoke(clip);
-        // Debug.Log("프로젝트 BGM 로드 SetBGM 실행함");
-        // StartCoroutine(BGMWebRequest(projectPath, returnCallback));
+        projectPath = Path.Combine(projectPath, "bgmSaveFile", musicName);
+        Debug.Log("ProjectTOLoadedData GetBgmAudioClip : " + projectPath);
+        if (!File.Exists(projectPath)) 
+            return null;
+        return WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));
     }
 
     private IEnumerator CheckAudioClipLoad(Action<List<AudioClip>> callback, int cnt)
     {
         while (_currentLoadClipCount < cnt)
             yield return null;
-        callback?.Invoke(audioClips);
+        callback?.Invoke(_audioClips);
     }
 
     private IEnumerator AudioWebRequest(string path, Action<AudioClip> callback)

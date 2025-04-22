@@ -365,8 +365,8 @@ public class NodeContainer : MonoBehaviour
         _currentBeatMapData.songData = new SongData
         {
             songLength = _audioSourceManager.AudioSource.clip.length,
-            phase2 = EditorDataManager.Instance.CurBeatMap?.songData?.phase2 ?? defaultPhase2,
-            phase3 = EditorDataManager.Instance.CurBeatMap?.songData?.phase3 ?? defaultPhase3,
+            phase2 = EditorDataManager.Instance.beatMap?.songData?.phase2 ?? defaultPhase2,
+            phase3 = EditorDataManager.Instance.beatMap?.songData?.phase3 ?? defaultPhase3,
         };
 
         _currentBeatMapData.gridSetting = new GridSetting

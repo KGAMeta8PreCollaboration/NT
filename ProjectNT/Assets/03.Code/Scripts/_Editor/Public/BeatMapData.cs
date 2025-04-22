@@ -33,8 +33,8 @@ public class UpperNodeData
 public class SongData
 {
     public float songLength;
-    public int phase2;
-    public int phase3;
+    public float phase2;
+    public float phase3;
 }
 
 //그리드의 정보

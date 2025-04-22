@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -122,6 +123,8 @@ public class GamePlayUI : BaseTitleUI
         else
         {
             (BeatMapData beatMapData, string projectPath, string musicName) data = GetGameStartData();
+            GameManager.Instance.difficulty = GetCurrentDifficulty();
+            GameManager.Instance.musicName = data.musicName;
             GameManager.Instance.SingleGameStart(data.beatMapData, data.projectPath, data.musicName);
         }
     }
@@ -236,7 +239,7 @@ public class GamePlayUI : BaseTitleUI
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
-
+    
     private void SetDifficulty(Toggle select, int difficulty)
     {
         //TestStartGameData.Instance.difficulty = difficulty;
@@ -245,7 +248,18 @@ public class GamePlayUI : BaseTitleUI
         normal.isOn = false;
         hard.isOn = false;
         superHade.isOn = false;
+        TextMeshProUGUI easyText = easy.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI normalText = normal.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI hardText = hard.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI superhardText = superHade.GetComponentInChildren<TextMeshProUGUI>();
+        
+        easyText.color = Color.white;
+        normalText.color = Color.white;
+        hardText.color = Color.white;
+        superhardText.color = Color.white;
 
+        select.GetComponentInChildren<TextMeshProUGUI>().color = select.colors.disabledColor;
+        
         select.isOn = true;//선택한 토글만 활성화
         if (curSelectDifficulty != null)
         {

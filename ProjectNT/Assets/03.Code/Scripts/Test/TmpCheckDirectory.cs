@@ -72,8 +72,6 @@ public class TmpCheckDirectory : MonoBehaviour
             }
         }
 
-        print("singleModeData.size : " + singleModeData.Count + " multiModeData.size : " + multiModeData.Count);
-
         // 게임 타입에 맞는 데이터만 전달
         foreach (MusicChangeAndSelect selector in musicChangeAndSelects)
         {
@@ -92,11 +90,13 @@ public class TmpCheckDirectory : MonoBehaviour
 
     private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
     {
-        TitleMusicData data = new TitleMusicData();
-        data.musicName = projectData.projectName;
-        data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
-        data.musicArtist = projectData.artistName;
-        data.projectName = projectData.projectName;
+        TitleMusicData data = ScriptableObject.CreateInstance<TitleMusicData>();
+        data.Init(projectData);
+        // data.musicName = projectData.projectName;
+        // data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
+        // data.musicArtist = projectData.artistName;
+        // data.projectName = projectData.projectName;
+        // data.musicClip = GameManager.Instance.projectToLoadedData.GetBgmAudioClip(projectData.projectName, "BGM_Highlight.wav");
         string path = Path.Combine(Application.persistentDataPath, "Projects", projectData.projectName, "BeatMapData");
         if (!Directory.Exists(path))
         {

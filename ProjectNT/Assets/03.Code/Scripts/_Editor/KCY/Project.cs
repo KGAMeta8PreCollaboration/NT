@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using Unity.InteractiveTutorials;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -47,9 +48,52 @@ public class Project : MonoBehaviour
         loader = GetComponentInParent<ProjectLoader>();
         delete_btn.onClick.AddListener(loader.DeleteUIOpen);
         toggle.group = loader.projects_Group;
+        toggle.onValueChanged.AddListener(ChangeFocus());
+    }
 
-        toggle.onValueChanged.AddListener(ChangeFocus);
-
+    private UnityAction<bool> ChangeFocus()
+    {
+        UnityAction<bool> action = isOn =>
+        {
+            if (false == isOn)
+            {
+                loader.currProject = null;
+                loader.SetProjectTMP = "";
+                loader.SetArtistTMP = "";
+                loader.SetBpm = "";
+                loader.SetBeatNum = "";
+                loader.SetThumbnailTMP = "";
+                loader.SetThumbnail = null;
+                toggle.interactable = true;
+            }
+            if (true == isOn)
+            {
+                loader.currProject = this;
+                if (string.IsNullOrEmpty(projectData.projectName))
+                {
+                    loader.InputFieldReset();
+                    projectName.text = "New Project";
+                    toggle.interactable = false;
+                    loader.EditBtn = false;
+                    return;
+                }
+                else
+                {
+                    loader.InputFieldReset();
+                    projectName.text = projectData.projectName;
+                    loader.SetProjectTMP = projectData.projectName;
+                    loader.SetArtistTMP = projectData.artistName;
+                    loader.SetBpm = projectData.bpm.ToString();
+                    loader.SetBeatNum = projectData.beatNum.ToString();
+                    loader.SetThumbnailTMP = projectData.thumbnailName;
+                    sprite = loader.ByteToSprite(projectData.thumbnailData);
+                    loader.SetThumbnail = sprite;
+                    loader.EditBtn = true;
+                }
+                toggle.interactable = false;
+            }
+        };
+        return action;
     }
 
     private void Start()
@@ -69,99 +113,42 @@ public class Project : MonoBehaviour
         tempBgm = projectData.bgmPath;
         tempBpm = projectData.bpm.ToString();
         tempBeatNum = projectData.beatNum.ToString();
-        tempKeySoundPath = projectData.m_KeysoundPath;
-    }
-
-    private void ChangeFocus(bool isTrue)
-    {
-        if (isTrue == false)
-        {
-            loader.currentProject = null;
-            loader.SetProjectTMP = "";
-            loader.SetArtistTMP = "";
-            loader.SetBpm = "";
-            loader.SetBeatNum = "";
-            loader.SetBgmTMP = "";
-            loader.SetThumbnailTMP = "";
-            loader.SetKeySoundTMP = "";
-            loader.SetThumbnail = null;
-            toggle.interactable = true;
-        }
-        else
-        {
-            loader.currentProject = this;
-            if (string.IsNullOrEmpty(projectData.projectName))
-            {
-                loader.InputFieldReset();
-                projectName.text = "New Project";
-                toggle.interactable = false;
-                loader.EditBtn = false;
-                return;
-            }
-            else
-            {
-                loader.InputFieldReset();
-                projectName.text = projectData.projectName;
-                loader.SetProjectTMP = projectData.projectName;
-                loader.SetArtistTMP = projectData.artistName;
-                loader.SetBpm = projectData.bpm.ToString();
-                loader.SetBeatNum = projectData.beatNum.ToString();
-                loader.SetBgmTMP = projectData.bgmPath;
-                loader.SetThumbnailTMP = projectData.thumbnailName;
-                loader.SetKeySoundTMP = projectData.m_KeysoundPath;
-                sprite = loader.ByteToSprite(projectData.thumbnailData);
-                loader.SetThumbnail = sprite;
-                loader.EditBtn = true;
-            }
-            toggle.interactable = false;
-        }
     }
 
     public void SetName(string text)
     {
-        if (this != loader.currentProject) return;
-        // projectData.projectName = text;
-        // loader.currentProject.projectName.text = text;
+        if (this != loader.currProject) return;
         tempName = text;
     }
 
     public void SetArtist(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempArtist = text;
     }
     public void SetBPM(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         if (string.IsNullOrEmpty(text)) return;
         tempBpm = text;
     }
     public void SetBeatNum(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         if (string.IsNullOrEmpty(text)) return;
         tempBeatNum = text;
     }
     public void SetThumbnail(string text)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempThumbnail = text;
     }
     public void SetThumbnailData(byte[] bytes)
     {
-        if (this != loader.currentProject) return;
+        if (this != loader.currProject) return;
         tempThumbnailData = bytes;
     }
-    public void SetBgm(string text)
-    {
-        if (this != loader.currentProject) return;
-        tempBgm = text;
-    }
-    public void SetKeySoundPath(string text)
-    {
-        if (this != loader.currentProject) return;
-        tempKeySoundPath = text;
-    }
+
     public void SetProjectData()
     {
         projectData.projectName = tempName;
@@ -170,6 +157,6 @@ public class Project : MonoBehaviour
         projectData.beatNum = int.Parse(tempBeatNum);
         projectData.thumbnailName = tempThumbnail;
         projectData.thumbnailData = tempThumbnailData;
-        projectData.m_KeysoundPath = tempKeySoundPath;
+        sprite = loader.ByteToSprite(projectData.thumbnailData);
     }
 }

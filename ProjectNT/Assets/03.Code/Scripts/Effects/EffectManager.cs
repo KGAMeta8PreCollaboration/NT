@@ -163,15 +163,8 @@ public class EffectManager : Singleton<EffectManager>
                 Phase2End();
                 p1PerfectAct += fireplayHandler.PlayFireplay;
                 p2PerfectAct += fireplayHandler.PlayFireplay;
-
-                //상단 노트 클리어
                 p1TopNoteAct += meteorHandler.PlayMeteor;
                 p2TopNoteAct += meteorHandler.PlayMeteor;
-
-                p1TwentyComboAct += lazerHandler.Play_S_P_3;
-                p1TwentyComboAct += lazerHandler.Play_M_L_P_3;
-                p2TwentyComboAct += lazerHandler.Play_S_P_3;
-                p2TwentyComboAct += lazerHandler.Play_M_R_P_3;
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");

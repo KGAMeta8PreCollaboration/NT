@@ -111,24 +111,22 @@ public class BeatMapManager : MonoBehaviour
             }
         }
         data.upperNodes = new List<UpperNodeData>();
-        foreach (var upperNode in _upperNodeHandler._upperNodeDic)
-        {
-            List<string> keySounds = new List<string>(); 
 
-            //인덱스에 맞게 키음 가져오기
-            foreach (int nodeIndex in upperNode.Value)
-            {
-                string keySound = _upperNodeHandler.GetNodeKeySoundByIndex(nodeIndex);
-                keySounds.Add(keySound);
-            }
+        foreach (var gridData in _upperNodeHandler._gridKeySoundDic)
+        {
+            int gridIndex = gridData.Key;
+            var keySoundMap = gridData.Value;
+
+            List<int> nodeIndexes = new List<int>(keySoundMap.Keys);
+            List<string> keySounds = new List<string>(keySoundMap.Values);
 
             UpperNodeData upperNodeData = new UpperNodeData
             {
-                gridIndex = upperNode.Key,
-                nodeIndexs = new List<int>(upperNode.Value),
+                gridIndex = gridIndex,
+                nodeIndexs = nodeIndexes,
                 keySounds = keySounds
             };
-            print($"저장된 상단노드 그리드 인덱스 : {upperNode.Key}, 노드 인덱스 : [{string.Join(", ", upperNode.Value)}]");
+            //print($"저장된 상단노드 그리드 인덱스 : {upperNode.Key}, 노드 인덱스 : [{string.Join(", ", upperNode.Value)}]");
             data.upperNodes.Add(upperNodeData);
         }
 

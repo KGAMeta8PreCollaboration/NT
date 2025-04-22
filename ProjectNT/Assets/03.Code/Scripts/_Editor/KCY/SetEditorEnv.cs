@@ -9,14 +9,13 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using Detail = Enums.Details;
 [Serializable]
-public class PATH
+public class EditorPATH
 {
-    public string Path;
-    public string EditorPath;
-    public string ProjectPath;
-    public string CurrentPath;
-    public string EditorDIR_Name = "Night Traveler_Editor";
-    public string ProjectDIR_Name = "Projects";
+    public string defaultPath;
+    public string topLevelPath;
+    public string projectPath;
+    public string topLevelDir_Name = "Night Traveler_Editor";
+    public string projectDir_Name = "Projects";
 }
 
 public class SetEditorEnv : MonoBehaviour
@@ -24,6 +23,7 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private RectTransform defaultPath;
     [SerializeField] private RectTransform project;
     [SerializeField] private TextMeshProUGUI path_tmp;
+    [SerializeField] private TextMeshProUGUI path_placeholder;
     [SerializeField] private Button openFolderBTN;
     [SerializeField] private Button nextBTN;
     [SerializeField] private ProjectIO projectIO;
@@ -31,7 +31,7 @@ public class SetEditorEnv : MonoBehaviour
     [SerializeField] private Button back_btn;
 
     private string savePath;
-    private PATH PATH = new PATH();
+    private EditorPATH editorPath = new EditorPATH();
     private string projectPath;
 
     private Action quitAction;
@@ -45,16 +45,17 @@ public class SetEditorEnv : MonoBehaviour
         openFolderBTN.onClick.AddListener(OpenExplorer);
         nextBTN.onClick.AddListener(CheckPath);
         exit_BTN.onClick.AddListener(Exit_BTN);
-        back_btn.onClick.AddListener(Back);
-
+        back_btn.onClick.AddListener(GotoSetPath);
     }
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return null;
         LoadPath();
-        path_tmp.text = PATH.Path;
-        if (PATH.Path != null) CheckPath();
+        path_tmp.text = editorPath.defaultPath;
 
+        if (editorPath.defaultPath != null)
+        {
+            CheckPath();
+        }
     }
     private void OnEnable()
     {
@@ -64,11 +65,8 @@ public class SetEditorEnv : MonoBehaviour
         quitAction += () => Application.Quit();
 #endif
     }
-    private void Back()
+    private void GotoSetPath()
     {
-        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
-        if (Directory.Exists(p)) Directory.Delete(p, true);
-        path_tmp.text = "";
         projectIO.gameObject.SetActive(false);
         defaultPath.gameObject.SetActive(true);
     }
@@ -78,118 +76,141 @@ public class SetEditorEnv : MonoBehaviour
         //TODO  세이브
 #if UNITY_EDITOR
         //유니티 플레이 종료
-        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EditorQuit, quitAction);
 #else
         //어플리케이션 종료
-        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EDITORQUIT, quitAction);
+        EditorUIManager.Instance.popUp.PopUpOpen(Detail.EditorQuit, quitAction);
 #endif
     }
 
     private void CheckPath()
     {
-        if (path_tmp.text == "")
+        if (false == Directory.Exists(editorPath.projectPath))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
             return;
         }
-        if (!Directory.Exists(Path.Combine(PATH.Path, PATH.EditorDIR_Name)))
-        {
-            Directory.CreateDirectory(Path.Combine(PATH.Path, PATH.EditorDIR_Name));
-            PATH.EditorPath = Path.Combine(PATH.Path, PATH.EditorDIR_Name);
-            PATH.CurrentPath = PATH.EditorPath;
-            SavePath();
-        }
-        else PATH.EditorPath = Path.Combine(PATH.Path, PATH.EditorDIR_Name);
-        if (!Directory.Exists(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name)))
-        {
-            Directory.CreateDirectory(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name));
-            PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
-            PATH.CurrentPath = PATH.ProjectPath;
-            SavePath();
-        }
-        else PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
-        if (Directory.Exists(PATH.ProjectPath))
-        {
-            projectPath = PATH.ProjectPath;
-            defaultPath.gameObject.SetActive(false);
-            projectIO.gameObject.SetActive(true);
-
-        }
-        else
-        {
-            Debug.LogWarning($"프로젝트 폴더 경로 오류\n{PATH.ProjectPath}");
-        }
-
+        projectPath = editorPath.projectPath;
+        path_placeholder.gameObject.SetActive(false);
+        defaultPath.gameObject.SetActive(false);
+        projectIO.gameObject.SetActive(true);
     }
 
     private void OpenExplorer()
     {
-        string p = Path.Combine(Application.persistentDataPath, "EditorPath");
-        if (Directory.Exists(p)) Directory.Delete(p, true);
+        string p;
+        // 기존에 저장된 경로 폴더 삭제
+        p = Path.Combine(Application.persistentDataPath, "EditorPath");
+        if (true == Directory.Exists(p))
+        {
+            Directory.Delete(p, true);
+        }
+
         var path = StandaloneFileBrowser.OpenFolderPanel("에디터 경로 선택", "", false);
         try
         {
-            //에디터 폴더를 직접 선택한 경우
-            if (Directory.Exists(Path.Combine(path[0], PATH.ProjectDIR_Name)))
+            string[] dirs = Directory.GetDirectories(path[0]);
+
+            // 이미 에디터 폴더가 있는 경우
+            foreach (string dir in dirs)
             {
-                PATH.EditorPath = path[0];
-                //에디터 폴더에 프로젝트 폴더가 존재하는지 확인
-                if (Directory.Exists(Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name)))
+                if (true == string.IsNullOrEmpty(dir))
                 {
-                    //프로젝트 폴더 경로 재설정
-                    PATH.ProjectPath = Path.Combine(PATH.EditorPath, PATH.ProjectDIR_Name);
+                    continue;
                 }
-                PATH.Path = path[0].Replace(PATH.EditorDIR_Name, "");
-                PATH.CurrentPath = PATH.Path;
-                path_tmp.text = PATH.CurrentPath;
-                SavePath();
+                // 최상위 폴더가 선택한 경로에 있을 경우
+                p = Path.Combine(path[0], editorPath.topLevelDir_Name);
+                if (dir == p)
+                {
+                    // 현재 경로를 기본 경로로 설정
+                    editorPath.defaultPath = path[0];
+                    editorPath.topLevelPath = p;
+
+                    // 프로젝트 폴더 생성 및 경로 지정
+                    p = Path.Combine(p, editorPath.projectDir_Name);
+                    if (false == Directory.Exists(p)) { Directory.CreateDirectory(p); }
+                    editorPath.projectPath = p;
+                    SavePath();
+                    return;
+                }
+
+                // 프로젝트 폴더가 선택한 경로에 있을 경우
+                p = Path.Combine(path[0], editorPath.projectDir_Name);
+                if (dir == p)
+                {
+                    // 최상위 폴더의 부모 디렉토리를 가져옴
+                    DirectoryInfo dirInfo = Directory.GetParent(p);
+
+                    // 부모 디렉토리의 이름이 최상위 폴더와 같으면
+                    if (dirInfo.Name == editorPath.topLevelDir_Name)
+                    {
+                        // 기본 폴더경로 설정
+                        editorPath.defaultPath = Directory.GetParent(dirInfo.FullName).FullName;
+                        // 최상위 폴더 경로 설정
+                        editorPath.topLevelPath = path[0];
+
+                        // 프로젝트 폴더 생성 및 경로 지정
+                        p = Path.Combine(path[0], editorPath.projectDir_Name);
+                        if (false == Directory.Exists(p)) { Directory.CreateDirectory(p); }
+                        editorPath.projectPath = p;
+                        SavePath();
+                        return;
+                    }
+                }
             }
-            else
-            {
-                PATH.Path = path[0];
-                PATH.CurrentPath = PATH.Path;
-                path_tmp.text = PATH.CurrentPath;
-                SavePath();
-            }
+
+            // 기존 폴더들이 없는 경우 새로 생성
+            editorPath.defaultPath = path[0];
+            p = Path.Combine(path[0], editorPath.topLevelDir_Name);
+            Directory.CreateDirectory(p);
+
+            editorPath.topLevelPath = p;
+            p = Path.Combine(p, editorPath.projectDir_Name);
+            Directory.CreateDirectory(p);
+
+            editorPath.projectPath = p;
+            SavePath();
+            return;
         }
         catch (Exception e)
         {
             Debug.Log(e.Message);
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
         }
     }
 
     private void SavePath()
     {
-        string data = JsonUtility.ToJson(PATH, true);
+        string data = JsonUtility.ToJson(editorPath, true);
         savePath = Path.Combine(Application.persistentDataPath, "EditorPath");
-        if (!Directory.Exists(savePath))
+        if (false == Directory.Exists(savePath))
         {
             Directory.CreateDirectory(savePath);
         }
         savePath = Path.Combine(savePath, "PathSaveFile");
         File.WriteAllText(savePath, data);
+        path_tmp.text = editorPath.defaultPath;
+        path_placeholder.gameObject.SetActive(false);
+        Debug.LogError("SAVE");
     }
     private void LoadPath()
     {
         savePath = Path.Combine(Application.persistentDataPath, "EditorPath");
-        if (!Directory.Exists(savePath))
+        if (false == Directory.Exists(savePath))
         {
             Directory.CreateDirectory(savePath);
         }
         savePath = Path.Combine(savePath, "PathSaveFile");
-        if (!File.Exists(savePath)) return;
+        if (false == File.Exists(savePath)) { return; }
         string data = File.ReadAllText(savePath);
-        PATH = JsonUtility.FromJson<PATH>(data);
-        savePath = Path.Combine(PATH.CurrentPath, PATH.EditorDIR_Name, PATH.ProjectDIR_Name);
-        if (!Directory.Exists(savePath))
+        editorPath = JsonUtility.FromJson<EditorPATH>(data);
+        savePath = Path.Combine(editorPath.defaultPath, editorPath.topLevelDir_Name, editorPath.projectDir_Name);
+        if (false == Directory.Exists(savePath))
         {
-            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PATHSETERROR);
-            PATH.Path = null;
-            PATH.CurrentPath = null;
-            PATH.EditorPath = null;
-            PATH.ProjectPath = null;
+            EditorUIManager.Instance.popUp.PopUpOpen(Detail.PathSetError);
+            editorPath.defaultPath = null;
+            editorPath.topLevelPath = null;
+            editorPath.projectPath = null;
         }
-
     }
 }

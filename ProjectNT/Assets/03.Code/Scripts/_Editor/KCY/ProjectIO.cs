@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class ProjectIO : MonoBehaviour
 {
     [SerializeField] private SetEditorEnv editorEnv;
+    [SerializeField] private EditProject editProject;
+    [SerializeField] private ProjectLoader projectLoader;
     [SerializeField] private Button return_BTN;
     public TextMeshProUGUI pathVisual_TMP;
     public string ProjectPath
@@ -24,6 +26,7 @@ public class ProjectIO : MonoBehaviour
         {
             Debug.LogError("파일 경로를 읽어올 수 없습니다.");
         }
+        return_BTN.onClick.AddListener(GotoProjectLoader);
     }
 
     private void OnEnable()
@@ -31,4 +34,20 @@ public class ProjectIO : MonoBehaviour
         pathVisual_TMP.text = editorEnv.ProjectPath;
     }
     //TODO 프로젝트의 저장정보를 ProjectLoader에게 보내기
+
+    public void EditProjectOpen()
+    {
+        editProject.currProject = projectLoader.currProject;
+        editProject.thumbnailSprite = projectLoader.currProject.Sprite;
+        projectLoader.gameObject.SetActive(false);
+        editProject.gameObject.SetActive(true);
+
+    }
+
+    private void GotoProjectLoader()
+    {
+        editProject.gameObject.SetActive(false);
+        projectLoader.gameObject.SetActive(true);
+    }
 }
+

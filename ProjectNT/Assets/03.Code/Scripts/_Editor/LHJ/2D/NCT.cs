@@ -25,6 +25,10 @@ public class NCT : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI stateTest;
 
+    [SerializeField] private GameObject upperGridMarkPrefab;
+    private Dictionary<int, Dictionary<bool, GameObject>> _upperGridMarks = new Dictionary<int, Dictionary<bool, GameObject>>();
+    private UpperNodeHandler _upperNodeHandler;
+
     public int RowGridNum;
 
     public double cellHeight = 0;
@@ -66,7 +70,8 @@ public class NCT : MonoBehaviour
     {
         _gridManager = FindObjectOfType<GridManager>();
         _audioSourceManager = FindObjectOfType<AudioSourceManager>();
-        _waveform = FindObjectOfType<Waveform>();   
+        _waveform = FindObjectOfType<Waveform>();
+        _upperNodeHandler = FindObjectOfType<UpperNodeHandler>();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -77,6 +82,9 @@ public class NCT : MonoBehaviour
     private void Start()
     {
         _gridManager.InitBeatMap += CreateNodeContainer;
+
+        //_upperNodeHandler.onUpperNodeAdded += CreateUpperGridMark;
+        //_upperNodeHandler.onUpperNodeRemoved += RemoveUpperGridMark;
         Debug.Log("NCT START");
     }
 
@@ -99,9 +107,7 @@ public class NCT : MonoBehaviour
         currentIndex = GetGridPositionFromMouse();
 
         if (Input.GetMouseButtonDown(0))
-        {
             _currentState.OnLeftClick(currentIndex);
-        }
         if (Input.GetMouseButtonDown(1))
             _currentState.OnRightClick(currentIndex);
         if (Input.GetMouseButtonDown(2))
@@ -171,6 +177,7 @@ public class NCT : MonoBehaviour
             Debug.LogWarning("BPM이 0입니다.");
             return;
         }
+
         print("NCT생성시작");
         isLoaded = false;
         _bpm = bpm;
@@ -603,6 +610,74 @@ public class NCT : MonoBehaviour
             }
         }
         print("=== 노드 정보 출력 끝 ===");
+    }
+
+    public void CreateUpperGridMark(int grid, int index)
+    {
+        bool isLeft = false;
+
+        if (!_upperGridMarks.ContainsKey(grid))
+        {
+            _upperGridMarks[grid] = new Dictionary<bool, GameObject>();
+        }
+
+        if (index >= 0 && index <= 3)
+        {
+            isLeft = true;
+        }
+
+        //이미 있다면 생성 안함
+        if (_upperGridMarks.ContainsKey(grid) && _upperGridMarks[grid].ContainsKey(isLeft))
+        {
+            return;
+        }
+
+        float rowSize = _spriteRenderer.size.y / (heightGrid.Count - 1);
+
+        float xPos = (isLeft == true) ? transform.position.x : transform.position.x + _spriteRenderer.size.x;
+        float yPos = rowSize * grid;
+
+        GameObject upperNodeObj = Instantiate(upperGridMarkPrefab);
+        upperNodeObj.transform.position = new Vector3(xPos, yPos);
+
+        if (isLeft == true)
+        {
+            upperNodeObj.transform.localScale = new Vector3(-upperGridMarkPrefab.transform.localScale.x, upperGridMarkPrefab.transform.localScale.y);
+        }
+
+        _upperGridMarks[grid][isLeft] = upperNodeObj;
+
+    }
+
+    public void RemoveUpperGridMark(int grid, int index)
+    {
+        bool isLeft = false;
+
+        if (index >= 0 && index <= 3)
+        {
+            isLeft = true;
+        }
+
+        //grid에 없다면 리턴
+        if (!_upperGridMarks.ContainsKey(grid))
+        {
+            return;
+        }
+
+
+        // 마커 제거
+        if (_upperGridMarks[grid][isLeft] != null)
+        {
+            Destroy(_upperGridMarks[grid][isLeft]);
+        }
+
+        // Dictionary 정리
+        _upperGridMarks[grid].Remove(isLeft);
+
+        //if (!_upperGridMarks.ContainsKey(grid))
+        //{
+        //    _upperGridMarks[grid] = new Dictionary<bool, GameObject>();
+        //}
     }
 
     public void ClearAllNodes()
