@@ -16,7 +16,7 @@ public class EditorLoadScene : MonoBehaviour
     public static void SceneLoad(string sceneName)
     {
         nextScene = sceneName;
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene("EditorLoadingScene");
     }
     private IEnumerator LoadSceneCorou()
     {
@@ -25,7 +25,7 @@ public class EditorLoadScene : MonoBehaviour
         op.allowSceneActivation = false;
         while (!op.isDone)
         {
-            if (op.progress >= 0.9f && EditorDataManager.Instance.isLoadCompelete)
+            if (op.progress >= 0.9f)
             {
                 op.allowSceneActivation = true;
                 yield break;
