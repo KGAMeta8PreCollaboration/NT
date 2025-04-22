@@ -1,7 +1,5 @@
-using Photon.Pun;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,8 +46,9 @@ public class MusicChangeAndSelect : MonoBehaviour
     private void SetInternalData(TitleMusicData data)
     {
         musicImage.sprite = data.musicAlbumArtSprit;
+        musicArtistText.text = data.musicArtist;
         musicNameText.text = data.musicName;
-        tilteSound.PlayGameSound(data.musicClip);
+        tilteSound.SetMusicClip(data.musicClip);
     }
 
     public void ReplayMusic()
@@ -77,6 +76,8 @@ public class MusicChangeAndSelect : MonoBehaviour
             _ => throw new ArgumentException("Invalid direction")
         };
         SetInternalData(currentMusicNode.Value);
+        tilteSound.PlayGameSound();
+
         action?.Invoke();
         // PrintCurrentMusicInfo();
     }
