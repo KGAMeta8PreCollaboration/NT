@@ -13,15 +13,8 @@ public class Woofer : MonoBehaviour
 
     public bool isHoldingLongNote = false;
 
-    //Test
-    public TextMeshProUGUI logText2;
-    public TmpCreateNotes tmp;
     private void Awake()
     {
-        //Test
-        logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
-        tmp = FindObjectOfType<TmpCreateNotes>();
-
         _audioSource = GetComponent<AudioSource>();
 
         _noteScanner.OnNoteEnter += AddNote;
@@ -66,10 +59,6 @@ public class Woofer : MonoBehaviour
                     ReleaseLongNote();
                 }
                 hapticDelegate?.Invoke(0.6f, 0.15f);
-                //if (AudioSettings.dspTime >= longNote.endTargetDspTime)
-                //{
-                //    ReleaseLongNote();
-                //}
             }
         }
     }
@@ -83,8 +72,6 @@ public class Woofer : MonoBehaviour
                 LongNote longNote = notes[0] as LongNote;
                 longNote.Release();
             }
-            tmp.count++;
-            logText2.text = $"롱노트 Release 횟수: ({tmp.count})";
         }
         isHoldingLongNote = false;
     }
