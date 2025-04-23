@@ -10,7 +10,6 @@ using TMPro;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.iOS;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using Detail = Enums.Details;
