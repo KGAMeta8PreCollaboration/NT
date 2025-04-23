@@ -141,7 +141,7 @@ public class LongNote : Note
         double currentTime = AudioSettings.dspTime;
         if (currentTime >= milestones[currentMilestoneIndex])
         {
-            EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
+            EffectManager.Instance.playerMapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
             // EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
             Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;
