@@ -136,4 +136,10 @@ public class InteractableObject : MonoBehaviour
         PhotonNetwork.ConnectUsingSettings();
 
     }
+
+    private void OnDestroy()
+    {
+        left.action.started -= OnSelectObject;
+        right.action.started -= OnSelectObject;
+    }
 }
