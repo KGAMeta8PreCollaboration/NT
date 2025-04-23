@@ -89,7 +89,7 @@ public partial class ProjectToLoadedData
         return _audioClips;
     }
     
-    public AudioClip GetBgmAudioClip(string projectPath, string musicName = "MainTheme.wav")
+    public AudioClip GetBgmAudioClip(string projectPath, string musicName = "Single_Theme.wav")
     {
         projectPath = Path.Combine(projectPath, "bgmSaveFile", musicName);
         Debug.Log("ProjectTOLoadedData GetBgmAudioClip : " + projectPath);
