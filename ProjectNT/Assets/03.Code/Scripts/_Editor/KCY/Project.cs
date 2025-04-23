@@ -21,10 +21,8 @@ public class Project : MonoBehaviour
     private string tempArtist;
     private string tempThumbnail;
     private byte[] tempThumbnailData;
-    private string tempBgm;
     private string tempBpm;
     private string tempBeatNum;
-    private string tempKeySoundPath;
     public Toggle Toggle
     {
         get { return toggle; }
@@ -110,7 +108,6 @@ public class Project : MonoBehaviour
         tempArtist = projectData.artistName;
         tempThumbnail = projectData.thumbnailName;
         tempThumbnailData = projectData.thumbnailData;
-        tempBgm = projectData.bgmPath;
         tempBpm = projectData.bpm.ToString();
         tempBeatNum = projectData.beatNum.ToString();
     }

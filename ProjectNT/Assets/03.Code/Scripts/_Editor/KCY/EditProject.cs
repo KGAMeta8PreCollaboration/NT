@@ -10,6 +10,7 @@ using TMPro;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.iOS;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using Detail = Enums.Details;
@@ -21,7 +22,8 @@ public class EditProject : MonoBehaviour
     private Dictionary<Toggle, Enums.GameMode> gameModeDic = new Dictionary<Toggle, Enums.GameMode>();
     private Dictionary<Toggle, Enums.Difficulty> diffDic = new Dictionary<Toggle, Enums.Difficulty>();
     [SerializeField] private TextMeshProUGUI bgmHighlight_tmp;
-    [SerializeField] private TextMeshProUGUI bgmName_tmp;
+    [SerializeField] private TextMeshProUGUI singleBgmName_tmp;
+    [SerializeField] private TextMeshProUGUI multiBgmName_tmp;
     [SerializeField] private TextMeshProUGUI projectName_tmp;
     [SerializeField] private TextMeshProUGUI artistName_tmp;
     [SerializeField] private TextMeshProUGUI bpm_tmp;
@@ -30,7 +32,8 @@ public class EditProject : MonoBehaviour
     [SerializeField] private TextMeshProUGUI phase2Keysound_tmp;
     [SerializeField] private TextMeshProUGUI phase3Keysound_tmp;
     [SerializeField] private Button loadHightlight_btn;
-    [SerializeField] private Button loadSong_btn;
+    [SerializeField] private Button loadSingleSong_btn;
+    [SerializeField] private Button loadMultiSong_btn;
     [SerializeField] private Button phase1Keysound_btn;
     [SerializeField] private Button phase2Keysound_btn;
     [SerializeField] private Button phase3Keysound_btn;
@@ -58,8 +61,9 @@ public class EditProject : MonoBehaviour
         set { thumbnail.sprite = value; }
     }
     public Project currProject;
-    public string bgmName = "MainTheme";
-    public string highlightName = "BGM_Highlight";
+    private string singleBgmName = "Single_Theme";
+    private string multiBgmName = "Multi_Theme";
+    private string highlightName = "BGM_Highlight";
     private void Awake()
     {
         Initialize();
@@ -71,7 +75,8 @@ public class EditProject : MonoBehaviour
     private void Initialize()
     {
         loadHightlight_btn.onClick.AddListener(() => LoadSongData(bgmHighlight_tmp, ref currProject.projectData.highlightPath, "하이라이트 음원을 선택해주세요."));
-        loadSong_btn.onClick.AddListener(() => LoadSongData(bgmName_tmp, ref currProject.projectData.bgmPath, "곡을 선택해주세요."));
+        loadSingleSong_btn.onClick.AddListener(() => LoadSongData(singleBgmName_tmp, ref currProject.projectData.singleBgmPath, "곡을 선택해주세요."));
+        loadMultiSong_btn.onClick.AddListener(() => LoadSongData(multiBgmName_tmp, ref currProject.projectData.multiBgmPath, "곡을 선택해주세요."));
         phase1Keysound_btn.onClick.AddListener(() =>
         KeySoundPathSet(phase1Keysound_tmp, ref currProject.projectData.phase1KeysoundPath));
         phase2Keysound_btn.onClick.AddListener(() =>
@@ -176,7 +181,8 @@ public class EditProject : MonoBehaviour
     }
     private void LoadSongEditorScene()
     {
-        if (string.IsNullOrEmpty(currProject.projectData.bgmPath) ||
+        if (string.IsNullOrEmpty(currProject.projectData.singleBgmPath) ||
+            string.IsNullOrEmpty(currProject.projectData.multiBgmPath) ||
             string.IsNullOrEmpty(currProject.projectData.highlightPath) ||
             string.IsNullOrEmpty(currProject.projectData.phase1KeysoundPath) ||
             string.IsNullOrEmpty(currProject.projectData.phase2KeysoundPath) ||
@@ -189,7 +195,19 @@ public class EditProject : MonoBehaviour
         currProject.projectData.modeDiff = (Enums.ModeDiff)((int)gameMode * 4 + (int)difficulty);
         EditorDataManager.Instance.thumbnail_sprite = currProject.Sprite;
         EditorDataManager.Instance.ProjectData = currProject.projectData;
-        StartCoroutine(InstantiateBGM(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile", bgmName + ".wav")));
+        switch (gameMode)
+        {
+            case Enums.GameMode.Solo:
+                StartCoroutine(InstantiateBGM(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile", singleBgmName + ".wav")));
+                break;
+            case Enums.GameMode.Duo1:
+            case Enums.GameMode.Duo2:
+                StartCoroutine(InstantiateBGM(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile", multiBgmName + ".wav")));
+                break;
+            default:
+                Debug.LogError("게임 모드 설정 오류");
+                break;
+        }
     }
 
     private void LoadProjectInfos()
@@ -198,7 +216,8 @@ public class EditProject : MonoBehaviour
         artistName_tmp.text = currProject.projectData.artistName;
         bpm_tmp.text = currProject.projectData.bpm.ToString();
         beatNum_tmp.text = currProject.projectData.beatNum.ToString();
-        FileExistCheck(currProject.projectData.bgmPath, bgmName_tmp);
+        FileExistCheck(currProject.projectData.singleBgmPath, singleBgmName_tmp);
+        FileExistCheck(currProject.projectData.multiBgmPath, multiBgmName_tmp);
         FileExistCheck(currProject.projectData.highlightPath, bgmHighlight_tmp);
         phase1Keysound_tmp.text = currProject.projectData.phase1KeysoundPath;
         phase2Keysound_tmp.text = currProject.projectData.phase2KeysoundPath;
@@ -211,12 +230,13 @@ public class EditProject : MonoBehaviour
         {
             Directory.Delete(Path.Combine(currProject.projectData.m_Path, "bgmSaveFile"), true);
         }
-        SaveSong(bgmName, currProject.projectData.bgmPath, true);
-        SaveSong(highlightName, currProject.projectData.highlightPath, false);
+        SaveSong(singleBgmName, currProject.projectData.singleBgmPath);
+        SaveSong(multiBgmName, currProject.projectData.multiBgmPath);
+        SaveSong(highlightName, currProject.projectData.highlightPath);
         EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
     }
 
-    private void SaveSong(string fileName, string originPath, bool isMainTheme = false)
+    private void SaveSong(string fileName, string originPath)
     {
         if (string.IsNullOrEmpty(originPath))
         {
@@ -237,10 +257,6 @@ public class EditProject : MonoBehaviour
             Debug.LogError(err.Message);
             EditorUIManager.Instance.popUp.PopUpOpen(Detail.ThemeAlreadyExist);
         }
-        // if (true == isMainTheme)
-        // {
-        //     StartCoroutine(InstantiateBGM(bgmDestPath));
-        // }
     }
 
     private IEnumerator InstantiateBGM(string bgmDestPath)
@@ -253,7 +269,7 @@ public class EditProject : MonoBehaviour
             Debug.LogError($"Error loading audio clip : {request.error}");
         }
         clip = DownloadHandlerAudioClip.GetContent(request);
-        clip.name = bgmName;
+        clip.name = Path.GetFileName(bgmDestPath);
         EditorDataManager.Instance.bgmClip = clip;
         print(EditorDataManager.Instance.bgmClip.name);
         yield return null;

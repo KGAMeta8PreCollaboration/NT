@@ -12,7 +12,9 @@ public struct ProjectData
     public string artistName;
     public string thumbnailName;
     public string highlightPath;
-    public string bgmPath;
+    public string singleBgmPath;
+    public string multiBgmPath;
+
     public int bpm;
     public int beatNum;
     public string m_Path;

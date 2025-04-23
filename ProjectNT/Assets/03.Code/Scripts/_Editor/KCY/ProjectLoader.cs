@@ -214,18 +214,22 @@ public class ProjectLoader : MonoBehaviour
             else if (path == currProject.projectData.m_Path)
             {
                 string thumbTemp = null;
-                string bgmTemp = null;
-
-                if (!string.IsNullOrEmpty(currProject.projectData.thumbnailName))
+                string singleBgmTemp = null;
+                string multiBgmTemp = null;
+                if (false == string.IsNullOrEmpty(currProject.projectData.thumbnailName))
                 {
                     thumbTemp = currProject.projectData.thumbnailName;
                 }
-                if (!string.IsNullOrEmpty(currProject.projectData.bgmPath))
+                if (false == string.IsNullOrEmpty(currProject.projectData.singleBgmPath))
                 {
-                    bgmTemp = currProject.projectData.bgmPath;
+                    singleBgmTemp = currProject.projectData.singleBgmPath;
+                }
+                if (false == string.IsNullOrEmpty(currProject.projectData.multiBgmPath))
+                {
+                    multiBgmTemp = currProject.projectData.multiBgmPath;
                 }
                 //바뀌기 전 기존 썸네일 및 음악 삭제s
-                FindDifferent(path, thumbTemp, bgmTemp);
+                FindDifferent(path, thumbTemp, singleBgmTemp, multiBgmTemp);
                 currProject.SetProjectData();
                 EditorDataManager.Instance.ProjectInfoSave(currProject.projectData);
                 currProject.ProjectName.text = currProject.projectData.projectName;
@@ -266,10 +270,11 @@ public class ProjectLoader : MonoBehaviour
         return true;
     }
 
-    private void FindDifferent(string path, string thumb, string bgm)
+    private void FindDifferent(string path, string thumb, string singleBgm, string multiBgm)
     {
         DeleteFileIfDifferent(path, thumb, currProject.projectData.thumbnailName);
-        DeleteFileIfDifferent(path, bgm, currProject.projectData.bgmPath);
+        DeleteFileIfDifferent(path, singleBgm, currProject.projectData.singleBgmPath);
+        DeleteFileIfDifferent(path, multiBgm, currProject.projectData.multiBgmPath);
     }
     private void DeleteFileIfDifferent(string path, string oldFile, string newFile)
     {
