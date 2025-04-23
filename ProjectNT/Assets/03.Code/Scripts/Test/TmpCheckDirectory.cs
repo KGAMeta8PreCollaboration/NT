@@ -1,25 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class TmpCheckDirectory : MonoBehaviour
 {
     public ProjectData[] projectList;
-    public BeatMapData beatMapData;
     [SerializeField] private MusicChangeAndSelect[] musicChangeAndSelects;
 
-    /// <summary>
-    /// 
-    /// </summary>
+
     /// <param name="프로젝트 이름"></param>
-    /// 
     private Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>> beatMapDic
         = new Dictionary<string, Dictionary<Enums.ModeDiff, BeatMapData>>();
-
+    
     private void Start()
     {
         string path = Path.Combine(Application.persistentDataPath, "Projects");
@@ -41,63 +35,31 @@ public class TmpCheckDirectory : MonoBehaviour
 
     public void SetProjectPanel(ProjectData[] projectList)
     {
-        print("SetProjectPanel 1");
         musicChangeAndSelects = FindObjectsOfType<MusicChangeAndSelect>(true);
-        string path = Path.Combine(Application.persistentDataPath, "Projects");
-
-        // 모든 곡 데이터 로드
-
+        MusicChangeAndSelect singleModeSelector = musicChangeAndSelects.ToList().Find(x => x.GetComponent<GamePlayUI>().gameType == UIGameType.Single);
+        MusicChangeAndSelect multiModeSelector = musicChangeAndSelects.ToList().Find(x => x.GetComponent<GamePlayUI>().gameType == UIGameType.Muliti);
         // 싱글/멀티 플레이용 데이터 분리
         List<TitleMusicData> singleModeData = new List<TitleMusicData>();
         List<TitleMusicData> multiModeData = new List<TitleMusicData>();
-
+        
         foreach (ProjectData project in projectList)
         {
-            List<TitleMusicData> musicData = ProjectDataToTitleMusicData(project);
-
+            TitleMusicData musicData = ProjectDataToTitleMusicData(project);
             if (musicData == null) continue;
-            for (int i = 0; i < musicData.Count; i++)
-            {
-                switch (musicData[i].modeDiff)
-                {
-                    case Enums.ModeDiff.SOLO_EASY:
-                    case Enums.ModeDiff.SOLO_HARD:
-                    case Enums.ModeDiff.SOLO_NORMAL:
-                    case Enums.ModeDiff.SOLO_EXTREAM:
-                        singleModeData.Add(musicData[i]);
-                        break;
-                    default:
-                        multiModeData.Add(musicData[i]);
-                        break;
-                }
-            }
+            if ((musicData.modeDiff & Enums.SOLO_DIFF_MODES) != 0)
+                singleModeData.Add(musicData);
+            if ((musicData.modeDiff & Enums.MULTI_DIFF_MODES) != 0)
+                multiModeData.Add(musicData);
         }
-        print("멀티 로드 카운트 : "+multiModeData.Count);
-        // 게임 타입에 맞는 데이터만 전달
-        foreach (MusicChangeAndSelect selector in musicChangeAndSelects)
-        {
-            if (selector.GetComponent<GamePlayUI>().gameType == UIGameType.Single)
-            {
-                if (singleModeData.Count != 0)
-                    selector.Init(singleModeData);
-            }
-            else
-            {
-                if (multiModeData.Count != 0)
-                    selector.Init(multiModeData);
-            }
-        }
+        singleModeSelector.Init(singleModeData);
+        multiModeSelector.Init(multiModeData);
     }
 
-    private List<TitleMusicData> ProjectDataToTitleMusicData(ProjectData projectData)
+    private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
     {
-        List<TitleMusicData> musicDataList = new List<TitleMusicData>();
+        TitleMusicData musicDataList = ScriptableObject.CreateInstance<TitleMusicData>();
+        musicDataList.Init(projectData);
 
-        // data.musicName = projectData.projectName;
-        // data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
-        // data.musicArtist = projectData.artistName;
-        // data.projectName = projectData.projectName;
-        // data.musicClip = GameManager.Instance.projectToLoadedData.GetBgmAudioClip(projectData.projectName, "BGM_Highlight.wav");
         string path = Path.Combine(Application.persistentDataPath, "Projects", projectData.projectName, "BeatMapData");
         if (!Directory.Exists(path))
         {
@@ -108,12 +70,12 @@ public class TmpCheckDirectory : MonoBehaviour
         foreach (string file in files)
         {
             Enums.ModeDiff modeDiff = (Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), Path.GetFileName(file));
-            if (modeDiff != Enums.ModeDiff.DUO1_EASY && modeDiff != Enums.ModeDiff.SOLO_EASY)
-                continue;
-            TitleMusicData data = ScriptableObject.CreateInstance<TitleMusicData>();
-            data.Init(projectData);
-            data.modeDiff = modeDiff;
-            musicDataList.Add(data);
+            // if (modeDiff != Enums.ModeDiff.DUO1_EASY && modeDiff != Enums.ModeDiff.SOLO_EASY)
+            //     continue;
+            // if (musicDataList.modeDiffs.Contains(modeDiff))
+            //     continue;
+            // musicDataList.modeDiffs.Add(modeDiff);
+            musicDataList.modeDiff |= modeDiff;
         }
         return musicDataList;
     }

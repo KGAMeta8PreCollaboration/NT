@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,32 @@ using UnityEngine;
 public class Enums
 {
     public const int MODEDIFF_COUNT = 12;
+    [Flags]
     public enum ModeDiff
     {
-        SOLO_EASY,
-        SOLO_NORMAL,
-        SOLO_HARD,
-        SOLO_EXTREAM,
-        DUO1_EASY,
-        DUO1_NORMAL,
-        DUO1_HARD,
-        DUO1_EXTREAM,
-        DUO2_EASY,
-        DUO2_NORMAL,
-        DUO2_HARD,
-        DUO2_EXTREAM
+        None = 0,
+        SOLO_EASY = 1,
+        SOLO_NORMAL = 2,
+        SOLO_HARD = 4,
+        SOLO_EXTREAM = 8,
+        DUO1_EASY = 16,
+        DUO1_NORMAL = 32,
+        DUO1_HARD = 64,
+        DUO1_EXTREAM = 128,
+        DUO2_EASY = 256,
+        DUO2_NORMAL = 512,
+        DUO2_HARD = 1024,
+        DUO2_EXTREAM = 2048,
     }
+    public static ModeDiff SOLO_DIFF_MODES = Enums.ModeDiff.SOLO_EASY | 
+                                    Enums.ModeDiff.SOLO_NORMAL | 
+                                    Enums.ModeDiff.SOLO_HARD | 
+                                    Enums.ModeDiff.SOLO_EXTREAM;
+    public static ModeDiff MULTI_DIFF_MODES = Enums.ModeDiff.DUO1_EASY | Enums.ModeDiff.DUO1_NORMAL | 
+                                    Enums.ModeDiff.DUO1_HARD | Enums.ModeDiff.DUO1_EXTREAM |
+                                    Enums.ModeDiff.DUO2_EASY | Enums.ModeDiff.DUO2_NORMAL |
+                                    Enums.ModeDiff.DUO2_HARD | Enums.ModeDiff.DUO2_EXTREAM;
+
     public enum GameMode
     {
         Solo,

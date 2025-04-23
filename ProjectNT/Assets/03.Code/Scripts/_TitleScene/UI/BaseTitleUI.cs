@@ -15,7 +15,7 @@ public class BaseTitleUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         titleManager = FindObjectOfType<TitleManager>();
     }

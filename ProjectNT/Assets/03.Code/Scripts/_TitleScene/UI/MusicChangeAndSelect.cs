@@ -8,6 +8,8 @@ public class MusicChangeAndSelect : MonoBehaviour
 {
     [SerializeField]
     private TitleSound tilteSound;
+    [Header("인스펙터 할당")]
+    public GamePlayUI parentGamePlayUI;
 
     public Image musicImage;
     public TextMeshProUGUI musicNameText;
@@ -26,6 +28,7 @@ public class MusicChangeAndSelect : MonoBehaviour
         currentMusicNode = musicList.First;
         SetInternalData(currentMusicNode.Value);
     }
+    
 
     private void OnEnable()
     {
@@ -45,10 +48,40 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        if (musicImage) musicImage.sprite = data.musicAlbumArtSprit; 
+        if (musicImage) musicImage.sprite = data.musicAlbumArtSprite; 
         if (musicArtistText) musicArtistText.text = data.musicArtist;
         if (musicNameText) musicNameText.text = data.musicName;
         if (tilteSound) tilteSound.SetMusicClip(data.musicClip);
+        
+        Debug.Log($"{gameObject.name} : SetInternalData");
+        Difficulty difficulty = Difficulty.None;
+        if (parentGamePlayUI.gameType == UIGameType.Single)
+        {
+            if ((data.modeDiff & Enums.ModeDiff.SOLO_EASY) != 0)
+                difficulty |= Difficulty.Easy;
+            if ((data.modeDiff & Enums.ModeDiff.SOLO_NORMAL) != 0)
+                difficulty |= Difficulty.Normal;
+            if ((data.modeDiff & Enums.ModeDiff.SOLO_HARD) != 0)
+                difficulty |= Difficulty.Hard;
+            if ((data.modeDiff & Enums.ModeDiff.SOLO_EXTREAM) != 0)
+                difficulty |= Difficulty.SuperHard;
+        }
+        else
+        {
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_EASY) != 0 && 
+                (data.modeDiff & Enums.ModeDiff.DUO2_EASY) != 0)
+                difficulty |= Difficulty.Easy;
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_NORMAL) != 0 && 
+                (data.modeDiff & Enums.ModeDiff.DUO2_NORMAL) != 0)
+                difficulty |= Difficulty.Normal;
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_HARD) != 0 && 
+                (data.modeDiff & Enums.ModeDiff.DUO2_HARD) != 0)
+                difficulty |= Difficulty.Hard;
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_EXTREAM) != 0 && 
+                (data.modeDiff & Enums.ModeDiff.DUO2_EXTREAM) != 0)
+                difficulty |= Difficulty.SuperHard;
+        }
+        parentGamePlayUI.SetToggleInteractable(difficulty);
     }
 
     public void ReplayMusic()
