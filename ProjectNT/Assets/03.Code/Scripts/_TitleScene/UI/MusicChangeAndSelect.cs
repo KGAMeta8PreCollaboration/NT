@@ -45,24 +45,16 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        musicImage.sprite = data.musicAlbumArtSprit;
-        musicArtistText.text = data.musicArtist;
-        musicNameText.text = data.musicName;
-        tilteSound.SetMusicClip(data.musicClip);
+        if (musicImage) musicImage.sprite = data.musicAlbumArtSprit; 
+        if (musicArtistText) musicArtistText.text = data.musicArtist;
+        if (musicNameText) musicNameText.text = data.musicName;
+        if (tilteSound) tilteSound.SetMusicClip(data.musicClip);
     }
 
     public void ReplayMusic()
     {
         // Debug.Log("Music Replay 노래 처음부터 시작");
         tilteSound.PlayGameSound(currentMusicNode.Value.musicClip);
-    }
-
-    private void PrintCurrentMusicInfo()
-    {
-        print(currentMusicNode.Value.musicName);
-        print(currentMusicNode.Value.musicArtist);
-        print(currentMusicNode.Value.musicClip);
-
     }
 
     public void ChangeMusic(string direction, Action action = null)

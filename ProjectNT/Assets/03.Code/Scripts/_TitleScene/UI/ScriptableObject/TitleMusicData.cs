@@ -29,4 +29,9 @@ public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
         projectName = projectData.projectName;
         modeDiff = projectData.modeDiff;
     }
+    
+    public void PrintInfo()
+    {
+        Debug.Log($"Music Name: {musicName}, Artist: {musicArtist}, Project Name: {projectName}, Mode: {modeDiff}, Clip Name: {musicClip?.name}");
+    }
 }

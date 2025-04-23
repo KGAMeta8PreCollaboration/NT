@@ -46,7 +46,6 @@ public class TmpCheckDirectory : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Projects");
 
         // 모든 곡 데이터 로드
-        List<TitleMusicData> allMusicData = projectList.Select(ProjectDataToTitleMusicData).ToList();
 
         // 싱글/멀티 플레이용 데이터 분리
         List<TitleMusicData> singleModeData = new List<TitleMusicData>();
@@ -54,24 +53,26 @@ public class TmpCheckDirectory : MonoBehaviour
 
         foreach (ProjectData project in projectList)
         {
-            TitleMusicData musicData = ProjectDataToTitleMusicData(project);
+            List<TitleMusicData> musicData = ProjectDataToTitleMusicData(project);
 
-            print("musicData : " + musicData.modeDiff);
             if (musicData == null) continue;
-            switch (musicData.modeDiff)
+            for (int i = 0; i < musicData.Count; i++)
             {
-                case Enums.ModeDiff.SOLO_EASY:
-                case Enums.ModeDiff.SOLO_HARD:
-                case Enums.ModeDiff.SOLO_NORMAL:
-                case Enums.ModeDiff.SOLO_EXTREAM:
-                    singleModeData.Add(musicData);
-                    break;
-                default:
-                    multiModeData.Add(musicData);
-                    break;
+                switch (musicData[i].modeDiff)
+                {
+                    case Enums.ModeDiff.SOLO_EASY:
+                    case Enums.ModeDiff.SOLO_HARD:
+                    case Enums.ModeDiff.SOLO_NORMAL:
+                    case Enums.ModeDiff.SOLO_EXTREAM:
+                        singleModeData.Add(musicData[i]);
+                        break;
+                    default:
+                        multiModeData.Add(musicData[i]);
+                        break;
+                }
             }
         }
-
+        print("멀티 로드 카운트 : "+multiModeData.Count);
         // 게임 타입에 맞는 데이터만 전달
         foreach (MusicChangeAndSelect selector in musicChangeAndSelects)
         {
@@ -88,10 +89,10 @@ public class TmpCheckDirectory : MonoBehaviour
         }
     }
 
-    private TitleMusicData ProjectDataToTitleMusicData(ProjectData projectData)
+    private List<TitleMusicData> ProjectDataToTitleMusicData(ProjectData projectData)
     {
-        TitleMusicData data = ScriptableObject.CreateInstance<TitleMusicData>();
-        data.Init(projectData);
+        List<TitleMusicData> musicDataList = new List<TitleMusicData>();
+
         // data.musicName = projectData.projectName;
         // data.musicAlbumArtSprit = ByteToSprite(projectData.thumbnailData);
         // data.musicArtist = projectData.artistName;
@@ -107,9 +108,14 @@ public class TmpCheckDirectory : MonoBehaviour
         foreach (string file in files)
         {
             Enums.ModeDiff modeDiff = (Enums.ModeDiff)Enum.Parse(typeof(Enums.ModeDiff), Path.GetFileName(file));
+            if (modeDiff != Enums.ModeDiff.DUO1_EASY && modeDiff != Enums.ModeDiff.SOLO_EASY)
+                continue;
+            TitleMusicData data = ScriptableObject.CreateInstance<TitleMusicData>();
+            data.Init(projectData);
             data.modeDiff = modeDiff;
+            musicDataList.Add(data);
         }
-        return data;
+        return musicDataList;
     }
 
     private ProjectData[] GetLobbySongData(string path)
