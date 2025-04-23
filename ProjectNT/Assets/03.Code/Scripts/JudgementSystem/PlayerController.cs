@@ -21,10 +21,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 prevPos = new Vector3();
 
     private WooferNetworkSync _wooferNetworkSync;
-    //test
-    public TextMeshProUGUI logText;
-    public TextMeshProUGUI logText2;
-    private ScoreUI _scoreUI;
+
     private HapticDelegate hapticDelegate;
 
     private Coroutine _collisionStayCoroutine = null;
@@ -79,12 +76,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        //=============test//=============
-        logText = GameObject.Find("LogText")?.GetComponent<TextMeshProUGUI>();
-        //logText2 = GameObject.Find("LogText2")?.GetComponent<TextMeshProUGUI>();
-        _scoreUI = FindObjectOfType<ScoreUI>();
-        //=============test=============
-
         prevPos = transform.position;
 
         if (GameManager.Instance.IsMulti) _wooferNetworkSync = FindObjectOfType<WooferNetworkSync>();
@@ -130,7 +121,6 @@ public class PlayerController : MonoBehaviour
                 if (!GameManager.Instance.IsMulti) woofer.Hit();
                 else _wooferNetworkSync.SendHit(woofer, PhotonNetwork.LocalPlayer.NickName);
                 if (_collisionStayCoroutine == null) _collisionStayCoroutine = StartCoroutine(OnCollisionStayCoroutine(woofer));
-                _scoreUI.tempHitCount++;
                 //logText.text = "Hit Count: " + _scoreUI.tempHitCount + "\n 우퍼 번호: " + woofer.name;
                 _controller.SendHapticImpulse(0.6f, 0.15f);
                 //print("우퍼와 상호작용 됨");
@@ -142,7 +132,6 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            logText.text = "우퍼에 닿는 중";
             if (!GameManager.Instance.IsMulti) woofer.Hold(hapticDelegate);
             else _wooferNetworkSync.SendHold(woofer, PhotonNetwork.LocalPlayer.NickName);
             yield return null;
@@ -153,7 +142,6 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Woofer>(out Woofer woofer))
         {
-            logText.text = "우퍼에서 뗏음";
             if (!GameManager.Instance.IsMulti) woofer.ReleaseLongNote();
             else _wooferNetworkSync.SendRelease(woofer, PhotonNetwork.LocalPlayer.NickName);
             if (_collisionStayCoroutine != null)
