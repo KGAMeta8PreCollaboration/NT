@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3933172679708003553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3933172679708003566}
+  - component: {fileID: 3933172681296910760}
+  m_Layer: 0
+  m_Name: Window_Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3933172679708003566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933172679708003553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.91343, y: 76.42973, z: -22.439873}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3933172681296910760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933172679708003553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe1d660c99715a45bfc88b3ca95f61a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left:
+  - {fileID: 2100000, guid: e89748e211f08354aa9170ecfcaeabf5, type: 2}
+  - {fileID: 2100000, guid: afbf2bacf5c575949a6b13642fb8386e, type: 2}
+  - {fileID: 2100000, guid: aa704bdb4ff4d4640a1e75254856a759, type: 2}
+  - {fileID: 2100000, guid: 0710f29d92248c24ba0922426b401afb, type: 2}
+  - {fileID: 2100000, guid: d2871f17d40bab545a53b909bc4b15a8, type: 2}
+  - {fileID: 2100000, guid: 724e0d0ef731d414b80abd0ceac1d924, type: 2}
+  - {fileID: 2100000, guid: a1f3749499aa80e4bad4a8888647e7e0, type: 2}
+  - {fileID: 2100000, guid: f9010e815fdd1044b97e1a39a42c9925, type: 2}
+  - {fileID: 2100000, guid: 24642ef6bb794a840bed23492c3d5dac, type: 2}
+  - {fileID: 2100000, guid: 44412adbd592b034ba19aee82e681db4, type: 2}
+  - {fileID: 2100000, guid: aa28440449e406140aca15c0e1dacf84, type: 2}
+  - {fileID: 2100000, guid: 1b2c0d65a711ca74cabc9a567067d679, type: 2}
+  - {fileID: 2100000, guid: d87860123f5e798488730a06ef76ab78, type: 2}
+  - {fileID: 2100000, guid: ef5fc8634ff01fd4b9074caad6d0a605, type: 2}
+  - {fileID: 2100000, guid: aaf87bb4817a6164f9ecff2f9b4a7501, type: 2}
+  - {fileID: 2100000, guid: a36a63a576c6a6a4284087a4b7f18db8, type: 2}
+  - {fileID: 2100000, guid: 8faec48e74490bd498fbb9320427a0c1, type: 2}
+  - {fileID: 2100000, guid: 765cc02980c807848929bd563a5322b9, type: 2}
+  right:
+  - {fileID: 2100000, guid: 62f72b594d083e84a856b8235d48ae81, type: 2}
+  - {fileID: 2100000, guid: 97fa8a21293ef6444a9e621a51274d36, type: 2}
+  - {fileID: 2100000, guid: 767fabe4288fb7b45b4c8a2154360ae6, type: 2}
+  - {fileID: 2100000, guid: 33ba14fbf278f3b46b99af6581f97b77, type: 2}
+  - {fileID: 2100000, guid: 5b9683de9c74cf944808e943ef09e3b1, type: 2}
+  - {fileID: 2100000, guid: c99be14e5c9383449a686377c72be5cb, type: 2}
+  - {fileID: 2100000, guid: bea95678ab850f248a4558af2b1db476, type: 2}
+  - {fileID: 2100000, guid: 02c4e6662f3a2c942a14b3863226cf3b, type: 2}
+  - {fileID: 2100000, guid: 2928469f3e0c6bc4db0eade351b7f732, type: 2}
+  - {fileID: 2100000, guid: 0898d61a7fe9cd94c8c36bca5d1efd9a, type: 2}
+  - {fileID: 2100000, guid: ff5ff387fb832e746843d7d6b9266a47, type: 2}
+  - {fileID: 2100000, guid: f64f3aaa6484ae040a90ee619e3391b7, type: 2}
+  - {fileID: 2100000, guid: a3850c715a5e94c4e956346a67c31c66, type: 2}
+  - {fileID: 2100000, guid: 657da9bca9b67964f802aa52a2dcbb59, type: 2}
+  - {fileID: 2100000, guid: 34afe2bcad236bc43ad28e6c788b4d02, type: 2}
+  - {fileID: 2100000, guid: 9456cbb1c94f915439c46f33203755e7, type: 2}
+  - {fileID: 2100000, guid: 579e0c1932c3b2442a06f8600818f8c4, type: 2}
+  - {fileID: 2100000, guid: a6e6fb3fa6d49ee4d9ce96d8e43b7e3d, type: 2}
+  targetEmission:
+  - 0.001
+  - 205
+  - 0.003
+  - 500
+  - 0.002
+  - 0.004
+  - 0.0019
+  - 0.0004
+  - 0.0019
+  - 17.9
+  - 0.002
+  - 0.002
+  - 0.003
+  - 1
+  - 400
+  - 0.003
+  - 200
+  - 0.008
+  targetDuration: 1
+  defaultEmission:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  defaultDuration: 0.15
