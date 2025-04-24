@@ -53,7 +53,6 @@ public class MusicChangeAndSelect : MonoBehaviour
         if (musicNameText) musicNameText.text = data.musicName;
         if (tilteSound) tilteSound.SetMusicClip(data.musicClip);
         
-        Debug.Log($"{gameObject.name} : SetInternalData");
         Difficulty difficulty = Difficulty.None;
         if (parentGamePlayUI.gameType == UIGameType.Single)
         {
