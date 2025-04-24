@@ -18,15 +18,15 @@ public class EffectManager : Singleton<EffectManager>
     private Action p2TwentyComboAct;
     private Action p1TopNoteAct;
     private Action p2TopNoteAct;
-    private LightEffect lightEffect;
-    private NeonEffect neonEffect;
-    private CarEffect carEffect;
+    private StreetLampHandler lightHandler;
+    private NeonHandler neonHandler;
+    private CarHandler carHandler;
     private MeteorHandler meteorHandler;
     private FireplayHandler fireplayHandler;
     private LazerHandler lazerHandler;
+    private WindowHandler windowHandler;
 
-    public Action<Note, int, Enums.PlayMode> player1MapEffect;
-    // public Action<Note, int> player2MapEffect;
+    public Action<Note, int, Enums.PlayMode> playerMapEffect;
 
     protected override void Awake()
     {
@@ -49,29 +49,32 @@ public class EffectManager : Singleton<EffectManager>
     // 로비씬 전환시 명시적 Null
     private void SetNull()
     {
-        lightEffect = null;
-        neonEffect = null;
-        carEffect = null;
+        lightHandler = null;
+        neonHandler = null;
+        carHandler = null;
+        windowHandler = null;
+        meteorHandler = null;
+        fireplayHandler = null;
+        lazerHandler = null;
         SetActionNull();
     }
 
     private void Initialize()
     {
         FindEffectObjects();
-        // player1MapEffect += EffectInvoke;
-        // player2MapEffect += EffectInvoke;
-        player1MapEffect += EffectInvoke;
+        playerMapEffect += EffectInvoke;
     }
 
     // 게임 씬 진입 시 배치된 이펙트오브젝트 찾음
     private void FindEffectObjects()
     {
-        lightEffect = FindObjectOfType<LightEffect>();
-        neonEffect = FindObjectOfType<NeonEffect>();
-        carEffect = FindObjectOfType<CarEffect>();
+        lightHandler = FindObjectOfType<StreetLampHandler>();
+        neonHandler = FindObjectOfType<NeonHandler>();
+        carHandler = FindObjectOfType<CarHandler>();
         meteorHandler = FindObjectOfType<MeteorHandler>();
         fireplayHandler = FindObjectOfType<FireplayHandler>();
         lazerHandler = FindObjectOfType<LazerHandler>();
+        windowHandler = FindObjectOfType<WindowHandler>();
     }
 
     public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
@@ -124,24 +127,45 @@ public class EffectManager : Singleton<EffectManager>
             // 페이즈 1 구독
             case Enums.Phase.Phase1:
                 SetActionNull();
+                if (null != lightHandler)
+                {
+                    // 노트 퍼펙트
+                    p1PerfectAct += lightHandler.P1EffectInvoke;
+                    p2PerfectAct += lightHandler.P2EffectInvoke;
+                }
 
-                if (null == lightEffect) { break; }
-                p1PerfectAct += lightEffect.P1EffectInvoke;
-                p2PerfectAct += lightEffect.P2EffectInvoke;
+                if (null != neonHandler)
+                {
+                    // 10 콤보
+                    p1TenComboAct += neonHandler.P1EffectInvoke;
+                    p2TenComboAct += neonHandler.P2EffectInvoke;
+                }
 
-                if (null == neonEffect) { break; }
-                p1TenComboAct += neonEffect.P1EffectInvoke;
-                p2TenComboAct += neonEffect.P2EffectInvoke;
+                if (null != carHandler)
+                {
+                    // 20 콤보
+                    p1TwentyComboAct += carHandler.P1EffectInvoke;
+                    p2TwentyComboAct += carHandler.P2EffectInvoke;
+                }
 
-                if (null == carEffect) { break; }
-                p1TwentyComboAct += carEffect.P1EffectInvoke;
-                p2TwentyComboAct += carEffect.P2EffectInvoke;
-
+                if (null != windowHandler)
+                {
+                    // 상단 노트 클리어
+                    p1TopNoteAct += windowHandler.P1EffectInvoke;
+                    p2TopNoteAct += windowHandler.P2EffectInvoke;
+                }
                 break;
             // 페이즈 2 구독
             case Enums.Phase.Phase2:
                 SetActionNull();
                 Phase1End();
+
+                if (windowHandler != null)
+                {
+                    // 노트 퍼펙트
+                    p1PerfectAct += windowHandler.P1EffectInvoke;
+                    p2PerfectAct += windowHandler.P2EffectInvoke;
+                }
 
                 if (lazerHandler != null)
                 {
@@ -158,6 +182,7 @@ public class EffectManager : Singleton<EffectManager>
                     p2TopNoteAct += lazerHandler.Play_M_R_P_3;
 
                 }
+                if (null == windowHandler) { break; }
 
                 break;
 
@@ -178,20 +203,20 @@ public class EffectManager : Singleton<EffectManager>
 
     private void Phase1End()
     {
-        lightEffect?.LeftEffectEnd();
-        lightEffect?.RightEffectEnd();
+        lightHandler?.LeftEffectEnd();
+        lightHandler?.RightEffectEnd();
 
-        neonEffect?.LeftEffectEnd();
-        neonEffect?.RightEffectEnd();
+        neonHandler?.LeftEffectEnd();
+        neonHandler?.RightEffectEnd();
 
-        carEffect?.LeftEffectEnd();
-        carEffect?.RightEffectEnd();
-        carEffect?.MovePhase2Pos();
+        carHandler?.LeftEffectEnd();
+        carHandler?.RightEffectEnd();
+        carHandler?.MovePhase2Pos();
     }
     private void Phase2End()
     {
-        carEffect?.MovePhase3Pos();
-
+        carHandler?.MovePhase3Pos();
+        // TODO 페이즈 종료 시 SetActionNull 메서드 호출하기 때문에 액션 구독해제 따로 안하셔도 됩니다.
         if (lazerHandler != null)
         {
             //20콤보
@@ -205,6 +230,11 @@ public class EffectManager : Singleton<EffectManager>
             p1TopNoteAct -= lazerHandler.Play_M_L_P_3;
             p2TopNoteAct -= lazerHandler.Play_S_P_3;
             p2TopNoteAct -= lazerHandler.Play_M_R_P_3;
+        }
+        if (windowHandler != null)
+        {
+            windowHandler.LeftEffectEnd();
+            windowHandler.RightEffectEnd();
         }
     }
 
