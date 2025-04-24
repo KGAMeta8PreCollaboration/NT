@@ -62,19 +62,20 @@ public class MultiLobbyUI : MonoBehaviourPun
     private void PrevSongButtonClick()
     {
         // 얘네를 동기화해야함
-        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
     }
     private void NextSongButtonClick()
     {
-        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
 
         //photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
     }
 
     [PunRPC]
-    private void Temp()
+    private void Temp(string musicName)
     {
-        gamePlayUI.musicChangeSelect.SetMusicNodeToString(gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+        print("Temp");
+        gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
     }
 
     [PunRPC]
