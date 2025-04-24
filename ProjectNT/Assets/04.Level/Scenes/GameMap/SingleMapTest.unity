@@ -250,6 +250,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: b98cddb6c85b23c48acc191cb69f54a6, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &59327188 stripped
@@ -302,6 +303,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 5f2540e88cb65774fa33404b0a59117d, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &223207459
@@ -371,6 +373,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8164334501563457210, guid: 7ee8de3311263f24889206dbda436cf7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ee8de3311263f24889206dbda436cf7, type: 3}
 --- !u!4 &223207460 stripped
@@ -429,6 +436,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 924d69b46902fe64c889536746a77eef, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &333724207 stripped
@@ -481,6 +489,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: e99b49bb56e74cb4888fd028639027f3, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &364261452
@@ -622,6 +631,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: f47f43420f91d0845ae586a42d8e7c6d, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &468270303 stripped
@@ -674,6 +684,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 1bdf02b73f7475c46a7db0770591296f, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &540479689
@@ -756,6 +767,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: b5c0a071807526645af7c0e8437ea03e, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &621708059
@@ -827,6 +839,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcf3082bbb79c4445be4dccc98f2557b, type: 3}
+--- !u!1 &692751107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8925413689465855829, guid: 7ee8de3311263f24889206dbda436cf7,
+    type: 3}
+  m_PrefabInstance: {fileID: 223207459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &692751108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692751107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b460b480c4013f84a8d0f3522079d845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gifImage:
+  - {fileID: 2800000, guid: 2c5a640b316fbc94f80c1a523bd58739, type: 3}
+  - {fileID: 2800000, guid: 797a67320aafaed4ebf0cb1dacf14662, type: 3}
+  - {fileID: 2800000, guid: fd2c79ac3caf2d546b8c7671b5963e42, type: 3}
+  - {fileID: 2800000, guid: 8864c92cccda4ed40808d7277d7655f4, type: 3}
+  - {fileID: 2800000, guid: 9067bd5a3dfeeb54db123d90611ec59c, type: 3}
+  - {fileID: 2800000, guid: edcf7781824b1c14d86ffe1435f42597, type: 3}
+  - {fileID: 2800000, guid: 3852a9d3823f9674fbaae3e037422983, type: 3}
+  - {fileID: 2800000, guid: 484c1e89e6346384c9ff95b9c4b88cd6, type: 3}
+  - {fileID: 2800000, guid: c37f1aa01336bc443a90194336baebf8, type: 3}
+  - {fileID: 2800000, guid: 9899d51a5bd645d418be5d1ce79642bb, type: 3}
+  - {fileID: 2800000, guid: 38b735fa4ec2c32418a5df0b49bc62cf, type: 3}
+  - {fileID: 2800000, guid: 1bbbd27a06305fa418ff25e8f87c2081, type: 3}
+  - {fileID: 2800000, guid: d148cb5d02cd99c4dbd433afd2a4979a, type: 3}
+  - {fileID: 2800000, guid: 37fa1f591c8ad5e4d849e676adb5ba03, type: 3}
+  - {fileID: 2800000, guid: d8b1f7cf007c1f54b9ac85cc713dd409, type: 3}
+  - {fileID: 2800000, guid: eea71b9c3c22d8247beea7ddc013a89f, type: 3}
+  - {fileID: 2800000, guid: f2cba8726ab3af348a9f4befcbb2821b, type: 3}
+  - {fileID: 2800000, guid: 2cda8fc49e690bc439856cb556f894b1, type: 3}
+  - {fileID: 2800000, guid: 454033ccf2354424e85c7866b41f48f9, type: 3}
+  - {fileID: 2800000, guid: 71d15880ee53c0d4981fea8cb8ba0c4e, type: 3}
+  - {fileID: 2800000, guid: a4bc70aaf677c9a48b1d63ce9430b65e, type: 3}
+  - {fileID: 2800000, guid: 4910970087a0b964cbefca590f1b88a2, type: 3}
+  - {fileID: 2800000, guid: 0d1cdd9250da3664886907a23ab30fc9, type: 3}
+  - {fileID: 2800000, guid: d2a8e50ecf8683c4aac1d5628f99a226, type: 3}
+  - {fileID: 2800000, guid: 10cf650988d7c864bad95f29bf726f8f, type: 3}
+  - {fileID: 2800000, guid: 93f107696d0ba28419441f2fb1e40cec, type: 3}
+  - {fileID: 2800000, guid: c2101f9c1d4654d439c830fd443d5a89, type: 3}
+  - {fileID: 2800000, guid: de28fd253bdf4a940b046108383e79dd, type: 3}
+  - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
+  - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
+  originalTexture: {fileID: 2800000, guid: e99b49bb56e74cb4888fd028639027f3, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
+  delay: 0.05
+  duration: 2
 --- !u!1 &714297869 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8526455708519523299, guid: 7ee8de3311263f24889206dbda436cf7,
@@ -877,6 +942,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 23ba12e2b4d4fb54f8a18035da7bc875, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &923322458
@@ -959,6 +1025,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 59072bde247852442aecf54aa2460466, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &974281456
@@ -1795,6 +1862,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 5f2e77fa23100e2499bf52a287639e3d, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1213129427 stripped
@@ -1847,6 +1915,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 23ba12e2b4d4fb54f8a18035da7bc875, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1214035830 stripped
@@ -1899,6 +1968,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 473ed877dcf42aa4baf2152ff44ab90a, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1242909777 stripped
@@ -1951,6 +2021,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: fb79692f1ff96534189bdcba83ca4ee0, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1313656924 stripped
@@ -2003,6 +2074,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: c473ca01cb18bc247ae63c22e3ba88ed, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1323554224 stripped
@@ -2055,6 +2127,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 1a881e092cb03e14d9828f317ac6ab4c, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &1425685582
@@ -2297,6 +2370,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: fe31f57371c498b4db9f2f31a0a6c7a5, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1481010685 stripped
@@ -2349,6 +2423,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 2383c5b48ab424b40b67764038680b6a, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1499712464 stripped
@@ -2401,6 +2476,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: a2f936dc15d535b419bb935d277e9618, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1570723635
@@ -2483,6 +2559,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: d6a2ca8c66a8bff49a9f1d0576dad265, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1642311581 stripped
@@ -2491,7 +2568,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 223207459}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1642311582
+--- !u!114 &1642311585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2535,6 +2612,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 580138248c3bb0e458c59df3b1eb3901, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &1656351472
@@ -2673,6 +2751,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 1bcf7c3683d330e47a2f7fc6dcce0d6d, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1752085218 stripped
@@ -2681,7 +2760,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 223207459}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1752085219
+--- !u!114 &1752085222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2725,6 +2804,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 2c4ef159d2bac6f479b2beaeccc77466, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1784459265
@@ -2770,6 +2850,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1821805539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8925413688824085941, guid: 7ee8de3311263f24889206dbda436cf7,
+    type: 3}
+  m_PrefabInstance: {fileID: 223207459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1821805540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821805539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b460b480c4013f84a8d0f3522079d845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gifImage:
+  - {fileID: 2800000, guid: 2c5a640b316fbc94f80c1a523bd58739, type: 3}
+  - {fileID: 2800000, guid: 797a67320aafaed4ebf0cb1dacf14662, type: 3}
+  - {fileID: 2800000, guid: fd2c79ac3caf2d546b8c7671b5963e42, type: 3}
+  - {fileID: 2800000, guid: 8864c92cccda4ed40808d7277d7655f4, type: 3}
+  - {fileID: 2800000, guid: 9067bd5a3dfeeb54db123d90611ec59c, type: 3}
+  - {fileID: 2800000, guid: edcf7781824b1c14d86ffe1435f42597, type: 3}
+  - {fileID: 2800000, guid: 3852a9d3823f9674fbaae3e037422983, type: 3}
+  - {fileID: 2800000, guid: 484c1e89e6346384c9ff95b9c4b88cd6, type: 3}
+  - {fileID: 2800000, guid: c37f1aa01336bc443a90194336baebf8, type: 3}
+  - {fileID: 2800000, guid: 9899d51a5bd645d418be5d1ce79642bb, type: 3}
+  - {fileID: 2800000, guid: 38b735fa4ec2c32418a5df0b49bc62cf, type: 3}
+  - {fileID: 2800000, guid: 1bbbd27a06305fa418ff25e8f87c2081, type: 3}
+  - {fileID: 2800000, guid: d148cb5d02cd99c4dbd433afd2a4979a, type: 3}
+  - {fileID: 2800000, guid: 37fa1f591c8ad5e4d849e676adb5ba03, type: 3}
+  - {fileID: 2800000, guid: d8b1f7cf007c1f54b9ac85cc713dd409, type: 3}
+  - {fileID: 2800000, guid: eea71b9c3c22d8247beea7ddc013a89f, type: 3}
+  - {fileID: 2800000, guid: f2cba8726ab3af348a9f4befcbb2821b, type: 3}
+  - {fileID: 2800000, guid: 2cda8fc49e690bc439856cb556f894b1, type: 3}
+  - {fileID: 2800000, guid: 454033ccf2354424e85c7866b41f48f9, type: 3}
+  - {fileID: 2800000, guid: 71d15880ee53c0d4981fea8cb8ba0c4e, type: 3}
+  - {fileID: 2800000, guid: a4bc70aaf677c9a48b1d63ce9430b65e, type: 3}
+  - {fileID: 2800000, guid: 4910970087a0b964cbefca590f1b88a2, type: 3}
+  - {fileID: 2800000, guid: 0d1cdd9250da3664886907a23ab30fc9, type: 3}
+  - {fileID: 2800000, guid: d2a8e50ecf8683c4aac1d5628f99a226, type: 3}
+  - {fileID: 2800000, guid: 10cf650988d7c864bad95f29bf726f8f, type: 3}
+  - {fileID: 2800000, guid: 93f107696d0ba28419441f2fb1e40cec, type: 3}
+  - {fileID: 2800000, guid: c2101f9c1d4654d439c830fd443d5a89, type: 3}
+  - {fileID: 2800000, guid: de28fd253bdf4a940b046108383e79dd, type: 3}
+  - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
+  - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
+  originalTexture: {fileID: 2800000, guid: e99b49bb56e74cb4888fd028639027f3, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
+  delay: 0.05
+  duration: 2
 --- !u!1 &1921810053 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 12646966394291065, guid: 7ee8de3311263f24889206dbda436cf7,
@@ -2820,6 +2953,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: e0e34c1e11b9ae8458ecffa115b61180, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &1975934368 stripped
@@ -2872,6 +3006,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 44b687025c2fee84b9900ac00d99ba82, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1001 &1994475889
@@ -3013,6 +3148,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: eb1369b85a9299c4cb420653b22c4cec, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &2063806474 stripped
@@ -3065,6 +3201,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 5ba31e8c7df9eab44af32f0a711c0cd1, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
 --- !u!1 &2109465022 stripped
@@ -3117,5 +3254,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1185a180a15463a438432de58895b056, type: 3}
   - {fileID: 2800000, guid: 8e64bc1d960b57a4e88c75ff90b5ef31, type: 3}
   originalTexture: {fileID: 2800000, guid: 580138248c3bb0e458c59df3b1eb3901, type: 3}
+  blackTexture: {fileID: 2800000, guid: 7454bb472e908e145a06fe300ae12222, type: 3}
   delay: 0.05
   duration: 2
