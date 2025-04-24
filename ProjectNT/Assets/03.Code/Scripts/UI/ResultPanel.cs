@@ -50,6 +50,7 @@ public class ResultPanel : Popup
         Grade grade = _scoreManager.CalculateGrade();
         if (grade == Grade.SPlus)
         {
+            _gradeSubText.gameObject.SetActive(true);
             _gradeText.text = "S";
             _gradeSubText.text = "+";
         }
@@ -59,13 +60,13 @@ public class ResultPanel : Popup
         //추가
         _scoreCount.text = _scoreManager.score.ToString();
         _maxComboCount.text = _scoreManager.maxCombo.ToString();
-        //musicImage.sprite = //음악 이미지
-        //_musicNameText.text = //음악 이름 텍스트
-        //_musicArtistText.text = //음악 아티스트 이름 텍스트
-        
+        musicImage.sprite = GameManager.Instance.musicImage;
+        // musicImage.sprite = //음악 이미지
+        _musicNameText.text = GameManager.Instance.musicName;
+        _musicArtistText.text = "";
         string musicName = GameManager.Instance.musicName;
         string difficulty = GameManager.Instance.difficulty.ToString();
-        
+
         endPanel.Open();
         endPanel.SetGameEndData(_scoreManager.score, _scoreManager.maxCombo, musicName, difficulty);//음악이름, 난이도 추가
         StartCoroutine(endPanel.NewHighScoreCheck());
@@ -97,6 +98,7 @@ public class ResultPanel : Popup
         Grade grade = _scoreManager.CalculateGrade(result);
         if (grade == Grade.SPlus)
         {
+            _gradeSubText.gameObject.SetActive(true);
             _gradeText.text = "S";
             _gradeSubText.text = "+";
         }

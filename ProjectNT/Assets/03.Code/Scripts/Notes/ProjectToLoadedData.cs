@@ -28,7 +28,7 @@ public partial class ProjectToLoadedData : MonoBehaviour
                 loadedNoteDatas.Add(loadedNoteData);
             }
         }
-
+        
         // TODO : 임시로 여기서 phase설정해주는겁니다.
         GameManager.Instance.phase2ChangeTime = beatMapData.songData.phase2;
         GameManager.Instance.phase3ChangeTime = beatMapData.songData.phase3;
@@ -92,7 +92,6 @@ public partial class ProjectToLoadedData
     public AudioClip GetBgmAudioClip(string projectPath, string musicName = "Single_Theme.wav")
     {
         projectPath = Path.Combine(projectPath, "bgmSaveFile", musicName);
-        Debug.Log("ProjectTOLoadedData GetBgmAudioClip : " + projectPath);
         if (!File.Exists(projectPath)) 
             return null;
         return WavUtility.WavToAudioClip(File.ReadAllBytes(projectPath), Path.GetFileName(projectPath));

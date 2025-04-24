@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,15 +55,19 @@ public class DisplayBoard : MonoBehaviour
         _targetMaterial.SetTexture("_MainTexture", originalTexture);
     }
 
+    private Sequence _turnOnSequence;
     //디스플레이 켜는 함수
     private void TurnOnDisplayBoard()
     {
-        if (_turnOnDisplayCoroutine != null)
+        if (_turnOnSequence != null && _turnOnSequence.IsActive())
         {
-            StopCoroutine(_turnOnDisplayCoroutine);
+            _turnOnSequence.Kill();
         }
 
-        _turnOnDisplayCoroutine = StartCoroutine(TurnOnDisplayBoardCoroutine());
+        _turnOnSequence = DOTween.Sequence()
+            .AppendCallback(() => _targetMaterial.SetTexture("_MainTexture", originalTexture))
+            .AppendInterval(duration)
+            .AppendCallback(() => _targetMaterial.SetTexture("_MainTexture", blackTexture));
     }
 
     private IEnumerator TurnOnDisplayBoardCoroutine()
