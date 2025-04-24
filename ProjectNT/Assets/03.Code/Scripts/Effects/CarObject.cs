@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CarObject : MonoBehaviour
 {
-    public MeshRenderer renderer;
+    public MeshRenderer _renderer;
 
     private void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
+        _renderer = GetComponent<MeshRenderer>();
     }
 
 }

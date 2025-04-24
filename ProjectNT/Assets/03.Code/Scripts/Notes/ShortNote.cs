@@ -25,7 +25,7 @@ public class ShortNote : Note
 		{
 			PoolManager.Instance.HitEffect(transform.position, true);
 		}
-		EffectManager.Instance.player1MapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
+		EffectManager.Instance.playerMapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
 		// EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
 		Destroy();
 	}

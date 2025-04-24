@@ -22,7 +22,6 @@ public class ScoreUI : MonoBehaviour
     public TMP_ColorGradient missGradient;
     public TextMeshProUGUI _timeText;
     private double _startDspTime;
-    public int tempHitCount;
     public float judgementTextalpha;
     private void Start()
     {

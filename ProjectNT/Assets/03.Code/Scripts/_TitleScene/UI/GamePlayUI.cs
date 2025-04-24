@@ -1,8 +1,7 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum UIGameType
@@ -11,12 +10,14 @@ public enum UIGameType
     Muliti
 }
 
+[Flags]
 public enum Difficulty
 {
-    Easy,
-    Normal,
-    Hard,
-    SuperHard
+    None = 0,
+    Easy = 1,
+    Normal = 2,
+    Hard = 4,
+    SuperHard = 8,
 }
 
 public class GamePlayUI : BaseTitleUI
@@ -33,20 +34,42 @@ public class GamePlayUI : BaseTitleUI
     public Toggle normal;
     public Toggle hard;
     public Toggle superHade;
-    //public Button randomDifficulty;
 
     private Toggle curSelectDifficulty = null;
     private bool isSettingDifficulty = false;
 
+    
+    private TextMeshProUGUI _easyText;
+    private TextMeshProUGUI _normalText;
+    private TextMeshProUGUI _hardText;
+    private TextMeshProUGUI _superhardText;
+    
+    
+    private TitleSound _titleSound;
+
     public override void Awake()
     {
         base.Awake();
+        _easyText = easy.GetComponentInChildren<TextMeshProUGUI>();
+        _normalText = normal.GetComponentInChildren<TextMeshProUGUI>();
+        _hardText = hard.GetComponentInChildren<TextMeshProUGUI>();
+        _superhardText = superHade.GetComponentInChildren<TextMeshProUGUI>();
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        easy.Select();
+    }
+
 
     private void OnEnable()
     {
+        _titleSound = FindObjectOfType<TitleSound>(true);
         if (musicChangeSelect != null)
         {
+            print("게임플레이 UI OnEnable ");
+            _titleSound.PlayGameSound();
             // musicChangeAndSelect의 gameMusicData를 만들어서줘야할거같은데..
             // TmpCheckDirectory.Instance.musicChangeAndSelect = musicChangeSelect;
             AddEventListeners();
@@ -67,24 +90,19 @@ public class GamePlayUI : BaseTitleUI
 
     public override void AddEventListeners()//켜질때 버튼 등록
     {
-        // print("AddEventListeners 1");
         base.AddEventListeners();
         ResetMusicSet();//0번 음악 세팅, 동시에 게임 미리듣기 음악 재생
         SetDifficulty(easy, 1);//난이도 토글 1로 세팅
-        // print("AddEventListeners 2");
 
         gameStartButton.onClick.AddListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.AddListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.AddListener(PreviousMusicButton);
-        //musicChangeSelect.musicReplayButton.onClick.AddListener(MusicSoundReplay);
-        // print("AddEventListeners 3");
 
         easy.onValueChanged.AddListener((value) => OnDifficultyChanged(easy, 1));
         normal.onValueChanged.AddListener((value) => OnDifficultyChanged(normal, 2));
         hard.onValueChanged.AddListener((value) => OnDifficultyChanged(hard, 3));
         superHade.onValueChanged.AddListener((value) => OnDifficultyChanged(superHade, 4));
-        //randomDifficulty.onClick.AddListener(SelectRandomDifficulty);
-        // print("AddEventListeners 4");
+
     }
 
     public override void RemoveEventListeners()//꺼질때 버튼 해제
@@ -94,14 +112,12 @@ public class GamePlayUI : BaseTitleUI
         gameStartButton.onClick.RemoveListener(StartGame);
         musicChangeSelect.changeRightButton.onClick.RemoveListener(NextMusicButton);
         musicChangeSelect.changeLeftButton.onClick.RemoveListener(PreviousMusicButton);
-        //musicChangeSelect.musicReplayButton.onClick.RemoveListener(MusicSoundReplay);
 
         //등록할때 람다식으로 넣어서 개별적으로 해제가 안됨, 그래서 RemoveAll로 없애기
         easy.onValueChanged.RemoveAllListeners();
         normal.onValueChanged.RemoveAllListeners();
         hard.onValueChanged.RemoveAllListeners();
         superHade.onValueChanged.RemoveAllListeners();
-        //randomDifficulty.onClick.RemoveListener(SelectRandomDifficulty);
     }
 
     public override void CloseUIButtonClick()
@@ -168,7 +184,6 @@ public class GamePlayUI : BaseTitleUI
             Difficulty.SuperHard => Enums.ModeDiff.DUO2_EXTREAM,
             _ => Enums.ModeDiff.DUO2_EASY,
         };
-
         
         BeatMapData beatMapData1 = GetBeatMapData(projectPath, modeDiff1);
         BeatMapData beatMapData2 = GetBeatMapData(projectPath, modeDiff2);
@@ -227,7 +242,7 @@ public class GamePlayUI : BaseTitleUI
     //다음 노래로 넘어감 (RightButton)
     public void NextMusicButton()
     {
-        //SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
+        SetDifficulty(easy, 1);//다음 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("next");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -235,7 +250,7 @@ public class GamePlayUI : BaseTitleUI
     //이전 노래로 넘어감 (LeftButton)
     public void PreviousMusicButton()
     {
-        //SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
+        SetDifficulty(easy, 1);//이전 곡으로 넘어가도 이전에 선택한 난이도 유지
         musicChangeSelect.ChangeMusic("previous");
         //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
     }
@@ -244,29 +259,61 @@ public class GamePlayUI : BaseTitleUI
     {
         //TestStartGameData.Instance.difficulty = difficulty;
 
-        easy.isOn = false;
-        normal.isOn = false;
-        hard.isOn = false;
-        superHade.isOn = false;
-        TextMeshProUGUI easyText = easy.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI normalText = normal.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI hardText = hard.GetComponentInChildren<TextMeshProUGUI>();
-        TextMeshProUGUI superhardText = superHade.GetComponentInChildren<TextMeshProUGUI>();
+        if (easy != select && easy.interactable)
+        {
+            easy.isOn = false;
+            _easyText.color = Color.white;
+        }
         
-        easyText.color = Color.white;
-        normalText.color = Color.white;
-        hardText.color = Color.white;
-        superhardText.color = Color.white;
-
-        select.GetComponentInChildren<TextMeshProUGUI>().color = select.colors.disabledColor;
+        if (normal != select && normal.interactable)
+        {
+            normal.isOn = false;
+            _normalText.color = Color.white;
+        }
         
+        if (hard != select && hard.interactable)
+        {
+            hard.isOn = false;
+            _hardText.color = Color.white;
+        }
+        if (superHade != select && superHade.interactable)
+        {
+            superHade.isOn = false;
+            _superhardText.color = Color.white;
+        }
+        
+        select.GetComponentInChildren<TextMeshProUGUI>().color = select.colors.selectedColor;
         select.isOn = true;//선택한 토글만 활성화
         if (curSelectDifficulty != null)
         {
             curSelectDifficulty.interactable = true;
         }
         curSelectDifficulty = select;
-        curSelectDifficulty.interactable = false;
+        curSelectDifficulty.Select();
+    }
+
+    public void SetToggleInteractable(Difficulty difficulty)
+    {
+        if (!difficulty.HasFlag(Difficulty.Easy))
+        {
+            easy.interactable = false;
+            _easyText.color = easy.colors.disabledColor;
+        }
+        if (!difficulty.HasFlag(Difficulty.Normal))
+        {
+            normal.interactable = false;
+            _normalText.color = normal.colors.disabledColor;
+        }
+        if (!difficulty.HasFlag(Difficulty.Hard))
+        {
+            hard.interactable = false;
+            _hardText.color = hard.colors.disabledColor;
+        }
+        if (!difficulty.HasFlag(Difficulty.SuperHard))
+        {
+            superHade.interactable = false;
+            _superhardText.color = superHade.colors.disabledColor;
+        }
     }
 
     private void OnDifficultyChanged(Toggle select, int difficulty)
