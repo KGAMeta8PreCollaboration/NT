@@ -14,6 +14,7 @@ public class GameEndPanel : MonoBehaviour
     public InGameRankingUI inGameRankingUI;
 
     public PlayerLocalSaveData newData;
+    public RankingBoardUI rankingBoardUI;
     
     private GameObject curUI = null;
     private int newDataNumber = 0;
@@ -23,6 +24,7 @@ public class GameEndPanel : MonoBehaviour
         newHighScroeUI.gameObject.SetActive(false);
         rankRegistrationUI.gameObject.SetActive(false);
         inGameRankingUI.gameObject.SetActive(false);
+        rankingBoardUI.gameObject.SetActive(false);
     }
 
     public void Open()
@@ -123,8 +125,10 @@ public class GameEndPanel : MonoBehaviour
     public void OpenInGameRankingUI()//순위표 UI 오픈
     {
         CloseUI();
-        inGameRankingUI.gameObject.SetActive(true);//순위표 UI 오픈
-        curUI = inGameRankingUI.gameObject;
+        // inGameRankingUI.gameObject.SetActive(true);//순위표 UI 오픈
+        rankingBoardUI.gameObject.SetActive(true);
+        // curUI = inGameRankingUI.gameObject;
+        curUI = rankingBoardUI.gameObject;
         inGameRankingUI.timeOverAction += OpenMusicSelectUI;//로비로 이동 등록
         inGameRankingUI.newDataNumber = newDataNumber;
         Debug.Log($"newDataNumber : {newDataNumber}");
