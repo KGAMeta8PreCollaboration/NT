@@ -63,13 +63,13 @@ public class MultiLobbyUI : MonoBehaviourPun
     {
         // 얘네를 동기화해야함
         //photonView.RPC(nameof(Temp), RpcTarget.All, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
-        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.All);
+        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.Others);
     }
     private void NextSongButtonClick()
     {
         //photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
 
-        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.All);
+        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.Others);
     }
 
     public void SetMusicNodeToString(string musicName)
