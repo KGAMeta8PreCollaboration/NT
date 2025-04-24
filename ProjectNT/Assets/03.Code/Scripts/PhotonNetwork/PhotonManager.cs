@@ -16,7 +16,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 30;
+
         SceneManager.sceneLoaded += LobbySceneLoaded;
+
+        PhotonNetwork.AutomaticallySyncScene = false;
     }
 
     private void LobbySceneLoaded(Scene cur, LoadSceneMode arg1)
@@ -45,7 +50,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         print("방 참가 성공!");
-        PhotonNetwork.AutomaticallySyncScene = true;
         AssignPlayerRole(); //플레이어 닉네임 설정
         joinedRoom?.Invoke();
     }

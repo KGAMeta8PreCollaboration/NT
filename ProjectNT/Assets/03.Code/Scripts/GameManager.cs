@@ -174,8 +174,8 @@ public class GameManager : Singleton<GameManager>
     public void MultiGameStart()
     {
         // 데이터
-
-        PhotonNetwork.LoadLevel("MultiGame");
+        //PhotonNetwork.LoadLevel("MultiGame");
+        SceneManager.LoadScene("MultiGame");
     }
 
     // TODO : 멀티 데이터 여기서 넘겨줍니다.

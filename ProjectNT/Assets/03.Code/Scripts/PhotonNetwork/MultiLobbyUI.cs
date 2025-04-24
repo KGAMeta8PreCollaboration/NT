@@ -120,7 +120,11 @@ public class MultiLobbyUI : MonoBehaviourPun
 
             var data = gamePlayUI.GetMultiGameStartData();
             GameManager.Instance.SetDataForMultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
-            if (PhotonNetwork.IsMasterClient) GameManager.Instance.MultiGameStart();
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //PhotonNetwork.AutomaticallySyncScene = true;
+            GameManager.Instance.MultiGameStart();
+            //}
         }
     }
 
