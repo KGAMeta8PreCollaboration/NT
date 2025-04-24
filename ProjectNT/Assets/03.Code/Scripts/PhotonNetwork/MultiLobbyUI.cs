@@ -16,7 +16,7 @@ public class MultiLobbyUI : MonoBehaviourPun
     [SerializeField] private Button _nextSongButton;
     [SerializeField] private TextMeshProUGUI _countStartGame;
     [SerializeField] private int countStartGame = 5;
-    [SerializeField] private GamePlayUI gamePlayUI;
+    [SerializeField] public GamePlayUI gamePlayUI;
     [Header("게임을 시작하기 위한 플레이어 수")]
     public int peopleCount = 2;
 
@@ -62,19 +62,19 @@ public class MultiLobbyUI : MonoBehaviourPun
     private void PrevSongButtonClick()
     {
         // 얘네를 동기화해야함
-        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+        //photonView.RPC(nameof(Temp), RpcTarget.All, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.All);
     }
     private void NextSongButtonClick()
     {
-        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+        //photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
 
-        //photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.All);
     }
 
-    [PunRPC]
-    private void Temp(string musicName)
+    public void SetMusicNodeToString(string musicName)
     {
-        print("Temp");
+        print("SetMusicNodeToString");
         gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
     }
 

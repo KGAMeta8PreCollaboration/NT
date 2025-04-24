@@ -4,12 +4,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     public Action joinedRoom; //방에 플레이어가 입장 했을 때 호출
     public Action disconnectedServer; //서버 연결이 해제될 때 호출
     public Action<Player> leftRoomPlayer; //플레이어가 방을 나갔을 때 호출
+
+    public MultiLobbyUI multiLobbyUI;
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += LobbySceneLoaded;
+    }
+
+    private void LobbySceneLoaded(Scene cur, LoadSceneMode arg1)
+    {
+        if (cur.name == "LobbyScene")
+        {
+            multiLobbyUI = FindObjectOfType<MultiLobbyUI>();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= LobbySceneLoaded;
+    }
+
     public override void OnConnectedToMaster()
     {
         print("Photon 연결 성공!");
@@ -68,6 +90,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         print("들어온 플레이어: " + newPlayer.NickName);
+        photonView.RPC(nameof(SetMusicNodeToString), newPlayer, multiLobbyUI, multiLobbyUI.gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+    }
+
+    [PunRPC]
+    public void SetMusicNodeToString(string musicName)
+    {
+        multiLobbyUI.SetMusicNodeToString(musicName);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
