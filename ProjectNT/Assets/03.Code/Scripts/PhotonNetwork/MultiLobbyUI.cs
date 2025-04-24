@@ -30,6 +30,7 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void Start()
     {
+
         _popupManager = FindObjectOfType<PopupManager>();
 
         _quitButton.onClick.AddListener(QuitButtonClick);
@@ -60,11 +61,20 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void PrevSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.OthersBuffered);
+        // 얘네를 동기화해야함
+        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered);
     }
     private void NextSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered);
+
+        //photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
+    }
+
+    [PunRPC]
+    private void Temp()
+    {
+        gamePlayUI.musicChangeSelect.SetMusicNodeToString(gamePlayUI.musicChangeSelect.CurMusicData.musicName);
     }
 
     [PunRPC]
