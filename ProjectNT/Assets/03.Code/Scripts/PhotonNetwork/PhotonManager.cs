@@ -90,7 +90,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         print("들어온 플레이어: " + newPlayer.NickName);
-        photonView.RPC(nameof(SetMusicNodeToString), newPlayer, multiLobbyUI, multiLobbyUI.gamePlayUI.musicChangeSelect.CurMusicData.musicName);
+        photonView.RPC(nameof(SetMusicNodeToString), newPlayer, multiLobbyUI.gamePlayUI.musicChangeSelect.CurMusicData.musicName);
     }
 
     [PunRPC]
