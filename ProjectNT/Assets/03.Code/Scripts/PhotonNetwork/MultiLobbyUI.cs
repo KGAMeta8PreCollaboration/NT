@@ -61,21 +61,16 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void PrevSongButtonClick()
     {
-        // 얘네를 동기화해야함
-        //photonView.RPC(nameof(Temp), RpcTarget.All, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
         photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.Others);
     }
     private void NextSongButtonClick()
     {
-        //photonView.RPC(nameof(Temp), RpcTarget.OthersBuffered, gamePlayUI.musicChangeSelect.CurMusicData.musicName);
-
         photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.Others);
     }
 
     public void SendSetMusicNodeToString(string musicName)
     {
         print("SetMusicNodeToString");
-        //gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
         photonView.RPC(nameof(RPC_SetMusicNodeToString), RpcTarget.Others, musicName);
     }
 
@@ -120,11 +115,8 @@ public class MultiLobbyUI : MonoBehaviourPun
 
             var data = gamePlayUI.GetMultiGameStartData();
             GameManager.Instance.SetDataForMultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
-            //if (PhotonNetwork.IsMasterClient)
-            //{
-            //PhotonNetwork.AutomaticallySyncScene = true;
+
             GameManager.Instance.MultiGameStart();
-            //}
         }
     }
 

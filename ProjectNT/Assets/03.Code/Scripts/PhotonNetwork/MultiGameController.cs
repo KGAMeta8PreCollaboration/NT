@@ -49,7 +49,6 @@ public class MultiGameController : MonoBehaviour
 
     public void GotoLobbyScene()
     {
-        //PhotonNetwork.AutomaticallySyncScene = false;
         SceneManager.LoadScene("LobbyScene");
     }
 

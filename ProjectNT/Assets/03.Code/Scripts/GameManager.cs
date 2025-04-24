@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
     public PhotonManager PhotonManager { get; private set; }
     public MultiGameController MultiGameController { get; private set; }
     public MultiLobbyController MultiLobbyController { get; private set; }
-    public bool IsMulti { get; set; }
+    public bool IsMulti { get; private set; }
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
@@ -100,8 +100,6 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () =>
             {
                 PhotonManager.LeaveRoom();
-                // IsMulti = false;
-                // Lobby 로드할때 씬체인지드 -> ismulti 확인 -> 멀티룸으로 이동, IsMulti = false;
             };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
@@ -112,6 +110,7 @@ public class GameManager : Singleton<GameManager>
             print($"=========멀티->로비=========");
             MultiLobbyController = FindObjectOfType<MultiLobbyController>();
             MultiLobbyController.OnActiveSceneChanged();
+            IsMulti = false;
         }
     }
 
@@ -173,8 +172,6 @@ public class GameManager : Singleton<GameManager>
     //멀티 임시 시작 메서드
     public void MultiGameStart()
     {
-        // 데이터
-        //PhotonNetwork.LoadLevel("MultiGame");
         SceneManager.LoadScene("MultiGame");
     }
 

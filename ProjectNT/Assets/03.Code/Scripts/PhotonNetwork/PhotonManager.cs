@@ -87,22 +87,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = ""; //플레이어 닉네임 초기화
         print("포톤 연결 해제");
         print($"로컬 플레이어: {PhotonNetwork.LocalPlayer.NickName}");
-        PhotonNetwork.AutomaticallySyncScene = false;
         disconnectedServer?.Invoke();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         print("들어온 플레이어: " + newPlayer.NickName);
-        //photonView.RPC(nameof(SetMusicNodeToString), newPlayer, multiLobbyUI.gamePlayUI.musicChangeSelect.CurMusicData.musicName);
         multiLobbyUI.SendSetMusicNodeToString(multiLobbyUI.gamePlayUI.musicChangeSelect.CurMusicData.musicName);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         print("나간 플레이어: " + otherPlayer.NickName);
-        otherPlayer.NickName = "";
         leftRoomPlayer?.Invoke(otherPlayer);
+        otherPlayer.NickName = "";
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
