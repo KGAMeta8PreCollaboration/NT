@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 
@@ -14,22 +16,10 @@ public class TopNoteProjectile : MonoBehaviour
         this.startPos = startPos;
         this.target = target;
         transform.LookAt(target);
-        particleSystem = GetComponent<ParticleSystem>();
-    }
-
-    private void Move()
-    {
-        transform.position = Vector3.Lerp(startPos, target, 1f);
-    }
-
-    private void Update()
-    {
-        Move();
-
-        if (particleSystem.time > 0.3)
+        if (null == particleSystem)
         {
-            PoolManager.Instance.topNoteProjPool.Push(this);
+            particleSystem = GetComponent<ParticleSystem>();
         }
+        transform.DOMove(target, 0.3f).SetEase(Ease.OutQuint).onComplete += () => PoolManager.Instance.topNoteProjPool.Push(this);
     }
-
 }

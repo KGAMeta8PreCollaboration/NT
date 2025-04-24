@@ -193,6 +193,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NeonHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 3019016241099385517, guid: b74d6bf6a2e3f8c49a95e22c1eb494ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b74d6bf6a2e3f8c49a95e22c1eb494ef, type: 3}
 --- !u!1001 &171630603
@@ -206,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202083122901304627, guid: 0dc61c7584080b0469ad790526255422,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5202083122901304652, guid: 0dc61c7584080b0469ad790526255422,
         type: 3}
@@ -367,6 +377,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1261397543663037075, guid: dcf3082bbb79c4445be4dccc98f2557b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcf3082bbb79c4445be4dccc98f2557b, type: 3}
 --- !u!1 &974281456
@@ -486,9 +501,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1138363792, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138363792, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138363792, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309282428, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1472190420, guid: d32b474d233496c4d974c19b591322a2, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929585570, guid: d32b474d233496c4d974c19b591322a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1945968144, guid: d32b474d233496c4d974c19b591322a2, type: 3}
       propertyPath: m_IsActive
@@ -500,6 +535,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 317597871042059976, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 826054383851599861, guid: d32b474d233496c4d974c19b591322a2,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -899,6 +939,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayableObject
       objectReference: {fileID: 0}
+    - target: {fileID: 3902564545372132098, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6171872906081332487, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691417806024037884, guid: d32b474d233496c4d974c19b591322a2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32b474d233496c4d974c19b591322a2, type: 3}
 --- !u!114 &976545851 stripped
@@ -1256,6 +1311,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireplayHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 6313376284731028145, guid: 151b9569f1bd5e34da5447f7d0fc49fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 151b9569f1bd5e34da5447f7d0fc49fe, type: 3}
 --- !u!1 &1308454389
@@ -1347,6 +1407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameSceneMove
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982072543300148259, guid: 58e3bf80675534d47873cd8d199aab43,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5982072543300148260, guid: 58e3bf80675534d47873cd8d199aab43,
         type: 3}
@@ -1484,6 +1549,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeteorHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 1807395551627978559, guid: 2c98975e85e43eb44975b8aac93ee040,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c98975e85e43eb44975b8aac93ee040, type: 3}
 --- !u!1001 &1994475889
@@ -1503,10 +1573,25 @@ PrefabInstance:
       propertyPath: phase3Pos
       value: 
       objectReference: {fileID: 1656351473}
+    - target: {fileID: 5412794739912874058, guid: 731d3ac3feaa5e048a6f54b487f8e204,
+        type: 3}
+      propertyPath: carMaterials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9fdcebc09513aff47837bd7aaa60afcb, type: 2}
+    - target: {fileID: 5412794739912874058, guid: 731d3ac3feaa5e048a6f54b487f8e204,
+        type: 3}
+      propertyPath: carMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b36423f873145e41b598b4a3a51c353, type: 2}
     - target: {fileID: 5412794739912874060, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}
       propertyPath: m_Name
       value: CarHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412794739912874060, guid: 731d3ac3feaa5e048a6f54b487f8e204,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5412794739912874061, guid: 731d3ac3feaa5e048a6f54b487f8e204,
         type: 3}
@@ -1576,6 +1661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WindowHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933172679708003553, guid: 02dfac598e5970f49b7109b513587690,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3933172679708003566, guid: 02dfac598e5970f49b7109b513587690,
         type: 3}
