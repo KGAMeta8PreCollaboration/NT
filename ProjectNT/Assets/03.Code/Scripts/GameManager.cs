@@ -140,7 +140,7 @@ public class GameManager : Singleton<GameManager>
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
         print($"게임매니저 싱글게임시작 뮤직이름 : {musicName}");
-        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath));
+        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath, "Single_Theme.wav"));
         AudioManager.Instance.SetAudioClips(projectToLoadedData.GetAudioClipsToProject(projectPath));
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);
         PlayMode = Enums.PlayMode.Single;
@@ -170,7 +170,7 @@ public class GameManager : Singleton<GameManager>
     // TODO : 멀티 데이터 여기서 넘겨줍니다.
     public void SetDataForMultiGameStart(BeatMapData loMapData1, BeatMapData loMapData2, string projectPath, string musicName)
     {
-        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath));
+        AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath, "Multi_Theme.wav"));
         AudioManager.Instance.SetAudioClips(projectToLoadedData.GetAudioClipsToProject(projectPath));
         _player1LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData1);
         _player2LoadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(loMapData2);
