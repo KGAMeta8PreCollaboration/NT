@@ -60,10 +60,10 @@ public class ResultPanel : Popup
         //추가
         _scoreCount.text = _scoreManager.score.ToString();
         _maxComboCount.text = _scoreManager.maxCombo.ToString();
-        //musicImage.sprite = //음악 이미지
-        //_musicNameText.text = //음악 이름 텍스트
-        //_musicArtistText.text = //음악 아티스트 이름 텍스트
-
+        musicImage.sprite = GameManager.Instance.musicImage;
+        // musicImage.sprite = //음악 이미지
+        _musicNameText.text = GameManager.Instance.musicName;
+        _musicArtistText.text = "";
         string musicName = GameManager.Instance.musicName;
         string difficulty = GameManager.Instance.difficulty.ToString();
 

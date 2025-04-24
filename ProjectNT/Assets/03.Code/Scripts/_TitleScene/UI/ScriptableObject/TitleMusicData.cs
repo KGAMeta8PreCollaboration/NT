@@ -26,13 +26,8 @@ public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
         musicAlbumArtSprite = Utility.ByteToSprite(projectData.thumbnailData);
         string path = Path.Combine(Application.persistentDataPath, "Projects", projectData.projectName);
         musicClip = GameManager.Instance.projectToLoadedData.GetBgmAudioClip(path, "BGM_Highlight.wav");
-        Debug.Log("Init TitleMusicData musicClip 이름 : " + musicClip.name);
         projectName = projectData.projectName;
         modeDiff = projectData.modeDiff;
     }
     
-    public void PrintInfo()
-    {
-        Debug.Log($"Music Name: {musicName}, Artist: {musicArtist}, Project Name: {projectName}, Mode: {modeDiff}, Clip Name: {musicClip?.name}");
-    }
 }

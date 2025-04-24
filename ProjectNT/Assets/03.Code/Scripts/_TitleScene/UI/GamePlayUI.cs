@@ -68,10 +68,7 @@ public class GamePlayUI : BaseTitleUI
         _titleSound = FindObjectOfType<TitleSound>(true);
         if (musicChangeSelect != null)
         {
-            print("게임플레이 UI OnEnable ");
             _titleSound.PlayGameSound();
-            // musicChangeAndSelect의 gameMusicData를 만들어서줘야할거같은데..
-            // TmpCheckDirectory.Instance.musicChangeAndSelect = musicChangeSelect;
             AddEventListeners();
         }
         else
@@ -91,7 +88,6 @@ public class GamePlayUI : BaseTitleUI
     public override void AddEventListeners()//켜질때 버튼 등록
     {
         base.AddEventListeners();
-        ResetMusicSet();//0번 음악 세팅, 동시에 게임 미리듣기 음악 재생
         SetDifficulty(easy, 1);//난이도 토글 1로 세팅
 
         gameStartButton.onClick.AddListener(StartGame);
@@ -127,17 +123,14 @@ public class GamePlayUI : BaseTitleUI
 
     public void StartGame()
     {
-        print("게임시작 버튼 클릭");
-        
-        print(gameType);
         //curMusicData 로 노래가지고 게임시작 로직
         if (gameType == UIGameType.Muliti)
         {
-            print("멀티 게임플레이 UI");
             //멀티플레이시 노래시작
         }
         else
         {
+            GameManager.Instance.musicImage = musicChangeSelect.CurMusicData.musicAlbumArtSprite;
             (BeatMapData beatMapData, string projectPath, string musicName) data = GetGameStartData();
             GameManager.Instance.difficulty = GetCurrentDifficulty();
             GameManager.Instance.musicName = data.musicName;
@@ -185,6 +178,7 @@ public class GamePlayUI : BaseTitleUI
             _ => Enums.ModeDiff.DUO2_EASY,
         };
         
+        GameManager.Instance.musicImage = musicChangeSelect.CurMusicData.musicAlbumArtSprite;
         BeatMapData beatMapData1 = GetBeatMapData(projectPath, modeDiff1);
         BeatMapData beatMapData2 = GetBeatMapData(projectPath, modeDiff2);
         string musicName = musicChangeSelect.currentMusicNode.Value.musicName;
@@ -213,30 +207,6 @@ public class GamePlayUI : BaseTitleUI
         if (superHade.isOn)
             return Difficulty.SuperHard;
         return Difficulty.Easy;
-    }
-
-    //음악 재시작
-    public void MusicSoundReplay()
-    {
-        Debug.Log($"노래 Restart : {musicChangeSelect.CurMusicData.musicName}");
-        musicChangeSelect.ReplayMusic();
-        if (gameType == UIGameType.Muliti)
-        {
-            //멀티플레이어시 음악 재시작 동기화
-        }
-    }
-
-    //인덱스 0번음악으로 변경(시작)
-    public void ResetMusicSet()
-    {
-        // TODO: 임의로 하는게 아니라 알아서 셋팅된 MusicChangeAndSelect가 알아서 호출해야함
-        // musicChangeSelect.ChangeMusic("first");
-        //TestStartGameData.Instance.musicName = musicChangeSelect.CurMusicData.musicName;
-        //TestStartGameData.Instance.difficulty = 1;
-        if (gameType == UIGameType.Muliti)
-        {
-            //멀티플레이어시 노래 넘어가는거 동기화
-        }
     }
 
     //다음 노래로 넘어감 (RightButton)
