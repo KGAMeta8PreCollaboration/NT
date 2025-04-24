@@ -72,9 +72,16 @@ public class MultiLobbyUI : MonoBehaviourPun
         photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.Others);
     }
 
-    public void SetMusicNodeToString(string musicName)
+    public void SendSetMusicNodeToString(string musicName)
     {
         print("SetMusicNodeToString");
+        //gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
+        photonView.RPC(nameof(RPC_SetMusicNodeToString), RpcTarget.Others, musicName);
+    }
+
+    [PunRPC]
+    public void RPC_SetMusicNodeToString(string musicName)
+    {
         gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
     }
 
