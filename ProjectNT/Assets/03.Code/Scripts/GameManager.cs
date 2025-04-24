@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -27,11 +28,12 @@ public class GameManager : Singleton<GameManager>
     //멀티 플레이를 위한 변수들
     public PhotonManager PhotonManager { get; private set; }
     public MultiGameController MultiGameController { get; private set; }
-    public bool IsMulti { get; private set; }
+    public MultiLobbyController MultiLobbyController { get; private set; }
+    public bool IsMulti { get; set; }
     private List<LoadedNoteData> _player1LoadedNoteDatas = new List<LoadedNoteData>();
     private List<LoadedNoteData> _player2LoadedNoteDatas = new List<LoadedNoteData>();
 
-    public string musicName; 
+    public string musicName;
     public Difficulty difficulty;
     public float bpm;
     public float phase2ChangeTime;
@@ -65,6 +67,7 @@ public class GameManager : Singleton<GameManager>
             noteGenerators[0].Init();
             phaseEnumerator = PhaseTracker();
         }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         PhotonManager = GetComponentInChildren<PhotonManager>();
     }
@@ -96,11 +99,18 @@ public class GameManager : Singleton<GameManager>
             OnGoToLobby += () =>
             {
                 PhotonManager.LeaveRoom();
-                IsMulti = false;
+                // IsMulti = false;
+                // Lobby 로드할때 씬체인지드 -> ismulti 확인 -> 멀티룸으로 이동, IsMulti = false;
             };
             MultiGameController = FindObjectOfType<MultiGameController>();
             MultiGameController.SetupAndReady(_player1LoadedNoteDatas, _player2LoadedNoteDatas);
             phaseEnumerator = PhaseTracker();
+        }
+        else if (scene.name == "LobbyScene" && IsMulti == true)
+        {
+            print($"=========멀티->로비=========");
+            MultiLobbyController = FindObjectOfType<MultiLobbyController>();
+            MultiLobbyController.OnActiveSceneChanged();
         }
     }
 
