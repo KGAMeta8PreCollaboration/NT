@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
+
+    [SerializeField] private List<Button> _gamePlayUIButtons = new List<Button>();
 
     private void Start()
     {
@@ -73,6 +76,9 @@ public class MultiLobbyUI : MonoBehaviourPun
             _startGameCoroutine = null;
         }
 
+
+        ControlGamePlayUIButtonInteractable(false);
+
         CountStartGameActive(true);
         _countStartGame.text = ""; // 카운트 UI 초기화
 
@@ -92,6 +98,8 @@ public class MultiLobbyUI : MonoBehaviourPun
 
         if (_startGameCoroutine != null && PhotonNetwork.PlayerList.Length == peopleCount)
         {
+            _popupManager.ClosePopup<AlarmPopup>();
+
             var data = gamePlayUI.GetMultiGameStartData();
             GameManager.Instance.SetDataForMultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
             if (PhotonNetwork.IsMasterClient) GameManager.Instance.MultiGameStart();
@@ -126,6 +134,8 @@ public class MultiLobbyUI : MonoBehaviourPun
         }
 
         Debug.Log("게임 시작이 취소되었습니다!");
+
+        ControlGamePlayUIButtonInteractable(true);
 
         _countStartGame.text = "";
         CountStartGameActive(false);
@@ -189,5 +199,13 @@ public class MultiLobbyUI : MonoBehaviourPun
     private void RPC_PreviousMusicButton()
     {
         gamePlayUI.PreviousMusicButton();
+    }
+
+    private void ControlGamePlayUIButtonInteractable(bool isOn)
+    {
+        foreach (Button button in _gamePlayUIButtons)
+        {
+            button.interactable = isOn;
+        }
     }
 }

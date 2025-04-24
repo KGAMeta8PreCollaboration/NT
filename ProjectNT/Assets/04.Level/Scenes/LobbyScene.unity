@@ -1821,7 +1821,7 @@ PrefabInstance:
     - target: {fileID: 4444866515538181206, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
       propertyPath: gameSceneName
-      value: SingleGameReduction 1
+      value: SingleGameReduction 2
       objectReference: {fileID: 0}
     - target: {fileID: 4444866515538181207, guid: c76c9b96609123747be2d94d0c4f92a9,
         type: 3}
@@ -49081,6 +49081,11 @@ MonoBehaviour:
   countStartGame: 5
   gamePlayUI: {fileID: 1423892284880246530}
   peopleCount: 2
+  _gamePlayUIButtons:
+  - {fileID: 1423892284665213426}
+  - {fileID: 1423892284790554032}
+  - {fileID: 216747890}
+  - {fileID: 2173348613064402101}
 --- !u!224 &8153908206073060158
 RectTransform:
   m_ObjectHideFlags: 0
