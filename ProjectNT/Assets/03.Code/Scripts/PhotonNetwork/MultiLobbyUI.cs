@@ -16,7 +16,7 @@ public class MultiLobbyUI : MonoBehaviourPun
     [SerializeField] private Button _nextSongButton;
     [SerializeField] private TextMeshProUGUI _countStartGame;
     [SerializeField] private int countStartGame = 5;
-    [SerializeField] private GamePlayUI gamePlayUI;
+    [SerializeField] public GamePlayUI gamePlayUI;
     [Header("게임을 시작하기 위한 플레이어 수")]
     public int peopleCount = 2;
 
@@ -30,6 +30,7 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void Start()
     {
+
         _popupManager = FindObjectOfType<PopupManager>();
 
         _quitButton.onClick.AddListener(QuitButtonClick);
@@ -60,11 +61,23 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void PrevSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.Others);
     }
     private void NextSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.Others);
+    }
+
+    public void SendSetMusicNodeToString(string musicName)
+    {
+        print("SetMusicNodeToString");
+        photonView.RPC(nameof(RPC_SetMusicNodeToString), RpcTarget.Others, musicName);
+    }
+
+    [PunRPC]
+    public void RPC_SetMusicNodeToString(string musicName)
+    {
+        gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
     }
 
     [PunRPC]
@@ -102,7 +115,8 @@ public class MultiLobbyUI : MonoBehaviourPun
 
             var data = gamePlayUI.GetMultiGameStartData();
             GameManager.Instance.SetDataForMultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
-            if (PhotonNetwork.IsMasterClient) GameManager.Instance.MultiGameStart();
+
+            GameManager.Instance.MultiGameStart();
         }
     }
 
