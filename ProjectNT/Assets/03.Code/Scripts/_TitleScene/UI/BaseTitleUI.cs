@@ -27,7 +27,7 @@ public class BaseTitleUI : MonoBehaviour
 
     public virtual void RemoveEventListeners()
     {
-        closeButton.onClick.RemoveListener(CloseUIButtonClick);
+        closeButton?.onClick.RemoveListener(CloseUIButtonClick);
     }
 
     public virtual void CloseUIButtonClick()

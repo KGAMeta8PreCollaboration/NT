@@ -28,7 +28,17 @@ public class MusicChangeAndSelect : MonoBehaviour
         currentMusicNode = musicList.First;
         SetInternalData(currentMusicNode.Value);
     }
-    
+
+    public void SetMusicNodeToString(string musicName)
+    {
+        for (int i = 0; i < musicList.Count; i++)
+        {
+            ChangeMusic("next");
+            if (string.Equals(CurMusicData.musicName, musicName))
+                return;
+        }
+    }
+
 
     private void OnEnable()
     {
@@ -48,12 +58,11 @@ public class MusicChangeAndSelect : MonoBehaviour
 
     private void SetInternalData(TitleMusicData data)
     {
-        if (musicImage) musicImage.sprite = data.musicAlbumArtSprite; 
+        if (musicImage) musicImage.sprite = data.musicAlbumArtSprite;
         if (musicArtistText) musicArtistText.text = data.musicArtist;
         if (musicNameText) musicNameText.text = data.musicName;
         if (tilteSound) tilteSound.SetMusicClip(data.musicClip);
-        
-        Debug.Log($"{gameObject.name} : SetInternalData");
+
         Difficulty difficulty = Difficulty.None;
         if (parentGamePlayUI.gameType == UIGameType.Single)
         {
@@ -68,16 +77,16 @@ public class MusicChangeAndSelect : MonoBehaviour
         }
         else
         {
-            if ((data.modeDiff & Enums.ModeDiff.DUO1_EASY) != 0 && 
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_EASY) != 0 &&
                 (data.modeDiff & Enums.ModeDiff.DUO2_EASY) != 0)
                 difficulty |= Difficulty.Easy;
-            if ((data.modeDiff & Enums.ModeDiff.DUO1_NORMAL) != 0 && 
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_NORMAL) != 0 &&
                 (data.modeDiff & Enums.ModeDiff.DUO2_NORMAL) != 0)
                 difficulty |= Difficulty.Normal;
-            if ((data.modeDiff & Enums.ModeDiff.DUO1_HARD) != 0 && 
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_HARD) != 0 &&
                 (data.modeDiff & Enums.ModeDiff.DUO2_HARD) != 0)
                 difficulty |= Difficulty.Hard;
-            if ((data.modeDiff & Enums.ModeDiff.DUO1_EXTREAM) != 0 && 
+            if ((data.modeDiff & Enums.ModeDiff.DUO1_EXTREAM) != 0 &&
                 (data.modeDiff & Enums.ModeDiff.DUO2_EXTREAM) != 0)
                 difficulty |= Difficulty.SuperHard;
         }

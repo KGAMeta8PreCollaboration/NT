@@ -25,6 +25,7 @@ public class EffectManager : Singleton<EffectManager>
     private FireplayHandler fireplayHandler;
     private LazerHandler lazerHandler;
     private WindowHandler windowHandler;
+    private DisplayBoardHandler displayBoardHandler;
 
     public Action<Note, int, Enums.PlayMode> playerMapEffect;
 
@@ -75,6 +76,7 @@ public class EffectManager : Singleton<EffectManager>
         fireplayHandler = FindObjectOfType<FireplayHandler>();
         lazerHandler = FindObjectOfType<LazerHandler>();
         windowHandler = FindObjectOfType<WindowHandler>();
+        displayBoardHandler = FindObjectOfType<DisplayBoardHandler>();
     }
 
     public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
@@ -180,8 +182,15 @@ public class EffectManager : Singleton<EffectManager>
                     p1TopNoteAct += lazerHandler.Play_M_L_P_3;
                     p2TopNoteAct += lazerHandler.Play_S_P_3;
                     p2TopNoteAct += lazerHandler.Play_M_R_P_3;
-
                 }
+
+                if (displayBoardHandler != null)
+                {
+                    //10콤보
+                    p1TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
+                    p2TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
+                }
+
                 if (null == windowHandler) { break; }
 
                 break;
@@ -190,10 +199,19 @@ public class EffectManager : Singleton<EffectManager>
             case Enums.Phase.Phase3:
                 SetActionNull();
                 Phase2End();
+
+                //퍼펙트
                 p1PerfectAct += fireplayHandler.PlayFireplay;
                 p2PerfectAct += fireplayHandler.PlayFireplay;
+
+                //상단 노드
                 p1TopNoteAct += meteorHandler.PlayMeteor;
                 p2TopNoteAct += meteorHandler.PlayMeteor;
+
+                //10콤보
+                p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+                p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");
@@ -217,25 +235,14 @@ public class EffectManager : Singleton<EffectManager>
     {
         carHandler?.MovePhase3Pos();
         // TODO 페이즈 종료 시 SetActionNull 메서드 호출하기 때문에 액션 구독해제 따로 안하셔도 됩니다.
-        if (lazerHandler != null)
-        {
-            //20콤보
-            p1TwentyComboAct -= lazerHandler.Play_S_P_2;
-            p1TwentyComboAct -= lazerHandler.Play_M_L_P_2;
-            p2TwentyComboAct -= lazerHandler.Play_S_P_2;
-            p2TwentyComboAct -= lazerHandler.Play_M_R_P_2;
-
-            //상단 노트 클리어
-            p1TopNoteAct -= lazerHandler.Play_S_P_3;
-            p1TopNoteAct -= lazerHandler.Play_M_L_P_3;
-            p2TopNoteAct -= lazerHandler.Play_S_P_3;
-            p2TopNoteAct -= lazerHandler.Play_M_R_P_3;
-        }
+        // -> 오홍 알겠습니다
         if (windowHandler != null)
         {
             windowHandler.LeftEffectEnd();
             windowHandler.RightEffectEnd();
         }
+
+        displayBoardHandler.SetDisplayOriginal();
     }
 
     private void SetActionNull()

@@ -19,7 +19,6 @@ public class TmpCheckDirectory : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "Projects");
         projectList = GetLobbySongData(path);
 
-        Debug.Log("프로젝트 리스트 갯수 : " + projectList.Length);
         if (projectList.Length == 0)
             return;
         for (int i = 0; i < projectList.Length; i++)
@@ -51,6 +50,8 @@ public class TmpCheckDirectory : MonoBehaviour
             if ((musicData.modeDiff & Enums.MULTI_DIFF_MODES) != 0)
                 multiModeData.Add(musicData);
         }
+        singleModeData.Sort();
+        multiModeData.Sort();
         singleModeSelector.Init(singleModeData);
         multiModeSelector.Init(multiModeData);
     }

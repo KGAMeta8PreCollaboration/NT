@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class MultiLobbyController : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPointPlayers;
@@ -11,12 +12,21 @@ public class MultiLobbyController : MonoBehaviour
 
     [SerializeField] private VRPlayer _lobbyPlayer;
 
+    [SerializeField] private InteractableObject _multiObject;
+
     private IEnumerator Start()
     {
         yield return null;
         GameManager.Instance.PhotonManager.joinedRoom += OnJoinedRoom;
         GameManager.Instance.PhotonManager.disconnectedServer += OnDisconnectedServer;
         GameManager.Instance.PhotonManager.leftRoomPlayer += OnLeftRoomPlayer;
+    }
+
+    public void OnActiveSceneChanged()
+    {
+        print("여기 들어옴");
+        _multiObject.MultiPlayOpen();
+
     }
 
     public void OnJoinedRoom()

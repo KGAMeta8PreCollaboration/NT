@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ public class MultiLobbyUI : MonoBehaviourPun
     [SerializeField] private Button _nextSongButton;
     [SerializeField] private TextMeshProUGUI _countStartGame;
     [SerializeField] private int countStartGame = 5;
-    [SerializeField] private GamePlayUI gamePlayUI;
+    [SerializeField] public GamePlayUI gamePlayUI;
     [Header("게임을 시작하기 위한 플레이어 수")]
     public int peopleCount = 2;
 
@@ -25,8 +26,11 @@ public class MultiLobbyUI : MonoBehaviourPun
     private Coroutine _startGameCoroutine;
     private Coroutine _countStartGameCoroutine;
 
+    [SerializeField] private List<Button> _gamePlayUIButtons = new List<Button>();
+
     private void Start()
     {
+
         _popupManager = FindObjectOfType<PopupManager>();
 
         _quitButton.onClick.AddListener(QuitButtonClick);
@@ -57,11 +61,23 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void PrevSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(RPC_PreviousMusicButton), RpcTarget.Others);
     }
     private void NextSongButtonClick()
     {
-        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.OthersBuffered);
+        photonView.RPC(nameof(RPC_NextMusicButton), RpcTarget.Others);
+    }
+
+    public void SendSetMusicNodeToString(string musicName)
+    {
+        print("SetMusicNodeToString");
+        photonView.RPC(nameof(RPC_SetMusicNodeToString), RpcTarget.Others, musicName);
+    }
+
+    [PunRPC]
+    public void RPC_SetMusicNodeToString(string musicName)
+    {
+        gamePlayUI.musicChangeSelect.SetMusicNodeToString(musicName);
     }
 
     [PunRPC]
@@ -72,6 +88,9 @@ public class MultiLobbyUI : MonoBehaviourPun
             StopCoroutine(_startGameCoroutine);
             _startGameCoroutine = null;
         }
+
+
+        ControlGamePlayUIButtonInteractable(false);
 
         CountStartGameActive(true);
         _countStartGame.text = ""; // 카운트 UI 초기화
@@ -92,9 +111,12 @@ public class MultiLobbyUI : MonoBehaviourPun
 
         if (_startGameCoroutine != null && PhotonNetwork.PlayerList.Length == peopleCount)
         {
+            _popupManager.ClosePopup<AlarmPopup>();
+
             var data = gamePlayUI.GetMultiGameStartData();
             GameManager.Instance.SetDataForMultiGameStart(data.beatMapData1, data.beatMapData2, data.projectPath, data.musicName);
-            if (PhotonNetwork.IsMasterClient) GameManager.Instance.MultiGameStart();
+
+            GameManager.Instance.MultiGameStart();
         }
     }
 
@@ -126,6 +148,8 @@ public class MultiLobbyUI : MonoBehaviourPun
         }
 
         Debug.Log("게임 시작이 취소되었습니다!");
+
+        ControlGamePlayUIButtonInteractable(true);
 
         _countStartGame.text = "";
         CountStartGameActive(false);
@@ -189,5 +213,13 @@ public class MultiLobbyUI : MonoBehaviourPun
     private void RPC_PreviousMusicButton()
     {
         gamePlayUI.PreviousMusicButton();
+    }
+
+    private void ControlGamePlayUIButtonInteractable(bool isOn)
+    {
+        foreach (Button button in _gamePlayUIButtons)
+        {
+            button.interactable = isOn;
+        }
     }
 }
