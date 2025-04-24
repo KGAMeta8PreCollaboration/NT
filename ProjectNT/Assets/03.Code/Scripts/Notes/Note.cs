@@ -67,6 +67,10 @@ public abstract class Note : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (null == target)
+        {
+            return;
+        }
         if (_isTargetReached || Vector3.Distance(transform.position, target.position) < 0.01f)
         {
             _isTargetReached = true;

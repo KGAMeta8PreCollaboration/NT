@@ -10,13 +10,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class TopNote : Note
 {
     [SerializeField] private new ParticleSystem particleSystem;
-    private XRSimpleInteractable xRSimInter;
     public bool canInter = false;
     private bool isIndicatorOn;
-    private void Awake()
-    {
-        xRSimInter = GetComponent<XRSimpleInteractable>();
-    }
 
     private void OnDisable()
     {
@@ -54,22 +49,15 @@ public class TopNote : Note
 
         _scoreManager = FindObjectOfType<ScoreManager>();
 
-        xRSimInter = GetComponent<XRSimpleInteractable>();
-
     }
     public void Hit()
     {
 
-        //if (false == canInter || false == xRSimInter.isHovered)
-        //{
-        //    return;
-        //}
         isHit = true;
         this.judgementType = JudgementType.PERFECT;
         OnHit?.Invoke(this);
         OnHit = null;
         EffectManager.Instance.playerMapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
-        // EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
         AudioManager.Instance.Play(hitSound.name, transform);
         PoolManager.Instance.HitEffect(transform.position, false);
 
