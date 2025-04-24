@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "TitleMusicData", menuName = "ScriptableObjects/TitleMusicData", order = int.MaxValue)]
-public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
+public class TitleMusicData : ScriptableObject, IComparable<TitleMusicData>//타이틀씬 음악 샘플파일
 {
     [Header("음악 이름")]
     public string musicName;
@@ -29,5 +30,9 @@ public class TitleMusicData : ScriptableObject//타이틀씬 음악 샘플파일
         projectName = projectData.projectName;
         modeDiff = projectData.modeDiff;
     }
-    
+
+    public int CompareTo(TitleMusicData other)
+    {
+        return string.Compare(musicName, other.musicName, StringComparison.Ordinal);
+    }
 }
