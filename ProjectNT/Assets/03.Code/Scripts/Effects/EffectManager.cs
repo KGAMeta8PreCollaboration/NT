@@ -171,11 +171,11 @@ public class EffectManager : Singleton<EffectManager>
 
                 if (lazerHandler != null)
                 {
-                    //20콤보
-                    p1TwentyComboAct += lazerHandler.Play_S_P_2;
-                    p1TwentyComboAct += lazerHandler.Play_M_L_P_2;
-                    p2TwentyComboAct += lazerHandler.Play_S_P_2;
-                    p2TwentyComboAct += lazerHandler.Play_M_R_P_2;
+                    //10콤보
+                    p1TenComboAct += lazerHandler.Play_S_P_2;
+                    p1TenComboAct += lazerHandler.Play_M_L_P_2;
+                    p2TenComboAct += lazerHandler.Play_S_P_2;
+                    p2TenComboAct += lazerHandler.Play_M_R_P_2;
 
                     //상단 노트 클리어
                     p1TopNoteAct += lazerHandler.Play_S_P_3;
@@ -186,9 +186,9 @@ public class EffectManager : Singleton<EffectManager>
 
                 if (displayBoardHandler != null)
                 {
-                    //10콤보
-                    p1TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
-                    p2TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
+                    //20콤보
+                    p1TwentyComboAct += displayBoardHandler.ChangeDisplayBoard;
+                    p2TwentyComboAct += displayBoardHandler.ChangeDisplayBoard;
                 }
 
                 if (null == windowHandler) { break; }
@@ -209,8 +209,14 @@ public class EffectManager : Singleton<EffectManager>
                 p2TopNoteAct += meteorHandler.PlayMeteor;
 
                 //10콤보
-                p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
-                p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+                //p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+                //p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+
+                //20콤보
+                p1TwentyComboAct += lazerHandler.Play_S_P_3;
+                p1TwentyComboAct += lazerHandler.Play_M_L_P_3;
+                p2TwentyComboAct += lazerHandler.Play_S_P_3;
+                p2TwentyComboAct += lazerHandler.Play_M_R_P_3;
 
                 break;
             default:
@@ -242,7 +248,8 @@ public class EffectManager : Singleton<EffectManager>
             windowHandler.RightEffectEnd();
         }
 
-        displayBoardHandler.SetDisplayOriginal();
+        //2페 끝나면 전광판을 이퀄라이져로 고정
+        displayBoardHandler.SetDisplayEqualizer();
     }
 
     private void SetActionNull()

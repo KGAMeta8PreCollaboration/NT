@@ -83,30 +83,30 @@ public class LazerHandler : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //{
-        //    Play_S_P_2();
-        //}
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    Play_S_P_3();
-        //}
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    Play_M_L_P_2();
-        //}
-        //if (Input.GetKeyDown(KeyCode.V))
-        //{
-        //    Play_M_L_P_3();
-        //}
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    Play_M_R_P_2();
-        //}
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    Play_M_R_P_3();
-        //}
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Play_S_P_2();
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Play_S_P_3();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Play_M_L_P_2();
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Play_M_L_P_3();
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Play_M_R_P_2();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Play_M_R_P_3();
+        }
     }
 
     //솔로 페이즈2 파티클 실행
