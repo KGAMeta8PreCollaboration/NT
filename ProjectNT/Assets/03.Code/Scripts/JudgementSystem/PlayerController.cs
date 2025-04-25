@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
                     return;
 
                 TopNoteProjectile proj = PoolManager.Instance.topNoteProjPool.Pop();
-                proj.transform.SetParent(transform, true);
+                proj.transform.SetParent(null, true);
                 proj.gameObject.transform.position = transform.position;
                 proj.Init(transform.position, hit.transform.position);
 
@@ -179,7 +179,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
 
     private void PlayerGameEndAction()
     {
