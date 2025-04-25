@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float velocityMagnitudeThreshold;
     public float hitThreshold = 0.1f; // 판정을 위한 거리 허용 오차
     [SerializeField] private ParticleSystem triggerEffect;
+    [SerializeField] private Collider _sphereColl;
     private ActionBasedController _controller;
     private XRRayInteractor rayInter;
     private Vector3 prevPos = new Vector3();
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.IsMulti)
         {
             _photonView = GetComponentInParent<PhotonView>();
-
+            _sphereColl.enabled = _photonView.IsMine;
         }
     }
     private void OnEnable()
