@@ -6,33 +6,39 @@ using UnityEngine;
 public class DisplayBoardHandler : MonoBehaviour
 {
     public Action changeDisplayBoardCallback;
-    public Action turnOnDisplayBoardCallback;
-    public Action setDisplayOriginalCallback;
+    //public Action turnOnDisplayBoardCallback;
+    //public Action setDisplayOriginalCallback;
+    public Action setDisplayEqualizerCallback;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            changeDisplayBoardCallback?.Invoke();
-        }   
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            turnOnDisplayBoardCallback?.Invoke();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        changeDisplayBoardCallback?.Invoke();
+    //    }   
+    //    if (Input.GetKeyDown(KeyCode.L))
+    //    {
+    //        turnOnDisplayBoardCallback?.Invoke();
+    //    }
+    //}
 
     public void ChangeDisplayBoard()
     {
         changeDisplayBoardCallback?.Invoke();
     }
 
-    public void TurnOnDisplayBoard()
-    {
-        turnOnDisplayBoardCallback?.Invoke();
-    }
+    //public void TurnOnDisplayBoard()
+    //{
+    //    turnOnDisplayBoardCallback?.Invoke();
+    //}
 
-    public void SetDisplayOriginal()
+    //public void SetDisplayOriginal()
+    //{
+    //    setDisplayOriginalCallback?.Invoke();
+    //}
+
+    public void SetDisplayEqualizer()
     {
-        setDisplayOriginalCallback?.Invoke();
+        setDisplayEqualizerCallback?.Invoke();
     }
 }

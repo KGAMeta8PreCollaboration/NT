@@ -43,5 +43,8 @@ public class Meteor : MonoBehaviour
         _ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         transform.position = _startPos;
+
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false); // 다시 꺼짐
     }
 }
