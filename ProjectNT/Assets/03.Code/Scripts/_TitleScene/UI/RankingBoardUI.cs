@@ -13,12 +13,25 @@ public class RankingBoardUI : BaseTitleUI
     public GameObject rankingBarPrefab;
     public RectTransform contentArea;
     public GameObject loadingPanel;
-
+    
     private List<GameObject> rankingBarUIs = new List<GameObject>();
+    private bool _isDataLoaded = false;
 
     public override void Awake()
     {
         base.Awake();
+    }
+
+    public void SetHighlight(int index)
+    {
+        _isDataLoaded = false;
+        StartCoroutine(SetHighlightCoroutine(index));
+    }
+    
+    private IEnumerator SetHighlightCoroutine(int index)
+    {
+        yield return new WaitUntil(() => _isDataLoaded);
+        rankingBarUIs[index].GetComponent<RankingBar>().UIColorChane(Color.yellow);
     }
 
     private void OnEnable()
@@ -78,6 +91,7 @@ public class RankingBoardUI : BaseTitleUI
                 rank++;
             }
         }
+        _isDataLoaded = true;
         LastUpdateTime(); //UI 업데이트 후 시간 표시
         loadingPanel.SetActive(false);
     }
