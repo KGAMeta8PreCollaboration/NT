@@ -17,7 +17,7 @@ public class ProjectLoader : MonoBehaviour
 {
     #region 상수정의
 
-    private const string AlphanumericRegex = @"[^0-9a-zA-Z가-힣]";
+    private const string AlphanumericRegex = @"[^0-9a-zA-Z가-힣 ]";
     private const string NumericRegex = @"[^0-9]";
     private const int DefaultTextureHeight = 100;
     private const int DefaultTextureWidth = 100;
