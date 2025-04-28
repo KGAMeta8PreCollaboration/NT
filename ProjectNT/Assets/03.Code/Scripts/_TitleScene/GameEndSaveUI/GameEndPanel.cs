@@ -11,7 +11,6 @@ public class GameEndPanel : MonoBehaviour
     public LocalSaveManager localSaveManager;
     public NewHighScroeUI newHighScroeUI;
     public RankRegistrationUI rankRegistrationUI;
-    public InGameRankingUI inGameRankingUI;
 
     public PlayerLocalSaveData newData;
     public RankingBoardUI rankingBoardUI;
@@ -23,7 +22,6 @@ public class GameEndPanel : MonoBehaviour
     {
         newHighScroeUI.gameObject.SetActive(false);
         rankRegistrationUI.gameObject.SetActive(false);
-        inGameRankingUI.gameObject.SetActive(false);
         rankingBoardUI.gameObject.SetActive(false);
     }
 
@@ -40,15 +38,12 @@ public class GameEndPanel : MonoBehaviour
 
     public IEnumerator NewHighScoreCheck()
     {
-        print("NewHighScoreCheck 1");
         List<PlayerLocalSaveData> newDataList = new List<PlayerLocalSaveData>();
 
-        print("NewHighScoreCheck 2");
         //데이터전부 넣고
         yield return localSaveManager.LocalDataLoad();
         newDataList.AddRange(localSaveManager.datas);
         newDataList.Add(newData);
-        print("NewHighScoreCheck 3");
 
         //비교
         newDataList.Sort((player1, player2) =>
@@ -61,23 +56,17 @@ public class GameEndPanel : MonoBehaviour
             return scoreComparison;
         });
 
-        print("NewHighScoreCheck 4");
         if (newDataList.Count > 50) //50개만 남기기
         {
             newDataList.RemoveRange(50, newDataList.Count - 50);
         }
 
-        print("NewHighScoreCheck 5");
         if (newDataList.Contains(newData))
         {
             //새로운 데이터가 50위안에 듬
-            print("NewHighScoreCheck 5 - 1");
             int rank = newDataList.IndexOf(newData) + 1;//새로운 데이터가 몇등인지
             newDataNumber = rank;
-            print("NewHighScoreCheck 5 - 2");
-            Debug.Log($"newDataNumber : {newDataNumber}, rank : {rank}");
             OpenNewHighScroeUI(rank);//새로운 데이터가 몇등인지 UI에 표시
-            print("NewHighScoreCheck 5 - 3");
             Debug.Log("새로운 데이터가 50위안에 들어감");
         }
         else
@@ -85,7 +74,6 @@ public class GameEndPanel : MonoBehaviour
             //새로운 데이터가 50위안에 못 듬
             Debug.Log("새로운 데이터가 50위에 안들어감");
         }
-        print("NewHighScoreCheck 6");
     }
 
     public void OpenNewHighScroeUI(int rank)//최고 점수 갱신 UI 오픈
@@ -96,7 +84,6 @@ public class GameEndPanel : MonoBehaviour
         newHighScroeUI.yesButtonAction += OpenRankRegistrationUI;//등록UI 오픈 등록
         newHighScroeUI.noButtonAction += CloseUI;//팝업 닫기
         curUI = newHighScroeUI.gameObject;
-        Debug.Log("새로운 데이터 등록 창");
     }
 
     public void OpenRankRegistrationUI()//등록 UI 오픈
@@ -105,7 +92,6 @@ public class GameEndPanel : MonoBehaviour
         rankRegistrationUI.gameObject.SetActive(true);
         rankRegistrationUI.registrationActuon += RegistrationSaveData;//저장 후 순위표 오픈
         curUI = rankRegistrationUI.gameObject;
-        Debug.Log("등록할 이름 설정 창");
     }
 
     public void RegistrationSaveData()//이름 저장 후 로컬 데이터 폴더에 저장
@@ -116,9 +102,7 @@ public class GameEndPanel : MonoBehaviour
 
     public IEnumerator DataSave(Action action)
     {
-        Debug.Log("이름 결정");
         yield return StartCoroutine(localSaveManager.LocalDataSave(newData));
-        Debug.Log("OpenInGameRankingUI로 이동");
         action?.Invoke();
     }
 
@@ -129,9 +113,8 @@ public class GameEndPanel : MonoBehaviour
         rankingBoardUI.gameObject.SetActive(true);
         // curUI = inGameRankingUI.gameObject;
         curUI = rankingBoardUI.gameObject;
-        inGameRankingUI.timeOverAction += OpenMusicSelectUI;//로비로 이동 등록
-        inGameRankingUI.newDataNumber = newDataNumber;
-        Debug.Log($"newDataNumber : {newDataNumber}");
+        rankingBoardUI.Init();
+        StartCoroutine(rankingBoardUI.SetHighlightIndex(newDataNumber));
         Debug.Log("인 게임 순위표 표시");
     }
 
