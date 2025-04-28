@@ -1,3 +1,4 @@
+using System;
 using Game;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,12 @@ public class ResultPanel : Popup
     [SerializeField] private Button restartButton;//재시작 버튼
     [SerializeField] private Button musicSelectButton;//곡 선택 이동 버튼
     [SerializeField] private GameEndPanel endPanel;//최고점수 갱신시 활성화될 UI
+    [SerializeField] private GameObject uiObject;
+
+    private void OnEnable()
+    {
+        uiObject.SetActive(false);
+    }
 
     public void DisplayPanel()
     {

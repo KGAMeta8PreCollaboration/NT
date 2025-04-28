@@ -14,7 +14,6 @@ public class GameEndPanel : MonoBehaviour
 
     public PlayerLocalSaveData newData;
     public RankingBoardUI rankingBoardUI;
-    
     private GameObject curUI = null;
     private int newDataNumber = 0;
 
