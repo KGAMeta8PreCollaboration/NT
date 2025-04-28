@@ -10,6 +10,7 @@ public class MultiLobbyUI : MonoBehaviourPun
 {
     [SerializeField] private Image _connectImagePlayer1;
     [SerializeField] private Image _connectImagePlayer2;
+    [SerializeField] private Image _clockImage;
     [SerializeField] private Button _quitButton;
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _prevSongButton;
@@ -56,6 +57,7 @@ public class MultiLobbyUI : MonoBehaviourPun
         else
         {
             _popupManager.OpenPopup<AlarmPopup>().SetPopup("플레이어 수가 부족합니다.", "확인");
+            _clockImage.gameObject.SetActive(false);
         }
     }
 
@@ -158,6 +160,7 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     public void CountStartGameActive(bool isActive)
     {
+        _clockImage.gameObject.SetActive(isActive);
         _countStartGame.gameObject.SetActive(isActive);
     }
 

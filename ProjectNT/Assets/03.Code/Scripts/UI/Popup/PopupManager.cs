@@ -22,7 +22,7 @@ public class PopupManager : MonoBehaviour
 
         if (foundPopup != null)
         {
-            foundPopup.transform.SetAsLastSibling();
+            //foundPopup.transform.SetAsLastSibling();
             foundPopup.gameObject.SetActive(true);
         }
 
