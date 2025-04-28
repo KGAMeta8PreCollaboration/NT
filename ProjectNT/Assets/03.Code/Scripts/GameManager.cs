@@ -117,8 +117,8 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator PhaseTracker()
     {
         // double phase1Time = AudioSettings.dspTime + phase2;
-        double phase2Time = AudioSettings.dspTime + phase3ChangeTime;
-        double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
+        double phase2Time = AudioManager.Instance.startDspTime + phase3ChangeTime;
+        double phase3Time = AudioManager.Instance.startDspTime + AudioManager.Instance.BgmLength;
 
 
         gameSceneMove.mapmovePosTimes[0].travelTime = phase2ChangeTime;
@@ -126,7 +126,7 @@ public class GameManager : Singleton<GameManager>
         gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3ChangeTime;
         double curr = AudioSettings.dspTime + phase2ChangeTime;
         List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
-        {
+        { 
             (phase2Time, Enums.Phase.Phase2),
             (phase3Time, Enums.Phase.Phase3)
         };
