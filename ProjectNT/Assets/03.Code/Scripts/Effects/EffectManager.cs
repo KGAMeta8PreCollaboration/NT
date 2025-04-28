@@ -201,22 +201,31 @@ public class EffectManager : Singleton<EffectManager>
                 Phase2End();
 
                 //퍼펙트
-                p1PerfectAct += fireplayHandler.PlayFireplay;
-                p2PerfectAct += fireplayHandler.PlayFireplay;
+                if (fireplayHandler)
+                {
+                    p1PerfectAct += fireplayHandler.PlayFireplay;
+                    p2PerfectAct += fireplayHandler.PlayFireplay;
+                }
 
                 //상단 노드
-                p1TopNoteAct += meteorHandler.PlayMeteor;
-                p2TopNoteAct += meteorHandler.PlayMeteor;
+                if (meteorHandler)
+                {
+                    p1TopNoteAct += meteorHandler.PlayMeteor;
+                    p2TopNoteAct += meteorHandler.PlayMeteor;
+                }
 
                 //10콤보
                 //p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
                 //p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
 
                 //20콤보
-                p1TwentyComboAct += lazerHandler.Play_S_P_3;
-                p1TwentyComboAct += lazerHandler.Play_M_L_P_3;
-                p2TwentyComboAct += lazerHandler.Play_S_P_3;
-                p2TwentyComboAct += lazerHandler.Play_M_R_P_3;
+                if (lazerHandler)
+                {
+                    p1TwentyComboAct += lazerHandler.Play_S_P_3;
+                    p1TwentyComboAct += lazerHandler.Play_M_L_P_3;
+                    p2TwentyComboAct += lazerHandler.Play_S_P_3;
+                    p2TwentyComboAct += lazerHandler.Play_M_R_P_3;
+                }
 
                 break;
             default:

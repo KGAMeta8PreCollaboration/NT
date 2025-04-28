@@ -14208,6 +14208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireplayHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 5414741325797995783, guid: 151b9569f1bd5e34da5447f7d0fc49fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 151b9569f1bd5e34da5447f7d0fc49fe, type: 3}
 --- !u!1 &982415453
@@ -22266,7 +22271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1592657627
 MonoBehaviour:
   m_ObjectHideFlags: 0
