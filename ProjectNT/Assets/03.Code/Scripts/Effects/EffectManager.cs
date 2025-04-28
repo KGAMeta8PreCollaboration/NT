@@ -153,8 +153,8 @@ public class EffectManager : Singleton<EffectManager>
                 if (null != windowHandler)
                 {
                     // 상단 노트 클리어
-                    p1TopNoteAct += windowHandler.P1EffectInvoke;
-                    p2TopNoteAct += windowHandler.P2EffectInvoke;
+                    p2TopNoteAct += windowHandler.P1EffectInvoke;
+                    p1TopNoteAct += windowHandler.P2EffectInvoke;
                 }
                 break;
             // 페이즈 2 구독
@@ -165,30 +165,30 @@ public class EffectManager : Singleton<EffectManager>
                 if (windowHandler != null)
                 {
                     // 노트 퍼펙트
-                    p1PerfectAct += windowHandler.P1EffectInvoke;
-                    p2PerfectAct += windowHandler.P2EffectInvoke;
+                    p2PerfectAct += windowHandler.P1EffectInvoke;
+                    p1PerfectAct += windowHandler.P2EffectInvoke;
                 }
 
                 if (lazerHandler != null)
                 {
                     //10콤보
-                    p1TenComboAct += lazerHandler.Play_S_P_2;
-                    p1TenComboAct += lazerHandler.Play_M_L_P_2;
                     p2TenComboAct += lazerHandler.Play_S_P_2;
-                    p2TenComboAct += lazerHandler.Play_M_R_P_2;
+                    p2TenComboAct += lazerHandler.Play_M_L_P_2;
+                    p1TenComboAct += lazerHandler.Play_S_P_2;
+                    p1TenComboAct += lazerHandler.Play_M_R_P_2;
 
                     //상단 노트 클리어
-                    p1TopNoteAct += lazerHandler.Play_S_P_3;
-                    p1TopNoteAct += lazerHandler.Play_M_L_P_3;
                     p2TopNoteAct += lazerHandler.Play_S_P_3;
-                    p2TopNoteAct += lazerHandler.Play_M_R_P_3;
+                    p2TopNoteAct += lazerHandler.Play_M_L_P_3;
+                    p1TopNoteAct += lazerHandler.Play_S_P_3;
+                    p1TopNoteAct += lazerHandler.Play_M_R_P_3;
                 }
 
                 if (displayBoardHandler != null)
                 {
                     //20콤보
-                    p1TwentyComboAct += displayBoardHandler.ChangeDisplayBoard;
                     p2TwentyComboAct += displayBoardHandler.ChangeDisplayBoard;
+                    p1TwentyComboAct += displayBoardHandler.ChangeDisplayBoard;
                 }
 
                 if (null == windowHandler) { break; }
