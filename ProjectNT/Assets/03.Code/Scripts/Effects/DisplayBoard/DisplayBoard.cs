@@ -19,7 +19,7 @@ public class DisplayBoard : MonoBehaviour
 
     private void Awake()
     {
-        _displayBoardHandler = FindObjectOfType<DisplayBoardHandler>(); 
+        _displayBoardHandler = FindObjectOfType<DisplayBoardHandler>();
     }
 
     private void Start()
@@ -64,12 +64,12 @@ public class DisplayBoard : MonoBehaviour
     //초기 상태는 검정색 화면이여야 함 -> 변경됨
     private void SetDisplayToBlack()
     {
-        _targetMaterial.SetTexture("_MainTexture", blackTexture);
+        _targetMaterial.SetTexture("_BaseMap", blackTexture);
     }
 
     private void SetDisplayToOriginal()
     {
-        _targetMaterial.SetTexture("_MainTexture", originalTexture);
+        _targetMaterial.SetTexture("_BaseMap", originalTexture);
     }
 
     private Sequence _turnOnSequence;
@@ -82,16 +82,16 @@ public class DisplayBoard : MonoBehaviour
         }
 
         _turnOnSequence = DOTween.Sequence()
-            .AppendCallback(() => _targetMaterial.SetTexture("_MainTexture", originalTexture))
+            .AppendCallback(() => _targetMaterial.SetTexture("_BaseMap", originalTexture))
             .AppendInterval(duration)
-            .AppendCallback(() => _targetMaterial.SetTexture("_MainTexture", blackTexture));
+            .AppendCallback(() => _targetMaterial.SetTexture("_BaseMap", blackTexture));
     }
 
     private IEnumerator TurnOnDisplayBoardCoroutine()
     {
-        _targetMaterial.SetTexture("_MainTexture", originalTexture);
+        _targetMaterial.SetTexture("_BaseMap", originalTexture);
         yield return new WaitForSeconds(duration);
-        _targetMaterial.SetTexture("_MainTexture", blackTexture);
+        _targetMaterial.SetTexture("_BaseMap", blackTexture);
     }
 
 
@@ -113,14 +113,14 @@ public class DisplayBoard : MonoBehaviour
 
         while (elapsed < duration)
         {
-            _targetMaterial.SetTexture("_MainTexture", gifImage[currentIndex]);
-            currentIndex = (currentIndex +1) % gifImage.Length;
+            _targetMaterial.SetTexture("_BaseMap", gifImage[currentIndex]);
+            currentIndex = (currentIndex + 1) % gifImage.Length;
 
             yield return new WaitForSeconds(delay);
             elapsed += delay;
         }
 
-        _targetMaterial.SetTexture("_MainTexture", originalTexture);
+        _targetMaterial.SetTexture("_BaseMap", originalTexture);
         _changeDisplayCoroutine = null;
     }
 
@@ -138,8 +138,8 @@ public class DisplayBoard : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= delay)
             {
-                _targetMaterial.SetTexture("_MainTexture", gifImage[currentIndex]);
-                currentIndex = (currentIndex +1) % gifImage.Length;
+                _targetMaterial.SetTexture("_BaseMap", gifImage[currentIndex]);
+                currentIndex = (currentIndex + 1) % gifImage.Length;
                 timer = 0f;
             }
             yield return null;
