@@ -14955,6 +14955,7 @@ MonoBehaviour:
   restartButton: {fileID: 2074699370}
   musicSelectButton: {fileID: 1032326606}
   endPanel: {fileID: 173985831}
+  uiObject: {fileID: 1103504770}
 --- !u!114 &1028296665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26257,6 +26258,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5017240850316960934}
     m_Modifications:
+    - target: {fileID: 1815161103408069682, guid: c5ea7e93c3276bb40b19ffb4219443c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2590641347661316160, guid: c5ea7e93c3276bb40b19ffb4219443c2,
         type: 3}
       propertyPath: m_Name
@@ -26320,6 +26326,26 @@ PrefabInstance:
     - target: {fileID: 2590641347661316161, guid: c5ea7e93c3276bb40b19ffb4219443c2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3474922398565812243, guid: c5ea7e93c3276bb40b19ffb4219443c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283164244588041802, guid: c5ea7e93c3276bb40b19ffb4219443c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283164245693293848, guid: c5ea7e93c3276bb40b19ffb4219443c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283164245982063328, guid: c5ea7e93c3276bb40b19ffb4219443c2,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -31376,6 +31402,7 @@ MonoBehaviour:
   restartButton: {fileID: 1168731886377018390}
   musicSelectButton: {fileID: 1168731885857113226}
   endPanel: {fileID: 4489685932751973449}
+  uiObject: {fileID: 4190252030863746384}
 --- !u!114 &1168731885863095154
 MonoBehaviour:
   m_ObjectHideFlags: 0
