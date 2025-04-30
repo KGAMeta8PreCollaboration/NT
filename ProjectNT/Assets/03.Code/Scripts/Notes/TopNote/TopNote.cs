@@ -35,7 +35,6 @@ public class TopNote : Note
     }
     public override void Init(Transform target, NoteSpawnData noteSpawnData, Transform indicatorPos)
     {
-        print($"상단 노트 : {noteSpawnData.hitSound}");
         base.Init(target, noteSpawnData);
 
         canInter = false;

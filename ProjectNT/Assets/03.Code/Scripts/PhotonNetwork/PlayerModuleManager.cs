@@ -20,22 +20,17 @@ public class PlayerModuleManager : MonoBehaviour
                 playerModule.NoteManager.topNoteTag = PlayerKey.Player1.ToString();
 
                 songData = player1SongData;
-                print($"{playerModule.name}의 노래 데이터: player1SongData 고름");
-                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
             else if (playerModule.playerKey == PlayerKey.Player2)
             {
                 playerModule.NoteManager.topNoteTag = PlayerKey.Player2.ToString();
 
                 songData = player2SongData;
-                print($"{playerModule.name}의 노래 데이터: player2SongData 고름");
-                print($"노트 매니저의 탑노트 태그: {playerModule.NoteManager.topNoteTag}");
             }
 
             playerModule.SetPlayerModuleData(songData);
         }
 
-        print($"플레이어1,2 의 로드된 노트데이터가 같은지?: {playerModules[0].NoteGenerator.loadedNotes.Equals(playerModules[1].NoteGenerator.loadedNotes)}");
     }
 
 
@@ -53,7 +48,6 @@ public class PlayerModuleManager : MonoBehaviour
             return module.woofers[wooferIndex];
         }
 
-        print($"플레이어 Woofer를 찾을 수 없음! 인덱스: {wooferIndex}, 닉네임: {nickname}");
         return null;
     }
 
@@ -66,7 +60,6 @@ public class PlayerModuleManager : MonoBehaviour
             if (playerModule.playerKey.ToString().Equals(nickname))
             {
                 module = playerModule;
-                print($"찾은 모듈:{module.name}");
             }
         }
 
@@ -76,14 +69,13 @@ public class PlayerModuleManager : MonoBehaviour
             {
                 if (module.woofers[i] == woofer)
                 {
-                    print($"찾은 우퍼의 인덱스: {i}");
                     return i;
                 }
             }
         }
         else
         {
-            print("설마 여길 들어올 리는 없겠지");
+            Debug.LogError("설마 여길 들어올 리는 없겠지");
         }
 
         Debug.LogWarning($"[WooferNetworkSync] 우퍼 인덱스를 찾을 수 없음! 닉네임: {nickname}, Woofer: {woofer}");

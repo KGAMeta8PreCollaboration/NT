@@ -24,7 +24,6 @@ public class MultiLobbyController : MonoBehaviour
 
     public void OnActiveSceneChanged()
     {
-        print("여기 들어옴");
         _multiObject.MultiPlayOpen();
 
     }

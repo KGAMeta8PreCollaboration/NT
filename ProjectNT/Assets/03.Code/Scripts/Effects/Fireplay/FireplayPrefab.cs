@@ -24,13 +24,12 @@ public class FireplayPrefab : MonoBehaviour
     private void Awake()
     {
         _vfx = GetComponent<VisualEffect>();
-        print($"불꽃 프리팹 생성됨 이름은 : {gameObject.name}");
     }
 
-    public void SetDirection(Vector3 startPos, Vector3 endPos,  float spawnRate = 10)
+    public void SetDirection(Vector3 startPos, Vector3 endPos, float spawnRate = 10)
     {
         _spawnRate = spawnRate;
-        _startPos = startPos;   
+        _startPos = startPos;
         _endPos = endPos;
         _vfx.SetFloat("NoOfSpawnParticles", _spawnRate);
         _vfx.SetVector3("StartPos", _startPos);
@@ -43,9 +42,8 @@ public class FireplayPrefab : MonoBehaviour
     {
         int rand = Random.Range(0, randColors.Length);
         Vector3 randColor = randColors[rand];
-        _vfx.SetVector3("Color", randColor); 
+        _vfx.SetVector3("Color", randColor);
         _vfx.Play();
-        print($"{gameObject.name}의 프리팹 실행 됨");
         StartCoroutine(HandleExplosion());
     }
 

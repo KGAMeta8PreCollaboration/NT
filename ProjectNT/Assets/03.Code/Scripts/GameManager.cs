@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -95,7 +96,6 @@ public class GameManager : Singleton<GameManager>
         }
         else if (scene.name == "MultiGame")
         {
-            print("멀티 게임 씬");
             IsMulti = true;
             OnGoToLobby += () =>
             {
@@ -107,38 +107,45 @@ public class GameManager : Singleton<GameManager>
         }
         else if (scene.name == "LobbyScene" && IsMulti == true)
         {
-            print($"=========멀티->로비=========");
             MultiLobbyController = FindObjectOfType<MultiLobbyController>();
             MultiLobbyController.OnActiveSceneChanged();
             IsMulti = false;
         }
     }
 
+    private void SetMapMovingTime()
+    {
+        gameSceneMove.mapmovePosTimes[0].travelTime = phase2ChangeTime + (float)delayTime;
+        gameSceneMove.mapmovePosTimes[1].travelTime = phase3ChangeTime - phase2ChangeTime + (float)delayTime;
+        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3ChangeTime + (float)delayTime;
+    }
+
     private IEnumerator PhaseTracker()
     {
-        // double phase1Time = AudioSettings.dspTime + phase2;
-        double phase2Time = AudioSettings.dspTime + phase3ChangeTime;
-        double phase3Time = AudioSettings.dspTime + AudioManager.Instance.BgmLength;
+        double startTime = AudioSettings.dspTime + delayTime;
+        double phase1Time = startTime + phase2ChangeTime;
+        double phase2Time = startTime + phase3ChangeTime;
+        double phase3Time = startTime + AudioManager.Instance.BgmLength;
 
-
-        gameSceneMove.mapmovePosTimes[0].travelTime = phase2ChangeTime;
-        gameSceneMove.mapmovePosTimes[1].travelTime = phase3ChangeTime - phase2ChangeTime;
-        gameSceneMove.mapmovePosTimes[2].travelTime = AudioManager.Instance.BgmLength - phase3ChangeTime;
-        double curr = AudioSettings.dspTime + phase2ChangeTime;
+        SetMapMovingTime();
         List<(double, Enums.Phase)> tuple = new List<(double, Enums.Phase)>
         {
             (phase2Time, Enums.Phase.Phase2),
             (phase3Time, Enums.Phase.Phase3)
         };
 
+        // 페이즈 1의 이동 관련 코드 스페이스
+        double phaseEndTime = phase1Time;
         Phase = Enums.Phase.Phase1;
         gameSceneMove.MapMoveByPhase(Phase);
+        //
+
 
         while (tuple.Count != 0)
         {
-            if (AudioSettings.dspTime > curr)
+            if (AudioSettings.dspTime > phaseEndTime)
             {
-                curr = tuple[0].Item1;
+                phaseEndTime = tuple[0].Item1;
                 Phase = tuple[0].Item2;
                 tuple.RemoveAt(0);
                 gameSceneMove.MapMoveByPhase(Phase);
@@ -149,7 +156,6 @@ public class GameManager : Singleton<GameManager>
 
     public void SingleGameStart(BeatMapData beatMapData, string projectPath, string musicName)
     {
-        print($"게임매니저 싱글게임시작 뮤직이름 : {musicName}");
         AudioManager.Instance.SetBackgroundMusic(projectToLoadedData.GetBgmAudioClip(projectPath, "Single_Theme.wav"));
         AudioManager.Instance.SetAudioClips(projectToLoadedData.GetAudioClipsToProject(projectPath));
         _loadedNoteDatas = projectToLoadedData.BeatMapDataToLoadedNoteData(beatMapData);

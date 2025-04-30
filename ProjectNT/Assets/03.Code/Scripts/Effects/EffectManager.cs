@@ -98,7 +98,6 @@ public class EffectManager : Singleton<EffectManager>
 
         if (note is TopNote)
         {
-            print($"탑 노트인 것 까진 확인");
             InvokeByPlayMode(p1TopNoteAct, p2TopNoteAct, playMode);
         }
     }
@@ -117,7 +116,6 @@ public class EffectManager : Singleton<EffectManager>
                 p2Act?.Invoke();
                 break;
             default:
-                Debug.LogWarning("Unhandled play mode: " + playMode);
                 break;
         }
     }
