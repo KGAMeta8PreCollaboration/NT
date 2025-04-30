@@ -43,7 +43,6 @@ public class MultiScoreManager : MonoBehaviourPun
     public void SendMyResult()
     {
         ScoreManager myScoreManager = GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName).ScoreManager;
-        print($"보내는 이의 모듈: {GameManager.Instance.MultiGameController.GetPlayerModuleByNick(PhotonNetwork.LocalPlayer.NickName).name}");
         PlayerResultContainer myResult = new PlayerResultContainer(myScoreManager);
 
         _playerResultDict[PhotonNetwork.LocalPlayer.NickName] = myResult;

@@ -255,7 +255,6 @@ public class EditProject : MonoBehaviour
         clip = DownloadHandlerAudioClip.GetContent(request);
         clip.name = bgmName;
         EditorDataManager.Instance.bgmClip = clip;
-        print(EditorDataManager.Instance.bgmClip.name);
         yield return null;
         EditorLoadScene.SceneLoad("SongEditorScene");
     }

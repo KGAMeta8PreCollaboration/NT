@@ -178,26 +178,21 @@ public class NCT : MonoBehaviour
             return;
         }
 
-        print("NCT생성시작");
         isLoaded = false;
         _bpm = bpm;
         _column = column;
         _beatNum = beatNum;
-        print($"bpm : {_bpm}, column : {_column}, beatNum : {_beatNum}");
 
         _audioSource = _audioSourceManager.AudioSource;
 
         width = 128;
         pixelPerSecond = _waveform.maxNum;
 
-        print($"pixelPerSecond : {pixelPerSecond}");
         int height = Mathf.CeilToInt(_audioSource.clip.length) * pixelPerSecond;
-        print(_audioSource.clip.length);
         _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 
         Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
         _spriteRenderer.sprite = Sprite.Create(_texture, rect, Vector2.zero);
-        print($"그리드 생성");
         xOffset = _spriteRenderer.size.x / 2;
         bpmPrefabLineScale = _spriteRenderer.size.x * 1.2f;
         beatPrefabLineScale = _spriteRenderer.size.x;

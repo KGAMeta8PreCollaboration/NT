@@ -18,7 +18,6 @@ public class Meteor : MonoBehaviour
 
     public void Move(Vector3 startPos, Vector3 endPos, float duration)
     {
-        print($"{transform.name}메테오가 실행됨");
         _startPos = startPos;
         _endPos = endPos;
         _duration = duration;
