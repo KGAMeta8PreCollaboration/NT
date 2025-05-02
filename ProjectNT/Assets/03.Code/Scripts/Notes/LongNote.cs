@@ -54,11 +54,8 @@ public class LongNote : Note
     private void CalculateMilestones(double duration)
     {
         float beatInterval = (float)60 / (bpm * 4);
-        print($"롱노트 지속시간: {duration}, 16비트 간격: {beatInterval}");
         int combo = Mathf.FloorToInt((float)duration / beatInterval);
-        print($"롱노트의 총 콤보 수: {combo}");
 
-        print($"duration : {duration}, beatInterval : {beatInterval}, combo : {combo}");
         divideCount = combo;
 
         milestones = new double[divideCount];
@@ -143,7 +140,6 @@ public class LongNote : Note
         {
             EffectManager.Instance.playerMapEffect?.Invoke(this, _scoreManager.currentCombo, playMode);
             // EffectManager.Instance.player2MapEffect?.Invoke(this, _scoreManager.currentCombo);
-            Debug.Log($"Hold에 들어온 판단 타입: {judgementType.ToString()}");
             if (isDisconnected) judgementType = JudgementType.Good;
 
             if (judgementType == JudgementType.MISS)
@@ -198,8 +194,6 @@ public class LongNote : Note
         Destroy();
         isHit = true;
         judgementType = JudgementType.MISS;
-        print($"삭제 시간 : {AudioSettings.dspTime - _startDspTime:F3}, 생성 시간 : {_spawnDspTime - _startDspTime:F3}, 타겟 시간 : {_targetDspTime - _startDspTime:F3}, 오디오 소스 : {hitSound}");
-        print($"롱노트 Miss 호출. 삭제 시간: {AudioSettings.dspTime - _startDspTime}");
         OnHit?.Invoke(this);
         OnHit = null;
     }
@@ -211,7 +205,6 @@ public class LongNote : Note
 
         double delta = duration / totalTime;
         float distance = (float)delta * (Vector3.Distance(_initialPosition, target.position));
-        print($"distance: {distance}");
 
         return distance;
     }

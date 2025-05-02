@@ -20,10 +20,27 @@ public class GameSceneMove : MonoBehaviour
 
     private void SetSequence(MapmovePosTime posNtime)
     {
+        if (true == moveSequence.IsActive())
+        {
+            moveSequence.Kill(true);
+        }
+        else
+        {
+            Debug.LogWarning("시퀸스아직 살아있음");
+        }
         moveSequence = DOTween.Sequence();
         // 만약 VR로 빌드 시 렉이 걸리면 0.2f => 0으로 변경
         moveSequence.Join(movingObject.DOMove(posNtime.startPos.position, 0.2f).SetEase(Ease.Linear)).
                      Append(movingObject.DOMove(posNtime.endPos.position, posNtime.travelTime).SetEase(Ease.Linear));
+        try
+        {
+            moveSequence.Play();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("시퀸스플레이문제");
+            Debug.LogError(e.Message);
+        }
     }
 
     //이 함수불러서 이동 바로시작

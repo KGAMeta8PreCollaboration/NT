@@ -22,7 +22,6 @@ public class ConnectLineRenderer : MonoBehaviour
     public void Init(float distance, Transform target)
     {
         Transform parentTransform = TransformUtil.GetRootParent(transform);
-        print($"=========={parentTransform.name}============");
         startNote = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "StartNote");
         endNote = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "EndNote");
         startPoint = TransformUtil.FindDeepChildComponent<Transform>(parentTransform, "Start");
@@ -33,7 +32,6 @@ public class ConnectLineRenderer : MonoBehaviour
         rightLR = TransformUtil.FindDeepChildComponent<ConnectLineRendererOutLine>(transform, "RightOutLineRenderer");
 
         _startRendererOriginPos = new Vector3(0, 0, 0);
-        print($"Init 시 롱노트 렌더러 디스크 POS: {startRenderer.position}");
         Vector3 railDirection = (startNote.position - target.position).normalized;
 
         endNote.localPosition = startNote.localPosition + (railDirection * distance);

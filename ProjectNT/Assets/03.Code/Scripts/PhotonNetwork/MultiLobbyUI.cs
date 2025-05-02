@@ -49,7 +49,6 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     private void StartButtonClick()
     {
-        Debug.Log($"플레이어 수: {PhotonNetwork.PlayerList.Length}");
         if (PhotonNetwork.PlayerList.Length == peopleCount)
         {
             photonView.RPC(nameof(RPC_GameStart), RpcTarget.All);
@@ -72,7 +71,6 @@ public class MultiLobbyUI : MonoBehaviourPun
 
     public void SendSetMusicNodeToString(string musicName)
     {
-        print("SetMusicNodeToString");
         photonView.RPC(nameof(RPC_SetMusicNodeToString), RpcTarget.Others, musicName);
     }
 
@@ -149,7 +147,6 @@ public class MultiLobbyUI : MonoBehaviourPun
             _countStartGameCoroutine = null;
         }
 
-        Debug.Log("게임 시작이 취소되었습니다!");
 
         ControlGamePlayUIButtonInteractable(true);
 

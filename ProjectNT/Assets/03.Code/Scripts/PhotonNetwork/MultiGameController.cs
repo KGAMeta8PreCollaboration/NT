@@ -42,7 +42,6 @@ public class MultiGameController : MonoBehaviour
 
     private void StartGameForAll()
     {
-        Debug.Log("모든 플레이어 준비 완료 → 게임 시작!");
         StopCoroutine(GameManager.Instance.GameSceneInitCo());
         StartCoroutine(GameManager.Instance.GameSceneInitCo());
     }
@@ -76,7 +75,6 @@ public class MultiGameController : MonoBehaviour
             _multiScoreManager.ReceivedPlayerCount == PhotonNetwork.PlayerList.Length
         );
 
-        Debug.Log("모든 결과 수신 완료.");
 
         PopupManager popupManager = FindObjectOfType<PopupManager>();
 

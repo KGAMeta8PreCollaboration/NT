@@ -22,7 +22,7 @@ public class BaseTitleUI : MonoBehaviour
 
     public virtual void AddEventListeners()
     {
-        closeButton.onClick.AddListener(CloseUIButtonClick);
+        closeButton?.onClick.AddListener(CloseUIButtonClick);
     }
 
     public virtual void RemoveEventListeners()

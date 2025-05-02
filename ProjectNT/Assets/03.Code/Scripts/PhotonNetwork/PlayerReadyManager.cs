@@ -30,7 +30,6 @@ public class PlayerReadyManager : MonoBehaviourPun
         if (!_readyPlayers.Contains(actorNumber))
         {
             _readyPlayers.Add(actorNumber);
-            print($"플레이어 {actorNumber} 준비 완료! ({_readyPlayers.Count}/{_totalPlayers})");
         }
     }
 

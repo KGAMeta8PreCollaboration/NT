@@ -62,7 +62,6 @@ public class BookMarkHandler : MonoBehaviour
     {
         float currentPosition = audioSlider.value;
         CreateBookMark(currentPosition);
-        print($"현재 오디오 슬라이더의 값 : {audioSlider.value}");
     }
 
     private void CreateBookMark(float position)

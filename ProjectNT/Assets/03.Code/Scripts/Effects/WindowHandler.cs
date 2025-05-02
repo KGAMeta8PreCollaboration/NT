@@ -34,7 +34,6 @@ public class WindowHandler : MapEffect<Material>
     }
     public override void P1EffectInvoke()
     {
-        print("Left Window Effect Invoke");
         rightSequence.Restart();
     }
 
@@ -45,7 +44,6 @@ public class WindowHandler : MapEffect<Material>
 
     public override void LeftEffectEnd()
     {
-        print("Left Window Effect End");
         leftSequence.Kill();
         SetTargetEmission(left);
     }

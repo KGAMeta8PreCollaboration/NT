@@ -21,5 +21,6 @@ public class TopNoteProjectile : MonoBehaviour
             particleSystem = GetComponent<ParticleSystem>();
         }
         transform.DOMove(target, 0.3f).SetEase(Ease.OutQuint).onComplete += () => PoolManager.Instance.topNoteProjPool.Push(this);
+        particleSystem.Play();
     }
 }

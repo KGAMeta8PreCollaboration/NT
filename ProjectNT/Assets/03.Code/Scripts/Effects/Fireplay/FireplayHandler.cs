@@ -31,7 +31,6 @@ public class FireplayHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            print($"스페이스바 눌림");
             int randomNum = Random.Range(0, fireplayPrefabs.Count);
 
             currentPrefab = fireplayInstances[randomNum];

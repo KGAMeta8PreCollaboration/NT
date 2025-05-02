@@ -13,7 +13,6 @@ public class JudgementSystem : MonoBehaviour
     {
         if (_woofer.notes == null || _woofer.notes.Count == 0 || _woofer.notes[0] == null)
         {
-            print("미스!");
             return JudgementType.MISS;
         }
         Note note = _woofer.notes[0];

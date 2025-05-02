@@ -85,7 +85,6 @@ public class NoteManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"NoteAudioScheduler not found on rail {i}");
             }
         }
     }
