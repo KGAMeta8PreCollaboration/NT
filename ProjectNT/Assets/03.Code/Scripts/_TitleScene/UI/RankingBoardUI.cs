@@ -18,6 +18,10 @@ public class RankingBoardUI : BaseTitleUI
     private List<GameObject> rankingBarUIs = new List<GameObject>();
     private bool _isDataLoadComplete;
 
+    private void OnEnable()
+    {
+        Init();
+    }
     public void Init()
     {
         AddEventListeners();
@@ -44,7 +48,7 @@ public class RankingBoardUI : BaseTitleUI
     {
         lastUpdataTimeText.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss tt");
     }
-    
+
     public void RankingBoardUIUpdate()
     {
         _isDataLoadComplete = false;
@@ -64,15 +68,15 @@ public class RankingBoardUI : BaseTitleUI
         RankingBarUIDestroy();
         loadingPanel.SetActive(true);
         _isDataLoadComplete = false;
-    
+
         yield return StartCoroutine(localSaveManager.LocalDataLoad());
-    
+
         // 기존 코드 유지
         int rank = 1;
         if (localSaveManager.datas != null && localSaveManager.datas.Count > 0)
         {
             List<PlayerLocalSaveData> rankingDataList = localSaveManager.datas;
-        
+
             foreach (PlayerLocalSaveData data in rankingDataList)
             {
                 GameObject rankingBarUI = Instantiate(rankingBarPrefab, contentArea);
@@ -81,7 +85,7 @@ public class RankingBoardUI : BaseTitleUI
                 rank++;
             }
         }
-    
+
         LastUpdateTime();
         loadingPanel.SetActive(false);
         _isDataLoadComplete = true;
