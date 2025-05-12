@@ -7,8 +7,6 @@ using TMPro;
 
 public class BeatMapManager : MonoBehaviour
 {
-    //[SerializeField] private TextMeshProUGUI bpmText;
-
     public bool isLoaded = false;
 
     private AudioSourceManager _audioSourceManager;
@@ -25,22 +23,14 @@ public class BeatMapManager : MonoBehaviour
         isLoaded = false;
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    //Temp();
-        //    SaveBeatMapData();
-        //}
-    }
-
-    public void Temp()
+    public void CheckNote()
     {
         if (_nct.NodeGrid == null)
         {
             Debug.LogWarning("NodeGrid에 암것도 없음");
             return;
         }
+
         print("=== 노드 정보 출력 시작 ===");
         for (int x = 0; x < _gridManager.Column; x++)
         {
@@ -56,7 +46,7 @@ public class BeatMapManager : MonoBehaviour
         print("=== 노드 정보 출력 끝 ===");
     }
 
-    //BeatMapData로 넘겨줄거임
+    //BeatMapData로 데이터 넘겨받음
     public BeatMapData SaveBeatMapData()
     {
         BeatMapData data = new BeatMapData();
@@ -85,7 +75,6 @@ public class BeatMapManager : MonoBehaviour
                     if (new Vector2Int(x, y) != longNode.StartIndex) continue;
 
                     // 롱노드 데이터 저장
-                    
                     NodeData nodeData = new NodeData
                     {
                         index = longNode.StartIndex,
@@ -93,7 +82,6 @@ public class BeatMapManager : MonoBehaviour
                         nodeType = EditorNoteType.LongNote,
                         keySound = longNode._keySound
                     };
-                    print($"저장된 롱노드 인덱스 : {longNode.StartIndex} ~ {longNode.EndIndex}");
                     data.nodes.Add(nodeData);
                 }
                 else
@@ -105,7 +93,6 @@ public class BeatMapManager : MonoBehaviour
                         nodeType = EditorNoteType.ShortNote,
                         keySound = _nct.NodeGrid[x, y]._keySound
                     };
-                    print($"저장된 하단노드 인덱스 : {x},{y}");
                     data.nodes.Add(nodeData);
                 }
             }
@@ -126,14 +113,13 @@ public class BeatMapManager : MonoBehaviour
                 nodeIndexs = nodeIndexes,
                 keySounds = keySounds
             };
-            //print($"저장된 상단노드 그리드 인덱스 : {upperNode.Key}, 노드 인덱스 : [{string.Join(", ", upperNode.Value)}]");
             data.upperNodes.Add(upperNodeData);
         }
 
         return data;
     }
 
-    //얘도 BeatMapData로 받아올거임
+    //BeatMapData로 받아올거임
     public void LoadBeatMapData(BeatMapData beatMapData)
     {
         if (beatMapData == null)
@@ -150,17 +136,14 @@ public class BeatMapManager : MonoBehaviour
         isLoaded = false;
         if (_audioSourceManager == null || _gridManager == null || _nct == null || _upperNodeHandler == null)
         {
-            Debug.LogError("필요한 컴포넌트가 없습니다.");
+            Debug.LogError("오브젝트 확인 필요");
             yield break;
         }
 
-        //AudioClip audioSource = Resources.Load<AudioClip>("_SongEditor/LoadedSongs/Sample1");
-        //일단 모두 초기화
+        //모든 노트 클리어
         _nct.ClearAllNodes();
         _upperNodeHandler._upperNodeDic.Clear();
 
-        //print(audioSource);
-        print("BeatMapManager LoadBeatMapDataCoroutine");
         //1. 오디오 Source 초기화
         _audioSourceManager.InitializeFromBeatMapManager(EditorDataManager.Instance.bgmClip);
         _audioSourceManager.InitializeFromSongData(beatMapData.songData);
@@ -170,22 +153,18 @@ public class BeatMapManager : MonoBehaviour
         _gridManager.InitializeFromBeatMapManager(beatMapData.gridSetting);
         yield return new WaitUntil(() => _nct.isLoaded == true);
 
-        // 3. node 초기화
+        //3. node 초기화
         if (beatMapData.nodes != null && beatMapData.nodes.Count > 0)
         {
             _nct.InitializeWithNodeData(beatMapData.nodes);
-            Debug.Log($"로드된 노드 수: {beatMapData.nodes.Count}");
         }
 
-        // 4. 상단 노드 초기화
+        //4. 상단 노드 초기화
         if (beatMapData.upperNodes != null && beatMapData.upperNodes.Count > 0)
         {
             _upperNodeHandler.InitializeWithNodeData(beatMapData.upperNodes);
-            Debug.Log($"로드된 상단 노드 수: {beatMapData.upperNodes.Count}");
         }
 
-        // 5. 기타 정보 초기화
-        //bpmText.text = $"BPM : ({EditorDataManager.Instance.ProjectData.bpm.ToString()})";
         isLoaded = true;
     }
 }

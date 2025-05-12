@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Toggle))]
-public class UpperNode : MonoBehaviour, IPointerEnterHandler
+public class UpperNode : MonoBehaviour
 {
     [SerializeField] private Color normalColor;
     [SerializeField] private Color selectedColor;
@@ -64,13 +64,4 @@ public class UpperNode : MonoBehaviour, IPointerEnterHandler
             _keySoundText.text = "";
         }
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (_keySound != null)
-        {
-            print($"현재 상단 노드 키사운드 : {_keySound}");
-        }
-    }
-
 }

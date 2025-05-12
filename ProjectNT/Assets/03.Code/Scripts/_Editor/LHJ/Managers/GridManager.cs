@@ -73,13 +73,9 @@ public class GridManager : MonoBehaviour
     //불러오기 기능일때만 시작
     public void InitializeFromBeatMapManager(GridSetting gridSetting)
     {
-        // bpm = gridSetting.BPM;
-        bpm = EditorDataManager.Instance.ProjectData.bpm; //나중에 이걸로 꼭 바꿔야함
-        column = 4;
+        bpm = EditorDataManager.Instance.ProjectData.bpm;
         beatNum = EditorDataManager.Instance.ProjectData.beatNum;
-        print($"bpm : {bpm}, beatNum : {beatNum}");
-        //CreateGrid();
-        //gridText.text = $"BPM : ({bpm})";
+        column = 4; //열은 4로 고정
         CreateNodeContainer(_audioSourceManager.AudioSource);
     }
 
@@ -87,7 +83,6 @@ public class GridManager : MonoBehaviour
     public void CreateNodeContainer(AudioSource audioSource)
     {
         InitBeatMap?.Invoke(bpm, column, beatNum);
-        print(4);
         //if (targetObject == null)
         //{
         //    Debug.LogWarning("그리드를 그릴 오브젝트가 없습니다.");

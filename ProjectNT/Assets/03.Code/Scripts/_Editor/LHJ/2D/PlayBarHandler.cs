@@ -41,9 +41,8 @@ public class PlayBarHandler : MonoBehaviour
             return;
         }
 
-        //progress = 현재 노래 시간 / 전체 노래 시간
+        //progress = 현재 노래 재생 퍼센트
         float _progress = _audioSourceManager.AudioSource.time / _audioSourceManager.AudioDuration;
-        //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
         float _yOffset = _progress * _waveform._spriteRenderer.size.x;
         float xPos = _nct.transform.position.x + _nct.xOffset;
         playBarPrefab.transform.position = new Vector3(xPos, _yOffset);

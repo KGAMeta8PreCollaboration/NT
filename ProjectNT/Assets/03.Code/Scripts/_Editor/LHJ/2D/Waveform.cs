@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Waveform : MonoBehaviour
 {
-    [SerializeField] private int width = 1024;
+    [SerializeField] private int width;
     [SerializeField] private int height = 64;
-    [SerializeField] private Color background = Color.black;
+    [SerializeField] private Color backgroundColor = Color.black;
     [SerializeField] private Color waveformColor = Color.yellow;
     //[SerializeField] private GameObject playBarPrefab;
 
@@ -33,138 +33,74 @@ public class Waveform : MonoBehaviour
 
         Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
         _spriteRenderer.sprite = Sprite.Create(texture, rect, Vector2.zero);
-        //arrow.transform.position = new Vector3(0f, 0f);
-        //arrowOffsetX = -(arrow.GetComponent<SpriteRenderer>().size.x / 2f);
-
-        //cam.transform.position = new Vector3(0f, 0f, -1f);
-        //cam.transform.Translate(Vector3.right * (_spriteRenderer.size.x / 2f));
-    }
-
-    private void Update()
-    {
-        //if (_audioSource == null)
-        //{
-        //    return;
-        //}
-
-        if (isLoaded != true)
-        {
-            return;
-        }
-
-        //SetPlayBarPos();
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    print("마우스 클릭 감지");
-        //    RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-        //    if (hit.collider != null && hit.collider.gameObject == arrow)
-        //    {
-        //        isDragging = true;
-        //    }
-        //}
-
-        //if (isDragging && Input.GetMouseButton(0))
-        //{
-        //    print("마우스 드래그 시작");
-        //    mousePos.z = 0;
-        //    arrow.transform.position = new Vector3(0, mousePos.y);
-
-        //    float progress = Mathf.Clamp01((arrow.transform.position.x - arrowOffsetX) / _spriteRenderer.size.x);
-        //    _audioSource.time = progress * _audioSource.clip.length;
-        //}
-
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    print("마우스 드래그 끝남");
-        //    isDragging = false;
-        //}
-
-        //if (!isDragging)
-        //{
-        //    float xoffset = (_audioSource.time / _audioSource.clip.length) * _spriteRenderer.size.x;
-        //    playBarPrefab.transform.position = new Vector3(0, xoffset + arrowOffsetX);
-        //}
     }
 
     public int maxNum;
+
+    const int MAX_FIXEL = 8192;
     private Texture2D GetWaveform()
     {
-        int halfHeight = height / 2;
-        float heightScale = (float)height * 0.75f;
-        width = Mathf.CeilToInt(_audioSource.clip.length) * 100;
-        if (width >= 8192)
-        {
-            maxNum = 8192 / Mathf.CeilToInt(_audioSource.clip.length);
-            width = maxNum * Mathf.CeilToInt(_audioSource.clip.length);
-        }
-        else
-        {
-            maxNum = 100;
-        }
-        print($"Mathf.CeilToInt(_audioSource.clip.length) : {Mathf.CeilToInt(_audioSource.clip.length)}");
-        print($"width : {width}");
+        //노래는 잘리면 안되므로 올림한다
+        width = Mathf.CeilToInt(_audioSource.clip.length);
+
+        if (width * 100 >= MAX_FIXEL) maxNum = MAX_FIXEL / width; //노래가 길때
+        else maxNum = 100;
+
+        width = maxNum * width;
+
+        //텍스쳐 크기 설정
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         waveform = new float[width];
 
+        //샘플 갯수
         sampleSize = _audioSource.clip.samples * _audioSource.clip.channels;
         samples = new float[sampleSize];
         _audioSource.clip.GetData(samples, 0);
 
         int packSize = Mathf.Max(1, sampleSize / width);
+
+        //픽셀만큼 waveform넓히기
         for (int w = 0; w < width; w++)
         {
             waveform[w] = Mathf.Abs(samples[w * packSize]);
         }
 
+        //배경색으로 texture 채우기
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                texture.SetPixel(x, y, background);
+                texture.SetPixel(x, y, backgroundColor);
             }
         }
 
+        //sample 그리기
         for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < waveform[x] * heightScale; y++)
+            for (int y = 0; y < waveform[x] * (float)height * 0.75f; y++)
             {
-                texture.SetPixel(x, halfHeight + y, waveformColor);
-                texture.SetPixel(x, halfHeight - y, waveformColor);
+                texture.SetPixel(x, height / 2 + y, waveformColor);
+                texture.SetPixel(x, height / 2 - y, waveformColor);
             }
         }
 
         texture.Apply();
         isLoaded = true;
-        //MakePlayBar();
         return texture;
     }
-
-    //private void MakePlayBar()
-    //{
-    //    if (isLoaded == false)
-    //    {
-    //        print("아직 로딩이 끝나지 않음");
-    //        return;
-    //    }
-
-    //    GameObject playBarObj = Instantiate(playBarPrefab);
-    //    PlayBar playBar = playBarObj.GetComponent<PlayBar>();
-    //    //playBar.transform.SetParent(transform);
-    //    playBar.transform.position = new Vector3(0, playBarOffsetX);
-    //}
-
-    //private void SetPlayBarPos()
-    //{
-    //    if (_audioSource == null || _audioSource.clip == null)
-    //    {
-    //        print($"오디오 문제");
-    //        return;
-    //    }
-    //    //progress = 현재 노래 시간 / 전체 노래 시간
-    //    float progress = _audioSource.time / _audioSource.clip.length;
-    //    //print($"_audioSource.time : {_audioSource.time}, _audioSource.clip.length : {_audioSource.clip.length}");
-    //    float yOffset = progress * _spriteRenderer.size.x;
-    //    playBarPrefab.transform.position = new Vector3(0, playBarOffsetX + yOffset);
-    //}
 }
+
+//waveform을 더 자세하게 그리고 싶으면 이걸 넣으면 된다.
+//for (int w = 0; w < width; w++)
+//{
+//    float sum = 0f;
+//    for (int i = 0; i < packSize; i++)
+//    {
+//        int index = w * packSize + i;
+//        if (index < samples.Length)
+//        {
+//            sum += Mathf.Abs(samples[index]);
+//        }
+//    }
+//    waveform[w] = sum / packSize;
+//}

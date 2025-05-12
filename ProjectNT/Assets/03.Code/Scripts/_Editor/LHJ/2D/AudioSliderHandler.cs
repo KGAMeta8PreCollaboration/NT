@@ -47,6 +47,8 @@ public class AudioSliderHandler : MonoBehaviour
     }
 
     public Action<bool> onClickSpace;
+    
+    //space를 누를 때 마다 근처의 Grid로 재생바 위치 변경
     private void HandlePushSpace(bool clickedSpace)
     {
         onClickSpace?.Invoke(clickedSpace);
@@ -55,15 +57,21 @@ public class AudioSliderHandler : MonoBehaviour
             _audioSourceManager.AudioSource.Pause();
 
             float currentTime = _audioSourceManager.AudioSource.time;
-            double gridStep = _nct.cellHeight / _nct.GetComponent<SpriteRenderer>().size.y * _audioSourceManager.AudioDuration;
 
+            //Grid높이를 WorldPosition으로 변경
+            double gridStep = 
+                _nct.cellHeight / _nct.GetComponent<SpriteRenderer>().size.y * _audioSourceManager.AudioDuration;
+
+            //가장 가까운 Grid
             int nearestGridIndex = Mathf.RoundToInt((float)(currentTime / gridStep));
 
             double snappedTime = nearestGridIndex * gridStep;
             snappedTime = Math.Max(0, Math.Min(snappedTime, _audioSourceManager.AudioDuration));
 
+            //가장 가까운 Grid로 시간 변경
             _audioSourceManager.AudioSource.time = (float)snappedTime;
 
+            //Slider의 위치도 변경
             audioSlider.value = _audioSourceManager.AudioSource.time / _audioSourceManager.AudioDuration;
         }
         else

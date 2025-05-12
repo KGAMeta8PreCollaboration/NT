@@ -56,9 +56,7 @@ public class NCT : MonoBehaviour
     private GameObject _previewLowNode;
     private GameObject _previewLongNode;
 
-    private float _bpm;
-    private int _column;
-    private int _beatNum;
+    private int _column = 4;
 
     private INodeState _currentState;
 
@@ -83,20 +81,12 @@ public class NCT : MonoBehaviour
     {
         _gridManager.InitBeatMap += CreateNodeContainer;
 
-        //_upperNodeHandler.onUpperNodeAdded += CreateUpperGridMark;
-        //_upperNodeHandler.onUpperNodeRemoved += RemoveUpperGridMark;
-        Debug.Log("NCT START");
+        isLoaded = false;
     }
 
     Vector2Int currentIndex = new Vector2Int();
     private void Update()
     {
-        //오브젝트 위에서만 상태 변경 가능
-        //if (EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    return;
-        //}
-
         if (IsPointerOverUI())
         {
             HideLowNodePreview();
@@ -166,136 +156,125 @@ public class NCT : MonoBehaviour
     public Action<double> callback;
     public bool isLoaded = false;
     public Action loadComplete;
+
     private void CreateNodeContainer(float bpm, int column, int beatNum)
     {
-        // if (EventSystem.current.IsPointerOverGameObject())
-        // {
-        //     return;
-        // }
-        if (bpm == 0)
-        {
-            Debug.LogWarning("BPM이 0입니다.");
-            return;
-        }
+        if (!IsBPMRight(bpm)) return;
 
-        print("NCT생성시작");
-        isLoaded = false;
-        _bpm = bpm;
-        _column = column;
-        _beatNum = beatNum;
-        print($"bpm : {_bpm}, column : {_column}, beatNum : {_beatNum}");
-
-        _audioSource = _audioSourceManager.AudioSource;
-
-        width = 128;
-        pixelPerSecond = _waveform.maxNum;
-
-        print($"pixelPerSecond : {pixelPerSecond}");
-        int height = Mathf.CeilToInt(_audioSource.clip.length) * pixelPerSecond;
-        print(_audioSource.clip.length);
-        _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-
-        Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
-        _spriteRenderer.sprite = Sprite.Create(_texture, rect, Vector2.zero);
-        print($"그리드 생성");
-        xOffset = _spriteRenderer.size.x / 2;
-        bpmPrefabLineScale = _spriteRenderer.size.x * 1.2f;
-        beatPrefabLineScale = _spriteRenderer.size.x;
-
-        //테스트 용도
-        float temp1 = _spriteRenderer.sprite.texture.width;
-        float temp2 = _spriteRenderer.sprite.texture.height;
-
-        print($"tmp1 : {temp1}, temp2 : {temp2}");
-
-        //노래의 너비 = 텍스쳐 높이
-        float songDuration = _audioSource.clip.length;
-        double heightPerSecond = _spriteRenderer.size.y / songDuration;
-        //double heightPerSecondd = _spriteRenderer.size.y / songDuration;
-        //print($"double일때 값 : {heightPerSecondd}");
-        float secondsPerBPM = 60 / bpm;
-
-        double bpmHeight = secondsPerBPM * heightPerSecond;
-        print("=====================================\n" +
-            $"_spriteRenderer.size.y  : {_spriteRenderer.size.y}\n" +
-            $"songDuration : {songDuration}\n" +
-            $"heightPerSecond : {heightPerSecond}\n" +
-            $"secondsPerBeat : {secondsPerBPM}\n" +
-            $"beatHeight : {bpmHeight}\n");
-
-        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i++)
-        {
-            double yPos = i * bpmHeight;
-            GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, (float)yPos, 0), Quaternion.identity);
-            bpmLineObj.transform.localScale = new Vector3(bpmPrefabLineScale, bpmLinePrefab.transform.localScale.y, bpmLinePrefab.transform.localScale.z);
-            bpmLineObj.transform.SetParent(transform);
-            BPMLine bpmLine = bpmLineObj.GetComponent<BPMLine>();
-            bpmLine.SetBPMText(i, secondsPerBPM);
-
-            bpmLineLength = bpmLineObj.transform.localScale.x;
-
-            //가로 grid에 BPM 추가
-            heightGrid.Add(bpmLineObj);
-            //bpmLine.Test(heightGrid.Count);
-
-            if (beatNum != 0)
-            {
-                double beatHeight = bpmHeight / beatNum;
-
-                for (int j = 1; j < beatNum; j++)
-                {
-                    double y = yPos + j * beatHeight;
-                    if (y >= _spriteRenderer.size.y)
-                    {
-                        break;
-                    }
-                    GameObject beatLine = Instantiate(beatLinePrefab, new Vector3(xOffset, (float)y, 0), Quaternion.identity);
-                    beatLine.transform.localScale = new Vector3(beatPrefabLineScale, beatLinePrefab.transform.localScale.y);
-                    beatLine.transform.SetParent(transform);
-
-                    //가로 grid에 Beat 추가
-                    heightGrid.Add(beatLine);
-                }
-            }
-        }
-        print($"새로 라인 개수 : {heightGrid.Count}");
-
-        if (column <= 0)
-        {
-            Debug.LogWarning("column 재설정 필요.");
-            return;
-        }
-
-        float columnSize = _spriteRenderer.size.x / column;
-        float yOffset = _spriteRenderer.size.y / 2;
-        columnLineScale = _spriteRenderer.size.y;
-        for (int j = 1; j < column; j++)
-        {
-            float xPos = j * columnSize;
-
-            //z축 -0.1은 해결이 필요
-            GameObject columnLine = Instantiate(columnLinePrefab, new Vector3(xPos, yOffset, -0.1f), Quaternion.identity);
-            columnLine.transform.localScale = new Vector3(columnLinePrefab.transform.localScale.x, columnLineScale);
-            columnLine.transform.SetParent(transform);
-
-            //새로 grid에 행 추가
-            widthGrid.Add(columnLine);
-            //print($"widthGrid.Count : {widthGrid.Count}" );
-        }
-
-        _nodeGrid = new Node[_column, heightGrid.Count];
-        cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
-
-        //NodeContainer가 SpriteRenderer로 생성되므로, 임시의 Plane을 생성해서 비교
-        tempPlane = new Plane(Vector3.forward, transform.position);
+        InitComponents();
+        CreateEditorTexture();
+        SetGridPrefabSize();
+        CreateBPMAndBeatLines(bpm, beatNum);
+        CreateColumnLines(column);
+        InitializeNodeGrid();
 
         callback?.Invoke(cellHeight);
         loadComplete?.Invoke();
-        //double temp = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
-
         RowGridNum = heightGrid.Count;
         isLoaded = true;
-        print($"한칸의 넓이 : {cellHeight}");
+    }
+
+    private bool IsBPMRight(float bpm)
+    {
+        if (bpm == 0)
+        {
+            Debug.LogWarning("BPM이 0입니다.");
+            return false;
+        }
+        return true;
+    }
+
+    private void InitComponents()
+    {
+        _audioSource = _audioSourceManager.AudioSource;
+        width = 128;
+    }
+
+    //에디터의 크기를 결정
+    private void CreateEditorTexture()
+    {
+        int height = Mathf.CeilToInt(_audioSource.clip.length) * _waveform.maxNum;
+        _texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+        Rect rect = new Rect(Vector2.zero, new Vector2(width, height));
+        _spriteRenderer.sprite = Sprite.Create(_texture, rect, Vector2.zero);
+    }
+
+    private void SetGridPrefabSize()
+    {
+        xOffset = _spriteRenderer.size.x / 2;
+        bpmPrefabLineScale = _spriteRenderer.size.x * 1.2f;
+        beatPrefabLineScale = _spriteRenderer.size.x;
+    }
+
+    //Grid를 생성
+    private void CreateBPMAndBeatLines(float bpm, int beatNum)
+    {
+        float songDuration = _audioSource.clip.length;
+        double heightPerSecond = _spriteRenderer.size.y / songDuration;
+        float secondsPerBPM = 60 / bpm;
+        double bpmHeight = secondsPerBPM * heightPerSecond;
+
+        for (int i = 0; i * bpmHeight < _spriteRenderer.size.y; i++)
+        {
+            CreateBPMLine(i, bpmHeight, secondsPerBPM);
+            if (beatNum != 0)
+            {
+                CreateBeatLines(i, bpmHeight, beatNum);
+            }
+        }
+    }
+
+    private void CreateBPMLine(int index, double bpmHeight, float secondsPerBPM)
+    {
+        double yPos = index * bpmHeight;
+        GameObject bpmLineObj = Instantiate(bpmLinePrefab, new Vector3(xOffset, (float)yPos, 0), Quaternion.identity);
+        bpmLineObj.transform.localScale = new Vector3(bpmPrefabLineScale, bpmLinePrefab.transform.localScale.y, bpmLinePrefab.transform.localScale.z);
+        bpmLineObj.transform.SetParent(transform);
+
+        BPMLine bpmLine = bpmLineObj.GetComponent<BPMLine>();
+        bpmLine.SetBPMText(index, secondsPerBPM);
+        bpmLineLength = bpmLineObj.transform.localScale.x;
+        heightGrid.Add(bpmLineObj);
+    }
+
+    private void CreateBeatLines(int bpmIndex, double bpmHeight, int beatNum)
+    {
+        double beatHeight = bpmHeight / beatNum;
+        double baseYPos = bpmIndex * bpmHeight;
+
+        for (int j = 1; j < beatNum; j++)
+        {
+            double y = baseYPos + j * beatHeight;
+            if (y >= _spriteRenderer.size.y) break;
+
+            GameObject beatLine = Instantiate(beatLinePrefab, new Vector3(xOffset, (float)y, 0), Quaternion.identity);
+            beatLine.transform.localScale = new Vector3(beatPrefabLineScale, beatLinePrefab.transform.localScale.y);
+            beatLine.transform.SetParent(transform);
+            heightGrid.Add(beatLine);
+        }
+    }
+
+    private void CreateColumnLines(int column)
+    {
+        float columnSize = _spriteRenderer.size.x / column;
+        float yOffset = _spriteRenderer.size.y / 2;
+        columnLineScale = _spriteRenderer.size.y;
+
+        for (int j = 1; j < column; j++)
+        {
+            float xPos = j * columnSize;
+            GameObject columnLine = Instantiate(columnLinePrefab, new Vector3(xPos, yOffset, -0.1f), Quaternion.identity);
+            columnLine.transform.localScale = new Vector3(columnLinePrefab.transform.localScale.x, columnLineScale);
+            columnLine.transform.SetParent(transform);
+            widthGrid.Add(columnLine);
+        }
+    }
+
+    private void InitializeNodeGrid()
+    {
+        _nodeGrid = new Node[_column, heightGrid.Count];
+        cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
+        tempPlane = new Plane(Vector3.forward, transform.position);
     }
 
     private Vector2Int GetGridPositionFromMouse()
