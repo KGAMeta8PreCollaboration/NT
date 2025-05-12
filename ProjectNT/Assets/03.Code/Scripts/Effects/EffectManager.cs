@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 public delegate void EffectDelegate();
 public class EffectManager : Singleton<EffectManager>
 {
-
     private Action p1PerfectAct;
     private Action p2PerfectAct;
     private Action p1TenComboAct;
@@ -59,7 +58,7 @@ public class EffectManager : Singleton<EffectManager>
         lazerHandler = null;
         SetActionNull();
     }
-
+    // 게임 씬 진입 시 초기화
     private void Initialize()
     {
         FindEffectObjects();
@@ -78,7 +77,7 @@ public class EffectManager : Singleton<EffectManager>
         windowHandler = FindObjectOfType<WindowHandler>();
         displayBoardHandler = FindObjectOfType<DisplayBoardHandler>();
     }
-
+    // 노트 타격 시 실행되는 메서드
     public void EffectInvoke(Note note, int combo, Enums.PlayMode playMode)
     {
 
@@ -90,18 +89,16 @@ public class EffectManager : Singleton<EffectManager>
         {
             InvokeByPlayMode(p1TenComboAct, p2TenComboAct, playMode);
         }
-
         if (combo % 20 == 0)
         {
             InvokeByPlayMode(p1TwentyComboAct, p2TwentyComboAct, playMode);
         }
-
         if (note is TopNote)
         {
-            print($"탑 노트인 것 까진 확인");
             InvokeByPlayMode(p1TopNoteAct, p2TopNoteAct, playMode);
         }
     }
+    // 플레이 모드에 따라 액션을 실행하는 메서드
     private void InvokeByPlayMode(Action p1Act, Action p2Act, Enums.PlayMode playMode)
     {
         switch (playMode)
@@ -128,28 +125,25 @@ public class EffectManager : Singleton<EffectManager>
         {
             // 페이즈 1 구독
             case Enums.Phase.Phase1:
+                // 구독 해제
                 SetActionNull();
                 if (null != lightHandler)
                 {
-                    // 노트 퍼펙트
                     p1PerfectAct += lightHandler.P1EffectInvoke;
                     p2PerfectAct += lightHandler.P2EffectInvoke;
                 }
-
                 if (null != neonHandler)
                 {
                     // 10 콤보
                     p1TenComboAct += neonHandler.P1EffectInvoke;
                     p2TenComboAct += neonHandler.P2EffectInvoke;
                 }
-
                 if (null != carHandler)
                 {
                     // 20 콤보
                     p1TwentyComboAct += carHandler.P1EffectInvoke;
                     p2TwentyComboAct += carHandler.P2EffectInvoke;
                 }
-
                 if (null != windowHandler)
                 {
                     // 상단 노트 클리어
@@ -161,14 +155,12 @@ public class EffectManager : Singleton<EffectManager>
             case Enums.Phase.Phase2:
                 SetActionNull();
                 Phase1End();
-
                 if (windowHandler != null)
                 {
                     // 노트 퍼펙트
                     p1PerfectAct += windowHandler.P1EffectInvoke;
                     p2PerfectAct += windowHandler.P2EffectInvoke;
                 }
-
                 if (lazerHandler != null)
                 {
                     //20콤보
@@ -183,42 +175,40 @@ public class EffectManager : Singleton<EffectManager>
                     p2TopNoteAct += lazerHandler.Play_S_P_3;
                     p2TopNoteAct += lazerHandler.Play_M_R_P_3;
                 }
-
                 if (displayBoardHandler != null)
                 {
                     //10콤보
                     p1TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
                     p2TenComboAct += displayBoardHandler.TurnOnDisplayBoard;
                 }
-
                 if (null == windowHandler) { break; }
-
                 break;
-
             // 페이즈 3 구독
             case Enums.Phase.Phase3:
                 SetActionNull();
                 Phase2End();
-
-                //퍼펙트
-                p1PerfectAct += fireplayHandler.PlayFireplay;
-                p2PerfectAct += fireplayHandler.PlayFireplay;
-
-                //상단 노드
-                p1TopNoteAct += meteorHandler.PlayMeteor;
-                p2TopNoteAct += meteorHandler.PlayMeteor;
-
-                //10콤보
-                p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
-                p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
-
+                if (null != fireplayHandler)
+                {
+                    p1PerfectAct += fireplayHandler.PlayFireplay;
+                    p2PerfectAct += fireplayHandler.PlayFireplay;
+                }
+                if (null != meteorHandler)
+                {
+                    p1TopNoteAct += meteorHandler.PlayMeteor;
+                    p2TopNoteAct += meteorHandler.PlayMeteor;
+                }
+                if (null != displayBoardHandler)
+                {
+                    p1TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+                    p2TenComboAct += displayBoardHandler.ChangeDisplayBoard;
+                }
                 break;
             default:
                 Debug.LogError("PhaseEffect Error");
                 break;
         }
     }
-
+    // 페이즈 종료 시 실행되는 이벤트
     private void Phase1End()
     {
         lightHandler?.LeftEffectEnd();
@@ -244,7 +234,6 @@ public class EffectManager : Singleton<EffectManager>
 
         displayBoardHandler.SetDisplayOriginal();
     }
-
     private void SetActionNull()
     {
         p1PerfectAct = null;
