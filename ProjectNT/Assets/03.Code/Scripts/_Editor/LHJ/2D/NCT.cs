@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -60,7 +62,7 @@ public class NCT : MonoBehaviour
 
     private INodeState _currentState;
 
-    private Plane tempPlane = new Plane();
+    private Plane spritePlane = new Plane();
 
     private bool _isMouseInUI = false;
 
@@ -274,33 +276,22 @@ public class NCT : MonoBehaviour
     {
         _nodeGrid = new Node[_column, heightGrid.Count];
         cellHeight = (double)(heightGrid[1].transform.position.y - heightGrid[0].transform.position.y);
-        tempPlane = new Plane(Vector3.forward, transform.position);
+        spritePlane = new Plane(Vector3.forward, transform.position);
     }
 
     private Vector2Int GetGridPositionFromMouse()
     {
-        Vector2Int index = new Vector2Int(-1, -1);
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        float distance;
 
-        if (tempPlane.Raycast(ray, out distance) == false)
-        {
-            // print($"플레인 밖이다 : {index}");
-            return index;
-        }
+        if (spritePlane.Raycast(ray, out float distance) == false ||
+            _spriteRenderer.bounds.Contains(ray.GetPoint(distance)) == false)
+            return new Vector2Int(-1, -1);
 
         Vector3 worldPoint = ray.GetPoint(distance);
-        if (_spriteRenderer.bounds.Contains(worldPoint) == false)
-        {
-            // print($"플레인 밖이다 : {index}");
-            return index;
-        }
-
-        int column = (int)(worldPoint.x / (_spriteRenderer.size.x / _column));
-        //열
-        int row = (int)(worldPoint.y / (_spriteRenderer.size.y / heightGrid.Count));
-
-        return new Vector2Int(column, row);
+        return new Vector2Int(
+            (int)(worldPoint.x / (_spriteRenderer.size.x / _column)),
+            (int)(worldPoint.y / (_spriteRenderer.size.y / heightGrid.Count))
+        );
     }
 
     public void CreatePreviewLowNode(Vector2Int currentIndex)

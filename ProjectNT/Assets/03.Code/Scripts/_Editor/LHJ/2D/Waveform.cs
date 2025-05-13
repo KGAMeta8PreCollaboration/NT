@@ -42,10 +42,7 @@ public class Waveform : MonoBehaviour
     {
         //노래는 잘리면 안되므로 올림한다
         width = Mathf.CeilToInt(_audioSource.clip.length);
-
-        if (width * 100 >= MAX_FIXEL) maxNum = MAX_FIXEL / width; //노래가 길때
-        else maxNum = 100;
-
+        maxNum = (width * 100 >= MAX_FIXEL) ? MAX_FIXEL / width : 100;
         width = maxNum * width;
 
         //텍스쳐 크기 설정

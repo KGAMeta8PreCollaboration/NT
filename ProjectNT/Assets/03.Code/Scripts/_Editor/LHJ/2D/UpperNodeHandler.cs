@@ -23,8 +23,8 @@ public class UpperNodeHandler : MonoBehaviour
     private List<UpperNode> upperNodes = new List<UpperNode>();
 
     public int _currentGridIndex = -1;
-    public Dictionary<int, List<int>> _upperNodeDic = new Dictionary<int, List<int>>();
     private List<int> _upperToggles = new List<int>();
+    public Dictionary<int, List<int>> _upperNodeDic = new Dictionary<int, List<int>>();
 
     private NCT _nct;
 
