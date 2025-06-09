@@ -36,6 +36,4 @@
 ### 기획 팀원
 | 팀장 | PM | 팀원 | 팀원 |
 |-----------|-----------|-----------|-----------|
-| ![김정환]() | ![강재우]() | ![김용주]() | ![정민혁]() |
 | **김정환** | **강재우** | **김용주** | **정민혁** |
-| [GitHub](https://github.com/yugd1211) | [GitHub](https://github.com/LeeSeoHyeong1031) | [GitHub](https://github.com/heejee99) | [GitHub](https://github.com/Victor20000130) |
