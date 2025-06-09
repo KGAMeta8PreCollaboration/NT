@@ -27,7 +27,7 @@
 ## 👥 팀원 소개
 
 ### 개발 팀원
-| 팀장 | 팀원 | 팀원 | 팀원 | 팀원 |
+| 팀장 | 팀원 | 팀원 | 팀원 | 팀원 & QA |
 |-----------|-----------|-----------|-----------|-----------|
 | ![유경동](https://avatars.githubusercontent.com/u/85577502?v=4) | ![김찬영](https://avatars.githubusercontent.com/u/180273758?v=4) | ![이서형](https://avatars.githubusercontent.com/u/165467444?v=4) | ![이희재](https://avatars.githubusercontent.com/u/180147303?v=4) | ![김민준](https://avatars.githubusercontent.com/u/182617161?v=4) |
 | **유경동** | **김찬영** | **이서형** | **이희재** | **김민준** |
