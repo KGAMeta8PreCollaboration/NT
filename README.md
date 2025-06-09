@@ -12,7 +12,7 @@
 
 <details>
 <summary><h1>📖 프로젝트 소개</h1></summary>
-<div align="left">
+<div align="center">
   
 ### 🕹️ 소개
 &nbsp;&nbsp;&nbsp;• Prject NT는 VR 멀티 리듬게임입니다.<br>
