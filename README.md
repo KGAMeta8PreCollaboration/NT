@@ -1,7 +1,7 @@
 # 경일 게임아카데미 8기 기업 협약 XR 프로젝트 3팀
 <div align="center">
 
-![header](https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Prject%20Night%20Traveler)
+![header](https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Project%20Night%20Traveler)
 
 <h1>Project NT Develop Repository</h1>
 <p align="center">
